@@ -1,17 +1,7 @@
 using System.Diagnostics;
 
 namespace AzulCLI;
-public struct Tile
-{
-    public int id;
-    public int count;
 
-    public Tile(int id, int count)
-    {
-        this.id = id;
-        this.count = count;
-    }
-}
 
 public class Tiles
 {
