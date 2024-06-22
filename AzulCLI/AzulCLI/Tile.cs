@@ -13,16 +13,18 @@ public struct Tile
     }
 }
 
-public struct Tiles
+public class Tiles
 {
     private int[] counts;
     private Random rand = new Random();
     private int totalCount;
+    public int typesCount;
 
     public Tiles(int typesCount, int totalCount)
     {
         counts = new int[typesCount];
         this.totalCount = totalCount;
+        this.typesCount = typesCount;
         int countPerType = totalCount / typesCount;
         for (int i = 0; i < typesCount; i++)
         {
@@ -87,7 +89,7 @@ public struct Tiles
 
     private int GetTypeOfTile(int position)
     {
-        Debug.Assert(position >= totalCount);
+        Debug.Assert(position < totalCount,"position must be in bounds of all counts");
         int i = 0;
         while (position > counts[i])
         {
