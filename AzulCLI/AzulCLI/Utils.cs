@@ -9,22 +9,33 @@ public struct Buffer
     public Buffer(int size)
     {
         this.size = size;
-        typeId = 0;
-        filled = 0;
+        typeId = -1;
+        filled = -1;
     }
 
     public bool Asign(int id, int count)//TODO:: maybe return int which is leak( what was after limit)
     {
-        if (filled != 0) return false; //TODO: break, return some kind of exeption
+        if (filled != -1) return false; //TODO: break, return some kind of exeption
         typeId = id;
-        filled += count;
+        filled += Math.Min(count, size);
         return true;
+    }
+
+    public bool Asign(Tile tile)
+    {
+        return Asign(tile.id, tile.count);
+    }
+
+    public int Epmty()
+    {
+        if (typeId == -1) return size;
+        return size - filled;
     }
 
     public void Clear()
     {
-        typeId = 0;
-        filled = 0;
+        typeId = -1;
+        filled = -1;
     }
 
     public bool Full()
