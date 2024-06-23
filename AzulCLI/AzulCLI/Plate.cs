@@ -21,17 +21,13 @@ public class Plate
 
     public Tile[] GetCounts()
     {
-        List<Tile> tileList = new List<Tile>();
+        Tile[] tile = new Tile[this.tiles.typesCount];
         for(int i = 0; i < tiles.typesCount; i++)
         {
-            Tile current = tiles.GetTiles(i);
-            if (current.count != 0)
-            {
-                tileList.Add(current);
-            }
+            tile[i] = new Tile(i,tiles.CountOfTiles(i));
         }
 
-        return tileList.ToArray();
+        return tile;
     }
     
     public void PutTiles(Tiles tiles)
