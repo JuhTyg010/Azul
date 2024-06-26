@@ -30,6 +30,9 @@ public class Board
         var data = p.GetCounts();
         if (data[tileId].count == 0) return false;
         bool success = players[currentPlayer].Place(bufferId, data[tileId]);//TODO: check if its from center for bool
+
+        #region succieded
+        
         if (success)
         {
             p.TakeTile(tileId);
@@ -43,10 +46,12 @@ public class Board
             currentPlayer++;
             if (currentPlayer == players.Length) currentPlayer = 0;
         }
-
+        #endregion
+        
         return success;
-
     }
+    
+    
 
     public bool Calculate(int col)
     {
