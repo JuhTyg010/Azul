@@ -58,7 +58,7 @@ public class Board
         int[] fullBuffers = players[calculating.x].FullBuffers();
         //TODO: get first => calculating.y
         //TODO: Try to fill it
-        //TODO: Move to next buffer, or stay if failed, aslo is=f success calculate points
+        //TODO: Move to next buffer, or stay if failed, also if is success calculate points
         return false;
     }
 }
