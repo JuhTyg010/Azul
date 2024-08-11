@@ -40,6 +40,7 @@ public class Plate
     {
         Tile outTile =  tiles.GetTiles(id);
         Debug.Assert(outTile.count != 0, "We can't take tile which is not on the plate");
+        isEmpty = tiles.TotalTiles() == 0;
         return outTile;
     }
 }
@@ -57,5 +58,6 @@ public class CenterPlate : Plate
     public void AddTiles(Tiles toPut)
     {
         tiles.Union(toPut);
+        isEmpty = tiles.TotalTiles() == 0;
     }
 }

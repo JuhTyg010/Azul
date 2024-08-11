@@ -13,7 +13,7 @@ public struct Buffer
         filled = -1;
     }
 
-    public bool Asign(int id, int count)//TODO:: maybe return int which is leak( what was after limit)
+    public bool Assign(int id, int count)//TODO:: maybe return int which is leak( what was after limit)
     {
         if (filled != -1) return false; //TODO: break, return some kind of exeption
         typeId = id;
@@ -21,12 +21,12 @@ public struct Buffer
         return true;
     }
 
-    public bool Asign(Tile tile)
+    public bool Assign(Tile tile)
     {
-        return Asign(tile.id, tile.count);
+        return Assign(tile.id, tile.count);
     }
 
-    public int Epmty()
+    public int Empty()
     {
         if (typeId == -1) return size;
         return size - filled;

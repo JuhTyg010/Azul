@@ -34,8 +34,8 @@ public class Player
             this.isFirst = true;
             //TODO: it takes space in the floor
         }
-        int toFloor = tile.count - buffers[row].Epmty();
-        bool answer = buffers[row].Asign(tile);
+        int toFloor = tile.count - buffers[row].Empty();
+        bool answer = buffers[row].Assign(tile);
         
         if (answer && floor.TotalTiles() < floorSize)
         {

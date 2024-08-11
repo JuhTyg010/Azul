@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "un8o/JPMzNEI799rqr5184sgizmGhijKz0wt+D90/CETJS/EqB6UvcrjEwtDali/rgT0Vge6hSMiTzVH1opBIA==",
+  "dgSpecHash": "TT2S/8FbfRQ8SQuZYvQBnO1qmYCIfHUk0piWKs7x9/psydCBFAMOwDadZh4w5MWs+SGxl2gOM2OR9XJvhDrr/A==",
   "success": true,
   "projectFilePath": "/home/juhtyg/Desktop/Azul/Azul/AzulCLI/AzulCLI/AzulCLI.csproj",
   "expectedPackageFiles": [
-    "/home/juhtyg/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.5/microsoft.aspnetcore.app.ref.8.0.5.nupkg.sha512"
+    "/home/juhtyg/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.6/microsoft.aspnetcore.app.ref.8.0.6.nupkg.sha512"
   ],
   "logs": []
 }
