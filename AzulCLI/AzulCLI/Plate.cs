@@ -30,7 +30,7 @@ public class Plate
         return tile;
     }
     
-    public void PutTiles(Tiles tiles)
+    public void SetTiles(Tiles tiles)
     {
         this.tiles = tiles;
         isEmpty = tiles.TotalTiles() == 0;
