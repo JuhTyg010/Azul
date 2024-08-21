@@ -54,6 +54,7 @@ public class Player
 
     public int[] FullBuffers()
     {
+        if (!hasFullBuffer()) return [];
         List<int> listOfFull = new List<int>();
         for (int i = 0; i < buffers.Length; i++)
         {
@@ -99,5 +100,14 @@ public class Player
         }
 
         return true;
+    }
+
+    public bool hasFullBuffer()
+    {
+        foreach (var buffer in buffers)
+        {
+            if (buffer.Full()) return true;
+        }
+        return false;
     }
 }
