@@ -19,13 +19,9 @@ public class Board
         if (plateId > plates.Length) return false;
         Plate p;
         if (plateId == plates.Length)
-        {
             p = center;
-        }
         else
-        {
             p = plates[plateId];
-        }
 
         var data = p.GetCounts();
         if (data[tileId].count == 0) return false;
@@ -43,6 +39,19 @@ public class Board
                 toPut.PutTile(newData[i]);
             }
             center.AddTiles(toPut);
+            if (ArePlatesEmpty())
+            {
+                currentPlayer = 0;
+                while (!players[currentPlayer].hasFullBuffer())
+                {
+                    currentPlayer++;
+                    if (currentPlayer == players.Length)
+                    {
+                        //TODO: skip phase 2
+                    }
+                }
+                phase = 2;
+            }
             currentPlayer++;
             if (currentPlayer == players.Length) currentPlayer = 0;
         }
@@ -51,14 +60,42 @@ public class Board
         return success;
     }
     
-    
-
+    //TODO: Check if player has some full Buffers
     public bool Calculate(int col)
     {
         int[] fullBuffers = players[calculating.x].FullBuffers();
-        //TODO: get first => calculating.y
-        //TODO: Try to fill it
-        //TODO: Move to next buffer, or stay if failed, also if is success calculate points
-        return false;
+        
+        bool isFilled = players[calculating.x].Fill(fullBuffers[0], col);
+        if (isFilled && fullBuffers.Length == 1)
+        {
+            players[calculating.x].ClearFloor();
+            calculating.x++;
+            while (!players[calculating.x].hasFullBuffer())
+            {
+                calculating.x++;
+                if (calculating.x == players.Length) phase = 1;
+            }
+            if (calculating.x == players.Length)
+            {
+                //All players finished phase 2
+                phase = 1;
+                //TODO: set currentPlayer based on the first from center point
+            }
+        }
+        
+        return isFilled;
+    }
+
+    private bool ArePlatesEmpty()
+    {
+        foreach (var plate in plates)
+        {
+            if (!plate.isEmpty)
+            {
+                return false;
+            }
+        }
+
+        return center.isEmpty;
     }
 }
