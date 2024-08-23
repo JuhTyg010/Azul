@@ -47,7 +47,11 @@ public class Plate
 
 public class CenterPlate : Plate {
     public bool isFirst { get; protected set; }
-    
+
+    public CenterPlate() {
+        tiles = new Tiles(0,0);
+        isEmpty = true;
+    }
     public CenterPlate(int typesCount) {
         tiles = new Tiles(typesCount, 0);
         isEmpty = true;
