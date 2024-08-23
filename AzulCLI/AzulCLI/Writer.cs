@@ -26,18 +26,29 @@ public static class Writer {
             PrintPlayerRow(currentPlayer.GetBufferData(i), i + 1,
                 Enumerable.Range(0,currentPlayer.wall.GetLength(0))
                     .Select(j => currentPlayer.wall[j,i]).ToArray());
+            Console.Write(" ");
+        }
+        
+        for (int i = 0; i < currentPlayer.FloorSize(); i++) {
+            if (i >= currentPlayer.floor.Count) {
+                Console.Write("_");
+            } else {
+                Console.Write(currentPlayer.floor[i]);
+            }
         }
         Console.WriteLine();
+        
         Console.Write("Action: ");
         
     }
 
     private static void PrintTable(Plate[] plates, CenterPlate center, bool firstTaken) {
         int plateCount = plates.Length;
-        Console.Write($"Table: center");
+        Console.Write($"Table:   center");
         for (int i = 0; i < plateCount; i++) {
             Console.Write($"| Hold{i}");
         }
+        Console.WriteLine();
 
         for (int i = 0; i < 5; i++) {
             Console.Write(" ");
@@ -67,7 +78,7 @@ public static class Writer {
         for (int i = 0; i < 5; i++) {
             buffers[i] = player.GetBufferData(i);
         }
-        Console.Write(player.name + " ");
+        Console.Write(player.name + ": ");
         Console.Write(player.pointCount + " ");
         for (int i = 0; i < 5; i++) {
             PrintPlayerRow(buffers[i], i + 1, 
@@ -75,14 +86,29 @@ public static class Writer {
                     .Select(j => player.wall[j,i]).ToArray());
             Console.Write(" ");
         }
-        Console.Write(player.floor);
+
+        for (int i = 0; i < player.FloorSize(); i++) {
+            if (i >= player.floor.Count) {
+                Console.Write("_");
+            } else {
+                Console.Write(player.floor[i]);
+            }
+        }
+        Console.WriteLine();
         
     }
 
     private static void PrintPlayerRow(Tile buffer, int bufferSize, int[] wallRow) {
-        string buff = new string((char)('0' + buffer.id), buffer.count);
-        for (int i = buffer.count; i <= bufferSize; i++) {
-            buff += '_';
+        string buff = "";
+        if (buffer.id == -1) {
+            for (int i = 0; i < bufferSize; i++) {
+                buff += '_';
+            }
+        } else {
+            buff = new string((char)('0' + buffer.id), buffer.count);
+            for (int i = buffer.count; i <= bufferSize; i++) {
+                buff += '_';
+            }
         }
 
         string wall = "";
