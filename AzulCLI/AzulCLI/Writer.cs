@@ -7,18 +7,18 @@ public static class Writer {
 
     public static void PrintBoard(Board game) {
         Console.WriteLine("Others:");
-        for (int i = 0; i < game.players.Length; i++) {
-            if (i == game.currentPlayer) continue;
+        for (int i = 0; i < game.Players.Length; i++) {
+            if (i == game.CurrentPlayer) continue;
             
             Console.Write(" ");
-            PrintPlayer(game.players[i]);
+            PrintPlayer(game.Players[i]);
         }
         Console.WriteLine();
         
-        PrintTable(game.plates, game.center, game.fisrtTaken);
+        PrintTable(game.Plates, game.Center, game.fisrtTaken);
         Console.WriteLine();
 
-        Player currentPlayer = game.players[game.currentPlayer];
+        Player currentPlayer = game.Players[game.CurrentPlayer];
         Console.WriteLine($"Me: {currentPlayer.name}");
         Console.WriteLine($" Score: {currentPlayer.pointCount}");
         Console.Write(" Data:  ");

@@ -29,7 +29,7 @@ public class Player
         if (!possibleRow(row, tile.id)) return false;
         if (isFirst) {
             this.isFirst = true;
-            //TODO: it takes space in the floor
+            floor.Add(Globals.FIRST);
         }
         int toFloor = tile.count - buffers[row].Empty();
         bool answer = buffers[row].Assign(tile);
@@ -69,8 +69,20 @@ public class Player
     }
 
     public bool ClearFloor() {
-        //TODO: implement this such as nagative points are -1,-1,-2,-2,-2,-3,-3
+        //negative points are -1,-1,-2,-2,-2,-3,-3
+        int[] toRemove = { 0, -1, -2, -4, -6, -8, -11, -14 };
+        pointCount += toRemove[Math.Min(7, floor.Count)];
+
+        if (floor[0] == Globals.FIRST) {
+            floor.Clear();
+            return true;
+        }
+        floor.Clear();
         return false;
+    }
+
+    public int FloorSize() {
+        return floorSize;
     }
     
     private bool possibleRow(int row, int typeId) {

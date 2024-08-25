@@ -23,6 +23,7 @@ public class Plate
         Tile[] tile = new Tile[this.tiles.typesCount];
         for(int i = 0; i < tiles.typesCount; i++) {
             tile[i] = new Tile(i,tiles.TileCountOfType(i));
+            
         }
 
         return tile;
@@ -32,8 +33,8 @@ public class Plate
         return tiles.TileCountOfType(typeId);
     }
     
-    public void SetTiles(Tiles tiles) {
-        this.tiles = tiles;
+    public void SetTiles(Tiles tiles_) {
+        tiles = tiles_;
         isEmpty = tiles.TotalTiles() == 0;
     }
 

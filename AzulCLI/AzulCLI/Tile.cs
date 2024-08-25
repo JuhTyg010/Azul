@@ -14,7 +14,7 @@ public class Tiles
         counts = new int[typesCount];
         this.totalCount = totalCount;
         this.typesCount = typesCount;
-        int countPerType = totalCount / typesCount;
+        int countPerType = typesCount == 0 ? 0 : totalCount / typesCount;
         for (int i = 0; i < typesCount; i++) {
             counts[i] = countPerType;
         }
@@ -22,10 +22,15 @@ public class Tiles
 
     private Tiles(int[] counts) {
         this.counts = counts;
+        typesCount = counts.Length;
+        totalCount = 0;
+        foreach (var val in counts) {
+            totalCount += val;
+        }
     }
     
     public Tiles GetRandom(int count) {
-        int[] outCounts = new int[counts.Length];
+        int[] outCounts = new int[typesCount];
         for (int i = 0; i < count; i++) {
             int chosen = rand.Next(totalCount);
             int id = GetTypeOfTile(chosen);
@@ -38,6 +43,7 @@ public class Tiles
     }
 
     public int TileCountOfType(int id) {
+        if (id < 0 || id > counts.Length - 1) return 0;
         return counts[id];
     }
 

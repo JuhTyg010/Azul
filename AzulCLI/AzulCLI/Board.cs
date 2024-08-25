@@ -14,8 +14,9 @@ public class Board
     private bool isAdvanced;
     public bool fisrtTaken;
 
-    public Board(int playerCount, string[] playerNames) {
+    public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false) {
         //TODO: check if length of playerNames is same as playerCount
+        isAdvanced = isAdvanced_;
         Center = new CenterPlate();
         storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT); 
         
@@ -37,6 +38,8 @@ public class Board
         }
 
         CurrentPlayer = 0;
+        Phase = 1;
+        FillPlates();
     }
     
     public bool Move(int plateId, int tileId, int bufferId) {   //center is always last
@@ -99,7 +102,7 @@ public class Board
             } if (calculating.x == Players.Length) {
                 //All players finished phase 2
                 Phase = 1;
-                fisrtTaken = false;
+                FillPlates();
                 
             }
         }
@@ -108,7 +111,6 @@ public class Board
     }
     
     
-
     private bool ArePlatesEmpty() {
         foreach (var plate in Plates) {
             if (!plate.isEmpty) {
@@ -117,5 +119,13 @@ public class Board
         }
 
         return Center.isEmpty;
+    }
+
+    private void FillPlates() {
+        foreach (var plate in Plates) {
+            plate.SetTiles(storage.GetRandom(Globals.PLATE_VOLUME));
+        }
+
+        fisrtTaken = false;
     }
 }
