@@ -54,11 +54,13 @@ public class Tiles
     public Tile GetTiles(int id) {
         int count = counts[id];
         counts[id] = 0;
+        totalCount -= count;
         return new Tile(id, count);
     }
 
     public void PutTile(int id, int count) {
         counts[id] += count;
+        totalCount += count;
     }
 
     public void PutTile(Tile tile) {
@@ -66,9 +68,15 @@ public class Tiles
     }
 
     public void Union(Tiles other) {
+        // in case one of the counts wasn't initialized yet, if none was it won't do anything 
+        if (counts.Length == 0) counts = new int[other.counts.Length];
+        if (other.counts.Length == 0) other.counts = new int[counts.Length];
         for (int i = 0; i < counts.Length; i++) {
             counts[i] += other.counts[i];
         }
+
+        totalCount += other.totalCount;
+        typesCount = counts.Length;
     }
 
     private int GetTypeOfTile(int position) {
