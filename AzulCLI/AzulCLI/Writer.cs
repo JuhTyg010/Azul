@@ -5,6 +5,7 @@ namespace AzulCLI;
 
 public static class Writer {
 
+    private static readonly char EmptyPlace = '_';
     public static void PrintBoard(Board game) {
         Console.WriteLine("Others:");
         for (int i = 0; i < game.Players.Length; i++) {
@@ -31,7 +32,7 @@ public static class Writer {
         
         for (int i = 0; i < currentPlayer.FloorSize(); i++) {
             if (i >= currentPlayer.floor.Count) {
-                Console.Write("_");
+                Console.Write(EmptyPlace);
             } else {
                 Console.Write(currentPlayer.floor[i]);
             }
@@ -62,7 +63,7 @@ public static class Writer {
     }
 
     private static void PrintTypeData(Plate[] plates, CenterPlate center, int typeId) {
-        Console.Write($"Type {typeId + 1}: ");
+        Console.Write($"Type {typeId}: ");
         
         Console.Write($"   {center.TileCountOfType(typeId)}");
         if(center.TileCountOfType(typeId) < 10) Console.Write(" ");
@@ -89,7 +90,7 @@ public static class Writer {
 
         for (int i = 0; i < player.FloorSize(); i++) {
             if (i >= player.floor.Count) {
-                Console.Write("_");
+                Console.Write(EmptyPlace);
             } else {
                 Console.Write(player.floor[i]);
             }
@@ -100,21 +101,30 @@ public static class Writer {
 
     private static void PrintPlayerRow(Tile buffer, int bufferSize, int[] wallRow) {
         string buff = "";
-        if (buffer.id == -1) {
+        if (buffer.id == Globals.EMPTY_CELL) {
             for (int i = 0; i < bufferSize; i++) {
-                buff += '_';
+                buff += EmptyPlace;
             }
-        } else {
-            buff = new string((char)('0' + buffer.id), buffer.count);
-            for (int i = buffer.count; i <= bufferSize; i++) {
-                buff += '_';
+        } else { 
+            buff = new string(buffer.id.ToString()[0], buffer.count);
+            for (int i = buffer.count; i < bufferSize; i++) {
+                buff += EmptyPlace;
             }
         }
 
         string wall = "";
         foreach (var val in wallRow) {
-            wall += val.ToString();
+
+            if (val == Globals.EMPTY_CELL) {
+                wall += EmptyPlace;
+            } else if (val == Globals.FIRST) {
+                wall += "f";
+            } else {
+                wall += val.ToString();
+            }
+            
         }
+        
         Console.Write($"{buff} -> {wall}");
     }
     
