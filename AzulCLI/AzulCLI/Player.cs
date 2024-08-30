@@ -105,7 +105,7 @@ public class Player
     }
 
     private bool possibleBuffer(int bufferId, int typeId) {
-        if (buffers[bufferId].typeId != Globals.EMPTY_CELL ||
+        if (buffers[bufferId].typeId == Globals.EMPTY_CELL ||
             buffers[bufferId].typeId == typeId) return true;
         return false;
     }
