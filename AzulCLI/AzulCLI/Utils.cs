@@ -21,6 +21,7 @@ public struct Buffer
 
     public bool Assign(int id, int count) {//TODO:: maybe return int which is leak( what was after limit)
         if (filled != Globals.EMPTY_CELL && typeId != id) return false; //TODO: break, return some kind of exeption
+        if (typeId == Globals.EMPTY_CELL) filled = 0;
         typeId = id;
         filled += count;
         filled = Math.Min(filled, size);
