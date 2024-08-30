@@ -1,5 +1,5 @@
 
-namespace AzulCLI;
+namespace Azul;
 
 public class Board
 {
@@ -9,7 +9,7 @@ public class Board
     public Tiles storage { get; private set; }
     public int CurrentPlayer { get; private set; }
     public int Phase { get; private set; }
-    public AzulCLI.Vector2 calculating; //on x is currently calculated player and on the y is the row we are on
+    public Azul.Vector2 calculating; //on x is currently calculated player and on the y is the row we are on
     public int[,] predefinedWall { get; private set; }
     private bool isAdvanced;
     public bool fisrtTaken;

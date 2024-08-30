@@ -1,7 +1,4 @@
-using System.Linq;
-using System.Security.Cryptography;
-
-namespace AzulCLI;
+using Azul;
 
 public static class Writer {
 

@@ -1,4 +1,4 @@
-namespace AzulCLI;
+using Azul;
 
 public class CLIGameManager {
     static void Main(string[] args) {
@@ -20,7 +20,7 @@ public class CLIGameManager {
                 Writer.PrintBoard(game);
                 string input = Console.ReadLine();
                 int[] action = StringArrToIntArr(input.Split());
-                // <{0-9}> <{1-5}> <{0-4}> first is which plate (last is center) second is type and last is buffer id
+                // <{0-9}> <{0-4}> <{0-4}> first is which plate (last is center) second is type and last is buffer id
                 bool moveDone = game.Move(action[0], action[1], action[2]);
                 while (!moveDone) {
                     Console.WriteLine("Invalid move try again");
@@ -28,7 +28,10 @@ public class CLIGameManager {
                     action = StringArrToIntArr(Console.ReadLine().Split());
                     moveDone = game.Move(action[0], action[1], action[2]);
                 }
+            }
 
+            while (game.Phase == 2) {
+                
             }
                 
     }

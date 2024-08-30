@@ -1,4 +1,4 @@
-namespace AzulCLI;
+namespace Azul;
 
 public static class Globals {
     public const int FIRST = 999;

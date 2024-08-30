@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace AzulCLI;
+namespace Azul;
 
 
 public class Tiles
