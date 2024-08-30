@@ -19,7 +19,12 @@ public class Player
         floor = new List<int>();
         List<Buffer> bufferList = new List<Buffer>();
         for (int i = 0; i < wall.GetLength(0); i++) {
+            
             bufferList.Add(new Buffer(i + 1));
+            
+            for (int j = 0; j < wall.GetLength(1); j++) {
+                wall[i, j] = Globals.EMPTY_CELL;
+            }
         }
 
         buffers = bufferList.ToArray();
@@ -27,6 +32,7 @@ public class Player
     
     public bool Place(int row, Tile tile, bool isFirst = false) {
         if (!possibleRow(row, tile.id)) return false;
+        if (!possibleBuffer(row, tile.id)) return false;
         if (isFirst) {
             this.isFirst = true;
             floor.Add(Globals.FIRST);
@@ -35,7 +41,12 @@ public class Player
         bool answer = buffers[row].Assign(tile);
         
         if (answer && floor.Count < floorSize) {
-            //TODO: implement floor addition
+            for (int i = 0; i < toFloor; i++) {
+                floor.Add(tile.id);
+                if (floor.Count == floorSize) {
+                    break;
+                }
+            }
         }
 
         return answer;
@@ -51,14 +62,14 @@ public class Player
         if (!hasFullBuffer()) return [];
         List<int> listOfFull = new List<int>();
         for (int i = 0; i < buffers.Length; i++) {
-            if(buffers[i].Full()) listOfFull.Add(i);
+            if(buffers[i].IsFull()) listOfFull.Add(i);
         }
 
         return listOfFull.ToArray();
     }
 
     public bool Fill(int row, int col) {
-        if (!buffers[row].Full()) return false;
+        if (!buffers[row].IsFull()) return false;
         //TODO: logs
         if (!possibleColumn(col, buffers[row].typeId)) return false;
         //TODO:logs
@@ -93,6 +104,12 @@ public class Player
         return true;
     }
 
+    private bool possibleBuffer(int bufferId, int typeId) {
+        if (buffers[bufferId].typeId != Globals.EMPTY_CELL ||
+            buffers[bufferId].typeId == typeId) return true;
+        return false;
+    }
+
     private bool possibleColumn(int col, int typeId) {
         for (int i = 0; i < wall.GetLength(0); i++) {
             if (wall[i, col] == typeId) return false;
@@ -103,7 +120,7 @@ public class Player
 
     public bool hasFullBuffer() {
         foreach (var buffer in buffers) {
-            if (buffer.Full()) return true;
+            if (buffer.IsFull()) return true;
         }
         return false;
     }
