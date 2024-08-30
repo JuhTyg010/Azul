@@ -7,4 +7,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="Azul">
+        <HintPath>..\..\Azul\bin\Release\net8.0\publish\Azul.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

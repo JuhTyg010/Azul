@@ -14,7 +14,7 @@ public class CLIGameManager {
 
             Board game = new Board(playerCount, names);
 
-            while (game.Phase == 1) {
+            while (game.Phase == Phase.Taking) {
                 Console.WriteLine($" Next turn {names[game.CurrentPlayer]} (press enter to go)");
                 Console.ReadLine();
                 Writer.PrintBoard(game);
@@ -30,7 +30,7 @@ public class CLIGameManager {
                 }
             }
 
-            while (game.Phase == 2) {
+            while (game.Phase == Phase.Placing) {
                 
             }
                 
