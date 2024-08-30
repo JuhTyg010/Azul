@@ -44,6 +44,11 @@ public class Plate
         isEmpty = tiles.TotalTiles() == 0;
         return outTile;
     }
+
+    public void ClearPlate() {
+        tiles = new Tiles(tiles.typesCount, 0);
+        isEmpty = true;
+    }
 }
 
 public class CenterPlate : Plate {
