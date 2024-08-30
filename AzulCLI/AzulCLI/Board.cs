@@ -65,6 +65,7 @@ public class Board
         if (success) {
             p.TakeTile(tileId);
             var newData = p.GetCounts();
+            p.ClearPlate();
             Tiles toPut = new Tiles(newData.Length, 0);
             for (int i = 0; i < newData.Length; i++) {
                 toPut.PutTile(newData[i]);
