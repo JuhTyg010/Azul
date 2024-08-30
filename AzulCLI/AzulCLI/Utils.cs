@@ -5,6 +5,7 @@ public static class Globals {
     public const int TYPE_COUNT = 5;
     public const int TOTAL_TILE_COUNT = 100;
     public const int PLATE_VOLUME = 4;
+    public const int EMPTY_CELL = -1;
 }
 public struct Buffer
 {
@@ -14,14 +15,15 @@ public struct Buffer
     
     public Buffer(int size) {
         this.size = size;
-        typeId = -1;
-        filled = -1;
+        typeId = Globals.EMPTY_CELL;
+        filled = Globals.EMPTY_CELL;
     }
 
     public bool Assign(int id, int count) {//TODO:: maybe return int which is leak( what was after limit)
-        if (filled != -1) return false; //TODO: break, return some kind of exeption
+        if (filled != Globals.EMPTY_CELL && typeId != id) return false; //TODO: break, return some kind of exeption
         typeId = id;
-        filled += Math.Min(count, size);
+        filled += count;
+        filled = Math.Min(filled, size);
         return true;
     }
 
@@ -30,16 +32,16 @@ public struct Buffer
     }
 
     public int Empty() {
-        if (typeId == -1) return size;
+        if (typeId == Globals.EMPTY_CELL) return size;
         return size - filled;
     }
 
     public void Clear() {
-        typeId = -1;
-        filled = -1;
+        typeId = Globals.EMPTY_CELL;
+        filled = Globals.EMPTY_CELL;
     }
 
-    public bool Full() {
+    public bool IsFull() {
         return size == filled;
     }
 }
