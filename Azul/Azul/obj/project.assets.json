@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/juhtyg/Desktop/MyStuff/Azul/Azul/Azul.csproj",
+      "projectUniqueName": "/home/juhtyg/Desktop/Azul/Azul/Azul/Azul/Azul.csproj",
       "projectName": "Azul",
-      "projectPath": "/home/juhtyg/Desktop/MyStuff/Azul/Azul/Azul.csproj",
+      "projectPath": "/home/juhtyg/Desktop/Azul/Azul/Azul/Azul/Azul.csproj",
       "packagesPath": "/home/juhtyg/.nuget/packages/",
-      "outputPath": "/home/juhtyg/Desktop/MyStuff/Azul/Azul/obj/",
+      "outputPath": "/home/juhtyg/Desktop/Azul/Azul/Azul/Azul/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/juhtyg/.nuget/NuGet/NuGet.Config"
