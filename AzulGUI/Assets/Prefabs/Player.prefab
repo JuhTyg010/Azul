@@ -276,8 +276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc0b358f87da71a3b8fa8b2c4e1dcf8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  humanImage: {fileID: -1136558356, guid: d16ee56589ff11d2699af36f5e5d4c8e, type: 3}
-  botImage: {fileID: -1097583665, guid: d16ee56589ff11d2699af36f5e5d4c8e, type: 3}
+  humanImage: {fileID: -292042970, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
+  botImage: {fileID: 2028992007, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   nameHolder: {fileID: 3791305056025498321}
   id: 0
 --- !u!1 &6870950064363318827
