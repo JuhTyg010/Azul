@@ -23,7 +23,7 @@ public static class Writer {
         for (int i = 0; i < 5; i++) {
             PrintPlayerRow(currentPlayer.GetBufferData(i), i + 1,
                 Enumerable.Range(0,currentPlayer.wall.GetLength(0))
-                    .Select(j => currentPlayer.wall[j,i]).ToArray());
+                    .Select(j => currentPlayer.wall[i,j]).ToArray());
             Console.Write(" ");
         }
         
@@ -81,7 +81,7 @@ public static class Writer {
         for (int i = 0; i < 5; i++) {
             PrintPlayerRow(buffers[i], i + 1, 
                 Enumerable.Range(0,player.wall.GetLength(0))
-                    .Select(j => player.wall[j,i]).ToArray());
+                    .Select(j => player.wall[i,j]).ToArray());
             Console.Write(" ");
         }
 
