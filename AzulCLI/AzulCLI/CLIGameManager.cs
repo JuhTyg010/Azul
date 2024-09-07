@@ -14,48 +14,48 @@ public class CLIGameManager {
 
             Board game = new Board(playerCount, names);
 
-            while (game.Phase == Phase.Taking) {
-                Console.WriteLine($" Next turn {names[game.CurrentPlayer]} (press enter to go)");
-                Console.ReadLine();
-                Writer.PrintBoard(game);
-                string input = Console.ReadLine();
-                int[] action = StringArrToIntArr(input.Split());
-                // <{0-9}> <{0-4}> <{0-4}> first is which plate (last is center) second is type and last is buffer id
-                bool moveDone = game.Move(action[0], action[1], action[2]);
-                while (!moveDone) {
-                    Console.WriteLine("Invalid move try again");
+            while (game.Phase != Phase.GameOver) {
+                while (game.Phase == Phase.Taking) {
+                    Console.WriteLine($" Next turn {names[game.CurrentPlayer]} (press enter to go)");
+                    Console.ReadLine();
                     Writer.PrintBoard(game);
-                    action = StringArrToIntArr(Console.ReadLine().Split());
-                    moveDone = game.Move(action[0], action[1], action[2]);
-                }
-            }
-
-            while (game.Phase == Phase.Placing) {
-                Console.WriteLine($" Next turn in filling {names[game.calculating.x]} (press enter to go)");
-                Console.ReadLine();
-                if (!game.isAdvanced) {
-                    int currentPlayer = game.calculating.x;
-                    while (currentPlayer == game.calculating.x) {
-                        game.Calculate();
+                    string input = Console.ReadLine();
+                    int[] action = StringArrToIntArr(input.Split());
+                    // <{0-9}> <{0-4}> <{0-4}> first is which plate (last is center) second is type and last is buffer id
+                    bool moveDone = game.Move(action[0], action[1], action[2]);
+                    while (!moveDone) {
+                        Console.WriteLine("Invalid move try again");
+                        Writer.PrintBoard(game);
+                        action = StringArrToIntArr(Console.ReadLine().Split());
+                        moveDone = game.Move(action[0], action[1], action[2]);
                     }
-                    Writer.PrintBoard(game);
                 }
-                else {
-                    Writer.PrintBoard(game);
-                    int currentPlayer = game.calculating.x;
-                    while (currentPlayer == game.calculating.x) {
-                        string input = Console.ReadLine(); //should be {0-4} representing the column of first buffer
-                        game.Calculate(int.Parse(input));
+
+                while (game.Phase == Phase.Placing) {
+                    Console.WriteLine($" Next turn in filling {names[game.calculating.x]} (press enter to go)");
+                    Console.ReadLine();
+                    if (!game.isAdvanced) {
+                        int currentPlayer = game.calculating.x;
+                        while (currentPlayer == game.calculating.x) {
+                            game.Calculate();
+                        }
+
                         Writer.PrintBoard(game);
                     }
+                    else {
+                        Writer.PrintBoard(game);
+                        int currentPlayer = game.calculating.x;
+                        while (currentPlayer == game.calculating.x) {
+                            string input = Console.ReadLine(); //should be {0-4} representing the column of first buffer
+                            game.Calculate(int.Parse(input));
+                            Writer.PrintBoard(game);
+                        }
+                    }
                 }
             }
 
-            if (game.Phase == Phase.GameOver) {
-                Console.WriteLine("Game over");
-                //TODO: write scores and stuff
-            }
-                
+            Console.WriteLine("Game over");
+            //TODO: write scores and stuff
     }
             
             
