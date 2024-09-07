@@ -106,15 +106,13 @@ public class Board
             bool isFirst = Players[calculating.x].ClearFloor();
             CurrentPlayer = calculating.x;
             calculating.x++;
-            if (calculating.x == Players.Length) Phase = Phase.Taking;
-            while (!Players[calculating.x].hasFullBuffer()) {
+            while (calculating.x < Players.Length && !Players[calculating.x].hasFullBuffer()) {
                 calculating.x++;
                 if (calculating.x == Players.Length) Phase = Phase.Taking;
             } if (calculating.x == Players.Length) {
                 //All players finished phase 2
                 Phase = Phase.Taking;
                 FillPlates();
-                
             }
         }
         
