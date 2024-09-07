@@ -106,6 +106,7 @@ public class Board
             bool isFirst = Players[calculating.x].ClearFloor();
             CurrentPlayer = calculating.x;
             calculating.x++;
+            if (calculating.x == Players.Length) Phase = Phase.Taking;
             while (!Players[calculating.x].hasFullBuffer()) {
                 calculating.x++;
                 if (calculating.x == Players.Length) Phase = Phase.Taking;

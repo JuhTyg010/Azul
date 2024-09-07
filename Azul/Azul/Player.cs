@@ -84,7 +84,7 @@ public class Player
         int[] toRemove = { 0, -1, -2, -4, -6, -8, -11, -14 };
         pointCount += toRemove[Math.Min(7, floor.Count)];
 
-        if (floor[0] == Globals.FIRST) {
+        if (floor.Count != 0 && floor[0] == Globals.FIRST) {
             floor.Clear();
             return true;
         }
