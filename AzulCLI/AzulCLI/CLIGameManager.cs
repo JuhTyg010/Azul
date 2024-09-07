@@ -31,10 +31,29 @@ public class CLIGameManager {
             }
 
             while (game.Phase == Phase.Placing) {
-                Console.WriteLine($" Next turn {names[game.CurrentPlayer]} (press enter to go)");
+                Console.WriteLine($" Next turn in filling {names[game.calculating.x]} (press enter to go)");
                 Console.ReadLine();
-                Writer.PrintBoard(game);
-                
+                if (!game.isAdvanced) {
+                    int currentPlayer = game.calculating.x;
+                    while (currentPlayer == game.calculating.x) {
+                        game.Calculate();
+                    }
+                    Writer.PrintBoard(game);
+                }
+                else {
+                    Writer.PrintBoard(game);
+                    int currentPlayer = game.calculating.x;
+                    while (currentPlayer == game.calculating.x) {
+                        string input = Console.ReadLine(); //should be {0-4} representing the column of first buffer
+                        game.Calculate(int.Parse(input));
+                        Writer.PrintBoard(game);
+                    }
+                }
+            }
+
+            if (game.Phase == Phase.GameOver) {
+                Console.WriteLine("Game over");
+                //TODO: write scores and stuff
             }
                 
     }
