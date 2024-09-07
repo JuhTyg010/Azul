@@ -11,7 +11,7 @@ public class Board
     public Phase Phase { get; private set; }
     public Azul.Vector2 calculating; //on x is currently calculated player and on the y is the row we are on
     public int[,] predefinedWall { get; private set; }
-    private bool isAdvanced;
+    public bool isAdvanced { get; private set; }
     public bool fisrtTaken;
 
     public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false) {
