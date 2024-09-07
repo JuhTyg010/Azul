@@ -9,7 +9,7 @@
 
     <ItemGroup>
       <Reference Include="Azul">
-        <HintPath>..\..\Azul\bin\Release\net8.0\publish\Azul.dll</HintPath>
+        <HintPath>..\..\Azul\Azul\bin\Debug\net8.0\Azul.dll</HintPath>
       </Reference>
     </ItemGroup>
 

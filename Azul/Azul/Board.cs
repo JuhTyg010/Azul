@@ -89,9 +89,18 @@ public class Board
         return success;
     }
     
-    public bool Calculate(int col) {
+    public bool Calculate(int col = -1) {
         int[] fullBuffers = Players[calculating.x].FullBuffers();
-        
+        if (col < 0 && isAdvanced) return false;
+        if (!isAdvanced) {
+            int tmp = 0;
+            for (; tmp < predefinedWall.GetLength(0); tmp++) {
+                if (predefinedWall[fullBuffers[0], tmp] == Players[calculating.x].GetBufferData(fullBuffers[0]).id) {
+                    col = tmp;
+                    break;
+                }
+            }
+        }
         bool isFilled = Players[calculating.x].Fill(fullBuffers[0], col);
         if (isFilled && fullBuffers.Length == 1) {
             bool isFirst = Players[calculating.x].ClearFloor();

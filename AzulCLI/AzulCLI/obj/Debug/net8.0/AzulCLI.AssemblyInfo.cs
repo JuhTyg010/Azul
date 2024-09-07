@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AzulCLI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb855969622ecfe3024cebf243a75ef5d75cc85d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+929fac015637ebcdc9c7590b92a445c845894100")]
 [assembly: System.Reflection.AssemblyProductAttribute("AzulCLI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AzulCLI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
