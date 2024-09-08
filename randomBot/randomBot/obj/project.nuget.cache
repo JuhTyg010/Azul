@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "IhiZSk8U+Ok=",
+  "success": true,
+  "projectFilePath": "/home/juhtyg/Desktop/Azul/Azul/randomBot/randomBot/randomBot.csproj",
+  "expectedPackageFiles": [
+    "/home/juhtyg/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.7/microsoft.aspnetcore.app.ref.8.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}
