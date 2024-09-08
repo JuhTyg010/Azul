@@ -93,8 +93,7 @@ public class Board
         int[] fullBuffers = Players[calculating.x].FullBuffers();
         if (col < 0 && isAdvanced) return false;
         if (!isAdvanced) {
-            int tmp = 0;
-            for (; tmp < predefinedWall.GetLength(0); tmp++) {
+            for (int tmp = 0; tmp < predefinedWall.GetLength(0); tmp++) {
                 if (predefinedWall[fullBuffers[0], tmp] == Players[calculating.x].GetBufferData(fullBuffers[0]).id) {
                     col = tmp;
                     break;

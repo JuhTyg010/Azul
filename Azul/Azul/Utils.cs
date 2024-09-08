@@ -3,6 +3,7 @@ namespace Azul;
 public static class Globals {
     public const int FIRST = 999;
     public const int TYPE_COUNT = 5;
+    public const int WALL_DIMENSION = 5;
     public const int TOTAL_TILE_COUNT = 100;
     public const int PLATE_VOLUME = 4;
     public const int EMPTY_CELL = -1;

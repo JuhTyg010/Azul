@@ -53,7 +53,6 @@ public class Player
     }
     
     public Tile GetBufferData(int row) {
-        if (buffers[row].typeId == -1) ; //TODO: return somehow that this is empty
         Debug.Assert(row < buffers.Length, "You're asking for out of range");
         return new Tile(buffers[row].typeId, buffers[row].filled);
     }
