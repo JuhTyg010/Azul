@@ -11,6 +11,9 @@
       <Reference Include="Azul">
         <HintPath>..\..\Azul\Azul\bin\Debug\net8.0\Azul.dll</HintPath>
       </Reference>
+      <Reference Include="randomBot">
+        <HintPath>..\..\randomBot\randomBot\bin\Debug\net8.0\randomBot.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
