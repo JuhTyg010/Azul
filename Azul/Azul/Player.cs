@@ -74,7 +74,11 @@ public class Player
         if (!possibleColumn(col, buffers[row].typeId)) return false;
         //TODO:logs
         wall[row, col] = buffers[row].typeId;
-        //TODO: assign points, check for win condition
+        pointCount += calculatePoints(row, col);
+
+        bool isEnd = checkWin();
+        //TODO: start event or something
+        
         buffers[row].Clear();
         return true;
     }
@@ -118,6 +122,52 @@ public class Player
         return true;
     }
 
+    private int calculatePoints(int row, int col) {
+        int colPoints = 0;
+        int rowPoints = 0;
+        int colTmp = col;
+        int rowTmp = row;
+        while (colTmp >= 0 && wall[row, colTmp] != Globals.EMPTY_CELL) {
+            colPoints++;
+            colTmp--;
+        }
+
+        colTmp = col + 1;
+        while (colTmp < wall.GetLength(1) && wall[row, colTmp] != Globals.EMPTY_CELL) {
+            colPoints++;
+            colTmp++;
+        }
+        
+        while (rowTmp >= 0 && wall[row, rowTmp] != Globals.EMPTY_CELL) {
+            rowPoints++;
+            rowTmp--;
+        }
+        rowTmp = row + 1;
+        while (rowTmp < wall.GetLength(0) && wall[row, rowTmp] != Globals.EMPTY_CELL) {
+            rowPoints++;
+            rowTmp++;
+        }
+
+        if (rowTmp > 1 && colTmp > 1) return rowPoints + colPoints;
+        
+        return Math.Max(colPoints, rowPoints); // at least one is 1
+    }
+
+    private bool checkWin() {
+        bool isSpace = false;
+        for (int row = 0; row < wall.GetLength(0); row++) {
+            isSpace = false;
+            for (int col = 0; col < wall.GetLength(1); col++) {
+                if (wall[row, col] == Globals.EMPTY_CELL) {
+                    isSpace = true;
+                    break;
+                }
+            }
+            if (!isSpace) return true;
+        }
+        return false;
+    }
+    
     public bool hasFullBuffer() {
         foreach (var buffer in buffers) {
             if (buffer.IsFull()) return true;
