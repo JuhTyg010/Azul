@@ -9,11 +9,11 @@ public class Board
     public Tiles storage { get; private set; }
     public int CurrentPlayer { get; private set; }
     public Phase Phase { get; private set; }
-    public Azul.Vector2 calculating; //on x is currently calculated player and on the y is the row we are on
     public int[,] predefinedWall { get; private set; }
     public bool isAdvanced { get; private set; }
     public bool fisrtTaken;
     private bool isGameOver;
+    private int nextFirst;
 
     public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false) {
         //TODO: check if length of playerNames is same as playerCount
@@ -60,7 +60,7 @@ public class Board
         bool success = Players[CurrentPlayer].Place(bufferId, data[tileId], isFirstInCenter);
 
         #region succieded
-        
+
         if (success) {
             p.TakeTile(tileId);
             var newData = p.GetCounts();
@@ -69,20 +69,29 @@ public class Board
             for (int i = 0; i < newData.Length; i++) {
                 toPut.PutTile(newData[i]);
             }
+
             Center.AddTiles(toPut);
             if (ArePlatesEmpty()) {
                 CurrentPlayer = 0;
+                bool isSkiped = false;
                 while (!Players[CurrentPlayer].hasFullBuffer()) {
+                    if(Players[CurrentPlayer].ClearFloor()) nextFirst = CurrentPlayer;
                     CurrentPlayer++;
                     if (CurrentPlayer == Players.Length) {
-                        //TODO: skip phase 2
+                        isSkiped = true;
+                        CurrentPlayer = nextFirst;
                     }
                 }
-                Phase = Phase.Placing;
+
+                if (!isSkiped) Phase = Phase.Placing;
+
             }
-            CurrentPlayer++;
-            if (CurrentPlayer == Players.Length) CurrentPlayer = 0;
+            else {
+                CurrentPlayer++;
+                if (CurrentPlayer == Players.Length) CurrentPlayer = 0;
+            }
         }
+
         #endregion
         
         return success;
@@ -90,30 +99,34 @@ public class Board
     
     public bool Calculate(int col = Globals.EMPTY_CELL) {
         if(Phase != Phase.Placing) throw new IllegalOptionException("Invalid Phase");
-        int[] fullBuffers = Players[calculating.x].FullBuffers();
+        int[] fullBuffers = Players[CurrentPlayer].FullBuffers();
         if (col < 0 && isAdvanced) return false;
         if (!isAdvanced) {
             for (int tmp = 0; tmp < predefinedWall.GetLength(0); tmp++) {
-                if (predefinedWall[fullBuffers[0], tmp] == Players[calculating.x].GetBufferData(fullBuffers[0]).id) {
+                if (predefinedWall[fullBuffers[0], tmp] == Players[CurrentPlayer].GetBufferData(fullBuffers[0]).id) {
                     col = tmp;
                     break;
                 }
             }
         }
-        bool isFilled = Players[calculating.x].Fill(fullBuffers[0], col);
+        bool isFilled = Players[CurrentPlayer].Fill(fullBuffers[0], col);
         if (isFilled && fullBuffers.Length == 1) {
-            bool isFirst = Players[calculating.x].ClearFloor();
-            CurrentPlayer = calculating.x;
-            calculating.x++;
-            while (calculating.x < Players.Length && !Players[calculating.x].hasFullBuffer()) {
-                calculating.x++;
-                if (calculating.x == Players.Length) Phase = Phase.Taking;
+            if(Players[CurrentPlayer].ClearFloor()) nextFirst = CurrentPlayer;
+            CurrentPlayer++;
+            while (CurrentPlayer < Players.Length && !Players[CurrentPlayer].hasFullBuffer()) {
+                if(Players[CurrentPlayer].ClearFloor()) nextFirst = CurrentPlayer;
+                CurrentPlayer++;
+                if (CurrentPlayer == Players.Length) {
+                    CurrentPlayer = nextFirst;
+                    Phase = Phase.Taking;
+                }
             }
 
-            if (calculating.x == Players.Length) {
+            if (CurrentPlayer == Players.Length) {
                 //All players finished phase 2
                 if (isGameOver) Phase = Phase.GameOver; //TODO: calculate bonuses, I guess
                 else {
+                    CurrentPlayer = nextFirst;
                     Phase = Phase.Taking;
                     FillPlates();
                 }
