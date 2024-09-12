@@ -94,6 +94,7 @@ public class Bot {
                 for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
                     if (PossibleCol(me.wall, chosenBuffer, j, i)) {
                         possibleTypes.Add(i);
+                        break;
                     }
                 }
             }

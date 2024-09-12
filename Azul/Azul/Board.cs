@@ -17,12 +17,12 @@ public class Board
     public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false) {
         //TODO: check if length of playerNames is same as playerCount
         isAdvanced = isAdvanced_;
-        Center = new CenterPlate();
+        Center = new CenterPlate(Globals.TYPE_COUNT);
         storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT); 
         
         Plates = new Plate[playerCount * 2 + 1];
         for (int i = 0; i < playerCount * 2 + 1; i++) {
-            Plates[i] = new Plate();
+            Plates[i] = new Plate(Globals.TYPE_COUNT);
         }
         
         Players = new Player[playerCount];
