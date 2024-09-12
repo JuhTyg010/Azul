@@ -9,6 +9,8 @@ public static class Globals {
     public const int EMPTY_CELL = -1;
 }
 
+public class IllegalOptionException(string msg) : Exception(msg);
+
 public enum Phase { Taking = 1, Placing = 2, GameOver = 3 }
 
 public struct Buffer
@@ -36,7 +38,7 @@ public struct Buffer
         return Assign(tile.id, tile.count);
     }
 
-    public int Empty() {
+    public int FreeToFill() {
         if (typeId == Globals.EMPTY_CELL) return size;
         return size - filled;
     }
