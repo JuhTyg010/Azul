@@ -37,6 +37,8 @@ public class Bot {
                 List<int> possiblePlates = PossiblePlates(board, chosenType);
                 if (possiblePlates.Count > 0) {
                     isCorrectConfig = true;
+                    randomPos = random.Next(0, possiblePlates.Count);
+                    chosenPlate = possiblePlates[randomPos];
                     break;
                 }
             }
@@ -80,8 +82,8 @@ public class Bot {
 
     private List<int> PossibleTypes(Player me, int chosenBuffer) {
         List<int> possibleTypes = new List<int>();
-        if(me.GetBufferData(chosenBuffer).id != Globals.EMPTY_CELL) 
-            return new List<int>(me.GetBufferData(chosenBuffer).id);
+        if (me.GetBufferData(chosenBuffer).id != Globals.EMPTY_CELL)
+            return new List<int>() { me.GetBufferData(chosenBuffer).id };
         for (int i = 0; i < Globals.TYPE_COUNT; i++) {
             bool isPossible = true;
             for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
