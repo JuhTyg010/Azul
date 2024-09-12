@@ -12,6 +12,9 @@ public class Player
     public List<int> floor { get; private set; }
     public bool isFirst { get; private set; }
 
+    public event EventHandler OnWin;
+    
+
     public Player(string name) {
         this.name = name;
         pointCount = 0;
@@ -75,7 +78,9 @@ public class Player
         wall[row, col] = buffers[row].typeId;
         pointCount += calculatePoints(row, col);
 
-        bool isEnd = checkWin();
+        if (IsWinCheck()) {
+            OnWin?.Invoke(this, EventArgs.Empty);
+        }
         //TODO: start event or something
         
         buffers[row].Clear();
@@ -97,6 +102,13 @@ public class Player
 
     public int FloorSize() {
         return floorSize;
+    }
+    
+    public bool hasFullBuffer() {
+        foreach (var buffer in buffers) {
+            if (buffer.IsFull()) return true;
+        }
+        return false;
     }
     
     private bool possibleRow(int row, int typeId) {
@@ -152,10 +164,9 @@ public class Player
         return Math.Max(colPoints, rowPoints); // at least one is 1
     }
 
-    private bool checkWin() {
-        bool isSpace = false;
+    private bool IsWinCheck() {
         for (int row = 0; row < wall.GetLength(0); row++) {
-            isSpace = false;
+            var isSpace = false;
             for (int col = 0; col < wall.GetLength(1); col++) {
                 if (wall[row, col] == Globals.EMPTY_CELL) {
                     isSpace = true;
@@ -163,13 +174,6 @@ public class Player
                 }
             }
             if (!isSpace) return true;
-        }
-        return false;
-    }
-    
-    public bool hasFullBuffer() {
-        foreach (var buffer in buffers) {
-            if (buffer.IsFull()) return true;
         }
         return false;
     }

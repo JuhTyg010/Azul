@@ -24,16 +24,13 @@ public class Board
         for (int i = 0; i < playerCount * 2 + 1; i++) {
             Plates[i] = new Plate(Globals.TYPE_COUNT);
         }
-        
-        Players = new Player[playerCount];
-        for (int i = 0; i < playerCount; i++) {
-            Players[i] = new Player(playerNames[i]);
-        }
 
-        predefinedWall = new int[Globals.TYPE_COUNT, Globals.TYPE_COUNT];
-        for (int i = 0; i < Globals.TYPE_COUNT; i++) {
-            for (int j = 0; j < Globals.TYPE_COUNT; j++) {
-                predefinedWall[j % Globals.TYPE_COUNT, (i + j) % Globals.TYPE_COUNT] = i;
+        Players = InitializePlayers(playerCount, playerNames);
+
+        predefinedWall = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
+        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
+                predefinedWall[j % Globals.WALL_DIMENSION, (i + j) % Globals.WALL_DIMENSION] = i;
             }
         }
 
@@ -135,5 +132,18 @@ public class Board
         }
 
         fisrtTaken = false;
+    }
+
+    private Player[] InitializePlayers(int playerCount, string[] playerNames) {
+        var players = new Player[playerCount];
+        for (int i = 0; i < playerCount; i++) {
+            players[i] = new Player(playerNames[i]);
+            players[i].OnWin += OnWin;
+        }
+        return players;
+    }
+
+    private void OnWin(object? sender, EventArgs args) {
+        throw new Exception("You are trying to win the game! Not implemented yet");
     }
 }

@@ -10,6 +10,7 @@ public static class Globals {
 }
 
 public enum Phase { Taking = 1, Placing = 2, GameOver = 3 }
+
 public struct Buffer
 {
     public int size { get; private set; }
