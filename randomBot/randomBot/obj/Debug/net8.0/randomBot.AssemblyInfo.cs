@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("randomBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11cf61ab037e1cf36719c8f239843b9ac7d1afe5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+865185c2619a257faafd9a39c6752f5d9057256a")]
 [assembly: System.Reflection.AssemblyProductAttribute("randomBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("randomBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
