@@ -12,7 +12,7 @@ public class Player
     public List<int> floor { get; private set; }
     public bool isFirst { get; private set; }
 
-    public event EventHandler OnWin;
+    public event EventHandler? OnWin;
     
 
     public Player(string name) {
@@ -33,14 +33,20 @@ public class Player
         buffers = bufferList.ToArray();
     }
     
-    public bool Place(int row, Tile tile, bool isFirst = false) {
+    public bool Place(int row, Tile tile, bool isFirst = false) {   //row can be Globals.WALL_DIMENSION for floor
+        if (row == Globals.WALL_DIMENSION) {
+            for (int i = 0; i < tile.count; i++) {
+                if (floor.Count < floorSize) floor.Add(tile.id);
+                else break;
+            }
+        }
         if (!possibleRow(row, tile.id)) return false;
         if (!possibleBuffer(row, tile.id)) return false;
         if (isFirst) {
             this.isFirst = true;
             floor.Add(Globals.FIRST);
         }
-        int toFloor = tile.count - buffers[row].Empty();
+        int toFloor = tile.count - buffers[row].FreeToFill();
         bool answer = buffers[row].Assign(tile);
         
         if (answer && floor.Count < floorSize) {
