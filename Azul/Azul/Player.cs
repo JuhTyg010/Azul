@@ -39,6 +39,8 @@ public class Player
                 if (floor.Count < floorSize) floor.Add(tile.id);
                 else break;
             }
+
+            return true;
         }
         if (!possibleRow(row, tile.id)) return false;
         if (!possibleBuffer(row, tile.id)) return false;

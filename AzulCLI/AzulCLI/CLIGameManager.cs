@@ -58,11 +58,11 @@ public class CLIGameManager {
                 }
 
                 while (game.Phase == Phase.Placing) {
-                    Console.WriteLine($" Next turn in filling {names[game.calculating.x]} (press enter to go)");
-                    if(!botIds.Contains(game.calculating.x)) Console.ReadLine();
+                    Console.WriteLine($" Next turn in filling {names[game.CurrentPlayer]} (press enter to go)");
+                    if(!botIds.Contains(game.CurrentPlayer)) Console.ReadLine();
                     if (!game.isAdvanced) {
-                        int currentPlayer = game.calculating.x;
-                        while (currentPlayer == game.calculating.x) {
+                        int currentPlayer = game.CurrentPlayer;
+                        while (currentPlayer == game.CurrentPlayer && game.Phase == Phase.Placing) {
                             game.Calculate();
                         }
 
@@ -70,9 +70,9 @@ public class CLIGameManager {
                     }
                     else {
                         Writer.PrintBoard(game);
-                        int currentPlayer = game.calculating.x;
-                        while (currentPlayer == game.calculating.x) {
-                            if (botIds.Contains(game.calculating.x)) {
+                        int currentPlayer = game.CurrentPlayer;
+                        while (currentPlayer == game.CurrentPlayer && game.Phase == Phase.Placing) {
+                            if (botIds.Contains(game.CurrentPlayer)) {
                                 game.Calculate(int.Parse(botPlayers[findBot(currentPlayer, botPlayers)].Place(game)));
                             }
                             else {
