@@ -13,6 +13,7 @@ public class Board
     public int[,] predefinedWall { get; private set; }
     public bool isAdvanced { get; private set; }
     public bool fisrtTaken;
+    private bool isGameOver;
 
     public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false) {
         //TODO: check if length of playerNames is same as playerCount
@@ -40,6 +41,7 @@ public class Board
     }
     
     public bool Move(int plateId, int tileId, int bufferId) {   //center is always last
+        if(Phase != Phase.Taking) throw new IllegalOptionException("Invalid Phase");
         if (plateId > Plates.Length) return false;
         Plate p;
         bool isFirstInCenter = false;
@@ -86,7 +88,8 @@ public class Board
         return success;
     }
     
-    public bool Calculate(int col = -1) {
+    public bool Calculate(int col = Globals.EMPTY_CELL) {
+        if(Phase != Phase.Placing) throw new IllegalOptionException("Invalid Phase");
         int[] fullBuffers = Players[calculating.x].FullBuffers();
         if (col < 0 && isAdvanced) return false;
         if (!isAdvanced) {
@@ -105,10 +108,15 @@ public class Board
             while (calculating.x < Players.Length && !Players[calculating.x].hasFullBuffer()) {
                 calculating.x++;
                 if (calculating.x == Players.Length) Phase = Phase.Taking;
-            } if (calculating.x == Players.Length) {
+            }
+
+            if (calculating.x == Players.Length) {
                 //All players finished phase 2
-                Phase = Phase.Taking;
-                FillPlates();
+                if (isGameOver) Phase = Phase.GameOver; //TODO: calculate bonuses, I guess
+                else {
+                    Phase = Phase.Taking;
+                    FillPlates();
+                }
             }
         }
         
@@ -144,6 +152,8 @@ public class Board
     }
 
     private void OnWin(object? sender, EventArgs args) {
-        throw new Exception("You are trying to win the game! Not implemented yet");
+        if (Phase == Phase.Taking)
+            throw new Exception("Something went really wrong, win cant happen if we are not placing");
+        isGameOver = true;
     }
 }
