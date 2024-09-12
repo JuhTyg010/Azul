@@ -27,13 +27,7 @@ public static class Writer {
             Console.Write(" ");
         }
         
-        for (int i = 0; i < currentPlayer.FloorSize(); i++) {
-            if (i >= currentPlayer.floor.Count) {
-                Console.Write(EmptyPlace);
-            } else {
-                Console.Write(currentPlayer.floor[i]);
-            }
-        }
+        PrintPlayerFloor(currentPlayer);
         Console.WriteLine();
         
         Console.Write("Action: ");
@@ -85,13 +79,7 @@ public static class Writer {
             Console.Write(" ");
         }
 
-        for (int i = 0; i < player.FloorSize(); i++) {
-            if (i >= player.floor.Count) {
-                Console.Write(EmptyPlace);
-            } else {
-                Console.Write(player.floor[i]);
-            }
-        }
+        PrintPlayerFloor(player);
         Console.WriteLine();
         
     }
@@ -123,6 +111,17 @@ public static class Writer {
         }
         
         Console.Write($"{buff} -> {wall}");
+    }
+
+    private static void PrintPlayerFloor(Player player) {
+        for (int i = 0; i < player.FloorSize(); i++) {
+            if (i >= player.floor.Count) {
+                Console.Write(EmptyPlace);
+            } else {
+                if(player.floor[i] == Globals.FIRST) Console.Write("F");
+                else Console.Write(player.floor[i]);
+            }
+        }
     }
     
     
