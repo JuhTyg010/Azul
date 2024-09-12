@@ -1,5 +1,6 @@
 using Azul;
 using randomBot;
+using System.Linq;
 
 public class CLIGameManager {
     static void Main(string[] args) {
@@ -34,7 +35,8 @@ public class CLIGameManager {
                 while (game.Phase == Phase.Taking) {
                     Console.WriteLine($" Next turn {names[game.CurrentPlayer]} (press enter to go)");
                     if (botIds.Contains(game.CurrentPlayer)) {
-                        Writer.PrintBoard(game);
+                        Writer.PrintBoard(game.Players.Where(x => x != game.Players[game.CurrentPlayer]).ToArray(), 
+                            game.Plates, game.Center, game.Players[game.CurrentPlayer]);       
                         string botMove = botPlayers[findBot(game.CurrentPlayer, botPlayers)].DoMove(game);
                         Console.WriteLine(botMove);
                         int[] action = StringArrToIntArr(botMove.Split(' '));
@@ -42,15 +44,16 @@ public class CLIGameManager {
                     }
                     else {
                         Console.ReadLine();
-                        Writer.PrintBoard(game);
-
+                        Writer.PrintBoard(game.Players.Where(x => x != game.Players[game.CurrentPlayer]).ToArray(), 
+                            game.Plates, game.Center, game.Players[game.CurrentPlayer]);  
                         string input = Console.ReadLine();
                         int[] action = StringArrToIntArr(input.Split());
                         // <{0-9}> <{0-4}> <{0-5}> first is which plate (last is center) second is type and last is buffer id
                         bool moveDone = game.Move(action[0], action[1], action[2]);
                         while (!moveDone) {
                             Console.WriteLine("Invalid move try again");
-                            Writer.PrintBoard(game);
+                            Writer.PrintBoard(game.Players.Where(x => x != game.Players[game.CurrentPlayer]).ToArray(), 
+                                game.Plates, game.Center, game.Players[game.CurrentPlayer]);  
                             action = StringArrToIntArr(Console.ReadLine().Split());
                             moveDone = game.Move(action[0], action[1], action[2]);
                         }
@@ -66,11 +69,13 @@ public class CLIGameManager {
                             game.Calculate();
                         }
 
-                        Writer.PrintBoard(game);
+                        Writer.PrintBoard(game.Players.Where(x => x != game.Players[currentPlayer]).ToArray(), 
+                            game.Plates, game.Center, game.Players[currentPlayer]);
                     }
                     else {
-                        Writer.PrintBoard(game);
                         int currentPlayer = game.CurrentPlayer;
+                        Writer.PrintBoard(game.Players.Where(x => x != game.Players[currentPlayer]).ToArray(), 
+                            game.Plates, game.Center, game.Players[currentPlayer]);
                         while (currentPlayer == game.CurrentPlayer && game.Phase == Phase.Placing) {
                             if (botIds.Contains(game.CurrentPlayer)) {
                                 game.Calculate(int.Parse(botPlayers[findBot(currentPlayer, botPlayers)].Place(game)));
@@ -80,7 +85,9 @@ public class CLIGameManager {
                                 game.Calculate(int.Parse(input));
                             }
 
-                            Writer.PrintBoard(game);
+                            Writer.PrintBoard(game.Players.Where(x => x != game.Players[currentPlayer]).ToArray(), 
+                                game.Plates, game.Center, game.Players[currentPlayer]);
+                            
                         }
                     }
                 }

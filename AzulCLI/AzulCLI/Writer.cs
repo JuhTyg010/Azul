@@ -3,20 +3,16 @@ using Azul;
 public static class Writer {
 
     private static readonly char EmptyPlace = '_';
-    public static void PrintBoard(Board game) {
+    public static void PrintBoard(Player[] otherPlayers, Plate[] plates, CenterPlate centerPlate, Player currentPlayer) {
         Console.WriteLine("Others:");
-        for (int i = 0; i < game.Players.Length; i++) {
-            if (i == game.CurrentPlayer) continue;
-            
+        for (int i = 0; i < otherPlayers.Length; i++) {
             Console.Write(" ");
-            PrintPlayer(game.Players[i]);
+            PrintPlayer(otherPlayers[i]);
         }
         Console.WriteLine();
         
-        PrintTable(game.Plates, game.Center, game.fisrtTaken);
+        PrintTable(plates, centerPlate);
         Console.WriteLine();
-
-        Player currentPlayer = game.Players[game.CurrentPlayer];
         Console.WriteLine($"Me: {currentPlayer.name}");
         Console.WriteLine($" Score: {currentPlayer.pointCount}");
         Console.Write(" Data:  ");
@@ -34,7 +30,7 @@ public static class Writer {
         
     }
 
-    private static void PrintTable(Plate[] plates, CenterPlate center, bool firstTaken) {
+    private static void PrintTable(Plate[] plates, CenterPlate center) {
         int plateCount = plates.Length;
         Console.Write($"Table:   center");
         for (int i = 0; i < plateCount; i++) {
@@ -49,7 +45,7 @@ public static class Writer {
         }
 
         string firstInfo = "First center taken: ";
-        firstInfo += firstTaken ? "true" : "false";
+        firstInfo += center.isFirst ? "false" : "true";
         Console.WriteLine($" {firstInfo}");
     }
 

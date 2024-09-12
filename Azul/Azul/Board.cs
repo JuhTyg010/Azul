@@ -152,6 +152,7 @@ public class Board
             plate.SetTiles(storage.GetRandom(Globals.PLATE_VOLUME));
         }
 
+        Center = new CenterPlate(Globals.TYPE_COUNT);
         fisrtTaken = false;
     }
 

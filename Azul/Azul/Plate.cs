@@ -57,10 +57,20 @@ public class CenterPlate : Plate {
     public CenterPlate() {
         tiles = new Tiles(0,0);
         isEmpty = true;
+        isFirst = true;
     }
     public CenterPlate(int typesCount) {
         tiles = new Tiles(typesCount, 0);
         isEmpty = true;
+        isFirst = true;
+    }
+
+     public Tile TakeTile(int id) {
+        Tile outTile =  tiles.GetTiles(id);
+        Debug.Assert(outTile.count != 0 && !isFirst, "We can't take tile which is not on the plate");
+        isEmpty = tiles.TotalTiles() == 0;
+        isFirst = false;
+        return outTile;
     }
 
     public void AddTiles(Tiles toPut) {
