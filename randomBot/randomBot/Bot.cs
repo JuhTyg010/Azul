@@ -15,21 +15,28 @@ public class Bot {
     public string DoMove(Board board) {
         Player me = board.Players[id];
         List<int> possibleBuffers = PossibleBuffers(me);
+        List<int> possibleTypes = new List<int>();
+
         bool isCorrectConfig = false;
         int chosenBuffer = Globals.EMPTY_CELL;
         int chosenType = Globals.EMPTY_CELL;    //not chosen yet
-        int chosenPlate = Globals.EMPTY_CELL;   //not chosen yet
+        int chosenPlate = Globals.EMPTY_CELL; //not chosen yet
+        int randomPos;
         
         while (!isCorrectConfig) {
-            if(possibleBuffers.Count == 0) throw new Exception("No possible buffers found aka need to put something on floor");
-            int randomPos = random.Next(0, possibleBuffers.Count);
-            chosenBuffer = possibleBuffers[randomPos];
-            possibleBuffers.RemoveAt(randomPos);
-            
-            List<int> possibleTypes = PossibleTypes(me, chosenBuffer);
+            if (possibleBuffers.Count == 0) {
+                chosenBuffer = Globals.WALL_DIMENSION;  //floor
+                possibleTypes = new List<int>();
+                for (int i = 0; i < Globals.TYPE_COUNT; i++) possibleTypes.Add(i);  //every type is possible 
+            } else {
+                randomPos = random.Next(0, possibleBuffers.Count);
+                chosenBuffer = possibleBuffers[randomPos];
+                possibleBuffers.RemoveAt(randomPos);
+                possibleTypes = PossibleTypes(me, chosenBuffer);
+            }
+
             while (true) {
                 if (possibleTypes.Count == 0) break;
-                
                 randomPos = random.Next(0, possibleTypes.Count);
                 chosenType = possibleTypes[randomPos];
                 possibleTypes.RemoveAt(randomPos);
