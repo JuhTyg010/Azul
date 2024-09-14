@@ -22,7 +22,8 @@ namespace Board {
                 int index = 0;
                 foreach (var tile in tiles) {
                     while (tile.count > 0) {
-                        Instantiate(gameController.tiles[tile.id], transform.position + (Vector3)localPositions[index], Quaternion.identity);
+                        var currentTile = Instantiate(gameController.tile, transform.position + (Vector3)localPositions[index], Quaternion.identity);
+                        currentTile.GetComponent<TileObject>().id = tile.id;
                         index++;
                     }
                 }
