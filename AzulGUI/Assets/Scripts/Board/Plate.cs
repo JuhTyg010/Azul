@@ -50,6 +50,28 @@ namespace Board {
             gameController.PutToHand(tileId, count, id);
         }
 
+        public void ReturnFromHand() {
+            for (int i = 0; i < tiles.Count; i++) {
+                tiles[i].SetActive(true);
+            }
+        }
+
+        public List<GameObject> EmptyTiles() {
+            var toReturn = new List<GameObject>();
+            foreach (var tile in tiles) {
+                var tileObject = tile.GetComponent<TileObject>();
+                if (!inHand.Contains(tile)) {
+                    toReturn.Add(tile);
+                }
+            }
+
+            foreach (var tile in inHand) {
+                Destroy(tile);
+            }
+
+            return toReturn;
+        }
+
         public void ClearTiles() {
             tiles.Clear();
         }
