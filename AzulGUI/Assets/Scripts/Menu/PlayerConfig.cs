@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerConfig : MonoBehaviour, IPointerClickHandler {
     
-    private string playerName;
+    public string playerName { get; private set; }
     public Sprite humanImage;
     public Sprite botImage;
     private Image myImage;
