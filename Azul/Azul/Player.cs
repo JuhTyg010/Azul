@@ -35,6 +35,7 @@ public class Player
     
     public bool Place(int row, Tile tile, bool isFirst = false) {   //row can be Globals.WALL_DIMENSION for floor
         if (row == Globals.WALL_DIMENSION) {
+            Logger.WriteLine("is on floor");
             for (int i = 0; i < tile.count; i++) {
                 if (floor.Count < floorSize) floor.Add(tile.id);
                 else break;
@@ -42,8 +43,16 @@ public class Player
 
             return true;
         }
-        if (!possibleRow(row, tile.id)) return false;
-        if (!possibleBuffer(row, tile.id)) return false;
+
+        if (!possibleRow(row, tile.id)) {
+            Logger.WriteLine("invalid row");
+            return false;
+        }
+
+        if (!possibleBuffer(row, tile.id)) {
+            Logger.WriteLine("invalid buffer");
+            return false;
+        }
         if (isFirst) {
             this.isFirst = true;
             floor.Add(Globals.FIRST);
@@ -79,17 +88,23 @@ public class Player
     }
 
     public bool Fill(int row, int col) {
-        if (!buffers[row].IsFull()) return false;
-        //TODO: logs
-        if (!possibleColumn(col, buffers[row].typeId)) return false;
-        //TODO:logs
+        if (!buffers[row].IsFull()) {
+            Logger.WriteLine("buffer is not full");
+            return false;
+        }
+
+        if (!possibleColumn(col, buffers[row].typeId)) {
+            Logger.WriteLine("invalid column to fill");
+            return false;
+        }
         wall[row, col] = buffers[row].typeId;
         pointCount += calculatePoints(row, col);
+        Logger.WriteLine($"successfully placed on wall new points: {pointCount}");
 
         if (IsWinCheck()) {
+            Logger.WriteLine($"{this} win");
             OnWin?.Invoke(this, EventArgs.Empty);
         }
-        //TODO: start event or something
         
         buffers[row].Clear();
         return true;
@@ -99,7 +114,8 @@ public class Player
         //negative points are -1,-1,-2,-2,-2,-3,-3
         int[] toRemove = { 0, -1, -2, -4, -6, -8, -11, -14 };
         pointCount += toRemove[Math.Min(7, floor.Count)];
-
+        Logger.WriteLine($"Player {name} is clearing the floor new points {pointCount}");
+        
         if (floor.Count != 0 && floor[0] == Globals.FIRST) {
             floor.Clear();
             return true;
@@ -118,7 +134,22 @@ public class Player
         }
         return false;
     }
-    
+
+    public override string ToString() {
+        string board = "";
+        for (int i = 0; i < wall.GetLength(0); i++) {
+            board += " [";
+            board += buffers[i].ToString();
+            board += "] [";
+            for (int j = 0; j < wall.GetLength(1); j++) {
+                board += wall[i, j].ToString();
+            }
+            board += "]";
+        }
+
+        return $"{name} ({pointCount}) {board} {floor}";
+    }
+
     private bool possibleRow(int row, int typeId) {
         for (int i = 0; i < wall.GetLength(1); i++) {
             if (wall[row, i] == typeId) return false;

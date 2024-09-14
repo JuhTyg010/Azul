@@ -11,6 +11,24 @@ public static class Globals {
 
 public class IllegalOptionException(string msg) : Exception(msg);
 
+public static class Logger {
+    private static string fileName = "azul_log.txt";
+
+    public static void WriteLine(string msg) {
+       /* using StreamWriter log = new StreamWriter(Path.Combine(Environment.CurrentDirectory, fileName));
+        log.WriteLine(msg);
+        log.Flush();*/
+        File.AppendAllText(fileName, msg + Environment.NewLine);
+    }
+
+    public static void Write(string msg) {
+        /*using StreamWriter log = new StreamWriter(Path.Combine(Environment.CurrentDirectory, fileName));
+        log.Write(msg);
+        log.Flush();*/
+        File.AppendAllText(fileName, msg);
+    }
+}
+
 public enum Phase { Taking = 1, Placing = 2, GameOver = 3 }
 
 public struct Buffer
@@ -26,11 +44,15 @@ public struct Buffer
     }
 
     public bool Assign(int id, int count) {//TODO:: maybe return int which is leak( what was after limit)
-        if (filled != Globals.EMPTY_CELL && typeId != id) return false; //TODO: break, return some kind of exeption
+        if (filled != Globals.EMPTY_CELL && typeId != id) {
+            Logger.WriteLine($"invalid type, needed {typeId}, got {id}");
+            return false; //TODO: break, return some kind of exeption
+        }
         if (typeId == Globals.EMPTY_CELL) filled = 0;
         typeId = id;
         filled += count;
         filled = Math.Min(filled, size);
+        Logger.WriteLine($"successfully filled, current state {filled} of {size}");
         return true;
     }
 
@@ -50,6 +72,15 @@ public struct Buffer
 
     public bool IsFull() {
         return size == filled;
+    }
+
+    public override string ToString() {
+        string outStr = "";
+        for (int i = 0; i < size; i++) {
+            if(i < filled) outStr += $"{typeId} ";
+            else outStr += $"{Globals.EMPTY_CELL} ";
+        }
+        return outStr;
     }
 }
 

@@ -16,6 +16,8 @@ public class Board
     private int nextFirst;
 
     public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false) {
+        Logger.WriteLine(" ");
+        Logger.WriteLine("-----------------------------Game start-----------------------------");
         //TODO: check if length of playerNames is same as playerCount
         isAdvanced = isAdvanced_;
         Center = new CenterPlate(Globals.TYPE_COUNT);
@@ -41,8 +43,22 @@ public class Board
     }
     
     public bool Move(int plateId, int tileId, int bufferId) {   //center is always last
-        if(Phase != Phase.Taking) throw new IllegalOptionException("Invalid Phase");
-        if (plateId > Plates.Length) return false;
+        Logger.WriteLine("Move:");
+        Logger.Write("Plate data: ");
+        for (int i = 0; i < Plates.Length; i++) {
+            Logger.Write($" id: {i} {Plates[i]},");
+        }
+        Logger.WriteLine($" id: {Plates.Length} {Center}");
+        Logger.Write($"Player {Players[CurrentPlayer].name} ({CurrentPlayer}) taking from plate {plateId} tile {tileId} to buffer {bufferId}: ");
+        if (Phase != Phase.Taking) {
+            Logger.WriteLine("Invalid Phase");
+            throw new IllegalOptionException("Invalid Phase");
+        }
+
+        if (plateId > Plates.Length) {
+            Logger.WriteLine("invalid plate");
+            return false;
+        }
         Plate p;
         bool isFirstInCenter = false;
         if (plateId == Plates.Length) {
@@ -55,7 +71,10 @@ public class Board
             p = Plates[plateId];
         }
         var data = p.GetCounts();
-        if (data[tileId].count == 0) return false;
+        if (data[tileId].count == 0) {
+            Logger.WriteLine("no tiles");
+            return false;
+        }
         
         bool success = Players[CurrentPlayer].Place(bufferId, data[tileId], isFirstInCenter);
 
@@ -72,13 +91,19 @@ public class Board
 
             Center.AddTiles(toPut);
             if (ArePlatesEmpty()) {
+                Logger.WriteLine("Phase changed to filling");
                 CurrentPlayer = 0;
                 bool isSkiped = false;
                 while (!Players[CurrentPlayer].hasFullBuffer()) {
-                    if(Players[CurrentPlayer].ClearFloor()) nextFirst = CurrentPlayer;
+                    Logger.WriteLine($"Player {Players[CurrentPlayer].name} has no full buffer");
+                    if (Players[CurrentPlayer].ClearFloor()) {
+                        Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
+                        nextFirst = CurrentPlayer;
+                    }
                     CurrentPlayer++;
                     if (CurrentPlayer == Players.Length) {
                         isSkiped = true;
+                        Logger.WriteLine("No player has full buffer");
                         CurrentPlayer = nextFirst;
                     }
                 }
@@ -98,9 +123,18 @@ public class Board
     }
     
     public bool Calculate(int col = Globals.EMPTY_CELL) {
-        if(Phase != Phase.Placing) throw new IllegalOptionException("Invalid Phase");
+        Logger.WriteLine("Filling:");
+        Logger.WriteLine($"Player's data: {Players[CurrentPlayer]}");
+        if (Phase != Phase.Placing) {
+            Logger.WriteLine("Invalid Phase");
+            throw new IllegalOptionException("Invalid Phase");
+        }
         int[] fullBuffers = Players[CurrentPlayer].FullBuffers();
-        if (col < 0 && isAdvanced) return false;
+
+        if (col < 0 && isAdvanced) {
+            Logger.WriteLine("invalid col");
+            return false;
+        }
         if (!isAdvanced) {
             for (int tmp = 0; tmp < predefinedWall.GetLength(0); tmp++) {
                 if (predefinedWall[fullBuffers[0], tmp] == Players[CurrentPlayer].GetBufferData(fullBuffers[0]).id) {
@@ -111,21 +145,34 @@ public class Board
         }
         bool isFilled = Players[CurrentPlayer].Fill(fullBuffers[0], col);
         if (isFilled && fullBuffers.Length == 1) {
-            if(Players[CurrentPlayer].ClearFloor()) nextFirst = CurrentPlayer;
+            if (Players[CurrentPlayer].ClearFloor()) {
+                Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
+                nextFirst = CurrentPlayer;
+            }
             CurrentPlayer++;
             while (CurrentPlayer < Players.Length && !Players[CurrentPlayer].hasFullBuffer()) {
-                if(Players[CurrentPlayer].ClearFloor()) nextFirst = CurrentPlayer;
-                CurrentPlayer++;
-                if (CurrentPlayer == Players.Length) {
-                    CurrentPlayer = nextFirst;
-                    Phase = Phase.Taking;
+                Logger.WriteLine($"Player {Players[CurrentPlayer].name} has no full buffer");
+                if (Players[CurrentPlayer].ClearFloor()) {
+                    Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
+                    nextFirst = CurrentPlayer;
                 }
+                CurrentPlayer++;
             }
 
             if (CurrentPlayer == Players.Length) {
                 //All players finished phase 2
-                if (isGameOver) Phase = Phase.GameOver; //TODO: calculate bonuses, I guess
+                if (isGameOver) {
+                    Logger.WriteLine("-------GGG-------A-------M------M--EEEEEE-------OOO----V-----V----EEEEEE----RRRR------");
+                    Logger.WriteLine("------G---G-----A-A------MM----MM--E-----------O---O---V-----V----E---------R---R-----");
+                    Logger.WriteLine("-----G---------A---A-----M-M--M-M--EEEE-------O-----O---V---V-----EEEE------RRRR------");
+                    Logger.WriteLine("-----G--GGG---AAAAAAA----M--MM--M--EEEE-------O-----O---V---V-----EEEE------R--R------");
+                    Logger.WriteLine("------G---G---A-----A----M------M--E-----------O---O-----V-V------E---------R---R-----");
+                    Logger.WriteLine("-------GGG---A-------A---M------M--EEEEEE-------OOO-------V-------EEEEEE----R---R-----");
+
+                    Phase = Phase.GameOver; //TODO: calculate bonuses, I guess
+                }
                 else {
+                    Logger.WriteLine("All players filled to the wall");
                     CurrentPlayer = nextFirst;
                     Phase = Phase.Taking;
                     FillPlates();
@@ -170,4 +217,5 @@ public class Board
             throw new Exception("Something went really wrong, win cant happen if we are not placing");
         isGameOver = true;
     }
+    
 }

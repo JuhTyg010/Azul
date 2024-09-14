@@ -49,6 +49,15 @@ public class Plate
         tiles = new Tiles(tiles.typesCount, 0);
         isEmpty = true;
     }
+    
+    public override string ToString() {
+        string outStr = "[ ";
+        for (int i = 0; i < tiles.typesCount; i++) {
+            outStr += tiles.TileCountOfType(i) + ", ";
+        }
+        outStr += "]";
+        return outStr;
+    }
 }
 
 public class CenterPlate : Plate {
