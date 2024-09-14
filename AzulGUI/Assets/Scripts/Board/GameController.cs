@@ -44,6 +44,8 @@ namespace Board {
             board = new Azul.Board(playerCount, names);
             Debug.Log(board.Plates.Length);
             GeneratePlates(board.Plates.Length);
+            FillPlates();
+            
         }
 
         // Update is called once per frame
@@ -63,5 +65,19 @@ namespace Board {
                 else currentPosition.y += plateOffset.y;
             }
         }
+
+        private void FillPlates() {
+            for (int i = 0; i < board.Plates.Length; i++) {
+                var tiles = board.Plates[i].GetCounts();
+                List<int> tileIds = new List<int>();
+                foreach (var tile in tiles) {
+                    for (int j = 0; j < tile.count; j++) {
+                        tileIds.Add(j);
+                    }
+                }
+                plates[i].GetComponent<Plate>().PutTiles(tileIds.ToArray());
+            }
+        }
+
     }
 }
