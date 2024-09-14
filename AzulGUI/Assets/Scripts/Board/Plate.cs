@@ -10,6 +10,7 @@ namespace Board {
         [SerializeField] private Vector2[] localPositions;
         private List<GameObject> tiles = new List<GameObject>();
         private List<GameObject> inHand = new List<GameObject>();
+        public int id { get; private set; }//TODO maybe be public
     
         public GameController gameController { get; private set; }
         void Awake()
@@ -18,6 +19,10 @@ namespace Board {
             Debug.Log(gameController.tile);
         }
 
+        public void Init(int id, GameController gameController) {
+            this.gameController = gameController;
+            this.id = id;
+        }
         public void PutTiles(int[] tilesIds) {
             tiles.Clear();
             int current = 0;
@@ -33,14 +38,16 @@ namespace Board {
         }
 
         public void PutInHand(int tileId) {
+            int count = 0;
             foreach (var tile in tiles) {
                 var tileObject = tile.GetComponent<TileObject>();
                 if (tileObject.id == tileId) {
                     inHand.Add(tile);
                     tile.SetActive(false);
+                    count++;
                 }
             }
-            gameController.isHolding = true;
+            gameController.PutToHand(tileId, count, id);
         }
 
         public void ClearTiles() {
