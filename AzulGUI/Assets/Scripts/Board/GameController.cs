@@ -18,7 +18,7 @@ namespace Board {
         [SerializeField] private Vector2 plateOffset;
         [SerializeField] private bool isFlippedY = false;
         
-        
+        public bool isHolding = false;
         
         
         private Azul.Board board;

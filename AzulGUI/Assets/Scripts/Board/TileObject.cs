@@ -13,6 +13,7 @@ namespace Board {
         public int id;
         private Image image;
         private Plate myPlate;
+        public GameController gameController {get; private set;}
         
         void Awake()
         {
@@ -24,11 +25,12 @@ namespace Board {
             id = id_;
             image = GetComponent<Image>();
             image.sprite = sprites[id];
-            
+            gameController = plate.gameController;
+
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
-            GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
+            if(!gameController.isHolding) GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData) {
@@ -36,8 +38,7 @@ namespace Board {
         }
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
-            myPlate.PutInHand(id);
-            //TODO: animation of holding
+            if(!gameController.isHolding) myPlate.PutInHand(id);
         }
     }
 }

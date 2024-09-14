@@ -11,17 +11,11 @@ namespace Board {
         private List<GameObject> tiles = new List<GameObject>();
         private List<GameObject> inHand = new List<GameObject>();
     
-        private GameController gameController;
+        public GameController gameController { get; private set; }
         void Awake()
         {   
             gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
             Debug.Log(gameController.tile);
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
         }
 
         public void PutTiles(int[] tilesIds) {
@@ -46,6 +40,7 @@ namespace Board {
                     tile.SetActive(false);
                 }
             }
+            gameController.isHolding = true;
         }
 
         public void ClearTiles() {
