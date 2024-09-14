@@ -17,11 +17,10 @@ public class PlayerConfig : MonoBehaviour, IPointerClickHandler {
     public int id;
     void Start() {
 
-        playerName = $"Player {id + 1}";
         myImage = gameObject.GetComponent<Image>();
         myImage.sprite = humanImage;
         isHuman = true;
-        playerName = $"Player {id + 1}";
+        playerName = $"Player_{id + 1}";
         nameHolder.text = playerName;
     }
     
