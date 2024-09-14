@@ -27,7 +27,6 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             else {
                 image.color = Color.red;
             }
-
         }
     }
 
@@ -38,13 +37,7 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
         if (gameController.isHolding) {
             var data = gameController.GetHoldingData();
-            if (type == (int)data.x || type == Azul.Globals.EMPTY_CELL) {
-                //TODO: place stuff
-            }
-            else {
-                Debug.Log("What the fuck");
-                //TODO: return to plate
-            }
+            gameController.TryPlaceFromHand(size - 1);
         }
     }
 }
