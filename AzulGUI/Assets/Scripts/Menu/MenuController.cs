@@ -8,19 +8,19 @@ public class MenuController : MonoBehaviour
     public void OnPlayButtonClicked() {
         var players = GameObject.FindObjectsOfType<PlayerConfig>();
         int playerCount = players.Length;
-        string[] playerNames = new string[playerCount];
+        string playerNames = "";
+        string playerTypes = "";
+
         for (int i = 0; i < playerCount; i++) {
-            playerNames[i] = players[i].playerName;
+            playerNames += $"{players[i].playerName}\n";
+            playerTypes += players[i].isHuman ? "Human" : "AI";
+            playerTypes += "\n";
         }
+        PlayerPrefs.SetInt("PlayerCount", playerCount);
+        PlayerPrefs.SetString("PlayerNames", playerNames);
+        PlayerPrefs.SetString("PlayerTypes", playerTypes);
+        PlayerPrefs.Save();
         
-        using StreamWriter sw =  new StreamWriter(Path.Combine(Application.dataPath, "game_config.txt"));
-        sw.Write($"{playerCount} ");
-        for (int i = 0; i < playerCount; i++) {
-            string fullName = players[i].isHuman ? "H_" : "B_";
-            fullName += playerNames[i];
-            sw.Write($"{fullName} ");
-        }
-        sw.Close();
         SceneManager.LoadScene("Game");
     } 
     
