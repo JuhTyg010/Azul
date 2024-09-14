@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -19,6 +20,7 @@ namespace Board {
         [SerializeField] private bool isFlippedY = false;
         
         public bool isHolding = false;
+        private Vector3 handData; //x=typeId y=count z=plateId
         
         
         private Azul.Board board;
@@ -48,17 +50,43 @@ namespace Board {
             
         }
 
-        // Update is called once per frame
-        void Update()
-        {
+        public Azul.Player GetPlayerData(int id) {
+            if(id < 0 || id >= board.Players.Length) throw new System.IndexOutOfRangeException("asking impossible");
+            return board.Players[id];
+        }
+
+        public Vector2 GetHoldingData() {
+            if (isHolding) return handData;
+            return new Vector2(Azul.Globals.EMPTY_CELL, Azul.Globals.EMPTY_CELL);
+        }
+
+        public void PutToHand(int typeId, int count, int plateId) {
+            if (!isHolding) {
+                handData.x = typeId;
+                handData.y = count;
+                handData.z = plateId;
+                isHolding = true;
+            }
+            else throw new System.InvalidOperationException("Player already is holding something");
+        }
+
+        public void PlaceFromHand(int bufferId) {
+            if (isHolding) {
+                bool answer = board.Move((int) handData.z, (int) handData.x, bufferId);
+                if(!answer) Debug.LogError("Something went wrong, illegal move happend");
+                isHolding = false;
+            }
+            else throw new System.InvalidOperationException("Can't place if not holding anything");
             
         }
+        
 
         private void GeneratePlates(int plateCount) {
             Vector3 currentPosition = (Vector3) firstPlatePosition;
             for (int i = 0; i < plateCount; i++) {
                 var plate = Instantiate(platePrefab, currentPosition, Quaternion.identity, platesPanel.transform);
                 plates.Add(plate);
+                plate.GetComponent<Plate>().Init(i, this);
                 plate.GetComponent<RectTransform>().anchoredPosition = currentPosition;
                 currentPosition.x += plateOffset.x;
                 if(isFlippedY) currentPosition.y *= -1;
@@ -78,6 +106,5 @@ namespace Board {
                 plates[i].GetComponent<Plate>().PutTiles(tileIds.ToArray());
             }
         }
-
     }
 }
