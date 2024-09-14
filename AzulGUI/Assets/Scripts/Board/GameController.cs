@@ -70,10 +70,17 @@ namespace Board {
             else throw new System.InvalidOperationException("Player already is holding something");
         }
 
-        public void PlaceFromHand(int bufferId) {
+        public void TryPlaceFromHand(int bufferId) {
             if (isHolding) {
                 bool answer = board.Move((int) handData.z, (int) handData.x, bufferId);
-                if(!answer) Debug.LogError("Something went wrong, illegal move happend");
+                if (!answer) {
+                    Debug.LogError("Something went wrong, illegal move happend");
+                    plates[(int)handData.z].GetComponent<Plate>().ReturnFromHand();
+                }
+                else {
+                    var toCenter = plates[(int)handData.z].GetComponent<Plate>().EmptyTiles();
+                    //TODO: add rest to the center
+                }
                 isHolding = false;
             }
             else throw new System.InvalidOperationException("Can't place if not holding anything");

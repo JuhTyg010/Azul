@@ -9,7 +9,7 @@ public class CLIGameManager {
         Console.Write("Enter game mode (advanced 1/basic 0): ");
         string? mode = Console.ReadLine();
         bool isAdvanced = mode == "advanced" || mode == "1";
-        Console.Write("Enter the players names (H/B_name: ");
+        Console.Write("Enter the players names (H/B_name: ");   
         //TODO: somehow determine humans and bots and their names
         /*try {*/
         string[] playerSetup = Console.ReadLine().Split();
