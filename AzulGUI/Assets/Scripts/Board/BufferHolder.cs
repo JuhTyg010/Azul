@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Board;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Azul;
 
 public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
     [SerializeField] private int size;
@@ -15,7 +13,7 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void Start() {
         image = GetComponent<Image>();
-        type = Azul.Globals.EMPTY_CELL;
+        type = Globals.EMPTY_CELL;
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {

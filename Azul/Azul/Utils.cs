@@ -51,10 +51,9 @@ namespace Azul {
         }
 
         public bool Assign(int id, int count) {
-            //TODO:: maybe return int which is leak( what was after limit)
             if (filled != Globals.EMPTY_CELL && typeId != id) {
                 Logger.WriteLine($"invalid type, needed {typeId}, got {id}");
-                return false; //TODO: break, return some kind of exeption
+                return false;
             }
 
             if (typeId == Globals.EMPTY_CELL) filled = 0;

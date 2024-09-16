@@ -74,7 +74,8 @@ namespace Azul {
         }
     
         public Tile GetBufferData(int row) {
-            Debug.Assert(row < buffers.Length, "You're asking for out of range");
+            Debug.Assert(row < buffers.Length, 
+                "You're asking for out of range");
             return new Tile(buffers[row].typeId, buffers[row].filled);
         }
 
@@ -100,7 +101,8 @@ namespace Azul {
             }
             wall[row, col] = buffers[row].typeId;
             pointCount += calculatePoints(row, col);
-            Logger.WriteLine($"successfully placed on wall new points: {pointCount}");
+            Logger.WriteLine(
+                $"successfully placed on wall new points: {pointCount}");
 
             if (IsWinCheck()) {
                 Logger.WriteLine($"{this} win");
@@ -115,7 +117,8 @@ namespace Azul {
             //negative points are -1,-1,-2,-2,-2,-3,-3
             int[] toRemove = { 0, -1, -2, -4, -6, -8, -11, -14 };
             pointCount += toRemove[Math.Min(7, floor.Count)];
-            Logger.WriteLine($"Player {name} is clearing the floor new points {pointCount}");
+            Logger.WriteLine(
+                $"Player {name} is clearing the floor new points {pointCount}");
         
             if (floor.Count != 0 && floor[0] == Globals.FIRST) {
                 floor.Clear();
@@ -134,6 +137,35 @@ namespace Azul {
                 if (buffer.IsFull()) return true;
             }
             return false;
+        }
+
+        public void CalculateBonusPoints() {
+            int fullColumns = 0;
+            int fullRows = 0;
+            int fullTypes = 0;
+            int[] totalCounts = new int[Globals.TYPE_COUNT];
+
+            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+                bool isEmptyInColumn = false;
+                bool isEmptyInRow = false;
+                for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
+                    if (wall[i, j] == Globals.EMPTY_CELL) isEmptyInRow = true;
+                    if (wall[j, i] == Globals.EMPTY_CELL) isEmptyInColumn = true;
+                    if (wall[i, j] != Globals.EMPTY_CELL) totalCounts[wall[i, j]]++;
+                }
+
+                if (!isEmptyInColumn) fullColumns++;
+                if (!isEmptyInRow) fullRows++;
+            }
+
+            foreach (var type in totalCounts) {
+                if (type == Globals.WALL_DIMENSION) fullTypes++;
+            }
+            
+            pointCount += fullColumns * 8;
+            pointCount += fullRows * 5;
+            pointCount += fullTypes * 10;
+
         }
 
         public override string ToString() {
@@ -184,7 +216,9 @@ namespace Azul {
             }
 
             colTmp = col + 1;
-            while (colTmp < wall.GetLength(1) && wall[row, colTmp] != Globals.EMPTY_CELL) {
+            while (colTmp < wall.GetLength(1) &&
+                   wall[row, colTmp] != Globals.EMPTY_CELL) {
+                
                 colPoints++;
                 colTmp++;
             }
@@ -194,7 +228,8 @@ namespace Azul {
                 rowTmp--;
             }
             rowTmp = row + 1;
-            while (rowTmp < wall.GetLength(0) && wall[row, rowTmp] != Globals.EMPTY_CELL) {
+            while (rowTmp < wall.GetLength(0) &&
+                   wall[row, rowTmp] != Globals.EMPTY_CELL) {
                 rowPoints++;
                 rowTmp++;
             }

@@ -19,7 +19,11 @@ namespace Azul {
         public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false) {
             Logger.WriteLine(" ");
             Logger.WriteLine("-----------------------------Game start-----------------------------");
-            //TODO: check if length of playerNames is same as playerCount
+            if (playerNames.Length != playerCount) {
+                Logger.WriteLine("died cause of incorrect names of players");
+                throw new Exception("incorrect number of names, or players");
+            }
+
             isAdvanced = isAdvanced_;
             Center = new CenterPlate(Globals.TYPE_COUNT);
             storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT); 
@@ -163,6 +167,10 @@ namespace Azul {
                 if (CurrentPlayer == Players.Length) {
                     //All players finished phase 2
                     if (isGameOver) {
+                        
+                        foreach (var player in Players) {
+                            player.CalculateBonusPoints();
+                        }
                         Logger.WriteLine("-------GGG-------A-------M------M--EEEEEE-------OOO----V-----V----EEEEEE----RRRR------");
                         Logger.WriteLine("------G---G-----A-A------MM----MM--E-----------O---O---V-----V----E---------R---R-----");
                         Logger.WriteLine("-----G---------A---A-----M-M--M-M--EEEE-------O-----O---V---V-----EEEE------RRRR------");
@@ -170,7 +178,7 @@ namespace Azul {
                         Logger.WriteLine("------G---G---A-----A----M------M--E-----------O---O-----V-V------E---------R---R-----");
                         Logger.WriteLine("-------GGG---A-------A---M------M--EEEEEE-------OOO-------V-------EEEEEE----R---R-----");
 
-                        Phase = Phase.GameOver; //TODO: calculate bonuses, I guess
+                        Phase = Phase.GameOver;
                     }
                     else {
                         Logger.WriteLine("All players filled to the wall");
