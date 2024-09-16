@@ -162,8 +162,8 @@ namespace Azul {
                 if (type == Globals.WALL_DIMENSION) fullTypes++;
             }
             
-            pointCount += fullColumns * 8;
-            pointCount += fullRows * 5;
+            pointCount += fullColumns * 7;
+            pointCount += fullRows * 2;
             pointCount += fullTypes * 10;
 
         }
