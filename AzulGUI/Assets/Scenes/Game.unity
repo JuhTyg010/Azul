@@ -322,9 +322,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 1000
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1600, y: 900}
+  m_ReferenceResolution: {x: 1600, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1293,6 +1293,7 @@ MonoBehaviour:
   firstPlatePosition: {x: -400, y: 90}
   plateOffset: {x: 100, y: 0}
   isFlippedY: 1
+  isHolding: 0
   plates: []
 --- !u!4 &1652634338
 Transform:

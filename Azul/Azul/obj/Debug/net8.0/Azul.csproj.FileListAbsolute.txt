@@ -1,0 +1,12 @@
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\bin\Debug\net8.0\Azul.deps.json
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\bin\Debug\net8.0\Azul.dll
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\bin\Debug\net8.0\Azul.pdb
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\Azul.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\Azul.AssemblyInfoInputs.cache
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\Azul.AssemblyInfo.cs
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\Azul.csproj.CoreCompileInputs.cache
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\Azul.sourcelink.json
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\Azul.dll
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\refint\Azul.dll
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\Azul.pdb
+C:\Users\sadov\OneDrive\Dokumenty\GitHub\Azul\Azul\Azul\obj\Debug\net8.0\ref\Azul.dll

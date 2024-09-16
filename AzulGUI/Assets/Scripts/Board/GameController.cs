@@ -70,7 +70,7 @@ namespace Board {
             else throw new System.InvalidOperationException("Player already is holding something");
         }
 
-        public void TryPlaceFromHand(int bufferId) {
+        public void TryPlaceFromHand(int bufferId) { //TODO: could return bool for buffer to know to change it's data
             if (isHolding) {
                 bool answer = board.Move((int) handData.z, (int) handData.x, bufferId);
                 if (!answer) {
@@ -84,9 +84,7 @@ namespace Board {
                 isHolding = false;
             }
             else throw new System.InvalidOperationException("Can't place if not holding anything");
-            
         }
-        
 
         private void GeneratePlates(int plateCount) {
             Vector3 currentPosition = (Vector3) firstPlatePosition;

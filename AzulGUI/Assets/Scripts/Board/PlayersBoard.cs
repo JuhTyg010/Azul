@@ -1,25 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Board {
     public class PlayersBoard : MonoBehaviour
     {
-        public int id;
-
-        private GameController gameController;
-        private GameObject wallPanel;
-        private GameObject[] buffers;
-        private GameObject floor;
-        void Start()
-        {
-            gameController = FindObjectOfType<GameController>();
-            wallPanel = transform.Find("Wall").gameObject;
-            floor = transform.Find("Floor").gameObject;
-        }
-
+        public int id { get; private set; }
         
-        void Update()
-        {
-            
-        }
+        [SerializeField] private GameObject wallHolder;
+        [SerializeField] private List<GameObject> bufferHolders;
+        
     }
 }
