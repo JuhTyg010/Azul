@@ -28,7 +28,8 @@ namespace Azul {
 
             isAdvanced = isAdvanced_;
             Center = new CenterPlate(Globals.TYPE_COUNT);
-            storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT); 
+            storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT);
+            trash = new Tiles(Globals.TYPE_COUNT, 0);
         
             Plates = new Plate[playerCount * 2 + 1];
             for (int i = 0; i < playerCount * 2 + 1; i++) {
