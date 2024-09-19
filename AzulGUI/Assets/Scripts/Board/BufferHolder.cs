@@ -11,25 +11,30 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private GameController gameController;
     private Image image;
 
-    private void Start() {
+    private void Awake() {
         image = GetComponent<Image>();
+        gameController = FindObjectOfType<GameController>();
         type = Globals.EMPTY_CELL;
+    }
+
+    public void LoadData(int typeId, int count) {
+        //TODO: use some math to determine positions and generate tiles
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
         if (gameController.isHolding) {
             var data = gameController.GetHoldingData();
             if (type == (int) data.x || type == Azul.Globals.EMPTY_CELL) {
-                image.color = Color.black;
+                image.color = new Color(0, 0, 0, .3f);
             }
             else {
-                image.color = Color.red;
+                image.color = new Color(1, 0, 0, .3f);
             }
         }
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData) {
-        image.color = Color.white;
+        image.color = new Color(1, 1, 1, .3f);
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {

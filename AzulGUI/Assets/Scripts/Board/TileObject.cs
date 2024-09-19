@@ -9,14 +9,13 @@ namespace Board {
     [RequireComponent(typeof(Image))]
     public class TileObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        [SerializeField] List<Sprite> sprites = new List<Sprite>();
+       
         public int id;
         private Image image;
         private Plate myPlate;
         public GameController gameController {get; private set;}
         
-        void Awake()
-        {
+        void Awake() {
             image = GetComponent<Image>();
         }
         
@@ -24,7 +23,7 @@ namespace Board {
             myPlate = plate;
             id = id_;
             image = GetComponent<Image>();
-            image.sprite = sprites[id];
+            image.sprite = gameController.GetTileSprite(id);
             gameController = plate.gameController;
 
         }
