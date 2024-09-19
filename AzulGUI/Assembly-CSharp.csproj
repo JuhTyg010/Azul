@@ -54,6 +54,7 @@
     <Compile Include="Assets\Scripts\Board\WallTile.cs" />
     <Compile Include="Assets\Resources\Azul\Player.cs" />
     <Compile Include="Assets\Resources\Azul\Tile.cs" />
+    <Compile Include="Assets\Scripts\Board\BufferTile.cs" />
     <Compile Include="Assets\Scripts\Board\TileObject.cs" />
     <Compile Include="Assets\Resources\Azul\Utils.cs" />
     <Compile Include="Assets\Scripts\Menu\PlayerConfig.cs" />
