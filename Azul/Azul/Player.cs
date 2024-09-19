@@ -9,23 +9,24 @@ namespace Azul {
         public string name { get; private set; }
         public int pointCount { get; private set; }
         public int[,] wall { get; private set; }
-        private Buffer[] buffers;
         public List<int> floor { get; private set; }
         public bool isFirst { get; private set; }
-
+        
+        private Buffer[] buffers;
+        private Board game;
+        
         public event EventHandler? OnWin;
     
 
-        public Player(string name) {
+        public Player(string name, Board game) {
             this.name = name;
+            this.game = game;
             pointCount = 0;
             wall = new int[5, 5];
             floor = new List<int>();
             List<Buffer> bufferList = new List<Buffer>();
             for (int i = 0; i < wall.GetLength(0); i++) {
-            
                 bufferList.Add(new Buffer(i + 1));
-            
                 for (int j = 0; j < wall.GetLength(1); j++) {
                     wall[i, j] = Globals.EMPTY_CELL;
                 }
@@ -101,6 +102,8 @@ namespace Azul {
             }
             wall[row, col] = buffers[row].typeId;
             pointCount += calculatePoints(row, col);
+            game.PutToTrash(buffers[row].typeId, buffers[row].size - 1);    //one goes on wall
+            
             Logger.WriteLine(
                 $"successfully placed on wall new points: {pointCount}");
 
@@ -116,16 +119,22 @@ namespace Azul {
         public bool ClearFloor() {
             //negative points are -1,-1,-2,-2,-2,-3,-3
             int[] toRemove = { 0, -1, -2, -4, -6, -8, -11, -14 };
+            bool isFirst = false;
             pointCount += toRemove[Math.Min(7, floor.Count)];
             Logger.WriteLine(
                 $"Player {name} is clearing the floor new points {pointCount}");
-        
-            if (floor.Count != 0 && floor[0] == Globals.FIRST) {
-                floor.Clear();
-                return true;
+
+            for (int i = 0; i < floor.Count; i++) {
+                if (floor[i] == Globals.FIRST) {
+                    isFirst = true;
+                }
+                else {
+                    game.PutToTrash(floor[i],1);
+                }
             }
             floor.Clear();
-            return false;
+
+            return isFirst;
         }
 
         public int FloorSize() {

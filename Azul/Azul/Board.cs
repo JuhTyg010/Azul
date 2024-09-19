@@ -222,7 +222,7 @@ namespace Azul {
             var players = new Player[playerCount];
 
             for (int i = 0; i < playerCount; i++) {
-                players[i] = new Player(playerNames[i]);
+                players[i] = new Player(playerNames[i], this);
                 players[i].OnWin += OnWin;
             }
 
