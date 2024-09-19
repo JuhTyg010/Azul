@@ -12,3 +12,6 @@ _deps
 .idea
 */.idea
 */rider.*
+AzulGUI/Library
+*/Logs
+*/Temp
