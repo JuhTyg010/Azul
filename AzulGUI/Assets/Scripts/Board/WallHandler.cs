@@ -13,12 +13,15 @@ namespace Board {
         [SerializeField] private Vector2 offset;
 
         private GameObject[,] wallData;
+        private int[,] simpleData;
 
         private void Awake() {
             wallData = new GameObject[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
+            simpleData = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
 
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
                 for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
+                    simpleData[i, j] = Globals.EMPTY_CELL;
                     var nextTile = Instantiate(tile, transform);
                     Vector2 realPosition = topLeftPos;
                     realPosition.x += i * offset.x;
@@ -36,13 +39,23 @@ namespace Board {
                 throw new Exception("wrong sized int[,] for wall");
             }
 
+            simpleData = data;
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
                 for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
                     wallData[i, j].GetComponent<WallTile>().FillTile(data[i, j]);
                 }
             }
-
         }
+
+        public bool IsPossiblePosition(int row, int col, int typeId) {
+            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+                if (simpleData[row, i] == typeId) return false;
+                if (simpleData[i, col] == typeId) return false;
+            }
+
+            return true;
+        }
+        
     }
 
 }

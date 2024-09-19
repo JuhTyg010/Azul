@@ -877,6 +877,7 @@ GameObject:
   - component: {fileID: 1085511936}
   - component: {fileID: 1085511938}
   - component: {fileID: 1085511937}
+  - component: {fileID: 1085511939}
   m_Layer: 5
   m_Name: Wall
   m_TagString: Untagged
@@ -900,8 +901,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 94.5, y: 23}
-  m_SizeDelta: {x: 145, y: 145}
+  m_AnchoredPosition: {x: 94.6, y: 23.1}
+  m_SizeDelta: {x: 143.5, y: 143.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1085511937
 MonoBehaviour:
@@ -916,7 +917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -941,6 +942,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085511935}
   m_CullTransparentMesh: 1
+--- !u!114 &1085511939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085511935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad57bd38d73c76448a3935c1540acdb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tile: {fileID: 6208589252640825952, guid: 6865ce8f4099ff14f806e333d9b955f8, type: 3}
+  topLeftPos: {x: 0, y: 0}
+  offset: {x: 28.7, y: 28.7}
 --- !u!1 &1126588859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,6 +1397,12 @@ MonoBehaviour:
   platesPanel: {fileID: 1349161527}
   playerBoardPrefab: {fileID: 8790129913159719957, guid: 0a5d56586999478cea628adbc743618d, type: 3}
   platePrefab: {fileID: 8866593834340999649, guid: 8655da7ecb05a196d82cd7e38e9c3cba, type: 3}
+  tileSprites:
+  - {fileID: 1148511438, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
+  - {fileID: 1780293973, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
+  - {fileID: 648806416, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
+  - {fileID: -1831508692, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
+  - {fileID: -1588553239, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   firstPlatePosition: {x: -400, y: 90}
   plateOffset: {x: 100, y: 0}
   isFlippedY: 1
