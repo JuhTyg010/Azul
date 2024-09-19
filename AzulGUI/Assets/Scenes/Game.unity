@@ -212,6 +212,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 2
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &159116497
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +559,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 1
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &492360236
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,6 +651,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 4
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &703027590
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,6 +743,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 5
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &712556564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,6 +1126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 3
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &1176365518
 GameObject:
   m_ObjectHideFlags: 0

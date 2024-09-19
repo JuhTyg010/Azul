@@ -8,8 +8,8 @@ using UnityEngine.PlayerLoop;
 
 public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
     [SerializeField] private int size;
-    [SerializeField] private Vector2Int leftPosition;
-    [SerializeField] private Vector2Int offset;
+    [SerializeField] private Vector2 leftPosition;
+    [SerializeField] private Vector2 offset;
     [SerializeField] private GameObject bufferTile;
     
     private int type;
@@ -26,7 +26,7 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         bufferTiles = new BufferTile[size];
         for (int i = 0; i < size; i++) {
             var nextTile = Instantiate(bufferTile, transform);
-            Vector2Int realPosition = leftPosition;
+            Vector2 realPosition = leftPosition;
             realPosition.x += offset.x * i;
             realPosition.y += offset.y * i;
             nextTile.GetComponent<RectTransform>().anchoredPosition = realPosition;

@@ -23,8 +23,8 @@ namespace Board {
             myPlate = plate;
             id = id_;
             image = GetComponent<Image>();
-            image.sprite = gameController.GetTileSprite(id);
             gameController = plate.gameController;
+            image.sprite = gameController.GetTileSprite(id);
 
         }
 
