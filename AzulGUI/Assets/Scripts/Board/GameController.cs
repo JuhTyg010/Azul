@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
@@ -14,6 +15,8 @@ namespace Board {
         
         [SerializeField] private GameObject playerBoardPrefab;
         [SerializeField] private GameObject platePrefab;
+
+        [SerializeField] private List<Sprite> tileSprites;
         
         [SerializeField] private Vector2 firstPlatePosition;
         [SerializeField] private Vector2 plateOffset;
@@ -84,6 +87,13 @@ namespace Board {
                 isHolding = false;
             }
             else throw new System.InvalidOperationException("Can't place if not holding anything");
+        }
+
+        public Sprite GetTileSprite(int id) {
+            if (id >= tileSprites.Count)
+                throw new IndexOutOfRangeException("Want tile with no sprite");
+
+            return tileSprites[id];
         }
 
         private void GeneratePlates(int plateCount) {
