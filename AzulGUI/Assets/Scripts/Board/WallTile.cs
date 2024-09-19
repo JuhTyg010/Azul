@@ -10,6 +10,7 @@ namespace Board {
         private bool isFilled;
         private int id;
         private GameController gameController;
+        private WallHandler wallController;
 
         private Color emptyColor = new Color(0, 0, 0, 0);
         private Color possibleColor = new Color(0, 1, 0, .3f);
@@ -17,11 +18,12 @@ namespace Board {
         private Color filledColor = new Color(1, 1, 1, 1);
 
 
-        public void Initialize(int row, int col) {
+        public void Initialize(int row, int col, WallHandler wallControl) {
             position = new Vector2Int(row, col);
             image = GetComponent<Image>();
             image.color = emptyColor;
             gameController = FindObjectOfType<GameController>();
+            wallController = wallControl;
             id = Globals.EMPTY_CELL;
         }
 
@@ -33,9 +35,9 @@ namespace Board {
 
 
         public void OnPointerEnter(PointerEventData eventData) {
-            //TODO: ask wall if it's possible to choose correct color
+            //TODO: ask wall if it's possible to choose correct color only if game in correct state
             if (!isFilled) {
-                //TODO: implement
+               // if(wallController.IsPossiblePosition(position.x, position))
             }
         }
 

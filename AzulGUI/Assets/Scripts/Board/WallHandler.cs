@@ -27,7 +27,7 @@ namespace Board {
                     realPosition.x += i * offset.x;
                     realPosition.y -= j * offset.y;
                     nextTile.GetComponent<RectTransform>().anchoredPosition = realPosition;
-                    nextTile.GetComponent<WallTile>().Initialize(i, j);
+                    nextTile.GetComponent<WallTile>().Initialize(i, j, this);
                     wallData[i, j] = nextTile;
                 }
             }
