@@ -13,6 +13,8 @@ namespace Azul {
         public int[,] predefinedWall { get; private set; }
         public bool isAdvanced { get; private set; }
         public bool fisrtTaken;
+        
+        private Tiles trash;
         private bool isGameOver;
         private int nextFirst;
 
@@ -167,16 +169,9 @@ namespace Azul {
                 if (CurrentPlayer == Players.Length) {
                     //All players finished phase 2
                     if (isGameOver) {
+                        foreach (var player in Players) player.CalculateBonusPoints();
                         
-                        foreach (var player in Players) {
-                            player.CalculateBonusPoints();
-                        }
-                        Logger.WriteLine("-------GGG-------A-------M------M--EEEEEE-------OOO----V-----V----EEEEEE----RRRR------");
-                        Logger.WriteLine("------G---G-----A-A------MM----MM--E-----------O---O---V-----V----E---------R---R-----");
-                        Logger.WriteLine("-----G---------A---A-----M-M--M-M--EEEE-------O-----O---V---V-----EEEE------RRRR------");
-                        Logger.WriteLine("-----G--GGG---AAAAAAA----M--MM--M--EEEE-------O-----O---V---V-----EEEE------R--R------");
-                        Logger.WriteLine("------G---G---A-----A----M------M--E-----------O---O-----V-V------E---------R---R-----");
-                        Logger.WriteLine("-------GGG---A-------A---M------M--EEEEEE-------OOO-------V-------EEEEEE----R---R-----");
+                        WriteGameOver();
 
                         Phase = Phase.GameOver;
                     }
@@ -191,6 +186,14 @@ namespace Azul {
         
             return isFilled;
         }
+        
+        public void PutToTrash(int typeId, int count) {
+
+            Tiles temp = new Tiles(Globals.TYPE_COUNT, 0);
+            temp.PutTile(typeId, count);
+            trash.Union(temp);
+            Logger.WriteLine($" {count} tiles of type {typeId} put to trash");
+        }
     
     
         private bool ArePlatesEmpty() {
@@ -204,6 +207,9 @@ namespace Azul {
         }
 
         private void FillPlates() {
+            if (storage.TotalTiles() < Globals.PLATE_VOLUME * Plates.Length) {
+                storage.Union(trash);
+            }
             foreach (var plate in Plates) {
                 plate.SetTiles(storage.GetRandom(Globals.PLATE_VOLUME));
             }
@@ -214,11 +220,22 @@ namespace Azul {
 
         private Player[] InitializePlayers(int playerCount, string[] playerNames) {
             var players = new Player[playerCount];
+
             for (int i = 0; i < playerCount; i++) {
                 players[i] = new Player(playerNames[i]);
                 players[i].OnWin += OnWin;
             }
+
             return players;
+        }
+
+        private void WriteGameOver() {
+            Logger.WriteLine("-------GGG-------A-------M------M--EEEEEE-------OOO----V-----V----EEEEEE----RRRR------");
+            Logger.WriteLine("------G---G-----A-A------MM----MM--E-----------O---O---V-----V----E---------R---R-----");
+            Logger.WriteLine("-----G---------A---A-----M-M--M-M--EEEE-------O-----O---V---V-----EEEE------RRRR------");
+            Logger.WriteLine("-----G--GGG---AAAAAAA----M--MM--M--EEEE-------O-----O---V---V-----EEEE------R--R------");
+            Logger.WriteLine("------G---G---A-----A----M------M--E-----------O---O-----V-V------E---------R---R-----");
+            Logger.WriteLine("-------GGG---A-------A---M------M--EEEEEE-------OOO-------V-------EEEEEE----R---R-----");
         }
 
         private void OnWin(object? sender, EventArgs args) {
