@@ -52,6 +52,7 @@ namespace Board {
             Debug.Log(board.Plates.Length);
             GeneratePlates(board.Plates.Length);
             FillPlates();
+            GenerateOtherPlayersBoards(currentPlayer);
             
         }
 

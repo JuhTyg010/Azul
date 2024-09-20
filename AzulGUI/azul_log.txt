@@ -134,3 +134,10 @@ Player Player_2 (0) taking from plate 1 tile 2 to buffer 3: successfully filled,
 Move:
 Plate data:  id: 0 [ 1, 0, 0, 3, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 1, 2, 0, 1, 0, ], id: 5 [ 2, 1, 0, 0, 3, ]
 Player Player_1 (1) taking from plate 0 tile 3 to buffer 4: successfully filled, current state 3 of 5
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 1, 1, 2, 0, 0, ], id: 1 [ 1, 1, 0, 1, 1, ], id: 2 [ 0, 2, 1, 1, 0, ], id: 3 [ 2, 0, 1, 1, 0, ], id: 4 [ 2, 1, 1, 0, 0, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 2 tile 1 to buffer 1: successfully filled, current state 2 of 2
+ 
+-----------------------------Game start-----------------------------

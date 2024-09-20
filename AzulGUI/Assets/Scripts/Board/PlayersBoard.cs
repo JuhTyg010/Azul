@@ -8,6 +8,7 @@ namespace Board {
     {
         public int id { get; private set; }
 
+        [SerializeField] private Text playerNameText;
         [SerializeField] private Text pointCoutText;
         [SerializeField] private GameObject wallHolder;
         [SerializeField] private List<GameObject> bufferHolders;
@@ -24,11 +25,14 @@ namespace Board {
             UpdateFloor(me);
             UpdateWall(me);
             pointCoutText.text = me.pointCount.ToString();
+            playerNameText.text = me.name;
         }
 
         public void Initialize(int id, GameController gameController) {
             this.id = id;
             this.gameController = gameController;
+            //TODO: somehow get own name
+            
             
         }
 
