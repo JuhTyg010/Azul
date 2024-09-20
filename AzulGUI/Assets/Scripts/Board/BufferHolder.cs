@@ -46,17 +46,23 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
         if (gameController.isHolding && type == Globals.EMPTY_CELL) {
             var data = gameController.GetHoldingData();
-            if (type == (int) data.x || type == Azul.Globals.EMPTY_CELL) {
-                image.color = new Color(0, 0, 0, .3f);
+            if (type == (int) data.x || type == Globals.EMPTY_CELL) {
+                foreach (var tile in bufferTiles) {
+                    tile.SetColor(new Color(0, 0, 0, .3f));
+                }
             }
             else {
-                image.color = new Color(1, 0, 0, .3f);
+                foreach (var tile in bufferTiles) {
+                    tile.SetColor(new Color(1, 0, 0, .3f));
+                }
             }
         }
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData) {
-        if(type == Globals.EMPTY_CELL) image.color = new Color(1, 1, 1, .3f);
+        foreach (var tile in bufferTiles) {
+            tile.SetColor(new Color(0, 0, 0, 0));
+        }
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {

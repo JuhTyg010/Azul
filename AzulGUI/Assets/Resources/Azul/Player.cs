@@ -22,7 +22,7 @@ namespace Azul {
             this.name = name;
             this.game = game;
             pointCount = 0;
-            wall = new int[5, 5];
+            wall = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
             floor = new List<int>();
             List<Buffer> bufferList = new List<Buffer>();
             for (int i = 0; i < wall.GetLength(0); i++) {

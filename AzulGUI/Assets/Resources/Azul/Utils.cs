@@ -19,16 +19,10 @@ namespace Azul {
         private static string fileName = "azul_log.txt";
 
         public static void WriteLine(string msg) {
-            /* using StreamWriter log = new StreamWriter(Path.Combine(Environment.CurrentDirectory, fileName));
-             log.WriteLine(msg);
-             log.Flush();*/
             File.AppendAllText(fileName, msg + Environment.NewLine);
         }
 
         public static void Write(string msg) {
-            /*using StreamWriter log = new StreamWriter(Path.Combine(Environment.CurrentDirectory, fileName));
-            log.Write(msg);
-            log.Flush();*/
             File.AppendAllText(fileName, msg);
         }
     }

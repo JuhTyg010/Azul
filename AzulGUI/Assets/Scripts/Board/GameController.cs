@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Azul;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -24,8 +25,8 @@ namespace Board {
         
         public bool isHolding = false;
         private Vector3 handData; //x=typeId y=count z=plateId
-        
-        
+
+        private int currentPlayer;
         private Azul.Board board;
         public List<GameObject> plates = new List<GameObject>();
         
@@ -47,6 +48,7 @@ namespace Board {
             }
             
             board = new Azul.Board(playerCount, names);
+            currentPlayer = board.CurrentPlayer;
             Debug.Log(board.Plates.Length);
             GeneratePlates(board.Plates.Length);
             FillPlates();
@@ -73,7 +75,7 @@ namespace Board {
             else throw new System.InvalidOperationException("Player already is holding something");
         }
 
-        public void TryPlaceFromHand(int bufferId) { //TODO: could return bool for buffer to know to change it's data
+        public void TryPlaceFromHand(int bufferId) {
             if (isHolding) {
                 bool answer = board.Move((int) handData.z, (int) handData.x, bufferId);
                 if (!answer) {
@@ -82,9 +84,14 @@ namespace Board {
                 }
                 else {
                     var toCenter = plates[(int)handData.z].GetComponent<Plate>().EmptyTiles();
-                    //TODO: add rest to the center
+                    for(int i = 0; i < plates.Count; i++) {
+                        plates[i].GetComponent<Plate>().UpdateData(board.Plates[i]);
+                    }
+                    //TODO: call update on center on player and on the plates
+                    //TODO: add rest to the center (is in lib should be done automatically)
                 }
                 isHolding = false;
+                handData = new Vector3(Globals.EMPTY_CELL, Globals.EMPTY_CELL, Globals.EMPTY_CELL);
             }
             else throw new System.InvalidOperationException("Can't place if not holding anything");
         }
@@ -109,16 +116,19 @@ namespace Board {
             }
         }
 
+        private void GenerateOtherPlayersBoards(int currentPlayer) {
+            //TODO: maybe do it in other players panel script
+            for (int i = 0; i < board.Players.Length; i++) {
+                if(i == currentPlayer) continue;
+                var player = Instantiate(playerBoardPrefab, otherPlayersPanel.transform);
+                //TODO: do some offsetting and stuff
+                player.GetComponent<PlayersBoard>().Initialize(i, this);
+            }
+        }
+
         private void FillPlates() {
             for (int i = 0; i < board.Plates.Length; i++) {
-                var tiles = board.Plates[i].GetCounts();
-                List<int> tileIds = new List<int>();
-                foreach (var tile in tiles) {
-                    for (int j = 0; j < tile.count; j++) {
-                        tileIds.Add(j);
-                    }
-                }
-                plates[i].GetComponent<Plate>().PutTiles(tileIds.ToArray());
+                plates[i].GetComponent<Plate>().UpdateData(board.Plates[i]);
             }
         }
     }

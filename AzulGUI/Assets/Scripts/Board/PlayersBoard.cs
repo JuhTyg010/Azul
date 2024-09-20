@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using Azul;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Board {
     public class PlayersBoard : MonoBehaviour
     {
         public int id { get; private set; }
-        
+
+        [SerializeField] private Text pointCoutText;
         [SerializeField] private GameObject wallHolder;
         [SerializeField] private List<GameObject> bufferHolders;
         [SerializeField] private GameObject floorHolder;
@@ -16,8 +19,11 @@ namespace Board {
             gameController = FindObjectOfType<GameController>();
         }
 
-        void Update(){
-            //TODO: get from gameManager playerData
+        public void UpdateData(Player me){
+            UpdateBuffers(me);
+            UpdateFloor(me);
+            UpdateWall(me);
+            pointCoutText.text = me.pointCount.ToString();
         }
 
         public void Initialize(int id, GameController gameController) {
@@ -26,11 +32,13 @@ namespace Board {
             
         }
 
-        private void UpdateWall(Azul.Player me) {
-            //TODO: wall should have some script which translates from int[,] to wall
+        private void UpdateWall(Player me) {
+            var wall = wallHolder.GetComponent<WallHandler>();
+            wall.SetWall(me.wall);
+
         }
 
-        private void UpdateBuffers(Azul.Player me) {
+        private void UpdateBuffers(Player me) {
             for (int i = 0; i < bufferHolders.Count; i++) {
                 var bufferLogic = bufferHolders[i].GetComponent<BufferHolder>();
                 var data = me.GetBufferData(i);
@@ -38,7 +46,7 @@ namespace Board {
             }
         }
 
-        private void UpdateFloor(Azul.Player me) {
+        private void UpdateFloor(Player me) {
             //TODO: script for the floor and placing there
         }
         

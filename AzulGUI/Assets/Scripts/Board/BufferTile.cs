@@ -26,6 +26,7 @@ namespace Board {
 
             if (id == Globals.EMPTY_CELL) {
                 isSet = false;
+                image.color = emptyColor;
             }
             else {
                 isSet = true;
@@ -43,6 +44,12 @@ namespace Board {
                 isSet = true;
                 image.color = filledColor;
                 image.sprite = gameController.GetTileSprite(id);
+            }
+        }
+
+        public void SetColor(Color color) {
+            if (!isSet) {
+                image.color = color;
             }
         }
     }
