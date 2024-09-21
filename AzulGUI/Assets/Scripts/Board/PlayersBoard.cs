@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Azul;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,9 @@ namespace Board {
     {
         public int id { get; private set; }
 
-        [SerializeField] private Text playerNameText;
-        [SerializeField] private Text pointCoutText;
+        [SerializeField] private TMP_Text playerNameText;
+        [SerializeField] private bool isMain;
+        [SerializeField] private TMP_Text pointCoutText;
         [SerializeField] private GameObject wallHolder;
         [SerializeField] private List<GameObject> bufferHolders;
         [SerializeField] private GameObject floorHolder;
