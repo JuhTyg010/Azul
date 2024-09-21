@@ -12,16 +12,25 @@ namespace Board {
         public GameObject tile;
         
         [SerializeField] private GameObject otherPlayersPanel;
-        [SerializeField] private GameObject platesPanel;
-        
         [SerializeField] private GameObject playerBoardPrefab;
-        [SerializeField] private GameObject platePrefab;
+        [SerializeField] private Vector2 firstPlayerPosition;
+        [SerializeField] private Vector2 playerOffset;
 
-        [SerializeField] private List<Sprite> tileSprites;
+        [SerializeField] private GameObject mainPlayerPanel;
+        [SerializeField] private GameObject mainPlayerBoardPrefab;
+        [SerializeField] private Vector2 mainPlayerPosition;
         
+        [SerializeField] private GameObject centerPlatePanel;
+        [SerializeField] private GameObject centerPlateBoardPrefab;
+        [SerializeField] private Vector2 centerPlatePosition;
+        
+        [SerializeField] private GameObject platesPanel;
+        [SerializeField] private GameObject platePrefab;
         [SerializeField] private Vector2 firstPlatePosition;
         [SerializeField] private Vector2 plateOffset;
         [SerializeField] private bool isFlippedY = false;
+        
+        [SerializeField] private List<Sprite> tileSprites;
         
         public bool isHolding = false;
         private Vector3 handData; //x=typeId y=count z=plateId
@@ -73,7 +82,7 @@ namespace Board {
                 handData.z = plateId;
                 isHolding = true;
             }
-            else throw new System.InvalidOperationException("Player already is holding something");
+            else throw new InvalidOperationException("Player already is holding something");
         }
 
         public void TryPlaceFromHand(int bufferId) {
@@ -119,11 +128,14 @@ namespace Board {
 
         private void GenerateOtherPlayersBoards(int currentPlayer) {
             //TODO: maybe do it in other players panel script
+            Vector3 currentPosition =  firstPlatePosition;
             for (int i = 0; i < board.Players.Length; i++) {
                 if(i == currentPlayer) continue;
                 var player = Instantiate(playerBoardPrefab, otherPlayersPanel.transform);
-                //TODO: do some offsetting and stuff
                 player.GetComponent<PlayersBoard>().Initialize(i, this);
+                player.GetComponent<RectTransform>().anchoredPosition = currentPosition;
+                currentPosition.x += plateOffset.x;
+                currentPosition.y += plateOffset.y;
             }
         }
 

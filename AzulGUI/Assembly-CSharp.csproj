@@ -48,12 +48,14 @@
     <Compile Include="Assets\Resources\Azul\Plate.cs" />
     <Compile Include="Assets\Resources\Azul\Board.cs" />
     <Compile Include="Assets\Scripts\Board\WallHandler.cs" />
+    <Compile Include="Assets\Scripts\Board\FloorHandler.cs" />
     <Compile Include="Assets\Scripts\Board\PlayersBoard.cs" />
     <Compile Include="Assets\Scripts\Board\Plate.cs" />
     <Compile Include="Assets\Scripts\Board\CenterPlate.cs" />
     <Compile Include="Assets\Scripts\Board\WallTile.cs" />
     <Compile Include="Assets\Resources\Azul\Player.cs" />
     <Compile Include="Assets\Resources\Azul\Tile.cs" />
+    <Compile Include="Assets\Scripts\Board\FloorTile.cs" />
     <Compile Include="Assets\Scripts\Board\BufferTile.cs" />
     <Compile Include="Assets\Scripts\Board\TileObject.cs" />
     <Compile Include="Assets\Resources\Azul\Utils.cs" />

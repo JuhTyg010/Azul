@@ -30,6 +30,7 @@ namespace Board {
             }
             else {
                 isSet = true;
+                image.color = filledColor;
                 image.sprite = gameController.GetTileSprite(id);
             }
         }
