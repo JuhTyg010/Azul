@@ -1564,13 +1564,13 @@ MonoBehaviour:
   tile: {fileID: 4562107056350443452, guid: fb32db53ed45c44f89422963cd482f39, type: 3}
   otherPlayersPanel: {fileID: 1176365518}
   playerBoardPrefab: {fileID: 8790129913159719957, guid: 0a5d56586999478cea628adbc743618d, type: 3}
-  firstPlayerPosition: {x: 5, y: 5}
-  playerOffset: {x: 100, y: 100}
+  firstPlayerPosition: {x: 5, y: -5}
+  playerOffset: {x: 0, y: -290}
   mainPlayerPanel: {fileID: 198270261}
-  mainPlayerBoard: {fileID: 0}
+  mainPlayerBoard: {fileID: 1459302705}
   mainPlayerPosition: {x: -5, y: 5}
   centerPlatePanel: {fileID: 198270261}
-  centerPlateBoard: {fileID: 0}
+  centerPlateBoard: {fileID: 159116497}
   centerPlatePosition: {x: -177, y: -207}
   platesPanel: {fileID: 1349161527}
   platePrefab: {fileID: 8866593834340999649, guid: 8655da7ecb05a196d82cd7e38e9c3cba, type: 3}

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Azul;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -29,6 +30,8 @@ namespace Board {
         [SerializeField] private Vector2 firstPlatePosition;
         [SerializeField] private Vector2 plateOffset;
         [SerializeField] private bool isFlippedY = false;
+
+        [SerializeField] private GameObject nextPlayerPanel;
         
         [SerializeField] private List<Sprite> tileSprites;
         
@@ -93,20 +96,13 @@ namespace Board {
             if (isHolding) {
                 bool answer = board.Move((int) handData.z, (int) handData.x, bufferId);
                 if (!answer) {
-                    Debug.LogError("Something went wrong, illegal move happend");
+                    Debug.LogError("Something went wrong, illegal move happened");
                     plates[(int)handData.z].GetComponent<Plate>().ReturnFromHand();
                 }
                 else {
                     var toCenter = plates[(int)handData.z].GetComponent<Plate>().EmptyTiles();
-                    for(int i = 0; i < plates.Count; i++) {
-                        plates[i].GetComponent<Plate>().UpdateData(board.Plates[i]);
-                    } 
-                    
-                    mainPlayerBoard.GetComponent<PlayersBoard>().UpdateData(board.Players[currentPlayer]);
-                    for (int i = 0; i < board.Players.Length; i++) {
-                        if(i == currentPlayer) continue;
-                        players[i].GetComponent<PlayersBoard>().UpdateData(board.Players[i]);
-                    }
+                    UpdatePlates();
+                    UpdatePlayers();
                     //TODO: call update on center on player and on the plates
                     //TODO: add rest to the center (is in lib should be done automatically)
                     
@@ -114,10 +110,13 @@ namespace Board {
                 }
                 isHolding = false;
                 handData = new Vector3(Globals.EMPTY_CELL, Globals.EMPTY_CELL, Globals.EMPTY_CELL);
+                //TODO: add some info to player what to do to finish the move than call DisplayNextPlayerPanel
             }
             else throw new System.InvalidOperationException("Can't place if not holding anything");
         }
 
+        
+        
         public Sprite GetTileSprite(int id) {
             if (id >= tileSprites.Count)
                 throw new IndexOutOfRangeException("Want tile with no sprite");
@@ -125,6 +124,18 @@ namespace Board {
             return tileSprites[id];
         }
 
+        private void NextMove() {
+            //TODO: update plates, clear center, reload ids of the player's boards show nextPLayer panel probably with the name of the player
+            UpdatePlates();
+            UpdatePlayers();
+        }
+
+        private void DisplayNextPlayerPanel() {
+            nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
+            //TODO: event on click
+            nextPlayerPanel.SetActive(true);
+        }
+        
         private void GeneratePlates(int plateCount) {
             Vector3 currentPosition = (Vector3) firstPlatePosition;
             for (int i = 0; i < plateCount; i++) {
@@ -136,10 +147,6 @@ namespace Board {
                 if(isFlippedY) currentPosition.y *= -1;
                 else currentPosition.y += plateOffset.y;
             }
-        }
-
-        private void NextMove() {
-            //TODO: update plates, clear center, reload ids of the player's boards show nextPLayer panel probably with the name of the player
         }
 
         private void GenerateOtherPlayersBoards() {
