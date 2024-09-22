@@ -17,11 +17,11 @@ namespace Board {
         [SerializeField] private Vector2 playerOffset;
 
         [SerializeField] private GameObject mainPlayerPanel;
-        [SerializeField] private GameObject mainPlayerBoardPrefab;
+        [SerializeField] private GameObject mainPlayerBoard;
         [SerializeField] private Vector2 mainPlayerPosition;
         
         [SerializeField] private GameObject centerPlatePanel;
-        [SerializeField] private GameObject centerPlateBoardPrefab;
+        [SerializeField] private GameObject centerPlateBoard;
         [SerializeField] private Vector2 centerPlatePosition;
         
         [SerializeField] private GameObject platesPanel;
@@ -33,11 +33,13 @@ namespace Board {
         [SerializeField] private List<Sprite> tileSprites;
         
         public bool isHolding = false;
+        public bool isPlacing = false;
         private Vector3 handData; //x=typeId y=count z=plateId
 
         private int currentPlayer;
         private Azul.Board board;
         public List<GameObject> plates = new List<GameObject>();
+        public List<GameObject> players = new List<GameObject>();
         
         
         void Start()
@@ -60,12 +62,14 @@ namespace Board {
             currentPlayer = board.CurrentPlayer;
             Debug.Log(board.Plates.Length);
             GeneratePlates(board.Plates.Length);
-            FillPlates();
-            GenerateOtherPlayersBoards(currentPlayer);
+            UpdatePlates();
+            GenerateOtherPlayersBoards();
+            
+            mainPlayerBoard.GetComponent<PlayersBoard>().UpdateData(board.Players[currentPlayer]);
             
         }
 
-        public Azul.Player GetPlayerData(int id) {
+        public Player GetPlayerData(int id) {
             if(id < 0 || id >= board.Players.Length) throw new System.IndexOutOfRangeException("asking impossible");
             return board.Players[id];
         }
@@ -96,9 +100,17 @@ namespace Board {
                     var toCenter = plates[(int)handData.z].GetComponent<Plate>().EmptyTiles();
                     for(int i = 0; i < plates.Count; i++) {
                         plates[i].GetComponent<Plate>().UpdateData(board.Plates[i]);
+                    } 
+                    
+                    mainPlayerBoard.GetComponent<PlayersBoard>().UpdateData(board.Players[currentPlayer]);
+                    for (int i = 0; i < board.Players.Length; i++) {
+                        if(i == currentPlayer) continue;
+                        players[i].GetComponent<PlayersBoard>().UpdateData(board.Players[i]);
                     }
                     //TODO: call update on center on player and on the plates
                     //TODO: add rest to the center (is in lib should be done automatically)
+                    
+                    currentPlayer = board.CurrentPlayer; //cause in board it's already updated and we need previous player
                 }
                 isHolding = false;
                 handData = new Vector3(Globals.EMPTY_CELL, Globals.EMPTY_CELL, Globals.EMPTY_CELL);
@@ -126,22 +138,37 @@ namespace Board {
             }
         }
 
-        private void GenerateOtherPlayersBoards(int currentPlayer) {
+        private void NextMove() {
+            //TODO: update plates, clear center, reload ids of the player's boards show nextPLayer panel probably with the name of the player
+        }
+
+        private void GenerateOtherPlayersBoards() {
             //TODO: maybe do it in other players panel script
-            Vector3 currentPosition =  firstPlatePosition;
-            for (int i = 0; i < board.Players.Length; i++) {
-                if(i == currentPlayer) continue;
+            Vector3 currentPosition =  firstPlayerPosition;
+            for (int i = 0; i < board.Players.Length - 1; i++) {    //one is for the main view
                 var player = Instantiate(playerBoardPrefab, otherPlayersPanel.transform);
-                player.GetComponent<PlayersBoard>().Initialize(i, this);
+                players.Add(player);
+                player.GetComponentInChildren<PlayersBoard>().Init(i, board.Players[i].name);   //only one board in there so it's kinda safe
                 player.GetComponent<RectTransform>().anchoredPosition = currentPosition;
-                currentPosition.x += plateOffset.x;
-                currentPosition.y += plateOffset.y;
+                currentPosition.x += playerOffset.x;
+                currentPosition.y += playerOffset.y;
             }
         }
 
-        private void FillPlates() {
+        private void UpdatePlates() {
             for (int i = 0; i < board.Plates.Length; i++) {
                 plates[i].GetComponent<Plate>().UpdateData(board.Plates[i]);
+            }
+        }
+
+        private void UpdatePlayers() {
+            for (int i = 0; i < board.Players.Length; i++) {
+                if (i == currentPlayer) {
+                    mainPlayerBoard.GetComponent<PlayersBoard>().UpdateData(board.Players[i]);
+                }
+                else {
+                    players[i].GetComponentInChildren<PlayersBoard>().UpdateData(board.Players[i]);
+                }
             }
         }
     }

@@ -37,7 +37,6 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     public void LoadData(int typeId, int count) {
-        //TODO: use some math to determine positions and generate tiles
         for (int i = 0; i < count; i++) {
             bufferTiles[i].SetTile(typeId);
         }

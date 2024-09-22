@@ -33,7 +33,7 @@ namespace Board {
         }
 
         public void UpdateData(int[] floorIds) {
-            if (floorIds.Length != FLOOR_SIZE) {
+            if (floorIds.Length > FLOOR_SIZE) {
                 Debug.LogErrorFormat("Invalid number of floorIds for floorHandler: {0}", floorIds.Length);
             }
 

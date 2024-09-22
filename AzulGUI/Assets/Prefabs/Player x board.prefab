@@ -89,6 +89,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 3
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &1698367324001810976
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +315,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 2
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &4023184841853037464
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +447,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 4
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &5799183328373885247
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +539,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 1
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &6748954618361555737
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +633,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34d9598ad14f1f24f9a3934f099ef8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNameText: {fileID: 0}
+  isMain: 0
+  pointCoutText: {fileID: 0}
   wallHolder: {fileID: 7630422950697164135}
   bufferHolders:
   - {fileID: 5799183328373885247}
@@ -640,6 +655,7 @@ GameObject:
   - component: {fileID: 7821749993831769543}
   - component: {fileID: 6683552631073403054}
   - component: {fileID: 8305757032597751345}
+  - component: {fileID: 4155290413987313165}
   m_Layer: 5
   m_Name: Wall
   m_TagString: Untagged
@@ -704,6 +720,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4155290413987313165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7630422950697164135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad57bd38d73c76448a3935c1540acdb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tile: {fileID: 6208589252640825952, guid: 6865ce8f4099ff14f806e333d9b955f8, type: 3}
+  topLeftPos: {x: 0, y: 0}
+  offset: {x: 28.7, y: 28.7}
 --- !u!1 &7821301905404173660
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,6 +746,7 @@ GameObject:
   - component: {fileID: 7165520659515180362}
   - component: {fileID: 9211473889673642345}
   - component: {fileID: 5767471270145128846}
+  - component: {fileID: 6495037536876766165}
   m_Layer: 5
   m_Name: Floor
   m_TagString: Untagged
@@ -779,6 +811,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6495037536876766165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7821301905404173660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d5e817b512c9d4aadf0c4899115000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tile: {fileID: 6208589252640825952, guid: 38ab828e18b228a4481a5278122d6816, type: 3}
+  leftPos: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
 --- !u!1 &8158665119440997758
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,6 +915,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 5
+  leftPosition: {x: 0, y: 0}
+  offset: {x: 28.7, y: 0}
+  bufferTile: {fileID: 6208589252640825952, guid: 3a35fe72986460142b585f54425a13bc, type: 3}
 --- !u!1 &8790129913159719957
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,11 +952,11 @@ RectTransform:
   - {fileID: 4670057370702188851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -35, y: -7.5}
   m_SizeDelta: {x: 390, y: 285}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &8796455577002699230
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -935,7 +985,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

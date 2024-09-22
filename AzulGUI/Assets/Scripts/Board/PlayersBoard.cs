@@ -7,8 +7,6 @@ using UnityEngine.UI;
 namespace Board {
     public class PlayersBoard : MonoBehaviour
     {
-        public int id { get; private set; }
-
         [SerializeField] private TMP_Text playerNameText;
         [SerializeField] private bool isMain;
         [SerializeField] private TMP_Text pointCoutText;
@@ -27,15 +25,12 @@ namespace Board {
             UpdateFloor(me);
             UpdateWall(me);
             pointCoutText.text = me.pointCount.ToString();
-            playerNameText.text = me.name;
+            if(!isMain) playerNameText.text = me.name;
         }
 
-        public void Initialize(int id, GameController gameController) {
-            this.id = id;
-            this.gameController = gameController;
-            //TODO: somehow get own name
-            
-            
+        public void Init(int id, string name) {
+            this.name = name;
+            gameController = FindObjectOfType<GameController>();
         }
 
         private void UpdateWall(Player me) {
@@ -54,6 +49,7 @@ namespace Board {
 
         private void UpdateFloor(Player me) {
             //TODO: script for the floor and placing there
+            floorHolder.GetComponent<FloorHandler>().UpdateData(me.floor.ToArray());
         }
         
     }

@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNameText: {fileID: 0}
-  isMain: 0
+  isMain: 1
   pointCoutText: {fileID: 793830748}
   wallHolder: {fileID: 1085511935}
   bufferHolders:
@@ -1567,10 +1567,10 @@ MonoBehaviour:
   firstPlayerPosition: {x: 5, y: 5}
   playerOffset: {x: 100, y: 100}
   mainPlayerPanel: {fileID: 198270261}
-  mainPlayerBoardPrefab: {fileID: 0}
+  mainPlayerBoard: {fileID: 0}
   mainPlayerPosition: {x: -5, y: 5}
   centerPlatePanel: {fileID: 198270261}
-  centerPlateBoardPrefab: {fileID: 0}
+  centerPlateBoard: {fileID: 0}
   centerPlatePosition: {x: -177, y: -207}
   platesPanel: {fileID: 1349161527}
   platePrefab: {fileID: 8866593834340999649, guid: 8655da7ecb05a196d82cd7e38e9c3cba, type: 3}
@@ -1584,7 +1584,9 @@ MonoBehaviour:
   - {fileID: -1831508692, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   - {fileID: -1588553239, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   isHolding: 0
+  isPlacing: 0
   plates: []
+  players: []
 --- !u!4 &1652634338
 Transform:
   m_ObjectHideFlags: 0
