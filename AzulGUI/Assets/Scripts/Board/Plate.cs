@@ -11,7 +11,7 @@ namespace Board {
         [SerializeField] private Vector2[] localPositions;
         private List<GameObject> tiles = new List<GameObject>();
         private List<GameObject> inHand = new List<GameObject>();
-        public int id { get; private set; }//TODO maybe be public
+        public int id { get; private set; }
     
         public GameController gameController { get; private set; }
         void Awake()

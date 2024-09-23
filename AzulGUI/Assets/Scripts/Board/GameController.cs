@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Azul;
@@ -108,6 +109,7 @@ namespace Board {
                 }
                 holding.EmptyHand();
                 Debug.Log("Hand is empty");
+                StartCoroutine(inputWaiter());
                 //TODO: add some info to player what to do to finish the move than call DisplayNextPlayerPanel
             }
             else throw new InvalidOperationException("Can't place if not holding anything");
@@ -178,5 +180,11 @@ namespace Board {
                 }
             }
         }
+        IEnumerator inputWaiter()
+        {
+            yield return new WaitForSeconds(1f);
+            NextMove();
+
+        }   
     }
 }
