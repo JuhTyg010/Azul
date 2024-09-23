@@ -47,9 +47,11 @@
   <ItemGroup>
     <Compile Include="Assets\Resources\Azul\Plate.cs" />
     <Compile Include="Assets\Resources\Azul\Board.cs" />
+    <Compile Include="Assets\Scripts\UI\NextPlayerPanel.cs" />
     <Compile Include="Assets\Scripts\Board\WallHandler.cs" />
     <Compile Include="Assets\Scripts\Board\FloorHandler.cs" />
     <Compile Include="Assets\Scripts\Board\PlayersBoard.cs" />
+    <Compile Include="Assets\Scripts\UI\Notification.cs" />
     <Compile Include="Assets\Scripts\Board\Plate.cs" />
     <Compile Include="Assets\Scripts\Board\CenterPlate.cs" />
     <Compile Include="Assets\Scripts\Board\WallTile.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Assets\Scripts\Menu\MenuController.cs" />
     <Compile Include="Assets\Scripts\Board\BufferHolder.cs" />
     <Compile Include="Assets\Scripts\Menu\PlayersSetup.cs" />
+    <Compile Include="Assets\Scripts\Statics\State.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
