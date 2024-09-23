@@ -14,12 +14,15 @@ public class Notification : MonoBehaviour {
     private void Awake() {
         text = GetComponentInChildren<TMP_Text>();
         image = GetComponent<Image>();
+        notificationActive = false;
+        gameObject.SetActive(false);
     }
 
     public void ShowMessage(string message) {
+        notificationActive = true;
         text.text = message;
         Color color = image.color;
-        color.a = 1;
+        color.a = .5f;
         image.color = color;
         gameObject.SetActive(true);
     }
