@@ -42,7 +42,7 @@ namespace Board {
             simpleData = data;
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
                 for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
-                    wallData[i, j].GetComponent<WallTile>().FillTile(data[i, j]);
+                    wallData[i, j].GetComponent<WallTile>().SetTile(data[i, j]);
                 }
             }
         }

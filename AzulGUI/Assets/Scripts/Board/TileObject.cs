@@ -29,7 +29,7 @@ namespace Board {
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
-            if(!gameController.isHolding) GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
+            if(!gameController.holding.isHolding) GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData) {
@@ -37,7 +37,7 @@ namespace Board {
         }
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
-            if(!gameController.isHolding) myPlate.PutInHand(id);
+            if(!gameController.holding.isHolding) myPlate.PutInHand(id);
         }
     }
 }

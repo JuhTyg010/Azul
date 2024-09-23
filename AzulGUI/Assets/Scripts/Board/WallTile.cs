@@ -7,7 +7,7 @@ namespace Board {
     public class WallTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
         private Vector2Int position;
         private Image image;
-        private bool isFilled;
+        private bool isSet;
         private int id;
         private GameController gameController;
         private WallHandler wallController;
@@ -27,22 +27,27 @@ namespace Board {
             id = Globals.EMPTY_CELL;
         }
 
-        public void FillTile(int typeId) {
-            isFilled = true;
-            id = typeId;
-            image.sprite = gameController.GetTileSprite(id);
+        public void SetTile(int id) { 
+            this.id = id;
+            if (id == Globals.EMPTY_CELL) {
+                image.color = emptyColor;
+            }
+            else {
+                image.color = filledColor;
+                image.sprite = gameController.GetTileSprite(id);
+            }
         }
 
 
         public void OnPointerEnter(PointerEventData eventData) {
             //TODO: ask wall if it's possible to choose correct color only if game in correct state
-            if (!isFilled) {
+            if (!isSet) {
                // if(wallController.IsPossiblePosition(position.x, position))
             }
         }
 
         public void OnPointerExit(PointerEventData eventData) {
-            if (!isFilled) {
+            if (!isSet) {
                 image.color = emptyColor;
             }
         }
