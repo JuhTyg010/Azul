@@ -25,11 +25,16 @@ namespace Board {
             UpdateFloor(me);
             UpdateWall(me);
             pointCoutText.text = me.pointCount.ToString();
+            pointCoutText.SetText(me.pointCount.ToString());
             if(!isMain) playerNameText.text = me.name;
         }
 
-        public void Init(int id, string name) {
-            this.name = name;
+        public void Init(Player me) {
+            UpdateBuffers(me);
+            UpdateFloor(me);
+            UpdateWall(me);
+            pointCoutText.SetText(me.pointCount.ToString());
+            if(!isMain) playerNameText.text = me.name;
             gameController = FindObjectOfType<GameController>();
         }
 
@@ -43,7 +48,7 @@ namespace Board {
             for (int i = 0; i < bufferHolders.Count; i++) {
                 var bufferLogic = bufferHolders[i].GetComponent<BufferHolder>();
                 var data = me.GetBufferData(i);
-                bufferLogic.LoadData(data.id, data.count);
+                bufferLogic.UpdateData(data.id, data.count);
             }
         }
 

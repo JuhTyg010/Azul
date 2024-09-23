@@ -13,7 +13,6 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private GameObject bufferTile;
     
     private int type;
-    private int count;
     
     private GameController gameController;
     private Image image;
@@ -31,21 +30,26 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             realPosition.y += offset.y * i;
             nextTile.GetComponent<RectTransform>().anchoredPosition = realPosition;
             bufferTiles[i] = nextTile.GetComponent<BufferTile>();
-            bufferTiles[i].Initialize(Globals.EMPTY_CELL, this);
+            bufferTiles[i].Init(Globals.EMPTY_CELL, this);
         }
         
     }
 
-    public void LoadData(int typeId, int count) {
+    public void UpdateData(int typeId, int count) {
+        type = typeId;
+        for (int i = 0; i < size; i++) {
+            bufferTiles[i].ResetTile();
+        }
         for (int i = 0; i < count; i++) {
             bufferTiles[i].SetTile(typeId);
         }
     }
+    
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
-        if (gameController.holding.isHolding && type == Globals.EMPTY_CELL) {
-            var data = gameController.GetHoldingData();
-            if (type == (int) data.x || type == Globals.EMPTY_CELL) {
+        if (gameController.holding.isHolding) {
+            var hold = gameController.holding;
+            if (type == (int) hold.typeId || type == Globals.EMPTY_CELL) {
                 foreach (var tile in bufferTiles) {
                     tile.SetColor(new Color(0, 0, 0, .3f));
                 }
@@ -66,7 +70,7 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
         if (gameController.holding.isHolding) {
-            var data = gameController.GetHoldingData();
+            //var data = gameController.GetHoldingData();
             gameController.TryPlaceFromHand(size - 1);
         }
     }

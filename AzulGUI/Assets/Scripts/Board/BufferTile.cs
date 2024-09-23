@@ -18,7 +18,7 @@ namespace Board {
         private Color filledColor = new Color(1, 1, 1, 1);
         
 
-        public void Initialize(int id, BufferHolder buffer) {
+        public void Init(int id, BufferHolder buffer) {
             this.id = id;
             gameController = FindObjectOfType<GameController>();
             myBuffer = buffer;
@@ -35,13 +35,18 @@ namespace Board {
             }
         }
 
+        public void ResetTile() {
+            isSet = false;
+            image.color = emptyColor;
+            id = Globals.EMPTY_CELL;
+            image.sprite = null;
+        }
+
         public void SetTile(int id) {
             this.id = id;
+            image.color = emptyColor;
 
-            if (id == Globals.EMPTY_CELL) {
-                image.color = emptyColor;
-            }
-            else {
+            if (id != Globals.EMPTY_CELL) {
                 isSet = true;
                 image.color = filledColor;
                 image.sprite = gameController.GetTileSprite(id);

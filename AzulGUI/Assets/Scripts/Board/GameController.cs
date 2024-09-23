@@ -70,7 +70,7 @@ namespace Board {
             UpdatePlates();
             GenerateOtherPlayersBoards();
             notificationPanel.GetComponent<Notification>().ShowMessage("This is the test");
-            mainPlayerBoard.GetComponent<PlayersBoard>().UpdateData(board.Players[currentPlayer]);
+            mainPlayerBoard.GetComponent<PlayersBoard>().Init(board.Players[currentPlayer]);
             
         }
 
@@ -85,6 +85,7 @@ namespace Board {
         }
 
         public void PutToHand(int typeId, int count, int plateId) {
+            Debug.Log("try to put to hand");
             if(!holding.isHolding) holding.PutToHand(typeId, count, plateId);
             else throw new InvalidOperationException("Player already is holding something");
         }
@@ -106,6 +107,7 @@ namespace Board {
                     currentPlayer = board.CurrentPlayer; //cause in board it's already updated and we need previous player
                 }
                 holding.EmptyHand();
+                Debug.Log("Hand is empty");
                 //TODO: add some info to player what to do to finish the move than call DisplayNextPlayerPanel
             }
             else throw new InvalidOperationException("Can't place if not holding anything");
@@ -114,8 +116,8 @@ namespace Board {
         
         
         public Sprite GetTileSprite(int id) {
-            if (id >= tileSprites.Count)
-                throw new IndexOutOfRangeException("Want tile with no sprite");
+            if (id >= tileSprites.Count || id < 0)
+                throw new IndexOutOfRangeException($"Want tile with no sprite (id: {id})");
 
             return tileSprites[id];
         }
@@ -151,7 +153,7 @@ namespace Board {
             for (int i = 0; i < board.Players.Length - 1; i++) {    //one is for the main view
                 var player = Instantiate(playerBoardPrefab, otherPlayersPanel.transform);
                 players.Add(player);
-                player.GetComponentInChildren<PlayersBoard>().Init(i, board.Players[i].name);   //only one board in there so it's kinda safe
+                player.GetComponentInChildren<PlayersBoard>().Init(board.Players[i]);   //only one board in there so it's kinda safe
                 player.GetComponent<RectTransform>().anchoredPosition = currentPosition;
                 currentPosition.x += playerOffset.x;
                 currentPosition.y += playerOffset.y;
@@ -165,12 +167,14 @@ namespace Board {
         }
 
         private void UpdatePlayers() {
+            int offset = 0;
             for (int i = 0; i < board.Players.Length; i++) {
                 if (i == currentPlayer) {
                     mainPlayerBoard.GetComponent<PlayersBoard>().UpdateData(board.Players[i]);
+                    offset = 1;
                 }
                 else {
-                    players[i].GetComponentInChildren<PlayersBoard>().UpdateData(board.Players[i]);
+                    players[i - offset].GetComponentInChildren<PlayersBoard>().UpdateData(board.Players[i]);
                 }
             }
         }
