@@ -43,7 +43,7 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
-        if (gameController.isHolding && type == Globals.EMPTY_CELL) {
+        if (gameController.holding.isHolding && type == Globals.EMPTY_CELL) {
             var data = gameController.GetHoldingData();
             if (type == (int) data.x || type == Globals.EMPTY_CELL) {
                 foreach (var tile in bufferTiles) {
@@ -65,7 +65,7 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
-        if (gameController.isHolding) {
+        if (gameController.holding.isHolding) {
             var data = gameController.GetHoldingData();
             gameController.TryPlaceFromHand(size - 1);
         }

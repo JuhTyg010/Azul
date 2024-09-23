@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Azul;
+using Statics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -36,9 +37,9 @@ namespace Board {
         
         [SerializeField] private List<Sprite> tileSprites;
         
-        public bool isHolding = false;
+        public Holding holding;
+        
         public bool isPlacing = false;
-        private Vector3 handData; //x=typeId y=count z=plateId
 
         private int currentPlayer;
         private Azul.Board board;
@@ -78,30 +79,25 @@ namespace Board {
             return board.Players[id];
         }
 
-        public Vector2 GetHoldingData() {
-            if (isHolding) return handData;
-            return new Vector2(Azul.Globals.EMPTY_CELL, Azul.Globals.EMPTY_CELL);
+        public Vector3Int GetHoldingData() {
+            if (holding.isHolding) return holding.GetData();
+            return new Vector3Int(Globals.EMPTY_CELL, Globals.EMPTY_CELL, Globals.EMPTY_CELL);
         }
 
         public void PutToHand(int typeId, int count, int plateId) {
-            if (!isHolding) {
-                handData.x = typeId;
-                handData.y = count;
-                handData.z = plateId;
-                isHolding = true;
-            }
+            if(!holding.isHolding) holding.PutToHand(typeId, count, plateId);
             else throw new InvalidOperationException("Player already is holding something");
         }
 
         public void TryPlaceFromHand(int bufferId) {
-            if (isHolding) {
-                bool answer = board.Move((int) handData.z, (int) handData.x, bufferId);
+            if (holding.isHolding) {
+                bool answer = board.Move(holding.plateId, holding.typeId, bufferId);
                 if (!answer) {
                     Debug.LogError("Something went wrong, illegal move happened");
-                    plates[(int)handData.z].GetComponent<Plate>().ReturnFromHand();
+                    plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
                 }
                 else {
-                    var toCenter = plates[(int)handData.z].GetComponent<Plate>().EmptyTiles();
+                    var toCenter = plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
                     UpdatePlates();
                     UpdatePlayers();
                     //TODO: call update on center on player and on the plates
@@ -109,11 +105,10 @@ namespace Board {
                     
                     currentPlayer = board.CurrentPlayer; //cause in board it's already updated and we need previous player
                 }
-                isHolding = false;
-                handData = new Vector3(Globals.EMPTY_CELL, Globals.EMPTY_CELL, Globals.EMPTY_CELL);
+                holding.EmptyHand();
                 //TODO: add some info to player what to do to finish the move than call DisplayNextPlayerPanel
             }
-            else throw new System.InvalidOperationException("Can't place if not holding anything");
+            else throw new InvalidOperationException("Can't place if not holding anything");
         }
 
         
