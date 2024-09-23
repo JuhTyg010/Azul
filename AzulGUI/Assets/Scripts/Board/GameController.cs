@@ -32,6 +32,7 @@ namespace Board {
         [SerializeField] private bool isFlippedY = false;
 
         [SerializeField] private GameObject nextPlayerPanel;
+        [SerializeField] private GameObject notificationPanel;
         
         [SerializeField] private List<Sprite> tileSprites;
         
@@ -67,7 +68,7 @@ namespace Board {
             GeneratePlates(board.Plates.Length);
             UpdatePlates();
             GenerateOtherPlayersBoards();
-            
+            notificationPanel.GetComponent<Notification>().ShowMessage("This is the test");
             mainPlayerBoard.GetComponent<PlayersBoard>().UpdateData(board.Players[currentPlayer]);
             
         }
