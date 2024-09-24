@@ -51,6 +51,9 @@ namespace Azul {
         }
     
         public bool Move(int plateId, int tileId, int bufferId) {   //center is always last
+
+            #region Logging
+
             Logger.WriteLine("Move:");
             Logger.Write("Plate data: ");
             for (int i = 0; i < Plates.Length; i++) {
@@ -67,6 +70,9 @@ namespace Azul {
                 Logger.WriteLine("invalid plate");
                 return false;
             }
+
+            #endregion
+            
             Plate p;
             bool isFirstInCenter = false;
             if (plateId == Plates.Length) {
