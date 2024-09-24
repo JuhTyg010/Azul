@@ -9,11 +9,11 @@ namespace Board {
     public class Plate : MonoBehaviour {
     
         [SerializeField] private Vector2[] localPositions;
-        private List<GameObject> tiles = new List<GameObject>();
-        private List<GameObject> inHand = new List<GameObject>();
+        protected List<GameObject> tiles = new List<GameObject>();
+        protected List<GameObject> inHand = new List<GameObject>();
         public int id { get; private set; }
     
-        public GameController gameController { get; private set; }
+        public GameController gameController { get; protected set; }
         void Awake()
         {   
             gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -64,7 +64,7 @@ namespace Board {
             tiles.Clear();
         }
 
-        public void UpdateData(Azul.Plate plateData) {
+        public virtual void UpdateData(Azul.Plate plateData) {
             var data = plateData.GetCounts();
             //TODO: do it smart remove and add only if necessery
             tiles.Clear();
