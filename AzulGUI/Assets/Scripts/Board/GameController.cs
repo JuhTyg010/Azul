@@ -35,7 +35,10 @@ namespace Board {
         [SerializeField] private Notification notification;
         
         [SerializeField] private List<Sprite> tileSprites;
-        [SerializeField] public Sprite nextMoveFirstTile;
+        [SerializeField] private Sprite nextMoveFirstTile;
+        [SerializeField] public Sprite emptyTile;
+        
+        [SerializeField] private CursorSprite cursorSprite;
         
         public Holding holding;
         public bool isPlacing = false;
@@ -70,10 +73,10 @@ namespace Board {
             currentPlayer = board.CurrentPlayer;
             Debug.Log(board.Plates.Length);
             GeneratePlates(board.Plates.Length);
-            UpdatePlates();
             GenerateOtherPlayersBoards();
-            notification.ShowMessage("This is the test");
             mainPlayerBoard.GetComponent<PlayersBoard>().Init(board.Players[currentPlayer]);
+            
+            DisplayNextPlayerPanel();
             
         }
 
@@ -93,13 +96,17 @@ namespace Board {
 
         public void PutToHand(int typeId, int count, int plateId) {
             Debug.Log("try to put to hand");
-            if(!holding.isHolding) holding.PutToHand(typeId, count, plateId);
+            if (!holding.isHolding) {
+                holding.PutToHand(typeId, count, plateId);
+                cursorSprite.SetVisible(true, tileSprites[typeId]);
+            }
             else throw new InvalidOperationException("Player already is holding something");
         }
 
         public void TryPlaceFromHand(int bufferId) {
             if(phase != Phase.Taking) throw new InvalidOperationException("You are not in phase to put to buffers");
             if (!holding.isHolding) throw new InvalidOperationException("Can't place if not holding anything");
+            cursorSprite.SetVisible(false, nextMoveFirstTile);
             bool answer = board.Move(holding.plateId, holding.typeId, bufferId);
             if (!answer) {
                 Debug.LogError("Something went wrong, illegal move happened");
@@ -113,12 +120,10 @@ namespace Board {
                 UpdatePlayers();
                 
                 currentPlayer = board.CurrentPlayer; //cause in board it's already updated and we need previous player
+                StartCoroutine(NextMoveInputWaiter());
+                notification.ShowMessage("Press any key to end turn");
             }
             holding.EmptyHand();
-            Debug.Log("Hand is empty");
-            StartCoroutine(NextMoveInputWaiter()); //TODO:only if player changed
-            notification.ShowMessage("Press any key to end turn"); //TODO: make this the truth also maybe choose specific key
-            
         }
 
         public void ShowMessage(string message) {
@@ -139,18 +144,15 @@ namespace Board {
 
         private void NextMove() {
             phase = board.Phase;
-            //TODO: check phase
             if(phase == Phase.Taking) notification.ShowLongMessage("Choose plate, and take some tile to buffer");
             else if(phase == Phase.Placing && board.isAdvanced) 
                 notification.ShowLongMessage("Choose a column on the wall where you would like to place a tile from the buffer");
-            //TODO: show nextPLayer panel probably with the name of the player
             UpdatePlates();
             UpdatePlayers();
         }
 
         private void DisplayNextPlayerPanel() {
             nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
-            //TODO: event on click
             nextPlayerPanel.SetActive(true);
             StartCoroutine(NextPlayerReactionWaiter());
         }
