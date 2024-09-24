@@ -18,7 +18,7 @@ namespace Board {
         private Color filledColor = new Color(1, 1, 1, 1);
 
 
-        public void Initialize(int row, int col, WallHandler wallControl) {
+        public void Init(int row, int col, WallHandler wallControl) {
             position = new Vector2Int(row, col);
             image = GetComponent<Image>();
             image.color = emptyColor;
@@ -31,13 +31,23 @@ namespace Board {
             this.id = id;
             if (id == Globals.EMPTY_CELL) {
                 image.color = emptyColor;
-                image.sprite = gameController.emptyTileSprite;
+                if(gameController.isAdvanced) image.sprite = gameController.emptyTileSprite;
             }
             else {
                 image.color = filledColor;
                 image.sprite = gameController.GetTileSprite(id);
             }
         }
+
+        public void SetTile(int id, Color color) {
+            this.id = id;
+            image.color = color;
+            if (id == Globals.EMPTY_CELL) {
+                if (gameController.isAdvanced) image.sprite = gameController.emptyTileSprite;
+            }
+            else image.sprite = gameController.GetTileSprite(id);
+        }
+        
 
 
         public void OnPointerEnter(PointerEventData eventData) {
@@ -48,9 +58,7 @@ namespace Board {
         }
 
         public void OnPointerExit(PointerEventData eventData) {
-            if (!isSet) {
-                image.color = emptyColor;
-            }
+            //TODO: do some stuff for advanced game
         }
 
         public void OnPointerClick(PointerEventData eventData) {

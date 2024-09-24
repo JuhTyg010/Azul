@@ -43,6 +43,9 @@ namespace Board {
         public Holding holding;
         public bool isPlacing = false;
         public Phase phase;
+        public bool isAdvanced;
+        public int[,] predefinedWall;
+        
         
         private int currentPlayer;
         private Azul.Board board;
@@ -52,7 +55,7 @@ namespace Board {
         
         private bool keyPressed = false;
         
-        void Start()
+        void Awake()
         {
             int playerCount = PlayerPrefs.GetInt("PlayerCount");
             Debug.Log(playerCount);
@@ -69,8 +72,12 @@ namespace Board {
             }
             
             board = new Azul.Board(playerCount, names);
+            
             phase = board.Phase;
+            isAdvanced = board.isAdvanced;
+            predefinedWall = board.predefinedWall;
             currentPlayer = board.CurrentPlayer;
+            
             Debug.Log(board.Plates.Length);
             GeneratePlates(board.Plates.Length);
             GenerateOtherPlayersBoards();

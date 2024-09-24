@@ -16,19 +16,13 @@ public class CursorSprite : MonoBehaviour {
     {
         image = GetComponent<SpriteRenderer>();
         gameController = FindObjectOfType<GameController>();
-        GetComponent<RectTransform>().sizeDelta = size;
-        canvas = FindObjectOfType<Canvas>().gameObject;
     }
     
     void Update()
     {
         if (isVisible) {
             image.enabled = true;
-            Vector2 cursorPos;
-            /*RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
-                Input.mousePosition,Camera.main,out cursorPos);
-            /*cursorPos.x = Input.mousePosition.x / canvas.transform.localScale.x;
-            cursorPos.y = Input.mousePosition.y / canvas.transform.localScale.y;  */  
+            Vector2 cursorPos;  
             cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = cursorPos;
         }
