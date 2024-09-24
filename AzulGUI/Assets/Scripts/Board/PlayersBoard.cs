@@ -53,7 +53,6 @@ namespace Board {
         }
 
         private void UpdateFloor(Player me) {
-            //TODO: script for the floor and placing there
             floorHolder.GetComponent<FloorHandler>().UpdateData(me.floor.ToArray());
         }
         

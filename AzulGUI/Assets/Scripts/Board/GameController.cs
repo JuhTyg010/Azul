@@ -34,14 +34,14 @@ namespace Board {
         [SerializeField] private bool isFlippedY = false;
 
         [SerializeField] private GameObject nextPlayerPanel;
-        [SerializeField] private GameObject notificationPanel;
+        [SerializeField] private Notification notification;
         
         [SerializeField] private List<Sprite> tileSprites;
         
         public Holding holding;
-        
         public bool isPlacing = false;
-
+        public Phase phase;
+        
         private int currentPlayer;
         private Azul.Board board;
         public List<GameObject> plates = new List<GameObject>();
@@ -70,7 +70,7 @@ namespace Board {
             GeneratePlates(board.Plates.Length);
             UpdatePlates();
             GenerateOtherPlayersBoards();
-            notificationPanel.GetComponent<Notification>().ShowMessage("This is the test");
+            notification.ShowMessage("This is the test");
             mainPlayerBoard.GetComponent<PlayersBoard>().Init(board.Players[currentPlayer]);
             
         }
@@ -92,27 +92,27 @@ namespace Board {
         }
 
         public void TryPlaceFromHand(int bufferId) {
-            if (holding.isHolding) {
-                bool answer = board.Move(holding.plateId, holding.typeId, bufferId);
-                if (!answer) {
-                    Debug.LogError("Something went wrong, illegal move happened");
-                    plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
-                }
-                else {
-                    var toCenter = plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
-                    UpdatePlates();
-                    UpdatePlayers();
-                    //TODO: call update on center on player and on the plates
-                    //TODO: add rest to the center (is in lib should be done automatically)
-                    
-                    currentPlayer = board.CurrentPlayer; //cause in board it's already updated and we need previous player
-                }
-                holding.EmptyHand();
-                Debug.Log("Hand is empty");
-                StartCoroutine(inputWaiter());
-                //TODO: add some info to player what to do to finish the move than call DisplayNextPlayerPanel
+            if(phase != Phase.Taking) throw new InvalidOperationException("You are not in phase to put to buffers");
+            if (!holding.isHolding) throw new InvalidOperationException("Can't place if not holding anything");
+            bool answer = board.Move(holding.plateId, holding.typeId, bufferId);
+            if (!answer) {
+                Debug.LogError("Something went wrong, illegal move happened");
+                plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
             }
-            else throw new InvalidOperationException("Can't place if not holding anything");
+            else {
+                var toCenter = plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
+                UpdatePlates();
+                UpdatePlayers();
+                //TODO: call update on center on player and on the plates
+                //TODO: add rest to the center (is in lib should be done automatically)
+                
+                currentPlayer = board.CurrentPlayer; //cause in board it's already updated and we need previous player
+            }
+            holding.EmptyHand();
+            Debug.Log("Hand is empty");
+            StartCoroutine(NextMoveInputWaiter());
+            notification.ShowMessage("Press any key to end turn"); //TODO: make this the truth also maybe choose specific key
+            
         }
 
         
@@ -150,7 +150,6 @@ namespace Board {
         }
 
         private void GenerateOtherPlayersBoards() {
-            //TODO: maybe do it in other players panel script
             Vector3 currentPosition =  firstPlayerPosition;
             for (int i = 0; i < board.Players.Length - 1; i++) {    //one is for the main view
                 var player = Instantiate(playerBoardPrefab, otherPlayersPanel.transform);
@@ -180,9 +179,10 @@ namespace Board {
                 }
             }
         }
-        IEnumerator inputWaiter()
+        IEnumerator NextMoveInputWaiter()
         {
             yield return new WaitForSeconds(1f);
+            //TODO: recognise if it's bot move if yes do the move than call DisplayNextMove()
             NextMove();
 
         }   
