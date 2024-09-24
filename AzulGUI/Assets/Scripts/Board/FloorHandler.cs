@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Azul;
+using UnityEngine.EventSystems;
 
 
 namespace Board {
-    public class FloorHandler : MonoBehaviour {
+    public class FloorHandler : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler{
         private const int FLOOR_SIZE = 7;
 
         [SerializeField] private GameObject tile;
@@ -39,6 +40,27 @@ namespace Board {
 
             for (int i = 0; i < floorIds.Length; i++) {
                 tiles[i].SetTile(floorIds[i]);
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData) {
+            if (gameController.holding.isHolding) {
+                gameController.ShowMessage("You probably don't want to put it here");
+                foreach (var tile in tiles) {
+                    tile.SetColor(new Color(0, 0, 0, .3f));
+                }
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData) {
+            foreach (var tile in tiles) {
+                tile.SetColor(new Color(0, 0, 0, 0));
+            }
+        }
+
+        public void OnPointerClick(PointerEventData eventData) {
+            if (gameController.holding.isHolding) {
+                gameController.TryPlaceFromHand(5); //5 is always floor
             }
         }
     }

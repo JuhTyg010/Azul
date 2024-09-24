@@ -12,6 +12,7 @@ public class FloorTile : MonoBehaviour {
     private FloorHandler handler;
     private GameController gameController;
     private Image image;
+    private bool isSet;
 
     private Color emptyColor = new Color(0, 0, 0, 0);
     private Color filledColor = new Color(1,1,1,1);
@@ -22,13 +23,7 @@ public class FloorTile : MonoBehaviour {
         gameController = GameObject.FindObjectOfType<GameController>();
         image = GetComponent<Image>();
 
-        if (id == Globals.EMPTY_CELL) {
-            image.color = emptyColor;
-        }
-        else {
-            image.color = filledColor;
-            image.sprite = gameController.GetTileSprite(id);
-        }
+        SetTile(id);
     } 
     
     public void SetTile(int id) {
@@ -36,10 +31,18 @@ public class FloorTile : MonoBehaviour {
 
         if (id == Globals.EMPTY_CELL) {
             image.color = emptyColor;
+            isSet = false;
         }
         else {
             image.color = filledColor;
             image.sprite = gameController.GetTileSprite(id);
+            isSet = true;
+        }
+    }
+    
+    public void SetColor(Color color) {
+        if (!isSet) {
+            image.color = color;
         }
     }
 }

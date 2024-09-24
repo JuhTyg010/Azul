@@ -35,21 +35,18 @@ namespace Board {
             }
         }
 
-        public void ResetTile() {
-            isSet = false;
-            image.color = emptyColor;
-            id = Globals.EMPTY_CELL;
-            image.sprite = null;
-        }
 
         public void SetTile(int id) {
             this.id = id;
-            image.color = emptyColor;
 
-            if (id != Globals.EMPTY_CELL) {
-                isSet = true;
+            if (id == Globals.EMPTY_CELL) {
+                image.color = emptyColor;
+                isSet = false;
+            }
+            else {
                 image.color = filledColor;
                 image.sprite = gameController.GetTileSprite(id);
+                isSet = true;
             }
         }
 

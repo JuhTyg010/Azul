@@ -38,10 +38,7 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void UpdateData(int typeId, int count) {
         type = typeId;
         for (int i = 0; i < size; i++) {
-            bufferTiles[i].ResetTile();
-        }
-        for (int i = 0; i < count; i++) {
-            bufferTiles[i].SetTile(typeId);
+            bufferTiles[i].SetTile(i < count ? typeId : Globals.EMPTY_CELL);
         }
     }
     
@@ -70,7 +67,6 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
         if (gameController.holding.isHolding) {
-            //var data = gameController.GetHoldingData();
             gameController.TryPlaceFromHand(size - 1);
         }
     }
