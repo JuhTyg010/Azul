@@ -10,6 +10,7 @@ public class Notification : MonoBehaviour {
     private TMP_Text text;
     private Image image;
     private bool notificationActive;
+    private float timer;
     
     private void Awake() {
         text = GetComponentInChildren<TMP_Text>();
@@ -24,13 +25,24 @@ public class Notification : MonoBehaviour {
         Color color = image.color;
         color.a = .5f;
         image.color = color;
+        timer = notificationDuration;
+        gameObject.SetActive(true);
+    }
+
+    public void ShowLongMessage(string message) {
+        notificationActive = true;
+        text.text = message;
+        Color color = image.color;
+        color.a = .5f;
+        image.color = color;
+        timer = notificationDuration * 2;
         gameObject.SetActive(true);
     }
     
     void Update() {
         if (notificationActive) {
             Color color = image.color;
-            color.a -= Time.deltaTime / notificationDuration;
+            color.a -= Time.deltaTime / timer;
             if (color.a <= 0) {
                 notificationActive = false;
                 gameObject.SetActive(false);
