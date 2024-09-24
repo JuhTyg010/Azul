@@ -38,8 +38,8 @@ namespace Board {
                 Debug.LogErrorFormat("Invalid number of floorIds for floorHandler: {0}", floorIds.Length);
             }
 
-            for (int i = 0; i < floorIds.Length; i++) {
-                tiles[i].SetTile(floorIds[i]);
+            for (int i = 0; i < FLOOR_SIZE; i++) {
+                tiles[i].SetTile(i < floorIds.Length ? floorIds[i] : Globals.EMPTY_CELL);
             }
         }
 

@@ -1,14 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using Azul;
 using Statics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Android;
-using UnityEngine.Serialization;
 
 namespace Board {
     public class GameController : MonoBehaviour
@@ -50,6 +47,8 @@ namespace Board {
         public List<GameObject> players = new List<GameObject>();
         
         
+        private bool keyPressed = false;
+        
         void Start()
         {
             int playerCount = PlayerPrefs.GetInt("PlayerCount");
@@ -76,6 +75,10 @@ namespace Board {
             notification.ShowMessage("This is the test");
             mainPlayerBoard.GetComponent<PlayersBoard>().Init(board.Players[currentPlayer]);
             
+        }
+
+        void Update() {
+            if(!Input.anyKey) keyPressed = false;
         }
 
         public Player GetPlayerData(int id) {
@@ -149,6 +152,7 @@ namespace Board {
             nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
             //TODO: event on click
             nextPlayerPanel.SetActive(true);
+            StartCoroutine(NextPlayerReactionWaiter());
         }
         
         private void GeneratePlates(int plateCount) {
@@ -198,10 +202,18 @@ namespace Board {
         }
         IEnumerator NextMoveInputWaiter()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitUntil(() => Input.anyKey && !keyPressed);
             //TODO: recognise if it's bot move if yes do the move than call DisplayNextMove()
-            NextMove();
+            keyPressed = true;
+            DisplayNextPlayerPanel();
 
-        }   
+        }
+
+        IEnumerator NextPlayerReactionWaiter() {
+            yield return new WaitUntil(() => Input.anyKey && !keyPressed);
+            keyPressed = true;
+            NextMove();
+            nextPlayerPanel.SetActive(false);
+        }
     }
 }
