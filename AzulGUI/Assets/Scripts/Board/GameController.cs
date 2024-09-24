@@ -122,6 +122,7 @@ namespace Board {
         
         
         public Sprite GetTileSprite(int id) {
+            if (id == Globals.FIRST) return nextMoveFirstTile;
             if (id >= tileSprites.Count || id < 0)
                 throw new IndexOutOfRangeException($"Want tile with no sprite (id: {id})");
 

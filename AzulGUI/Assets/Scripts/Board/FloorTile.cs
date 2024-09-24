@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class FloorTile : MonoBehaviour {
 
 
-    [SerializeField] private Sprite firstSprite;
     private int id;
     private FloorHandler handler;
     private GameController gameController;
@@ -40,8 +39,7 @@ public class FloorTile : MonoBehaviour {
         }
         else {
             image.color = filledColor;
-            if (id == Globals.FIRST) image.sprite = firstSprite;
-            else image.sprite = gameController.GetTileSprite(id);
+            image.sprite = gameController.GetTileSprite(id);
         }
     }
 }

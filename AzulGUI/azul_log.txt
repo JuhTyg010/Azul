@@ -574,3 +574,8 @@ Player Player_1 (1) taking from plate 5 tile 0 to buffer 2: successfully filled,
 Move:
 Plate data:  id: 0 [ 0, 1, 2, 0, 1, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 1, 1, 2, 0, 0, ], id: 4 [ 1, 2, 0, 1, 0, ], id: 5 [ 0, 0, 1, 0, 0, ]
 Player Player_2 (0) taking from plate 5 tile 2 to buffer 1: invalid buffer
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 1, 0, 2, 1, ], id: 2 [ 1, 0, 0, 3, 0, ], id: 3 [ 3, 1, 0, 0, 0, ], id: 4 [ 0, 1, 0, 1, 2, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 5 tile 999 to buffer 2: 

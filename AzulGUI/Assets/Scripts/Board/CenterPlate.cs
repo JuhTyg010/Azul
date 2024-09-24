@@ -16,7 +16,7 @@ namespace Board {
 
         }
         
-        public override void UpdateData(Azul.Plate plateData) {
+        public void UpdateData(Azul.CenterPlate plateData) {
             var data = plateData.GetCounts();
             tiles.Clear();
             var children = GetComponentsInChildren<TileObject>();
@@ -24,7 +24,13 @@ namespace Board {
                 Destroy(child.gameObject);
             }
             inHand.Clear();
-            int current = 0;
+            if (plateData.isFirst) {
+                var tile = Instantiate(gameController.tile,transform);
+                tiles.Add(tile);
+                tile.GetComponent<TileObject>().Initialize(GetComponent<Plate>(), Azul.Globals.FIRST);
+                tile.GetComponent<RectTransform>().anchoredPosition = GetRandomPosition();
+                tile.GetComponent<RectTransform>().Rotate(Vector3.forward, Random.Range(0f, 90f));
+            }
             for (int i = 0; i < data.Length; i++){
                 for (int j = 0; j < data[i].count; j++) {
                     var tile = Instantiate(gameController.tile,transform);
@@ -32,7 +38,6 @@ namespace Board {
                     tile.GetComponent<TileObject>().Initialize(GetComponent<Plate>(), data[i].id);
                     tile.GetComponent<RectTransform>().anchoredPosition = GetRandomPosition();
                     tile.GetComponent<RectTransform>().Rotate(Vector3.forward, Random.Range(0f, 90f));
-                    current++;
                 }
             }
         }
