@@ -578,4 +578,51 @@ Player Player_2 (0) taking from plate 5 tile 2 to buffer 1: invalid buffer
 -----------------------------Game start-----------------------------
 Move:
 Plate data:  id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 1, 0, 2, 1, ], id: 2 [ 1, 0, 0, 3, 0, ], id: 3 [ 3, 1, 0, 0, 0, ], id: 4 [ 0, 1, 0, 1, 2, ], id: 5 [ 0, 0, 0, 0, 0, ]
-Player Player_2 (0) taking from plate 5 tile 999 to buffer 2: 
+Player Player_2 (0) taking from plate 5 tile 999 to buffer 2:  
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 2, 1, 1, 0, 0, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 2, 1, 0, 1, 0, ], id: 3 [ 2, 0, 0, 0, 2, ], id: 4 [ 2, 0, 0, 0, 2, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 2 tile 0 to buffer 5: is on floor
+Move:
+Plate data:  id: 0 [ 2, 1, 1, 0, 0, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 2, 0, 0, 0, 2, ], id: 4 [ 2, 0, 0, 0, 2, ], id: 5 [ 0, 1, 0, 1, 0, ]
+Player Player_1 (1) taking from plate 3 tile 0 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 2, 1, 1, 0, 0, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 2, 0, 0, 0, 2, ], id: 5 [ 0, 1, 0, 1, 2, ]
+Player Player_2 (0) taking from plate 1 tile 1 to buffer 5: is on floor
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 1, 1, 2, 0, 0, ], id: 1 [ 0, 1, 1, 0, 2, ], id: 2 [ 0, 1, 2, 0, 1, ], id: 3 [ 0, 2, 0, 1, 1, ], id: 4 [ 1, 0, 3, 0, 0, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 4 tile 2 to buffer 5: is on floor
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 1, 0, 0, 2, 1, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 0, 0, 1, 1, 2, ], id: 3 [ 0, 2, 0, 1, 1, ], id: 4 [ 1, 1, 0, 1, 1, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 2 tile 4 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 1, 0, 0, 2, 1, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 2, 0, 1, 1, ], id: 4 [ 1, 1, 0, 1, 1, ], id: 5 [ 0, 0, 1, 1, 0, ]
+Player Player_1 (1) taking from plate 5 tile 2 to buffer 2: successfully filled, current state 1 of 3
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 0, 2, 1, 0, 1, ], id: 1 [ 1, 1, 2, 0, 0, ], id: 2 [ 0, 0, 1, 1, 2, ], id: 3 [ 1, 0, 2, 0, 1, ], id: 4 [ 2, 0, 1, 0, 1, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 3 tile 0 to buffer 1: successfully filled, current state 1 of 2
+Move:
+Plate data:  id: 0 [ 0, 2, 1, 0, 1, ], id: 1 [ 1, 1, 2, 0, 0, ], id: 2 [ 0, 0, 1, 1, 2, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 2, 0, 1, 0, 1, ], id: 5 [ 0, 0, 2, 0, 1, ]
+Player Player_1 (1) taking from plate 1 tile 2 to buffer 2: successfully filled, current state 2 of 3
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------

@@ -7,6 +7,7 @@ using Statics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.Serialization;
 
 namespace Board {
@@ -104,9 +105,7 @@ namespace Board {
                 else plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
             }
             else {
-                if(holding.plateId == plates.Count) 
-                    centerPlateBoard.GetComponent<CenterPlate>().EmptyTiles();
-                else plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
+                if(holding.plateId < plates.Count) plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
                 UpdatePlates();
                 UpdatePlayers();
                 
@@ -119,7 +118,13 @@ namespace Board {
             
         }
 
-        
+        public void ShowMessage(string message) {
+            notification.ShowMessage(message);
+        }
+
+        public void ShowLongMessage(string message) {
+            notification.ShowLongMessage(message);
+        }
         
         public Sprite GetTileSprite(int id) {
             if (id == Globals.FIRST) return nextMoveFirstTile;
@@ -130,10 +135,14 @@ namespace Board {
         }
 
         private void NextMove() {
-            //TODO: update plates, clear center, reload ids of the player's boards show nextPLayer panel probably with the name of the player
+            phase = board.Phase;
+            //TODO: check phase
+            if(phase == Phase.Taking) notification.ShowLongMessage("Choose plate, and take some tile to buffer");
+            else if(phase == Phase.Placing && board.isAdvanced) 
+                notification.ShowLongMessage("Choose a column on the wall where you would like to place a tile from the buffer");
+            //TODO: show nextPLayer panel probably with the name of the player
             UpdatePlates();
             UpdatePlayers();
-            phase = board.Phase;
         }
 
         private void DisplayNextPlayerPanel() {

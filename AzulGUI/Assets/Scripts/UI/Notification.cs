@@ -23,7 +23,7 @@ public class Notification : MonoBehaviour {
         notificationActive = true;
         text.text = message;
         Color color = image.color;
-        color.a = .5f;
+        color.a = 1;
         image.color = color;
         timer = notificationDuration;
         gameObject.SetActive(true);
@@ -33,7 +33,7 @@ public class Notification : MonoBehaviour {
         notificationActive = true;
         text.text = message;
         Color color = image.color;
-        color.a = .5f;
+        color.a = 1;
         image.color = color;
         timer = notificationDuration * 2;
         gameObject.SetActive(true);
@@ -43,6 +43,7 @@ public class Notification : MonoBehaviour {
         if (notificationActive) {
             Color color = image.color;
             color.a -= Time.deltaTime / timer;
+            text.color = new Color(text.color.r, text.color.g, text.color.b, color.a);
             if (color.a <= 0) {
                 notificationActive = false;
                 gameObject.SetActive(false);
