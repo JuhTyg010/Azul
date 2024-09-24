@@ -2194,7 +2194,7 @@ MonoBehaviour:
   plateOffset: {x: 100, y: 0}
   isFlippedY: 1
   nextPlayerPanel: {fileID: 272521032}
-  notificationPanel: {fileID: 376764236}
+  notification: {fileID: 376764240}
   tileSprites:
   - {fileID: 1148511438, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   - {fileID: 1780293973, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
@@ -2202,6 +2202,7 @@ MonoBehaviour:
   - {fileID: -1831508692, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   - {fileID: -1588553239, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   isPlacing: 0
+  phase: 0
   plates: []
   players: []
 --- !u!4 &1652634338

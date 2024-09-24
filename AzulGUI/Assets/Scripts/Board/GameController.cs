@@ -37,6 +37,7 @@ namespace Board {
         [SerializeField] private Notification notification;
         
         [SerializeField] private List<Sprite> tileSprites;
+        [SerializeField] public Sprite nextMoveFirstTile;
         
         public Holding holding;
         public bool isPlacing = false;
@@ -65,6 +66,7 @@ namespace Board {
             }
             
             board = new Azul.Board(playerCount, names);
+            phase = board.Phase;
             currentPlayer = board.CurrentPlayer;
             Debug.Log(board.Plates.Length);
             GeneratePlates(board.Plates.Length);
@@ -97,20 +99,22 @@ namespace Board {
             bool answer = board.Move(holding.plateId, holding.typeId, bufferId);
             if (!answer) {
                 Debug.LogError("Something went wrong, illegal move happened");
-                plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
+                if(holding.plateId == plates.Count) 
+                    centerPlateBoard.GetComponent<CenterPlate>().ReturnFromHand();
+                else plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
             }
             else {
-                var toCenter = plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
+                if(holding.plateId == plates.Count) 
+                    centerPlateBoard.GetComponent<CenterPlate>().EmptyTiles();
+                else plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
                 UpdatePlates();
                 UpdatePlayers();
-                //TODO: call update on center on player and on the plates
-                //TODO: add rest to the center (is in lib should be done automatically)
                 
                 currentPlayer = board.CurrentPlayer; //cause in board it's already updated and we need previous player
             }
             holding.EmptyHand();
             Debug.Log("Hand is empty");
-            StartCoroutine(NextMoveInputWaiter());
+            StartCoroutine(NextMoveInputWaiter()); //TODO:only if player changed
             notification.ShowMessage("Press any key to end turn"); //TODO: make this the truth also maybe choose specific key
             
         }
@@ -128,6 +132,7 @@ namespace Board {
             //TODO: update plates, clear center, reload ids of the player's boards show nextPLayer panel probably with the name of the player
             UpdatePlates();
             UpdatePlayers();
+            phase = board.Phase;
         }
 
         private void DisplayNextPlayerPanel() {
@@ -147,6 +152,7 @@ namespace Board {
                 if(isFlippedY) currentPosition.y *= -1;
                 else currentPosition.y += plateOffset.y;
             }
+            centerPlateBoard.GetComponent<CenterPlate>().Init(plateCount, this);
         }
 
         private void GenerateOtherPlayersBoards() {
@@ -165,6 +171,7 @@ namespace Board {
             for (int i = 0; i < board.Plates.Length; i++) {
                 plates[i].GetComponent<Plate>().UpdateData(board.Plates[i]);
             }
+            centerPlateBoard.GetComponent<CenterPlate>().UpdateData(board.Center);
         }
 
         private void UpdatePlayers() {
