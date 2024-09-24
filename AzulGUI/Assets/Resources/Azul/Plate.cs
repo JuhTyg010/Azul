@@ -16,7 +16,7 @@ namespace Azul {
         }
 
         public Tile[] GetCounts() {
-            Tile[] tile = new Tile[this.tiles.typesCount];
+            Tile[] tile = new Tile[tiles.typesCount];
             for (int i = 0; i < tiles.typesCount; i++) {
                 tile[i] = new Tile(i, tiles.TileCountOfType(i));
 
