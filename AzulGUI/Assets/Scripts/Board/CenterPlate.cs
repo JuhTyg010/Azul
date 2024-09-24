@@ -33,6 +33,7 @@ namespace Board {
 
             if (!plateData.isFirst && tiles.Exists(x => x.GetComponent<TileObject>().id == Globals.FIRST)) {
                 var tile = tiles.Find(x => x.GetComponent<TileObject>().id == Globals.FIRST);
+                tiles.Remove(tile);
                 Destroy(tile);
             }
             inHand.Clear();
