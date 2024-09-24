@@ -31,6 +31,7 @@ public class FloorTile : MonoBehaviour {
 
         if (id == Globals.EMPTY_CELL) {
             image.color = emptyColor;
+            image.sprite = gameController.emptyTileSprite;
             isSet = false;
         }
         else {

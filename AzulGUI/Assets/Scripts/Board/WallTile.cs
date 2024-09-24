@@ -31,6 +31,7 @@ namespace Board {
             this.id = id;
             if (id == Globals.EMPTY_CELL) {
                 image.color = emptyColor;
+                image.sprite = gameController.emptyTileSprite;
             }
             else {
                 image.color = filledColor;

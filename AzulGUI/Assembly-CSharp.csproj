@@ -48,6 +48,7 @@
     <Compile Include="Assets\Resources\Azul\Plate.cs" />
     <Compile Include="Assets\Resources\Azul\Board.cs" />
     <Compile Include="Assets\Scripts\UI\NextPlayerPanel.cs" />
+    <Compile Include="Assets\Scripts\Statics\CursorSprite.cs" />
     <Compile Include="Assets\Scripts\Board\WallHandler.cs" />
     <Compile Include="Assets\Scripts\Board\FloorHandler.cs" />
     <Compile Include="Assets\Scripts\Board\PlayersBoard.cs" />

@@ -24,15 +24,7 @@ namespace Board {
             myBuffer = buffer;
             image = GetComponent<Image>();
 
-            if (id == Globals.EMPTY_CELL) {
-                isSet = false;
-                image.color = emptyColor;
-            }
-            else {
-                isSet = true;
-                image.color = filledColor;
-                image.sprite = gameController.GetTileSprite(id);
-            }
+            SetTile(id);
         }
 
 
@@ -41,6 +33,7 @@ namespace Board {
 
             if (id == Globals.EMPTY_CELL) {
                 image.color = emptyColor;
+                image.sprite = gameController.emptyTileSprite;
                 isSet = false;
             }
             else {

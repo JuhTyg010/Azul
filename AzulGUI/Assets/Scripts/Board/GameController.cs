@@ -36,7 +36,7 @@ namespace Board {
         
         [SerializeField] private List<Sprite> tileSprites;
         [SerializeField] private Sprite nextMoveFirstTile;
-        [SerializeField] public Sprite emptyTile;
+        [SerializeField] public Sprite emptyTileSprite;
         
         [SerializeField] private CursorSprite cursorSprite;
         
