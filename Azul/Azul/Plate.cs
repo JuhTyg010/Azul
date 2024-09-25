@@ -74,7 +74,6 @@ namespace Azul {
 
         public override Tile TakeTile(int id) {
             Tile outTile = tiles.GetTiles(id);
-            Debug.Assert(outTile.count != 0 && !isFirst, "We can't take tile which is not on the plate");
             isEmpty = tiles.TotalTiles() == 0;
             isFirst = false;
             return outTile;

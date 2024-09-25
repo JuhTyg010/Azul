@@ -98,7 +98,9 @@ public class CLIGameManager {
         }
 
         Console.WriteLine("Game over");
-        //TODO: write scores and stuff
+        for (int i = 0; i < game.Players.Length; i++) {
+            Console.WriteLine($"Player {game.Players[i].name}: {game.Players[i].pointCount}");
+        }
     }
             
             

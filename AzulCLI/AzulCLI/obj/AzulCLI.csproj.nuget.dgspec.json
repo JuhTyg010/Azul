@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/juhtyg/Desktop/Azul/Azul/AzulCLI/AzulCLI/AzulCLI.csproj": {}
+    "C:\\Users\\sadov\\Desktop\\GitHub\\Azul\\AzulCLI\\AzulCLI\\AzulCLI.csproj": {}
   },
   "projects": {
-    "/home/juhtyg/Desktop/Azul/Azul/AzulCLI/AzulCLI/AzulCLI.csproj": {
+    "C:\\Users\\sadov\\Desktop\\GitHub\\Azul\\AzulCLI\\AzulCLI\\AzulCLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/juhtyg/Desktop/Azul/Azul/AzulCLI/AzulCLI/AzulCLI.csproj",
+        "projectUniqueName": "C:\\Users\\sadov\\Desktop\\GitHub\\Azul\\AzulCLI\\AzulCLI\\AzulCLI.csproj",
         "projectName": "AzulCLI",
-        "projectPath": "/home/juhtyg/Desktop/Azul/Azul/AzulCLI/AzulCLI/AzulCLI.csproj",
-        "packagesPath": "/home/juhtyg/.nuget/packages/",
-        "outputPath": "/home/juhtyg/Desktop/Azul/Azul/AzulCLI/AzulCLI/obj/",
+        "projectPath": "C:\\Users\\sadov\\Desktop\\GitHub\\Azul\\AzulCLI\\AzulCLI\\AzulCLI.csproj",
+        "packagesPath": "C:\\Users\\sadov\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sadov\\Desktop\\GitHub\\Azul\\AzulCLI\\AzulCLI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/juhtyg/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\sadov\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -48,18 +53,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.7, 8.0.7]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.107/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\sadov\\.dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
