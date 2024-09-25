@@ -10,8 +10,6 @@ public class CLIGameManager {
         string? mode = Console.ReadLine();
         bool isAdvanced = mode == "advanced" || mode == "1";
         Console.Write("Enter the players names (H/B_name: ");   
-        //TODO: somehow determine humans and bots and their names
-        /*try {*/
         string[] playerSetup = Console.ReadLine().Split();
             
         List<randomBot.Bot> botPlayers = new List<randomBot.Bot>();
@@ -102,13 +100,6 @@ public class CLIGameManager {
             Console.WriteLine($"Player {game.Players[i].name}: {game.Players[i].pointCount}");
         }
     }
-            
-            
-
-    /*} catch (Exception e) {
-        Console.WriteLine(e.Message);
-        Environment.Exit(1);
-    }*/
         
     private static int[] StringArrToIntArr(string[] arr) {
         List<int> output = new List<int>();
