@@ -132,9 +132,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 129535008}
-  - component: {fileID: 129535005}
   - component: {fileID: 129535007}
   - component: {fileID: 129535009}
+  - component: {fileID: 129535010}
   m_Layer: 0
   m_Name: CursorSprite
   m_TagString: Untagged
@@ -142,18 +142,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &129535005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129535004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc76c98317579b4facf157a555a3cf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &129535007
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -229,6 +217,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &129535010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129535004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f26233de7acae26db635b63d6aaf688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 25, y: 25}
 --- !u!1 &140761015
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,9 +727,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 376764236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42a8422ba9438de479537d61467e3846, type: 3}
+  m_Script: {fileID: 11500000, guid: 83f4a17fc54059ddca91cb68d81acd3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notificationDuration: 3
 --- !u!1 &418923763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,7 +2325,7 @@ MonoBehaviour:
   - {fileID: -1588553239, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   nextMoveFirstTile: {fileID: -1150315961, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   emptyTileSprite: {fileID: 0}
-  cursorSprite: {fileID: 129535005}
+  cursorSprite: {fileID: 129535010}
   isPlacing: 0
   phase: 0
   isAdvanced: 0
