@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6039614648020924499}
   - component: {fileID: 9090823392452092782}
   - component: {fileID: 1535140450723123713}
-  - component: {fileID: 796432066247580898}
+  - component: {fileID: 3195292192981561403}
   m_Layer: 5
   m_Name: Floor
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &796432066247580898
+--- !u!114 &3195292192981561403
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,10 +85,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 234977529632977239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31d5e817b512c9d4aadf0c4899115000, type: 3}
+  m_Script: {fileID: 11500000, guid: 96e462a560bc1a22c880e6c39fdf7761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 6208589252640825952, guid: 38ab828e18b228a4481a5278122d6816, type: 3}
+  tile: {fileID: 6208589252640825952, guid: dda4073393b02da839ea38b9c4688605, type: 3}
   leftPos: {x: 0, y: 0}
   offset: {x: 28.7, y: 0}
 --- !u!1 &1673768395230643620
@@ -732,7 +732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad57bd38d73c76448a3935c1540acdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 6208589252640825952, guid: 6865ce8f4099ff14f806e333d9b955f8, type: 3}
+  tile: {fileID: 6208589252640825952, guid: fe1c8c39e0ecc36939bc29276fb1d367, type: 3}
   topLeftPos: {x: 0, y: 0}
   offset: {x: 28.7, y: 28.7}
 --- !u!1 &7019052171026651866

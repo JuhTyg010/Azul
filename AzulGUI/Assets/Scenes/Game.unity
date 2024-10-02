@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dc76c98317579b4facf157a555a3cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 50, y: 50}
 --- !u!222 &129535007
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -730,7 +729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a8422ba9438de479537d61467e3846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notificationDuration: 1.5
 --- !u!1 &418923763
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,10 +814,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 418923763}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31d5e817b512c9d4aadf0c4899115000, type: 3}
+  m_Script: {fileID: 11500000, guid: 96e462a560bc1a22c880e6c39fdf7761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 6208589252640825952, guid: 38ab828e18b228a4481a5278122d6816, type: 3}
+  tile: {fileID: 6208589252640825952, guid: dda4073393b02da839ea38b9c4688605, type: 3}
   leftPos: {x: 0, y: 0}
   offset: {x: 28.7, y: 0}
 --- !u!1 &458982484
@@ -1720,7 +1718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad57bd38d73c76448a3935c1540acdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 6208589252640825952, guid: 6865ce8f4099ff14f806e333d9b955f8, type: 3}
+  tile: {fileID: 6208589252640825952, guid: fe1c8c39e0ecc36939bc29276fb1d367, type: 3}
   topLeftPos: {x: 0, y: 0}
   offset: {x: 28.7, y: 28.7}
 --- !u!1 &1126588859
@@ -2324,9 +2322,11 @@ MonoBehaviour:
   - {fileID: -1831508692, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   - {fileID: -1588553239, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   nextMoveFirstTile: {fileID: -1150315961, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
+  emptyTileSprite: {fileID: 0}
   cursorSprite: {fileID: 129535005}
   isPlacing: 0
   phase: 0
+  isAdvanced: 0
   plates: []
   players: []
 --- !u!4 &1652634338
