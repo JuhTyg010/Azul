@@ -46,12 +46,13 @@ namespace Board {
             simpleData = data;
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
                 for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
+                    WallTile wallTile = wallData[j, i].GetComponent<WallTile>();
                     if (!gameController.isAdvanced && data[i,j] == Globals.EMPTY_CELL) {
-                        wallData[i, j].GetComponent<WallTile>().SetTile(gameController.predefinedWall[i,j]);
-                        wallData[i, j].GetComponent<WallTile>().SetTile(Globals.EMPTY_CELL, new Color(1,1,1,.5f));
+                        wallTile.SetTile(gameController.predefinedWall[i,j]);
+                        wallTile.SetTile(Globals.EMPTY_CELL, new Color(1,1,1,.5f));
                         Debug.Log($"value on {i}, {j} is {gameController.predefinedWall[i,j]}");
                     }
-                    else wallData[i, j].GetComponent<WallTile>().SetTile(data[i, j]);
+                    else wallTile.SetTile(data[i, j]);
                 }
             }
         }
