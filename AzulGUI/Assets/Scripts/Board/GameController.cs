@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Azul;
 using Statics;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Board {
@@ -42,6 +41,7 @@ namespace Board {
         
         public Holding holding;
         public bool isPlacing = false;
+        public bool isTaking = false;
         public Phase phase;
         public bool isAdvanced;
         public int[,] predefinedWall;
@@ -83,12 +83,17 @@ namespace Board {
             GenerateOtherPlayersBoards();
             mainPlayerBoard.GetComponent<PlayersBoard>().Init(board.Players[currentPlayer]);
             
+            
             DisplayNextPlayerPanel();
             
         }
 
         void Update() {
             if(!Input.anyKey) keyPressed = false;
+            if (isPlacing && !isAdvanced && Input.anyKey && !keyPressed) {
+                keyPressed = true;
+                PlaceNextTileToWall();
+            }
         }
 
         public Player GetPlayerData(int id) {
@@ -122,6 +127,7 @@ namespace Board {
                 else plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
             }
             else {
+                isTaking = false;
                 if(holding.plateId < plates.Count) plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
                 UpdatePlates();
                 UpdatePlayers();
@@ -131,6 +137,28 @@ namespace Board {
                 notification.ShowMessage("Press any key to end turn");
             }
             holding.EmptyHand();
+        }
+
+        public void TryPlaceOnWall(Vector2Int position) {
+            if(phase != Phase.Placing) throw new InvalidOperationException("You are not in phase to place on wall");
+            if(!isAdvanced) throw new InvalidOperationException("in not advanced placing is automaptic");
+            bool answer = board.Calculate(position.y);
+            if (!answer) {
+                ShowMessage("You tried to place on illegal position on the wall");
+            }
+            else {
+                isPlacing = false;
+                if (currentPlayer != board.CurrentPlayer || phase != Phase.Placing) {
+                    StartCoroutine(NextMoveInputWaiter());
+                } 
+                else {  //player still have fullBuffers
+                    NextMove(); //skip the nextPlayerPanel
+                }
+            }
+        }
+
+        public void TryPlaceOnWall(int x, int y) {
+            TryPlaceOnWall(new Vector2Int(x, y));
         }
 
         public void ShowMessage(string message) {
@@ -150,18 +178,46 @@ namespace Board {
         }
 
         private void NextMove() {
+            currentPlayer = board.CurrentPlayer;
             phase = board.Phase;
-            if(phase == Phase.Taking) notification.ShowLongMessage("Choose plate, and take some tile to buffer");
-            else if(phase == Phase.Placing && board.isAdvanced) 
-                notification.ShowLongMessage("Choose a column on the wall where you would like to place a tile from the buffer");
+            if (phase == Phase.Taking) {
+                notification.ShowLongMessage("Choose plate, and take some tile to buffer");
+                isTaking = true;
+            }
+            else if (phase == Phase.Placing) {
+                
+                isPlacing = true;
+
+                if (board.isAdvanced) {
+                    notification.ShowLongMessage(
+                        "Choose a column on the wall where you would like to place a tile from the buffer");
+                }
+                else {
+                    notification.ShowLongMessage("Press any button to move tile from buffer to the wall");
+                }
+            }
             UpdatePlates();
             UpdatePlayers();
         }
 
         private void DisplayNextPlayerPanel() {
+            currentPlayer = board.CurrentPlayer;
             nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
             nextPlayerPanel.SetActive(true);
             StartCoroutine(NextPlayerReactionWaiter());
+        }
+
+        private void PlaceNextTileToWall() {
+            isPlacing = false;
+            board.Calculate();
+            if (currentPlayer != board.CurrentPlayer || board.Phase != Phase.Placing) {
+                UpdatePlayers();
+                ShowMessage("Press any key to end turn");
+                StartCoroutine(NextMoveInputWaiter());
+            } 
+            else {  //player still have fullBuffers
+                NextMove(); //skip the nextPlayerPanel
+            }
         }
         
         private void GeneratePlates(int plateCount) {
@@ -209,6 +265,7 @@ namespace Board {
                 }
             }
         }
+       
         IEnumerator NextMoveInputWaiter()
         {
             yield return new WaitUntil(() => Input.anyKey && !keyPressed);
@@ -224,5 +281,7 @@ namespace Board {
             NextMove();
             nextPlayerPanel.SetActive(false);
         }
+
+        
     }
 }
