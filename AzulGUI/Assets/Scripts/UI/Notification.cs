@@ -11,10 +11,16 @@ public class Notification : MonoBehaviour {
     private Image image;
     private bool notificationActive;
     private float timer;
+    private CanvasGroup canvasGroup;
+
+
+   
     
     private void Awake() {
         text = GetComponentInChildren<TMP_Text>();
         image = GetComponent<Image>();
+        canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.blocksRaycasts = false;
         notificationActive = false;
         gameObject.SetActive(false);
     }

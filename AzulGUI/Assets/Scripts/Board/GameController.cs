@@ -58,15 +58,12 @@ namespace Board {
         void Awake()
         {
             int playerCount = PlayerPrefs.GetInt("PlayerCount");
-            Debug.Log(playerCount);
             List<int> bots = new List<int>();
             string[] names = new string[playerCount];
             string[] passedNames = PlayerPrefs.GetString("PlayerNames").Split('\n');
             string[] passedTypes = PlayerPrefs.GetString("PlayerTypes").Split('\n');
             
             for (int i = 0; i < playerCount; i++) {
-                Debug.Log(passedNames[i]);
-                Debug.Log(passedTypes[i]);
                 if(passedTypes[i] == "AI") bots.Add(i);
                 names[i] = passedNames[i];
             }
@@ -78,7 +75,6 @@ namespace Board {
             predefinedWall = board.predefinedWall;
             currentPlayer = board.CurrentPlayer;
             
-            Debug.Log(board.Plates.Length);
             GeneratePlates(board.Plates.Length);
             GenerateOtherPlayersBoards();
             mainPlayerBoard.GetComponent<PlayersBoard>().Init(board.Players[currentPlayer]);
@@ -107,7 +103,6 @@ namespace Board {
         }
 
         public void PutToHand(int typeId, int count, int plateId) {
-            Debug.Log("try to put to hand");
             if (!holding.isHolding) {
                 holding.PutToHand(typeId, count, plateId);
                 cursorSprite.SetVisible(true, tileSprites[typeId]);
@@ -270,6 +265,7 @@ namespace Board {
         {
             yield return new WaitUntil(() => Input.anyKey && !keyPressed);
             //TODO: recognise if it's bot move if yes do the move than call DisplayNextMove()
+            //TODO: handle game end
             keyPressed = true;
             DisplayNextPlayerPanel();
 

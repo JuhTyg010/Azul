@@ -21,7 +21,6 @@ namespace Board {
         void Awake()
         {   
             gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-            Debug.Log(gameController.tile);
             oldData = Array.Empty<Tile>();
         }
 
