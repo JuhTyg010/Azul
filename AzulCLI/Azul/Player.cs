@@ -243,7 +243,7 @@ namespace Azul {
                 rowTmp++;
             }
 
-            if (rowTmp > 1 && colTmp > 1) return rowPoints + colPoints;
+            if (rowPoints > 1 && colPoints > 1) return rowPoints + colPoints;
         
             return Math.Max(colPoints, rowPoints); // at least one is 1
         }

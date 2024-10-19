@@ -5,6 +5,7 @@ using Azul;
 using Statics;
 using TMPro;
 using UnityEngine;
+using Logger = UnityEngine.Logger;
 
 namespace Board {
     public class GameController : MonoBehaviour
@@ -67,6 +68,7 @@ namespace Board {
                 if(passedTypes[i] == "AI") bots.Add(i);
                 names[i] = passedNames[i];
             }
+            
             
             board = new Azul.Board(playerCount, names);
             

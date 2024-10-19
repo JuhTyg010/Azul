@@ -218,7 +218,6 @@ namespace Azul {
             int colPoints = 0;
             int rowPoints = 0;
             int colTmp = col;
-            int rowTmp = row;
             while (colTmp >= 0 && wall[row, colTmp] != Globals.EMPTY_CELL) {
                 colPoints++;
                 colTmp--;
@@ -231,19 +230,21 @@ namespace Azul {
                 colPoints++;
                 colTmp++;
             }
-        
-            while (rowTmp >= 0 && wall[row, rowTmp] != Globals.EMPTY_CELL) {
+            
+            int rowTmp = row;
+            while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EMPTY_CELL) {
                 rowPoints++;
                 rowTmp--;
             }
             rowTmp = row + 1;
             while (rowTmp < wall.GetLength(0) &&
-                   wall[row, rowTmp] != Globals.EMPTY_CELL) {
+                   wall[rowTmp, col] != Globals.EMPTY_CELL) {
                 rowPoints++;
                 rowTmp++;
             }
 
-            if (rowTmp > 1 && colTmp > 1) return rowPoints + colPoints;
+            if (rowPoints > 1 && colPoints > 1) return rowPoints + colPoints;
+            
         
             return Math.Max(colPoints, rowPoints); // at least one is 1
         }
