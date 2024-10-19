@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/juhtyg/Desktop/Azul/Azul/Azul/Azul.csproj": {}
+    "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj": {}
   },
   "projects": {
-    "/home/juhtyg/Desktop/Azul/Azul/Azul/Azul.csproj": {
+    "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/juhtyg/Desktop/Azul/Azul/Azul/Azul.csproj",
+        "projectUniqueName": "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj",
         "projectName": "Azul",
-        "projectPath": "/home/juhtyg/Desktop/Azul/Azul/Azul/Azul.csproj",
+        "projectPath": "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj",
         "packagesPath": "/home/juhtyg/.nuget/packages/",
-        "outputPath": "/home/juhtyg/Desktop/Azul/Azul/Azul/obj/",
+        "outputPath": "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/juhtyg/.nuget/NuGet/NuGet.Config"
