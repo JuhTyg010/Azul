@@ -232,13 +232,13 @@ namespace Azul {
                 colTmp++;
             }
         
-            while (rowTmp >= 0 && wall[row, rowTmp] != Globals.EMPTY_CELL) {
+            while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EMPTY_CELL) {
                 rowPoints++;
                 rowTmp--;
             }
             rowTmp = row + 1;
             while (rowTmp < wall.GetLength(0) &&
-                   wall[row, rowTmp] != Globals.EMPTY_CELL) {
+                   wall[rowTmp, col] != Globals.EMPTY_CELL) {
                 rowPoints++;
                 rowTmp++;
             }
