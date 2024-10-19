@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzulCLI", "AzulCLI\AzulCLI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azul", "Azul\Azul.csproj", "{2779E82B-C355-4DF9-ABEA-1CCED088BBD6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "randomBot", "randomBot\randomBot.csproj", "{55CD83E0-B9A6-4334-B130-94CD126D1213}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{2779E82B-C355-4DF9-ABEA-1CCED088BBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2779E82B-C355-4DF9-ABEA-1CCED088BBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2779E82B-C355-4DF9-ABEA-1CCED088BBD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55CD83E0-B9A6-4334-B130-94CD126D1213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55CD83E0-B9A6-4334-B130-94CD126D1213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55CD83E0-B9A6-4334-B130-94CD126D1213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55CD83E0-B9A6-4334-B130-94CD126D1213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -11,6 +11,19 @@
         "runtime": {
           "bin/placeholder/Azul.dll": {}
         }
+      },
+      "randomBot/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Azul": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/randomBot.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/randomBot.dll": {}
+        }
       }
     }
   },
@@ -19,11 +32,17 @@
       "type": "project",
       "path": "../Azul/Azul.csproj",
       "msbuildProject": "../Azul/Azul.csproj"
+    },
+    "randomBot/1.0.0": {
+      "type": "project",
+      "path": "../randomBot/randomBot.csproj",
+      "msbuildProject": "../randomBot/randomBot.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "Azul >= 1.0.0"
+      "Azul >= 1.0.0",
+      "randomBot >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -53,6 +72,9 @@
           "projectReferences": {
             "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj": {
               "projectPath": "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj"
+            },
+            "/home/juhtyg/Desktop/Azul/AzulCLI/randomBot/randomBot.csproj": {
+              "projectPath": "/home/juhtyg/Desktop/Azul/AzulCLI/randomBot/randomBot.csproj"
             }
           }
         }

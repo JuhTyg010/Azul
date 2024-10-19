@@ -7,9 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="Azul">
-        <HintPath>..\..\Azul\Azul\bin\Debug\net8.0\Azul.dll</HintPath>
-      </Reference>
+      <ProjectReference Include="..\Azul\Azul.csproj" />
     </ItemGroup>
 
 </Project>

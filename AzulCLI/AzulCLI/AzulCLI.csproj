@@ -8,13 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="randomBot">
-        <HintPath>..\..\randomBot\randomBot\bin\Debug\net8.0\randomBot.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Azul\Azul.csproj" />
+      <ProjectReference Include="..\randomBot\randomBot.csproj" />
     </ItemGroup>
 
 </Project>
