@@ -2747,10 +2747,11 @@ MonoBehaviour:
   - {fileID: -1588553239, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   nextMoveFirstTile: {fileID: -1150315961, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   emptyTileSprite: {fileID: 0}
-  cursorSprite: {fileID: 129535010}
   gameOverPanel: {fileID: 2013865813}
+  cursorSprite: {fileID: 129535010}
   isPlacing: 0
   isTaking: 0
+  isBotsTurn: 0
   phase: 0
   isAdvanced: 0
   plates: []
@@ -2921,7 +2922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2013865814
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3032,7 +3033,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 500, y: 126.56}
+  m_SizeDelta: {x: 709.68, y: 126.56}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2093878083
 MonoBehaviour:
@@ -3117,7 +3118,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -1.2831421, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

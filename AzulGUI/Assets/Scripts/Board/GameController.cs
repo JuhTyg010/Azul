@@ -5,7 +5,8 @@ using Azul;
 using Statics;
 using TMPro;
 using UnityEngine;
-using Logger = UnityEngine.Logger;
+using randomBot;
+using Unity.VisualScripting;
 
 namespace Board {
     public class GameController : MonoBehaviour
@@ -38,11 +39,13 @@ namespace Board {
         [SerializeField] private Sprite nextMoveFirstTile;
         [SerializeField] public Sprite emptyTileSprite;
         
+        [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private CursorSprite cursorSprite;
         
         public Holding holding;
         public bool isPlacing = false;
         public bool isTaking = false;
+        public bool isBotsTurn = false;
         public Phase phase;
         public bool isAdvanced;
         public int[,] predefinedWall;
@@ -50,6 +53,7 @@ namespace Board {
         
         private int currentPlayer;
         private Azul.Board board;
+        private List<Bot> bots = new List<Bot>();
         public List<GameObject> plates = new List<GameObject>();
         public List<GameObject> players = new List<GameObject>();
         
@@ -59,13 +63,12 @@ namespace Board {
         void Awake()
         {
             int playerCount = PlayerPrefs.GetInt("PlayerCount");
-            List<int> bots = new List<int>();
             string[] names = new string[playerCount];
             string[] passedNames = PlayerPrefs.GetString("PlayerNames").Split('\n');
             string[] passedTypes = PlayerPrefs.GetString("PlayerTypes").Split('\n');
             
             for (int i = 0; i < playerCount; i++) {
-                if(passedTypes[i] == "AI") bots.Add(i);
+                if(passedTypes[i] == "AI") bots.Add(new Bot(i));
                 names[i] = passedNames[i];
             }
             
@@ -88,7 +91,7 @@ namespace Board {
 
         void Update() {
             if(!Input.anyKey) keyPressed = false;
-            if (isPlacing && !isAdvanced && Input.anyKey && !keyPressed) {
+            if (isPlacing && !isAdvanced && Input.anyKey && !keyPressed && !isBotsTurn) {
                 keyPressed = true;
                 PlaceNextTileToWall();
             }
@@ -104,8 +107,11 @@ namespace Board {
             return new Vector3Int(Globals.EMPTY_CELL, Globals.EMPTY_CELL, Globals.EMPTY_CELL);
         }
 
-        public void PutToHand(int typeId, int count, int plateId) {
+        public void PutToHand(int typeId, int plateId) {
             if (!holding.isHolding) {
+                int count;
+                if(plateId == board.Plates.Length) count = board.Center.TileCountOfType(typeId);
+                else count = board.Plates[plateId].TileCountOfType(plateId);
                 holding.PutToHand(typeId, count, plateId);
                 cursorSprite.SetVisible(true, tileSprites[typeId]);
             }
@@ -177,11 +183,12 @@ namespace Board {
         private void NextMove() {
             currentPlayer = board.CurrentPlayer;
             phase = board.Phase;
-            if (phase == Phase.Taking) {
+            if(bots.Exists(x => x.id == currentPlayer)) isBotsTurn = true;
+            if (phase == Phase.Taking && !isBotsTurn) {
                 notification.ShowLongMessage("Choose plate, and take some tile to buffer");
                 isTaking = true;
             }
-            else if (phase == Phase.Placing) {
+            else if (phase == Phase.Placing && !isBotsTurn) {
                 
                 isPlacing = true;
 
@@ -197,24 +204,66 @@ namespace Board {
             UpdatePlayers();
         }
 
-        private void DisplayNextPlayerPanel() {
-            currentPlayer = board.CurrentPlayer;
-            nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
-            nextPlayerPanel.SetActive(true);
-            StartCoroutine(NextPlayerReactionWaiter());
-        }
-
         private void PlaceNextTileToWall() {
             isPlacing = false;
             board.Calculate();
             if (currentPlayer != board.CurrentPlayer || board.Phase != Phase.Placing) {
                 UpdatePlayers();
-                ShowMessage("Press any key to end turn");
-                StartCoroutine(NextMoveInputWaiter());
+                if(!isBotsTurn) StartCoroutine(NextMoveInputWaiter());
+                else DisplayNextPlayerPanel();
+                Debug.Log("Next one placing");
             } 
             else {  //player still have fullBuffers
                 NextMove(); //skip the nextPlayerPanel
+                Debug.Log("I still can place a tile");
             }
+        }
+        
+        private void BotMove(Bot bot) {
+            nextPlayerPanel.SetActive(false);
+            if (phase == Phase.Taking) {
+                var response = bot.DoMove(board).Split();
+                int typeId = int.Parse(response[1]);
+                int plateId = int.Parse(response[0]);
+                int bufferId = int.Parse(response[2]);
+                board.Move(plateId, typeId, bufferId);
+                isTaking = false;
+
+            } else if (phase == Phase.Placing) {
+                if (!isAdvanced) {
+                    PlaceNextTileToWall();
+                }
+                else {
+                    while (currentPlayer == board.CurrentPlayer) {
+                        var response = int.Parse(bot.Place(board));
+                        board.Calculate(response);
+                    }
+                }
+                isPlacing = false;
+            }
+            else {
+                Debug.LogError($"Unknown possible move for bot in this phase: {phase}");
+            }
+
+            isBotsTurn = false;
+            DisplayNextPlayerPanel();
+        }
+
+        private void ShowGameOverPanel() {
+            Dictionary<string, int> players = new Dictionary<string, int>();
+            int maxScore = -999;
+            string maxName = null;
+            gameOverPanel.SetActive(true);
+            foreach (var player in board.Players) {
+                if (player.pointCount > maxScore) {
+                    maxScore = player.pointCount;
+                    maxName = player.name;
+                }
+                players.Add(player.name, player.pointCount);
+            }
+            var endGame = gameOverPanel.GetComponent<endGamePanel>();
+            endGame.setTable(players);
+            endGame.setWinner(maxName);
         }
         
         private void GeneratePlates(int plateCount) {
@@ -262,15 +311,24 @@ namespace Board {
                 }
             }
         }
+        
+        private void DisplayNextPlayerPanel() {
+            currentPlayer = board.CurrentPlayer;
+            if (board.Phase == Phase.GameOver) {
+                ShowGameOverPanel();
+                return;
+            }
+            nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
+            nextPlayerPanel.SetActive(true);
+            StartCoroutine(NextPlayerReactionWaiter());
+        }
        
         IEnumerator NextMoveInputWaiter()
         {
+            ShowMessage("Press any key to end turn");
             yield return new WaitUntil(() => Input.anyKey && !keyPressed);
-            //TODO: recognise if it's bot move if yes do the move than call DisplayNextMove()
-            //TODO: handle game end
             keyPressed = true;
             DisplayNextPlayerPanel();
-
         }
 
         IEnumerator NextPlayerReactionWaiter() {
@@ -278,6 +336,9 @@ namespace Board {
             keyPressed = true;
             NextMove();
             nextPlayerPanel.SetActive(false);
+            if (isBotsTurn) {
+                BotMove(bots.Find(x => x.id == currentPlayer));
+            }
         }
 
         

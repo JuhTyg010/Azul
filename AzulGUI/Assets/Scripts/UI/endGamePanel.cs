@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class endGamePanel : MonoBehaviour {
     [SerializeField] private GameObject winnerText;
@@ -12,7 +15,7 @@ public class endGamePanel : MonoBehaviour {
 
     public void setWinner(string name) {
         winnerName = name;
-        winnerText.name = $"Winner : {name}";
+        winnerText.GetComponent<TMP_Text>().text = $"Winner : {name}";
     }
 
     public void setTable(Dictionary<string, int> table) {
@@ -21,7 +24,7 @@ public class endGamePanel : MonoBehaviour {
             tableString += $"{pair.Key} : {pair.Value}\n";
         }
 
-        tableText.name = tableString;
+        tableText.GetComponent<TMP_Text>().text = tableString;
     }
 
     public void OnClickToMenu() {
