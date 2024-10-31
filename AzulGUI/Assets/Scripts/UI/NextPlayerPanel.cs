@@ -1,18 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class NextPlayerPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private TMP_Text textField;
+    
+    private string text;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+    public void SetText(string text) {
+        this.text = text;
+        textField.text = text;
     }
 }

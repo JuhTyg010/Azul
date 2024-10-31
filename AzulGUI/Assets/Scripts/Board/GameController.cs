@@ -316,11 +316,16 @@ namespace Board {
         
         private void DisplayNextPlayerPanel() {
             currentPlayer = board.CurrentPlayer;
+            var panelHandler = nextPlayerPanel.GetComponent<NextPlayerPanel>();
             if (board.Phase == Phase.GameOver) {
                 ShowGameOverPanel();
                 return;
             }
+            NextMove();
+            string currentPhase = phase == Phase.Placing ? "placing" : "taking";
             nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
+            if(isBotsTurn) panelHandler.SetText($"It's {currentPhase} phase. Press to let <color=red>Bot</color> play");
+            panelHandler.SetText($"It's {currentPhase} phase. Press any button to continue");
             nextPlayerPanel.SetActive(true);
             StartCoroutine(NextPlayerReactionWaiter());
         }
