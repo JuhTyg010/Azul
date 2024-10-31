@@ -2748,6 +2748,7 @@ MonoBehaviour:
   nextMoveFirstTile: {fileID: -1150315961, guid: fa6d855fb35cea83491d6b057f76361b, type: 3}
   emptyTileSprite: {fileID: 0}
   cursorSprite: {fileID: 129535010}
+  gameOverPanel: {fileID: 2013865813}
   isPlacing: 0
   isTaking: 0
   phase: 0
@@ -2851,7 +2852,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1978369351}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2013865817}
+        m_TargetAssemblyTypeName: endGamePanel, Assembly-CSharp
+        m_MethodName: OnClickToMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1978369351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2901,6 +2914,7 @@ GameObject:
   - component: {fileID: 2013865814}
   - component: {fileID: 2013865816}
   - component: {fileID: 2013865815}
+  - component: {fileID: 2013865817}
   m_Layer: 5
   m_Name: Game over
   m_TagString: Untagged
@@ -2969,6 +2983,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013865813}
   m_CullTransparentMesh: 1
+--- !u!114 &2013865817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013865813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d067581a834b6fa42adcb3772d083084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winnerText: {fileID: 2093878081}
+  tableText: {fileID: 608817748}
 --- !u!1 &2093878081
 GameObject:
   m_ObjectHideFlags: 0

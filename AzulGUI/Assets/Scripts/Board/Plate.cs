@@ -40,7 +40,7 @@ namespace Board {
                     count++;
                 }
             }
-            gameController.PutToHand(tileId, count, id);
+            gameController.PutToHand(tileId, id);
         }
 
         public void ReturnFromHand() {

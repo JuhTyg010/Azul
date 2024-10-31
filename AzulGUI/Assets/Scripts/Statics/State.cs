@@ -36,6 +36,11 @@ namespace Statics {
             if(!isHolding) throw new Exception("You dont have nothing to hold.");
             return new Vector3Int(typeId, count, plateId);
         }
+
+        public override string ToString() {
+            if(!isHolding) return "Empty hand";
+            return $"plateId: {plateId}, typeId: {typeId}, count: {count}";
+        }
     }
     
 }

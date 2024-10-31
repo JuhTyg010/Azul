@@ -50,6 +50,7 @@
     <Compile Include="Assets/Scripts/UI/NextPlayerPanel.cs" />
     <Compile Include="Assets/Scripts/Statics/CursorSprite.cs" />
     <Compile Include="Assets/Scripts/Board/WallHandler.cs" />
+    <Compile Include="Assets/Resources/randomBot/Bot.cs" />
     <Compile Include="Assets/Scripts/Board/FloorHandler.cs" />
     <Compile Include="Assets/Scripts/Board/PlayersBoard.cs" />
     <Compile Include="Assets/Scripts/UI/Notification.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Assets/Resources/Azul/Utils.cs" />
     <Compile Include="Assets/Scripts/Menu/PlayerConfig.cs" />
     <Compile Include="Assets/Scripts/Board/GameController.cs" />
+    <Compile Include="Assets/Scripts/UI/endGamePanel.cs" />
     <Compile Include="Assets/Scripts/Menu/MenuController.cs" />
     <Compile Include="Assets/Scripts/Board/BufferHolder.cs" />
     <Compile Include="Assets/Scripts/Menu/PlayersSetup.cs" />
