@@ -220,6 +220,7 @@ namespace Board {
         }
         
         private void BotMove(Bot bot) {
+            Debug.Log("hiding panel");
             nextPlayerPanel.SetActive(false);
             if (phase == Phase.Taking) {
                 var response = bot.DoMove(board).Split();
@@ -231,7 +232,8 @@ namespace Board {
 
             } else if (phase == Phase.Placing) {
                 if (!isAdvanced) {
-                    PlaceNextTileToWall();
+                    while(currentPlayer == board.CurrentPlayer)
+                        PlaceNextTileToWall();
                 }
                 else {
                     while (currentPlayer == board.CurrentPlayer) {
@@ -334,8 +336,8 @@ namespace Board {
         IEnumerator NextPlayerReactionWaiter() {
             yield return new WaitUntil(() => Input.anyKey && !keyPressed);
             keyPressed = true;
-            NextMove();
             nextPlayerPanel.SetActive(false);
+            NextMove();
             if (isBotsTurn) {
                 BotMove(bots.Find(x => x.id == currentPlayer));
             }
