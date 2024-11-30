@@ -183,6 +183,7 @@ namespace Board {
         private void NextMove() {
             currentPlayer = board.CurrentPlayer;
             phase = board.Phase;
+            nextPlayerPanel.SetActive(false);
             if(bots.Exists(x => x.id == currentPlayer)) isBotsTurn = true;
             if (phase == Phase.Taking && !isBotsTurn) {
                 notification.ShowLongMessage("Choose plate, and take some tile to buffer");

@@ -655,7 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37dd397577846e816b4c755ebd57bae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextPlayerPanelText: {fileID: 1508139699}
+  textField: {fileID: 1508139701}
 --- !u!1 &376764236
 GameObject:
   m_ObjectHideFlags: 0
