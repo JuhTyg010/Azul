@@ -49,7 +49,7 @@ namespace Board {
                     WallTile wallTile = wallData[j, i].GetComponent<WallTile>();
                     if (!gameController.isAdvanced && data[i,j] == Globals.EMPTY_CELL) {
                         wallTile.SetTile(gameController.predefinedWall[i,j]);
-                        wallTile.SetTile(Globals.EMPTY_CELL, new Color(1,1,1,.5f));
+                        wallTile.SetTile(Globals.EMPTY_CELL, new Color(1,1,1,.2f));
                     }
                     else wallTile.SetTile(data[i, j]);
                 }
