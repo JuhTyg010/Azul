@@ -111,9 +111,9 @@ namespace Board {
             if (!holding.isHolding) {
                 int count;
                 if(plateId == board.Plates.Length) count = board.Center.TileCountOfType(typeId);
-                else count = board.Plates[plateId].TileCountOfType(plateId);
+                else count = board.Plates[plateId].TileCountOfType(typeId);
                 holding.PutToHand(typeId, count, plateId);
-                cursorSprite.SetVisible(true, tileSprites[typeId]);
+                cursorSprite.SetVisible(true, tileSprites[typeId], count.ToString());
             }
             else throw new InvalidOperationException("Player already is holding something");
         }
@@ -121,7 +121,7 @@ namespace Board {
         public void TryPlaceFromHand(int bufferId) {
             if(phase != Phase.Taking) throw new InvalidOperationException("You are not in phase to put to buffers");
             if (!holding.isHolding) throw new InvalidOperationException("Can't place if not holding anything");
-            cursorSprite.SetVisible(false, nextMoveFirstTile);
+            cursorSprite.SetVisible(false, nextMoveFirstTile, "");
             bool answer = board.Move(holding.plateId, holding.typeId, bufferId);
             if (!answer) {
                 Debug.LogError("Something went wrong, illegal move happened");
@@ -330,6 +330,7 @@ namespace Board {
             nextPlayerPanel.SetActive(true);
             StartCoroutine(NextPlayerReactionWaiter());
         }
+
        
         IEnumerator NextMoveInputWaiter()
         {
