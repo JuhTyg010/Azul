@@ -22,7 +22,11 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.Save();
         
         SceneManager.LoadScene("Game");
-    } 
+    }
+
+    public void OnQuitButtonClicked() {
+        Application.Quit();
+    }
     
     public void OnAboutButtonClicked(){} //TODO: here will be the rules 
     
