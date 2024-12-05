@@ -126,6 +126,11 @@ namespace Board {
             else throw new InvalidOperationException("Player already is holding something");
         }
 
+        public bool CanPlaceFromHand(int bufferId) {
+            if(phase != Phase.Taking) return false;
+            if (!holding.isHolding) return false;
+            return board.CanMove(holding.plateId, holding.typeId, bufferId);
+        }
         public void TryPlaceFromHand(int bufferId) {
             if(phase != Phase.Taking) throw new InvalidOperationException("You are not in phase to put to buffers");
             if (!holding.isHolding) throw new InvalidOperationException("Can't place if not holding anything");

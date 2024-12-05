@@ -45,8 +45,7 @@ public class BufferHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
         if (gameController.holding.isHolding) {
-            var hold = gameController.holding;
-            if (type == (int) hold.typeId || type == Globals.EMPTY_CELL) {
+            if (gameController.CanPlaceFromHand(size - 1)) {
                 foreach (var tile in bufferTiles) {
                     tile.SetColor(new Color(0, 0, 0, .3f));
                 }
