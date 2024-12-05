@@ -52,7 +52,7 @@ namespace Board {
         
         
         private int currentPlayer;
-        private Azul.Board board;
+        public Azul.Board board;
         private List<Bot> bots = new List<Bot>();
         public List<GameObject> plates = new List<GameObject>();
         public List<GameObject> players = new List<GameObject>();

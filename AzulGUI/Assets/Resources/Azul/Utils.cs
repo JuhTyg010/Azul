@@ -44,11 +44,20 @@ namespace Azul {
             filled = Globals.EMPTY_CELL;
         }
 
-        public bool Assign(int id, int count) {
+        public bool CanAssign(int id, int count) {
             if (filled != Globals.EMPTY_CELL && typeId != id) {
                 Logger.WriteLine($"invalid type, needed {typeId}, got {id}");
                 return false;
             }
+            return true;
+        }
+
+        public bool CanAssign(Tile tile) {
+            return CanAssign(tile.id, tile.count);
+        }
+        
+        public bool Assign(int id, int count) {
+            if (!CanAssign(id, count)) return false;
 
             if (typeId == Globals.EMPTY_CELL) filled = 0;
             typeId = id;
