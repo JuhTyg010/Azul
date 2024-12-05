@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using Azul;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.WSA;
 using Image = UnityEngine.UI.Image;
 
 namespace Board {
