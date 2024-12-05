@@ -1,0 +1,347 @@
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 1, 2, 0, 0, 1, ], id: 2 [ 0, 1, 1, 0, 2, ], id: 3 [ 1, 1, 1, 0, 1, ], id: 4 [ 2, 0, 1, 0, 1, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 1 tile 0 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 1, 1, 0, 2, ], id: 3 [ 1, 1, 1, 0, 1, ], id: 4 [ 2, 0, 1, 0, 1, ], id: 5 [ 0, 2, 0, 0, 1, ]
+Player Player_1 (1) taking from plate 2 tile 4 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 1, 1, 1, 0, 1, ], id: 4 [ 2, 0, 1, 0, 1, ], id: 5 [ 0, 3, 1, 0, 1, ]
+Player Player_2 (0) taking from plate 0 tile 3 to buffer 4: successfully filled, current state 2 of 5
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 1, 1, 1, 0, 1, ], id: 4 [ 2, 0, 1, 0, 1, ], id: 5 [ 1, 4, 1, 0, 1, ]
+Player Player_1 (1) taking from plate 4 tile 0 to buffer 1: invalid buffer
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 1, 1, 1, 0, 1, ], id: 4 [ 2, 0, 1, 0, 1, ], id: 5 [ 1, 4, 1, 0, 1, ]
+Player Player_1 (1) taking from plate 4 tile 0 to buffer 2: successfully filled, current state 2 of 3
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 1, 1, 1, 0, 1, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 1, 4, 2, 0, 2, ]
+Player Player_2 (0) taking from plate 3 tile 2 to buffer 2: successfully filled, current state 1 of 3
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 3, 1, 0, 0, 0, ], id: 1 [ 0, 1, 0, 0, 3, ], id: 2 [ 0, 2, 0, 1, 1, ], id: 3 [ 0, 3, 1, 0, 0, ], id: 4 [ 0, 0, 2, 1, 1, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player helca (0) taking from plate 3 tile 1 to buffer 4: successfully filled, current state 3 of 5
+Move:
+Plate data:  id: 0 [ 3, 1, 0, 0, 0, ], id: 1 [ 0, 1, 0, 0, 3, ], id: 2 [ 0, 2, 0, 1, 1, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 2, 1, 1, ], id: 5 [ 0, 0, 1, 0, 0, ]
+Player marecek (1) taking from plate 1 tile 4 to buffer 2: successfully filled, current state 3 of 3
+Move:
+Plate data:  id: 0 [ 3, 1, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 2, 0, 1, 1, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 2, 1, 1, ], id: 5 [ 0, 1, 1, 0, 0, ]
+Player helca (0) taking from plate 0 tile 0 to buffer 2: successfully filled, current state 3 of 3
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 2, 0, 1, 1, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 2, 1, 1, ], id: 5 [ 0, 2, 1, 0, 0, ]
+Player marecek (1) taking from plate 2 tile 1 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 2, 1, 1, ], id: 5 [ 0, 2, 1, 1, 1, ]
+Player helca (0) taking from plate 4 tile 4 to buffer 1: successfully filled, current state 1 of 2
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 2, 3, 2, 1, ]
+Player marecek (1) taking from plate 5 tile 2 to buffer 3: successfully filled, current state 3 of 4
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 2, 0, 2, 1, ]
+Player helca (0) taking from plate 5 tile 1 to buffer 4: successfully filled, current state 5 of 5
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 0, 0, 2, 1, ]
+Player marecek (1) taking from plate 5 tile 3 to buffer 4: successfully filled, current state 2 of 5
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 0, 0, 0, 1, ]
+Player helca (0) taking from plate 5 tile 4 to buffer 1: successfully filled, current state 2 of 2
+Phase changed to filling
+Filling:
+Player's data: helca (0)  [-1 ] [-1-1-1-1-1] [4 4 ] [-1-1-1-1-1] [0 0 0 ] [-1-1-1-1-1] [-1 -1 -1 -1 ] [-1-1-1-1-1] [1 1 1 1 1 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: helca (1)  [-1 ] [-1-1-1-1-1] [-1 -1 ] [4-1-1-1-1] [0 0 0 ] [-1-1-1-1-1] [-1 -1 -1 -1 ] [-1-1-1-1-1] [1 1 1 1 1 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 2 tiles of type 0 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: helca (2)  [-1 ] [-1-1-1-1-1] [-1 -1 ] [4-1-1-1-1] [-1 -1 -1 ] [-1-10-1-1] [-1 -1 -1 -1 ] [-1-1-1-1-1] [1 1 1 1 1 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 4 tiles of type 1 put to trash
+successfully placed on wall new points: 3
+Player helca is clearing the floor new points 3
+Filling:
+Player's data: marecek (0)  [-1 ] [-1-1-1-1-1] [1 1 ] [-1-1-1-1-1] [4 4 4 ] [-1-1-1-1-1] [2 2 2 -1 ] [-1-1-1-1-1] [3 3 -1 -1 -1 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: marecek (1)  [-1 ] [-1-1-1-1-1] [-1 -1 ] [-1-11-1-1] [4 4 4 ] [-1-1-1-1-1] [2 2 2 -1 ] [-1-1-1-1-1] [3 3 -1 -1 -1 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 2 tiles of type 4 put to trash
+successfully placed on wall new points: 2
+Player marecek is clearing the floor new points 1
+Player marecek will start next turn
+All players filled to the wall
+Move:
+Plate data:  id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 2, 0, 1, 1, ], id: 2 [ 0, 0, 0, 3, 1, ], id: 3 [ 2, 1, 1, 0, 0, ], id: 4 [ 0, 2, 0, 1, 1, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player marecek (1) taking from plate 2 tile 3 to buffer 4: successfully filled, current state 5 of 5
+Move:
+Plate data:  id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 2, 0, 1, 1, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 2, 1, 1, 0, 0, ], id: 4 [ 0, 2, 0, 1, 1, ], id: 5 [ 0, 0, 0, 0, 1, ]
+Player helca (0) taking from plate 1 tile 4 to buffer 2: successfully filled, current state 1 of 3
+Move:
+Plate data:  id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 2, 1, 1, 0, 0, ], id: 4 [ 0, 2, 0, 1, 1, ], id: 5 [ 0, 2, 0, 1, 1, ]
+Player marecek (1) taking from plate 3 tile 0 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 2, 0, 1, 1, ], id: 5 [ 0, 3, 1, 1, 1, ]
+Player helca (0) taking from plate 4 tile 1 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 3, 1, 2, 2, ]
+Player marecek (1) taking from plate 0 tile 0 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 4, 1, 3, 3, ]
+Player helca (0) taking from plate 5 tile 4 to buffer 2: successfully filled, current state 3 of 3
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 4, 1, 3, 0, ]
+Player marecek (1) taking from plate 5 tile 3 to buffer 3: invalid buffer
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 4, 1, 3, 0, ]
+Player marecek (1) taking from plate 5 tile 3 to buffer 2: successfully filled, current state 3 of 3
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 4, 1, 0, 0, ]
+Player helca (0) taking from plate 5 tile 1 to buffer 3: successfully filled, current state 4 of 4
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 0, 1, 0, 0, ]
+Player marecek (1) taking from plate 5 tile 2 to buffer 3: successfully filled, current state 4 of 4
+Phase changed to filling
+Filling:
+Player's data: helca (3)  [-1 ] [-1-1-1-1-1] [1 1 ] [4-1-1-1-1] [4 4 4 ] [-1-10-1-1] [1 1 1 1 ] [-1-1-1-1-1] [-1 -1 -1 -1 -1 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 5
+Filling:
+Player's data: helca (5)  [-1 ] [-1-1-1-1-1] [-1 -1 ] [4-11-1-1] [4 4 4 ] [-1-10-1-1] [1 1 1 1 ] [-1-1-1-1-1] [-1 -1 -1 -1 -1 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 2 tiles of type 4 put to trash
+successfully placed on wall new points: 7
+Filling:
+Player's data: helca (7)  [-1 ] [-1-1-1-1-1] [-1 -1 ] [4-11-1-1] [-1 -1 -1 ] [-140-1-1] [1 1 1 1 ] [-1-1-1-1-1] [-1 -1 -1 -1 -1 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 3 tiles of type 1 put to trash
+successfully placed on wall new points: 8
+Player helca is clearing the floor new points 6
+ 1 tiles of type 4 put to trash
+Player helca will start next turn
+Filling:
+Player's data: marecek (1)  [0 ] [-1-1-1-1-1] [0 0 ] [-1-11-1-1] [3 3 3 ] [-14-1-1-1] [2 2 2 2 ] [-1-1-1-1-1] [3 3 3 3 3 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: marecek (2)  [-1 ] [0-1-1-1-1] [0 0 ] [-1-11-1-1] [3 3 3 ] [-14-1-1-1] [2 2 2 2 ] [-1-1-1-1-1] [3 3 3 3 3 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 6
+Filling:
+Player's data: marecek (6)  [-1 ] [0-1-1-1-1] [-1 -1 ] [-101-1-1] [3 3 3 ] [-14-1-1-1] [2 2 2 2 ] [-1-1-1-1-1] [3 3 3 3 3 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 2 tiles of type 3 put to trash
+successfully placed on wall new points: 8
+Filling:
+Player's data: marecek (8)  [-1 ] [0-1-1-1-1] [-1 -1 ] [-101-1-1] [-1 -1 -1 ] [34-1-1-1] [2 2 2 2 ] [-1-1-1-1-1] [3 3 3 3 3 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 3 tiles of type 2 put to trash
+successfully placed on wall new points: 10
+Filling:
+Player's data: marecek (10)  [-1 ] [0-1-1-1-1] [-1 -1 ] [-101-1-1] [-1 -1 -1 ] [34-1-1-1] [-1 -1 -1 -1 ] [2-1-1-1-1] [3 3 3 3 3 ] [-1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 4 tiles of type 3 put to trash
+successfully placed on wall new points: 11
+Player marecek is clearing the floor new points 11
+All players filled to the wall
+Move:
+Plate data:  id: 0 [ 0, 0, 1, 2, 1, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 1, 2, 1, 0, ], id: 3 [ 1, 1, 1, 0, 1, ], id: 4 [ 1, 2, 0, 0, 1, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player helca (0) taking from plate 3 tile 0 to buffer 1: successfully filled, current state 1 of 2
+Move:
+Plate data:  id: 0 [ 0, 0, 1, 2, 1, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 1, 2, 1, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 1, 2, 0, 0, 1, ], id: 5 [ 0, 1, 1, 0, 1, ]
+Player marecek (1) taking from plate 2 tile 2 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 0, 0, 1, 2, 1, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 1, 2, 0, 0, 1, ], id: 5 [ 0, 2, 1, 1, 1, ]
+Player helca (0) taking from plate 4 tile 1 to buffer 2: successfully filled, current state 2 of 3
+Move:
+Plate data:  id: 0 [ 0, 0, 1, 2, 1, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 1, 2, 1, 1, 2, ]
+Player marecek (1) taking from plate 1 tile 2 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 0, 0, 1, 2, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 3, 3, 1, 1, 2, ]
+Player helca (0) taking from plate 0 tile 2 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 3, 3, 1, 3, 3, ]
+Player marecek (1) taking from plate 5 tile 0 to buffer 2: successfully filled, current state 3 of 3
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 3, 1, 3, 3, ]
+Player helca (0) taking from plate 5 tile 4 to buffer 3: successfully filled, current state 3 of 4
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 3, 1, 3, 0, ]
+Player marecek (1) taking from plate 5 tile 3 to buffer 3: successfully filled, current state 3 of 4
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 3, 1, 0, 0, ]
+Player helca (0) taking from plate 5 tile 2 to buffer 4: successfully filled, current state 1 of 5
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 3, 0, 0, 0, ]
+Player marecek (1) taking from plate 5 tile 1 to buffer 4: successfully filled, current state 3 of 5
+Phase changed to filling
+Filling:
+Player's data: helca (6)  [2 ] [-1-1-1-1-1] [0 -1 ] [4-11-1-1] [1 1 -1 ] [-140-1-1] [4 4 4 -1 ] [-1-1-1-11] [2 -1 -1 -1 -1 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 9
+Player helca is clearing the floor new points 9
+Filling:
+Player's data: marecek (11)  [2 ] [0-1-1-1-1] [2 2 ] [-101-1-1] [0 0 0 ] [34-1-1-1] [3 3 3 -1 ] [2-1-1-1-1] [1 1 1 -1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 13
+Filling:
+Player's data: marecek (13)  [-1 ] [0-12-1-1] [2 2 ] [-101-1-1] [0 0 0 ] [34-1-1-1] [3 3 3 -1 ] [2-1-1-1-1] [1 1 1 -1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 16
+Filling:
+Player's data: marecek (16)  [-1 ] [0-12-1-1] [-1 -1 ] [-1012-1] [0 0 0 ] [34-1-1-1] [3 3 3 -1 ] [2-1-1-1-1] [1 1 1 -1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 2 tiles of type 0 put to trash
+successfully placed on wall new points: 22
+Player marecek is clearing the floor new points 21
+Player marecek will start next turn
+All players filled to the wall
+Move:
+Plate data:  id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 1, 0, 0, 1, 2, ], id: 2 [ 2, 0, 1, 1, 0, ], id: 3 [ 2, 0, 0, 1, 1, ], id: 4 [ 0, 1, 1, 2, 0, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player marecek (1) taking from plate 1 tile 4 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 2, 0, 1, 1, 0, ], id: 3 [ 2, 0, 0, 1, 1, ], id: 4 [ 0, 1, 1, 2, 0, ], id: 5 [ 1, 0, 0, 1, 0, ]
+Player helca (0) taking from plate 3 tile 4 to buffer 3: successfully filled, current state 4 of 4
+Move:
+Plate data:  id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 2, 0, 1, 1, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 1, 1, 2, 0, ], id: 5 [ 3, 0, 0, 2, 0, ]
+Player marecek (1) taking from plate 2 tile 3 to buffer 3: successfully filled, current state 4 of 4
+Move:
+Plate data:  id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 1, 1, 2, 0, ], id: 5 [ 5, 0, 1, 2, 0, ]
+Player helca (0) taking from plate 4 tile 1 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 5, 0, 2, 4, 0, ]
+Player marecek (1) taking from plate 0 tile 1 to buffer 4: successfully filled, current state 4 of 5
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 7, 0, 2, 5, 0, ]
+Player helca (0) taking from plate 5 tile 2 to buffer 4: successfully filled, current state 3 of 5
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 7, 0, 0, 5, 0, ]
+Player marecek (1) taking from plate 5 tile 3 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 7, 0, 0, 0, 0, ]
+Player helca (0) taking from plate 5 tile 0 to buffer 1: successfully filled, current state 2 of 2
+Phase changed to filling
+Filling:
+Player's data: helca (9)  [1 ] [-1-12-1-1] [0 0 ] [4-11-1-1] [1 1 -1 ] [-140-1-1] [4 4 4 4 ] [-1-1-1-11] [2 2 2 -1 -1 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 11
+Filling:
+Player's data: helca (11)  [-1 ] [-112-1-1] [0 0 ] [4-11-1-1] [1 1 -1 ] [-140-1-1] [4 4 4 4 ] [-1-1-1-11] [2 2 2 -1 -1 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 17
+Filling:
+Player's data: helca (17)  [-1 ] [-112-1-1] [-1 -1 ] [401-1-1] [1 1 -1 ] [-140-1-1] [4 4 4 4 ] [-1-1-1-11] [2 2 2 -1 -1 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 3 tiles of type 4 put to trash
+successfully placed on wall new points: 21
+Player helca is clearing the floor new points 7
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+Player helca will start next turn
+Filling:
+Player's data: marecek (21)  [3 ] [0-12-1-1] [4 4 ] [-1012-1] [-1 -1 -1 ] [340-1-1] [3 3 3 3 ] [2-1-1-1-1] [1 1 1 1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 0 tiles of type 3 put to trash
+successfully placed on wall new points: 25
+Filling:
+Player's data: marecek (25)  [-1 ] [0-123-1] [4 4 ] [-1012-1] [-1 -1 -1 ] [340-1-1] [3 3 3 3 ] [2-1-1-1-1] [1 1 1 1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 33
+Filling:
+Player's data: marecek (33)  [-1 ] [0-123-1] [-1 -1 ] [4012-1] [-1 -1 -1 ] [340-1-1] [3 3 3 3 ] [2-1-1-1-1] [1 1 1 1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 3 tiles of type 3 put to trash
+successfully placed on wall new points: 38
+Player marecek is clearing the floor new points 32
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+All players filled to the wall
+Move:
+Plate data:  id: 0 [ 1, 0, 3, 0, 0, ], id: 1 [ 0, 0, 2, 2, 0, ], id: 2 [ 1, 0, 2, 0, 1, ], id: 3 [ 1, 0, 1, 1, 1, ], id: 4 [ 1, 0, 1, 0, 2, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player helca (0) taking from plate 1 tile 2 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 1, 0, 3, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ], id: 3 [ 1, 0, 1, 1, 1, ], id: 4 [ 1, 0, 1, 0, 2, ], id: 5 [ 0, 0, 0, 2, 0, ]
+Player marecek (1) taking from plate 5 tile 3 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 1, 0, 3, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ], id: 3 [ 1, 0, 1, 1, 1, ], id: 4 [ 1, 0, 1, 0, 2, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player helca (0) taking from plate 4 tile 0 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 1, 0, 3, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ], id: 3 [ 1, 0, 1, 1, 1, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 0, 1, 0, 2, ]
+Player marecek (1) taking from plate 0 tile 2 to buffer 2: successfully filled, current state 3 of 3
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ], id: 3 [ 1, 0, 1, 1, 1, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 1, 0, 1, 0, 2, ]
+Player helca (0) taking from plate 2 tile 2 to buffer 4: successfully filled, current state 5 of 5
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 1, 0, 1, 1, 1, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 2, 0, 1, 0, 3, ]
+Player marecek (1) taking from plate 3 tile 4 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 3, 0, 2, 1, 3, ]
+Player helca (0) taking from plate 5 tile 0 to buffer 3: successfully filled, current state 3 of 4
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 0, 2, 1, 3, ]
+Player marecek (1) taking from plate 5 tile 4 to buffer 3: successfully filled, current state 3 of 4
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 0, 2, 1, 0, ]
+Player helca (0) taking from plate 5 tile 2 to buffer 2: invalid buffer
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 0, 2, 1, 0, ]
+Player helca (0) taking from plate 5 tile 3 to buffer 5: is on floor
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 0, 0, 0, 0, 0, ], id: 5 [ 0, 0, 2, 0, 0, ]
+Player marecek (1) taking from plate 5 tile 2 to buffer 5: is on floor
+Phase changed to filling
+Filling:
+Player's data: helca (7)  [0 ] [-112-1-1] [2 2 ] [401-1-1] [1 1 -1 ] [-140-1-1] [0 0 0 -1 ] [-1-14-11] [2 2 2 2 2 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 12
+Filling:
+Player's data: helca (12)  [-1 ] [012-1-1] [2 2 ] [401-1-1] [1 1 -1 ] [-140-1-1] [0 0 0 -1 ] [-1-14-11] [2 2 2 2 2 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 16
+Filling:
+Player's data: helca (16)  [-1 ] [012-1-1] [-1 -1 ] [4012-1] [1 1 -1 ] [-140-1-1] [0 0 0 -1 ] [-1-14-11] [2 2 2 2 2 ] [1-1-1-1-1] System.Collections.Generic.List`1[System.Int32]
+ 4 tiles of type 2 put to trash
+successfully placed on wall new points: 18
+Player helca is clearing the floor new points 17
+ 1 tiles of type 3 put to trash
+Filling:
+Player's data: marecek (32)  [4 ] [0-123-1] [3 3 ] [4012-1] [2 2 2 ] [340-1-1] [4 4 4 -1 ] [23-1-1-1] [1 1 1 1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 0 tiles of type 4 put to trash
+successfully placed on wall new points: 35
+Filling:
+Player's data: marecek (35)  [-1 ] [0-1234] [3 3 ] [4012-1] [2 2 2 ] [340-1-1] [4 4 4 -1 ] [23-1-1-1] [1 1 1 1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 1 tiles of type 3 put to trash
+successfully placed on wall new points: 42
+marecek (42)  [-1 ] [0-1234] [3 3 ] [40123] [2 2 2 ] [340-1-1] [4 4 4 -1 ] [23-1-1-1] [1 1 1 1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32] win
+Filling:
+Player's data: marecek (42)  [-1 ] [0-1234] [-1 -1 ] [40123] [2 2 2 ] [340-1-1] [4 4 4 -1 ] [23-1-1-1] [1 1 1 1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32]
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 45
+marecek (45)  [-1 ] [0-1234] [-1 -1 ] [40123] [2 2 2 ] [340-12] [4 4 4 -1 ] [23-1-1-1] [1 1 1 1 -1 ] [-1-13-1-1] System.Collections.Generic.List`1[System.Int32] win
+Player marecek is clearing the floor new points 41
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 2 put to trash
+Player marecek will start next turn
+-------GGG-------A-------M------M--EEEEEE-------OOO----V-----V----EEEEEE----RRRR------
+------G---G-----A-A------MM----MM--E-----------O---O---V-----V----E---------R---R-----
+-----G---------A---A-----M-M--M-M--EEEE-------O-----O---V---V-----EEEE------RRRR------
+-----G--GGG---AAAAAAA----M--MM--M--EEEE-------O-----O---V---V-----EEEE------R--R------
+------G---G---A-----A----M------M--E-----------O---O-----V-V------E---------R---R-----
+-------GGG---A-------A---M------M--EEEEEE-------OOO-------V-------EEEEEE----R---R-----
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 1, 0, 0, 1, 2, ], id: 1 [ 1, 0, 1, 1, 1, ], id: 2 [ 1, 2, 0, 1, 0, ], id: 3 [ 0, 0, 3, 1, 0, ], id: 4 [ 1, 1, 1, 0, 1, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 1 tile 3 to buffer 0: successfully filled, current state 1 of 1
+Move:
+Plate data:  id: 0 [ 1, 0, 0, 1, 2, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 2, 0, 1, 0, ], id: 3 [ 0, 0, 3, 1, 0, ], id: 4 [ 1, 1, 1, 0, 1, ], id: 5 [ 1, 0, 1, 0, 1, ]
+Player Player_1 (1) taking from plate 3 tile 2 to buffer 2: successfully filled, current state 3 of 3
+Move:
+Plate data:  id: 0 [ 1, 0, 0, 1, 2, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 2, 0, 1, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 1, 1, 1, 0, 1, ], id: 5 [ 1, 0, 1, 1, 1, ]
+Player Player_2 (0) taking from plate 0 tile 4 to buffer 1: successfully filled, current state 2 of 2
+Move:
+Plate data:  id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 2, 0, 1, 0, ], id: 3 [ 0, 0, 0, 0, 0, ], id: 4 [ 1, 1, 1, 0, 1, ], id: 5 [ 2, 0, 1, 2, 1, ]
+Player Player_1 (1) taking from plate 4 tile 0 to buffer 1: successfully filled, current state 1 of 2
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data:  id: 0 [ 0, 0, 2, 1, 1, ], id: 1 [ 3, 0, 0, 1, 0, ], id: 2 [ 1, 0, 3, 0, 0, ], id: 3 [ 2, 1, 0, 1, 0, ], id: 4 [ 2, 0, 0, 0, 2, ], id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) taking from plate 1 tile 0 to buffer 2: successfully filled, current state 3 of 3
