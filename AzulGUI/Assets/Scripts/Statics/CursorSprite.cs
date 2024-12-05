@@ -33,7 +33,7 @@ public class CursorSprite : MonoBehaviour {
         }
     }
 
-    public void SetVisible(bool visible, Sprite sprite, string message) {
+    public void SetVisible(bool visible, Sprite sprite, string message = "") {
         isVisible = visible;
         image.sprite = sprite;
         text.text = message;

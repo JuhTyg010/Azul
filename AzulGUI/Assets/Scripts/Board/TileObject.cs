@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Azul;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 using Image = UnityEngine.UI.Image;
 
 namespace Board {
@@ -29,7 +31,7 @@ namespace Board {
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
-            if(!gameController.holding.isHolding) GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
+            if(!gameController.holding.isHolding && id != Globals.FIRST) GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData) {
@@ -37,7 +39,7 @@ namespace Board {
         }
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
-            if(!gameController.holding.isHolding) myPlate.PutInHand(id);
+            if(!gameController.holding.isHolding && id != Globals.FIRST) myPlate.PutInHand(id);
         }
     }
 }

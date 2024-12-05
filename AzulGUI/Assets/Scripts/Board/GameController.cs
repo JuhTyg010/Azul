@@ -95,6 +95,14 @@ namespace Board {
                 keyPressed = true;
                 PlaceNextTileToWall();
             }
+
+            if (holding.isHolding && Input.GetMouseButtonDown(1)) {
+                cursorSprite.SetVisible(false, nextMoveFirstTile);
+                if(holding.plateId == plates.Count) 
+                    centerPlateBoard.GetComponent<CenterPlate>().ReturnFromHand();
+                else plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
+                holding.EmptyHand();
+            }
         }
 
         public Player GetPlayerData(int id) {
@@ -121,7 +129,7 @@ namespace Board {
         public void TryPlaceFromHand(int bufferId) {
             if(phase != Phase.Taking) throw new InvalidOperationException("You are not in phase to put to buffers");
             if (!holding.isHolding) throw new InvalidOperationException("Can't place if not holding anything");
-            cursorSprite.SetVisible(false, nextMoveFirstTile, "");
+            cursorSprite.SetVisible(false, nextMoveFirstTile);
             bool answer = board.Move(holding.plateId, holding.typeId, bufferId);
             if (!answer) {
                 Debug.LogError("Something went wrong, illegal move happened");
