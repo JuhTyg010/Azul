@@ -71,8 +71,16 @@ namespace randomBot {
             int index = random.Next(possibleMoves.Count);
             Debug.Log($"Possible moves: {possibleMoves.Count}");
             //TODO: select one with higher point gain, aka prefer to not put tiles to the floor
-            Option move = possibleMoves[index];
-            return $"{move.plate} {move.tile} {move.buffer}";
+            Option option = new Option();
+            int bestGain = Int32.MinValue;
+            foreach (var possibleMove in possibleMoves) {
+                int gain = GainIfPlayed(possibleMove, board);
+                if (gain > bestGain) {
+                    option = possibleMove;
+                    bestGain = gain;
+                }
+            }
+            return $"{option.plate} {option.tile} {option.buffer}";
 
         }
 
@@ -154,8 +162,8 @@ namespace randomBot {
             int plateCount = board.Plates.Length;
             List<Option> possibleMoves = new List<Option>();
             for (int plate = 0; plate <= plateCount; plate++) {
-                for (int buffer = 0; buffer < Globals.TYPE_COUNT; buffer++) {
-                    for (int type = 0; type < Globals.TYPE_COUNT; type++) {
+                for (int type = 0; type < Globals.TYPE_COUNT; type++) {
+                    for (int buffer = 0; buffer <= Globals.TYPE_COUNT; buffer++) {  //equal for floor
                         if (board.CanMove(plate, type, buffer)) {
                             possibleMoves.Add(new Option(plate, type, buffer));
                         }
@@ -168,6 +176,9 @@ namespace randomBot {
         
         private int GainIfPlayed(Option possibleMove, Azul.Board board) {
             int gain = 0;
+            if (possibleMove.buffer >= Globals.WALL_DIMENSION) {
+                return -10;
+            }
             Player me = board.Players[id];
             int bufferSize = possibleMove.buffer + 1;
             Tile buffTile = me.GetBufferData(possibleMove.buffer);
@@ -177,7 +188,23 @@ namespace randomBot {
                 int toFloor = toFill - (bufferSize - buffTile.count);
                 if (toFloor >= 0) {
                     gain -= toFloor;
-                    //TODO: count how big is gain
+                    int clearGain = 0;
+                    if (board.isAdvanced) {
+                        int currGain = 0;
+                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
+                            currGain = me.CalculatePointsIfFilled(possibleMove.buffer, col);
+                            if(currGain > clearGain) clearGain = currGain;
+                        }
+                    }
+                    else {
+                        int row = possibleMove.buffer;
+                        int col = 0;
+                        for(;col < Globals.WALL_DIMENSION; col++)
+                            if (board.predefinedWall[row, col] == possibleMove.tile)
+                                break;
+                        clearGain = me.CalculatePointsIfFilled(row,col);
+                    }
+                    gain += clearGain;
                 }
             }
             
