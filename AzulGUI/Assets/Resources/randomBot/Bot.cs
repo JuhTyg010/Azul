@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Azul;
-using UnityEngine;
 using Random = System.Random;
 
 namespace randomBot {
@@ -69,7 +68,6 @@ namespace randomBot {
             return $"{chosenPlate} {chosenType} {chosenBuffer}";*/
             var possibleMoves = PossibleMoves(board);
             int index = random.Next(possibleMoves.Count);
-            Debug.Log($"Possible moves: {possibleMoves.Count}");
             //TODO: select one with higher point gain, aka prefer to not put tiles to the floor
             Option option = new Option();
             int bestGain = Int32.MinValue;
@@ -186,6 +184,29 @@ namespace randomBot {
             int toFill = p.TileCountOfType(possibleMove.tile);
             if (buffTile.id == possibleMove.tile) {
                 int toFloor = toFill - (bufferSize - buffTile.count);
+                if (toFloor >= 0) {
+                    gain -= toFloor;
+                    int clearGain = 0;
+                    if (board.isAdvanced) {
+                        int currGain = 0;
+                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
+                            currGain = me.CalculatePointsIfFilled(possibleMove.buffer, col);
+                            if(currGain > clearGain) clearGain = currGain;
+                        }
+                    }
+                    else {
+                        int row = possibleMove.buffer;
+                        int col = 0;
+                        for(;col < Globals.WALL_DIMENSION; col++)
+                            if (board.predefinedWall[row, col] == possibleMove.tile)
+                                break;
+                        clearGain = me.CalculatePointsIfFilled(row,col);
+                    }
+                    gain += clearGain;
+                }
+            }
+            else {
+                int toFloor = bufferSize - toFill;
                 if (toFloor >= 0) {
                     gain -= toFloor;
                     int clearGain = 0;

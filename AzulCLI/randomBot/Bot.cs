@@ -205,6 +205,29 @@ namespace randomBot {
                     gain += clearGain;
                 }
             }
+            else {
+                int toFloor = bufferSize - toFill;
+                if (toFloor >= 0) {
+                    gain -= toFloor;
+                    int clearGain = 0;
+                    if (board.isAdvanced) {
+                        int currGain = 0;
+                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
+                            currGain = me.CalculatePointsIfFilled(possibleMove.buffer, col);
+                            if(currGain > clearGain) clearGain = currGain;
+                        }
+                    }
+                    else {
+                        int row = possibleMove.buffer;
+                        int col = 0;
+                        for(;col < Globals.WALL_DIMENSION; col++)
+                            if (board.predefinedWall[row, col] == possibleMove.tile)
+                                break;
+                        clearGain = me.CalculatePointsIfFilled(row,col);
+                    }
+                    gain += clearGain;
+                }
+            }
             
             return gain;
         }

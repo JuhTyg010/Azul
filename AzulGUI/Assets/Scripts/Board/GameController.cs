@@ -45,7 +45,7 @@ namespace Board {
         public Holding holding;
         public bool isPlacing = false;
         public bool isTaking = false;
-        public bool isBotsTurn = false;
+        //public bool isBotsTurn = false;
         public Phase phase;
         public bool isAdvanced;
         public int[,] predefinedWall;
@@ -91,7 +91,7 @@ namespace Board {
 
         void Update() {
             if(!Input.anyKey) keyPressed = false;
-            if (isPlacing && !isAdvanced && Input.anyKey && !keyPressed && !isBotsTurn) {
+            if (isPlacing && !isAdvanced && Input.anyKey && !keyPressed && !IsBotMove()) {
                 keyPressed = true;
                 PlaceNextTileToWall();
             }
@@ -197,12 +197,11 @@ namespace Board {
             currentPlayer = board.CurrentPlayer;
             phase = board.Phase;
             nextPlayerPanel.SetActive(false);
-            if(bots.Exists(x => x.id == currentPlayer)) isBotsTurn = true;
-            if (phase == Phase.Taking && !isBotsTurn) {
+            if (phase == Phase.Taking && !IsBotMove()) {
                 notification.ShowLongMessage("Choose plate, and take some tile to buffer");
                 isTaking = true;
             }
-            else if (phase == Phase.Placing && !isBotsTurn) {
+            else if (phase == Phase.Placing && !IsBotMove()) {
                 
                 isPlacing = true;
 
@@ -223,7 +222,7 @@ namespace Board {
             board.Calculate();
             if (currentPlayer != board.CurrentPlayer || board.Phase != Phase.Placing) {
                 UpdatePlayers();
-                if(!isBotsTurn) StartCoroutine(NextMoveInputWaiter());
+                if(!IsBotMove()) StartCoroutine(NextMoveInputWaiter());
                 else DisplayNextPlayerPanel();
                 Debug.Log("Next one placing");
             } 
@@ -260,8 +259,6 @@ namespace Board {
             else {
                 Debug.LogError($"Unknown possible move for bot in this phase: {phase}");
             }
-
-            isBotsTurn = false;
             DisplayNextPlayerPanel();
         }
 
@@ -338,12 +335,15 @@ namespace Board {
             NextMove();
             string currentPhase = phase == Phase.Placing ? "placing" : "taking";
             nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
-            if(isBotsTurn) panelHandler.SetText($"It's {currentPhase} phase. Press to let <color=red>Bot</color> play");
+            if(IsBotMove()) panelHandler.SetText($"It's {currentPhase} phase. Press to let <color=red>Bot</color> play");
             panelHandler.SetText($"It's {currentPhase} phase. Press any button to continue");
             nextPlayerPanel.SetActive(true);
             StartCoroutine(NextPlayerReactionWaiter());
         }
 
+        private bool IsBotMove() {
+            return bots.Exists(x => x.id == currentPlayer);
+        }
        
         IEnumerator NextMoveInputWaiter()
         {
@@ -358,7 +358,7 @@ namespace Board {
             keyPressed = true;
             nextPlayerPanel.SetActive(false);
             NextMove();
-            if (isBotsTurn) {
+            if (IsBotMove()) {
                 BotMove(bots.Find(x => x.id == currentPlayer));
             }
         }
