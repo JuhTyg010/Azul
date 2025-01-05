@@ -49,8 +49,30 @@ namespace Azul {
             Phase = Phase.Taking;
             FillPlates();
         }
-    
+
+        public bool CanMove(int plateId, int tileId, int bufferId) {
+            Plate p;
+            bool isFirstInCenter = false;
+            if (plateId == Plates.Length) {
+                p = Center;
+                if (!fisrtTaken) {
+                    isFirstInCenter = true;
+                }
+            } else {
+                p = Plates[plateId];
+            }
+            var data = p.GetCounts();
+            if (data[tileId].count == 0) {
+                return false;
+            }
+
+            return Players[CurrentPlayer].CanPlace(bufferId, data[tileId], isFirstInCenter);
+        }
+        
         public bool Move(int plateId, int tileId, int bufferId) {   //center is always last
+
+            #region Logging
+
             Logger.WriteLine("Move:");
             Logger.Write("Plate data: ");
             for (int i = 0; i < Plates.Length; i++) {
@@ -67,6 +89,13 @@ namespace Azul {
                 Logger.WriteLine("invalid plate");
                 return false;
             }
+
+            #endregion
+
+            if (!CanMove(plateId, tileId, bufferId)) {
+                return false;
+            }
+            
             Plate p;
             bool isFirstInCenter = false;
             if (plateId == Plates.Length) {
@@ -79,16 +108,11 @@ namespace Azul {
                 p = Plates[plateId];
             }
             var data = p.GetCounts();
-            if (data[tileId].count == 0) {
-                Logger.WriteLine("no tiles");
-                return false;
-            }
         
-            bool success = Players[CurrentPlayer].Place(bufferId, data[tileId], isFirstInCenter);
+            Players[CurrentPlayer].Place(bufferId, data[tileId], isFirstInCenter); //is always true cause of CanMove
 
             #region succieded
 
-            if (success) {
                 p.TakeTile(tileId);
                 var newData = p.GetCounts();
                 p.ClearPlate();
@@ -115,7 +139,6 @@ namespace Azul {
                             CurrentPlayer = nextFirst;
                         }
                     }
-
                     if (!isSkiped) Phase = Phase.Placing;
 
                 }
@@ -123,11 +146,10 @@ namespace Azul {
                     CurrentPlayer++;
                     if (CurrentPlayer == Players.Length) CurrentPlayer = 0;
                 }
-            }
 
             #endregion
         
-            return success;
+            return true;
         }
     
         public bool Calculate(int col = Globals.EMPTY_CELL) {

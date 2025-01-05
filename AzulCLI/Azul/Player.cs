@@ -22,7 +22,7 @@ namespace Azul {
             this.name = name;
             this.game = game;
             pointCount = 0;
-            wall = new int[5, 5];
+            wall = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
             floor = new List<int>();
             List<Buffer> bufferList = new List<Buffer>();
             for (int i = 0; i < wall.GetLength(0); i++) {
@@ -34,44 +34,54 @@ namespace Azul {
 
             buffers = bufferList.ToArray();
         }
-    
+
+        public bool CanPlace(int row, Tile tile, bool isFirst = false) {
+            if (row == Globals.WALL_DIMENSION) return true;
+            if (!possibleRow(row, tile.id)) return false;
+            if (!possibleBuffer(row, tile.id)) return false;
+            
+            return buffers[row].CanAssign(tile);
+        }
         public bool Place(int row, Tile tile, bool isFirst = false) {   //row can be Globals.WALL_DIMENSION for floor
-            if (row == Globals.WALL_DIMENSION) {
-                Logger.WriteLine("is on floor");
-                for (int i = 0; i < tile.count; i++) {
-                    if (floor.Count < floorSize) floor.Add(tile.id);
-                    else break;
+            
+            bool canPlace = CanPlace(row, tile);
+            if (canPlace) {
+                if (row == Globals.WALL_DIMENSION) {
+                    Logger.WriteLine("is on floor");
+                    for (int i = 0; i < tile.count; i++) {
+                        if (floor.Count < floorSize) floor.Add(tile.id);
+                        else break;
+                    }
+                    return true;
                 }
-
-                return true;
-            }
-
-            if (!possibleRow(row, tile.id)) {
-                Logger.WriteLine("invalid row");
-                return false;
-            }
-
-            if (!possibleBuffer(row, tile.id)) {
-                Logger.WriteLine("invalid buffer");
-                return false;
-            }
-            if (isFirst) {
-                this.isFirst = true;
-                floor.Add(Globals.FIRST);
-            }
-            int toFloor = tile.count - buffers[row].FreeToFill();
-            bool answer = buffers[row].Assign(tile);
+                
+                if (isFirst) {
+                    this.isFirst = true;
+                    floor.Add(Globals.FIRST);
+                }
+                int toFloor = tile.count - buffers[row].FreeToFill();
+                buffers[row].Assign(tile);
         
-            if (answer && floor.Count < floorSize) {
-                for (int i = 0; i < toFloor; i++) {
-                    floor.Add(tile.id);
-                    if (floor.Count == floorSize) {
-                        break;
+                if (floor.Count < floorSize) {
+                    for (int i = 0; i < toFloor; i++) {
+                        floor.Add(tile.id);
+                        if (floor.Count == floorSize) {
+                            break;
+                        }
                     }
                 }
             }
-
-            return answer;
+            else {
+                if (!possibleRow(row, tile.id)) {
+                    Logger.WriteLine("invalid row");
+                    return false;
+                }
+                if (!possibleBuffer(row, tile.id)) {
+                    Logger.WriteLine("invalid buffer");
+                    return false;
+                }
+            }
+            return canPlace;
         }
     
         public Tile GetBufferData(int row) {
@@ -214,11 +224,44 @@ namespace Azul {
             return true;
         }
 
+        public int CalculatePointsIfFilled(int row, int col) {
+            int colPoints = 0;
+            int rowPoints = 0;
+            int colTmp = col;
+            while (colTmp >= 0 && wall[row, colTmp] != Globals.EMPTY_CELL || colTmp == col) {
+                colPoints++;
+                colTmp--;
+            }
+
+            colTmp = col + 1;
+            while (colTmp < wall.GetLength(1) &&
+                   wall[row, colTmp] != Globals.EMPTY_CELL) {
+                
+                colPoints++;
+                colTmp++;
+            }
+            
+            int rowTmp = row;
+            while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EMPTY_CELL || row == rowTmp) {
+                rowPoints++;
+                rowTmp--;
+            }
+            rowTmp = row + 1;
+            while (rowTmp < wall.GetLength(0) &&
+                   wall[rowTmp, col] != Globals.EMPTY_CELL) {
+                rowPoints++;
+                rowTmp++;
+            }
+
+            if (rowPoints > 1 && colPoints > 1) return rowPoints + colPoints;
+            
+        
+            return Math.Max(colPoints, rowPoints); // at least one is 1
+        }
         private int calculatePoints(int row, int col) {
             int colPoints = 0;
             int rowPoints = 0;
             int colTmp = col;
-            int rowTmp = row;
             while (colTmp >= 0 && wall[row, colTmp] != Globals.EMPTY_CELL) {
                 colPoints++;
                 colTmp--;
@@ -231,7 +274,8 @@ namespace Azul {
                 colPoints++;
                 colTmp++;
             }
-        
+            
+            int rowTmp = row;
             while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EMPTY_CELL) {
                 rowPoints++;
                 rowTmp--;
@@ -244,6 +288,7 @@ namespace Azul {
             }
 
             if (rowPoints > 1 && colPoints > 1) return rowPoints + colPoints;
+            
         
             return Math.Max(colPoints, rowPoints); // at least one is 1
         }

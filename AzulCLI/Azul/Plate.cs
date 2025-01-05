@@ -16,7 +16,7 @@ namespace Azul {
         }
 
         public Tile[] GetCounts() {
-            Tile[] tile = new Tile[this.tiles.typesCount];
+            Tile[] tile = new Tile[tiles.typesCount];
             for (int i = 0; i < tiles.typesCount; i++) {
                 tile[i] = new Tile(i, tiles.TileCountOfType(i));
 
@@ -74,6 +74,7 @@ namespace Azul {
 
         public override Tile TakeTile(int id) {
             Tile outTile = tiles.GetTiles(id);
+            Debug.Assert(outTile.count != 0 && !isFirst, "We can't take tile which is not on the plate");
             isEmpty = tiles.TotalTiles() == 0;
             isFirst = false;
             return outTile;
