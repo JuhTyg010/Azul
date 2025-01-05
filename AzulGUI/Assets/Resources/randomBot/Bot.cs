@@ -58,6 +58,7 @@ namespace randomBot {
             var possibleMoves = PossibleMoves(board);
             int index = random.Next(possibleMoves.Count);
             Debug.Log($"Possible moves: {possibleMoves.Count}");
+            //TODO: select one with higher point gain, aka prefer to not put tiles to the floor
             int[] move = possibleMoves[index];
             return $"{move[0]} {move[1]} {move[2]}";
 
