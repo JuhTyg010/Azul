@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Azul;
+using UnityEngine;
+using Random = System.Random;
 
 namespace randomBot {
 
@@ -14,7 +15,7 @@ namespace randomBot {
         }
 
         public string DoMove(Azul.Board board) {
-            Player me = board.Players[id];
+            /*Player me = board.Players[id];
             List<int> possibleBuffers = PossibleBuffers(me);
             List<int> possibleTypes = new List<int>();
 
@@ -53,7 +54,13 @@ namespace randomBot {
                 }
             }
 
-            return $"{chosenPlate} {chosenType} {chosenBuffer}";
+            return $"{chosenPlate} {chosenType} {chosenBuffer}";*/
+            var possibleMoves = PossibleMoves(board);
+            int index = random.Next(possibleMoves.Count);
+            Debug.Log($"Possible moves: {possibleMoves.Count}");
+            int[] move = possibleMoves[index];
+            return $"{move[0]} {move[1]} {move[2]}";
+
         }
 
         public string Place(Azul.Board board) {
@@ -130,5 +137,19 @@ namespace randomBot {
             return posibleBuffers;
         }
 
+        private List<int[]> PossibleMoves(Azul.Board board) {
+            int plateCount = board.Plates.Length;
+            List<int[]> possibleMoves = new List<int[]>();
+            for (int plate = 0; plate <= plateCount; plate++) {
+                for (int buffer = 0; buffer < Globals.TYPE_COUNT; buffer++) {
+                    for (int type = 0; type < Globals.TYPE_COUNT; type++) {
+                        if (board.CanMove(plate, type, buffer)) {
+                            possibleMoves.Add(new int[] {plate, type, buffer});
+                        }
+                    }
+                }
+            }
+            return possibleMoves;
+        }
     }
 }
