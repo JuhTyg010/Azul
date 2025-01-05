@@ -1,10 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Azul;
 using UnityEngine;
 using Random = System.Random;
 
 namespace randomBot {
 
+    internal struct Option {
+        public int plate;
+        public int tile;
+        public int buffer;
+        
+        public Option(int plate, int tile, int buffer) {
+            this.plate = plate;
+            this.tile = tile;
+            this.buffer = buffer;
+        }
+    }
     public class Bot {
         private Random random;
         public int id { get; private set; }
@@ -59,8 +71,8 @@ namespace randomBot {
             int index = random.Next(possibleMoves.Count);
             Debug.Log($"Possible moves: {possibleMoves.Count}");
             //TODO: select one with higher point gain, aka prefer to not put tiles to the floor
-            int[] move = possibleMoves[index];
-            return $"{move[0]} {move[1]} {move[2]}";
+            Option move = possibleMoves[index];
+            return $"{move.plate} {move.tile} {move.buffer}";
 
         }
 
@@ -138,19 +150,38 @@ namespace randomBot {
             return posibleBuffers;
         }
 
-        private List<int[]> PossibleMoves(Azul.Board board) {
+        private List<Option> PossibleMoves(Azul.Board board) {
             int plateCount = board.Plates.Length;
-            List<int[]> possibleMoves = new List<int[]>();
+            List<Option> possibleMoves = new List<Option>();
             for (int plate = 0; plate <= plateCount; plate++) {
                 for (int buffer = 0; buffer < Globals.TYPE_COUNT; buffer++) {
                     for (int type = 0; type < Globals.TYPE_COUNT; type++) {
                         if (board.CanMove(plate, type, buffer)) {
-                            possibleMoves.Add(new int[] {plate, type, buffer});
+                            possibleMoves.Add(new Option(plate, type, buffer));
                         }
                     }
                 }
             }
             return possibleMoves;
+        }
+
+        
+        private int GainIfPlayed(Option possibleMove, Azul.Board board) {
+            int gain = 0;
+            Player me = board.Players[id];
+            int bufferSize = possibleMove.buffer + 1;
+            Tile buffTile = me.GetBufferData(possibleMove.buffer);
+            Plate p = possibleMove.plate < board.Plates.Length ? board.Plates[possibleMove.plate] : board.Center;
+            int toFill = p.TileCountOfType(possibleMove.tile);
+            if (buffTile.id == possibleMove.tile) {
+                int toFloor = toFill - (bufferSize - buffTile.count);
+                if (toFloor >= 0) {
+                    gain -= toFloor;
+                    //TODO: count how big is gain
+                }
+            }
+            
+            return gain;
         }
     }
 }
