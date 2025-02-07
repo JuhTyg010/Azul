@@ -7,22 +7,34 @@ public class DQNTrainer
     private NeuralNetwork policyNet;
     private NeuralNetwork targetNet;
     private ReplayBuffer replayBuffer;
-
+    
+    private string fileName = "DQNTrainer";
+    
     private int stateSize;
     private int actionSize;
     private double epsilon = 1.0;
     private double epsilonDecay = 0.995;
     private double epsilonMin = 0.01;
     private double gamma = 0.99;
+    
+    private int episodeCount = 0;
+    private const int AutoSaveInterval = 10;
 
     public DQNTrainer(int stateSize, int actionSize, int replayBufferCapacity)
     {
         this.stateSize = stateSize;
         this.actionSize = actionSize;
 
-        policyNet = new NeuralNetwork( 20, 128,50);
-        targetNet = policyNet.Clone(); // Target network is a copy of the policy network
+        policyNet = new NeuralNetwork(stateSize, 128, actionSize);
+        targetNet = policyNet.Clone();
         replayBuffer = new ReplayBuffer(replayBufferCapacity);
+
+
+        if (ModelSaver.Load(policyNet)) {
+            targetNet = policyNet.Clone();
+            episodeCount = targetNet.episodeCount;
+        }
+
     }
 
     public void TrainEpisode(Func<double[]> getInitialState, Func<double[], int, (double[], double, bool)> step)
@@ -30,32 +42,32 @@ public class DQNTrainer
         var state = getInitialState();
         bool done = false;
 
-        while (!done)
-        {
-            // Epsilon-greedy action selection
+        while (!done) {
+            
             int action;
-            if (new Random().NextDouble() < epsilon)
-            {
+            if (new Random().NextDouble() < epsilon) {
                 action = new Random().Next(actionSize); // Random action
             }
-            else
-            {
+            else {
                 var qValues = policyNet.Predict(state);
                 action = Array.IndexOf(qValues, Max(qValues)); // Greedy action
             }
 
-            // Perform action and store the experience
             var (nextState, reward, isDone) = step(state, action);
             replayBuffer.Add(state, action, reward, nextState, isDone);
             state = nextState;
             done = isDone;
 
-            // Training
             if (replayBuffer.Count >= 32)
                 TrainOnBatch(32);
 
-            // Decay epsilon
             epsilon = Math.Max(epsilonMin, epsilon * epsilonDecay);
+        }
+
+        // Auto-save model every N episodes
+        episodeCount++;
+        if (episodeCount % AutoSaveInterval == 0) {
+            ModelSaver.Save(policyNet, fileName + episodeCount + ".json");
         }
     }
 
@@ -71,7 +83,7 @@ public class DQNTrainer
             var qValues = policyNet.Predict(state);
             var nextQValues = targetNet.Predict(nextState);
 
-            // Q-learning target
+            // 🔹 Compute Q-learning target
             qValues[action] = reward + (done ? 0 : gamma * Max(nextQValues));
 
             states[i] = state;

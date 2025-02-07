@@ -15,7 +15,9 @@ public static class ModelSaver {
                 weights1 = network.GetWeights1(),
                 weights2 = network.GetWeights2(),
                 biases1 = network.GetBiases1(),
-                biases2 = network.GetBiases2()
+                biases2 = network.GetBiases2(),
+                episodeCount = network.episodeCount
+                
             };
 
             string json = JsonSerializer.Serialize(modelData, new JsonSerializerOptions { WriteIndented = true });
@@ -45,6 +47,7 @@ public static class ModelSaver {
                     network.SetWeights2(modelData.weights2);
                     network.SetBiases1(modelData.biases1);
                     network.SetBiases2(modelData.biases2);
+                    network.episodeCount = modelData.episodeCount;
                     Console.WriteLine($"[ModelSaver] Model loaded from {filePath}");
                     return true;
                 }
@@ -63,5 +66,6 @@ public static class ModelSaver {
             public double[][] weights2 { get; set; }
             public double[] biases1 { get; set; }
             public double[] biases2 { get; set; }
+            public int episodeCount { get; set; }
         }
 }

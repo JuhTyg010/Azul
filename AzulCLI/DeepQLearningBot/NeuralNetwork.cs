@@ -8,6 +8,7 @@ public class NeuralNetwork
     private double[][] weights2; // Hidden layer to output
     private double[] biases1;    // Hidden layer biases
     private double[] biases2;    // Output layer biases
+    public int episodeCount;
 
     private Random random = new Random();
 
@@ -24,6 +25,7 @@ public class NeuralNetwork
         weights2 = InitializeMatrix(hiddenSize, outputSize);
         biases1 = InitializeVector(hiddenSize);
         biases2 = InitializeVector(outputSize);
+        episodeCount = 0;
     }
 
     // Forward pass: Compute outputs from inputs
@@ -174,35 +176,13 @@ public class NeuralNetwork
         return clonedNetwork;
     }
 
-    public double[] GetBiases1() {
-        return biases1;
-    }
+    public double[][] GetWeights1() => weights1;
+    public double[][] GetWeights2() => weights2;
+    public double[] GetBiases1() => biases1;
+    public double[] GetBiases2() => biases2;
 
-    public double[] GetBiases2() {
-        return biases2;
-    }
-
-    public double[][] GetWeights1() {
-        return weights1;
-    }
-
-    public double[][] GetWeights2() {
-        return weights2;
-    }
-    
-    public void SetBiases1(double[] biases1) {
-        this.biases1 = biases1;
-    }
-
-    public void SetBiases2(double[] biases2) {
-        this.biases2 = biases2;
-    }
-
-    public void SetWeights1(double[][] weights1) {
-        this.weights1 = weights1;
-    }
-
-    public void SetWeights2(double[][] weights2) {
-        this.weights2 = weights2;
-    }
+    public void SetWeights1(double[][] newWeights) => weights1 = newWeights;
+    public void SetWeights2(double[][] newWeights) => weights2 = newWeights;
+    public void SetBiases1(double[] newBiases) => biases1 = newBiases;
+    public void SetBiases2(double[] newBiases) => biases2 = newBiases;
 }
