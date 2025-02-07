@@ -11,6 +11,12 @@ public class NeuralNetwork
 
     private Random random = new Random();
 
+    public NeuralNetwork(double[][] weights1, double[][] weights2, double[] biases1, double[] biases2) {
+        this.weights1 = weights1;
+        this.weights2 = weights2;
+        this.biases1 = biases1;
+        this.biases2 = biases2;
+    }
     public NeuralNetwork(int inputSize, int hiddenSize, int outputSize)
     {
         // Initialize weights and biases with random values
@@ -168,4 +174,35 @@ public class NeuralNetwork
         return clonedNetwork;
     }
 
+    public double[] GetBiases1() {
+        return biases1;
+    }
+
+    public double[] GetBiases2() {
+        return biases2;
+    }
+
+    public double[][] GetWeights1() {
+        return weights1;
+    }
+
+    public double[][] GetWeights2() {
+        return weights2;
+    }
+    
+    public void SetBiases1(double[] biases1) {
+        this.biases1 = biases1;
+    }
+
+    public void SetBiases2(double[] biases2) {
+        this.biases2 = biases2;
+    }
+
+    public void SetWeights1(double[][] weights1) {
+        this.weights1 = weights1;
+    }
+
+    public void SetWeights2(double[][] weights2) {
+        this.weights2 = weights2;
+    }
 }
