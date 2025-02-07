@@ -1,3 +1,5 @@
 ﻿namespace DeepQLearningBot;
 
-public class Bot { }
+public class Bot {
+    
+}
