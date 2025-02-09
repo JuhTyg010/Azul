@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Azul\Azul.csproj" />
+      <ProjectReference Include="..\SaveSystem\SaveSystem.csproj" />
+    </ItemGroup>
+
 </Project>

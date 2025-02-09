@@ -20,14 +20,14 @@ public class DQNTrainer
     private int episodeCount = 0;
     private const int AutoSaveInterval = 10;
 
-    public DQNTrainer(int stateSize, int actionSize, int replayBufferCapacity)
+    public DQNTrainer(DQNSetting setting)
     {
-        this.stateSize = stateSize;
-        this.actionSize = actionSize;
+        this.stateSize = setting.stateSize;
+        this.actionSize = setting.actionSize;
 
         policyNet = new NeuralNetwork(stateSize, 128, actionSize);
         targetNet = policyNet.Clone();
-        replayBuffer = new ReplayBuffer(replayBufferCapacity);
+        replayBuffer = new ReplayBuffer(setting.replayBufferCapacity);
 
 
         if (ModelSaver.Load(policyNet)) {
@@ -100,6 +100,11 @@ public class DQNTrainer
             if (value > max)
                 max = value;
         return max;
+    }
+    
+    public double[] Predict(double[] state)
+    {
+        return policyNet.Predict(state);
     }
 
     public void UpdateTargetNetwork()

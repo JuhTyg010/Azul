@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "randomBot", "randomBot\rand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepQLearningBot", "DeepQLearningBot\DeepQLearningBot.csproj", "{23BC34B5-8704-4CFA-8F27-5FE6A2DADEED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveSystem", "SaveSystem\SaveSystem.csproj", "{78B24348-8CE2-4C4C-815E-ABAAE45506F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{23BC34B5-8704-4CFA-8F27-5FE6A2DADEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23BC34B5-8704-4CFA-8F27-5FE6A2DADEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23BC34B5-8704-4CFA-8F27-5FE6A2DADEED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78B24348-8CE2-4C4C-815E-ABAAE45506F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B24348-8CE2-4C4C-815E-ABAAE45506F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78B24348-8CE2-4C4C-815E-ABAAE45506F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78B24348-8CE2-4C4C-815E-ABAAE45506F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
