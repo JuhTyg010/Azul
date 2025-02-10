@@ -16,6 +16,7 @@ public class Bot {
         trainer = new DQNTrainer(setting);
         this.stateSize = setting.stateSize;
         this.actionSize = setting.actionSize;
+        this.id = id;
         
     }
 
@@ -46,7 +47,6 @@ public class Bot {
     {
         double[] state = new double[stateSize];
 
-        // TODO: Implement encoding logic based on board state
         //for plates takes max 45
         for (int i = 0; i < board.Plates.Length; i++) {
             for (int j = 0; j < Globals.TYPE_COUNT; j++) {
@@ -58,29 +58,40 @@ public class Bot {
             state[45 + i] = board.Center.TileCountOfType(i);
         }
         state[50] = board.Center.isFirst ? 0 : 1;
-        
-        //own data
-        int myIndex = board.CurrentPlayer;
-        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-            var buffer = board.Players[myIndex].GetBufferData(i);
-            state[51 + (2 * i)] = buffer.id;
-            state[52 + (2 * i)] = buffer.count;
-        }
-        //own floor
-        state[61] = board.Players[myIndex].floor.Count;
-        state[62] = board.Players[myIndex].isFirst ? 0 : 1;
-        //own wall
-        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-            for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
-                state[63 + (i * Globals.WALL_DIMENSION) + j] = board.Players[myIndex].wall[i, j];
+
+        int index = 51;
+        (state, index) = AddPlayerData(index, state, board.Players[id]);
+
+        foreach (Player p in board.Players) {
+            if (p != board.Players[id]) {
+                (state, index) = AddPlayerData(index, state, p);
             }
         }
         
-        //TODO: other players data 
-        
-        
-        
         return state;
+    }
+
+    private (double[], int) AddPlayerData(int startIndex, double[] data, Player player) {
+        //buffers
+        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            var buffer = player.GetBufferData(i);
+            data[startIndex] = buffer.id;
+            startIndex++;
+            data[startIndex] = buffer.count;
+            startIndex++;
+        }
+        //floor
+        data[startIndex] = player.floor.Count;
+        startIndex++;
+        data[startIndex] = player.isFirst ? 0 : 1;
+        //wall
+        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
+                data[startIndex] = player.wall[i, j];
+                startIndex++;
+            }
+        }
+        return (data, startIndex);
     }
 
     private int GetBestAction(double[] qValues)
