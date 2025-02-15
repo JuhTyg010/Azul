@@ -1,14 +1,15 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace DeepQLearningBot;
 
 public class NeuralNetwork
 {
-    private double[][] weights1; // Input to hidden layer
-    private double[][] weights2; // Hidden layer to output
-    private double[] biases1;    // Hidden layer biases
-    private double[] biases2;    // Output layer biases
-    public int episodeCount;
+    
+    [JsonInclude] private double[][] weights1; // Input to hidden layer
+    [JsonInclude] private double[][] weights2; // Hidden layer to output
+    [JsonInclude] private double[] biases1;    // Hidden layer biases
+    [JsonInclude] private double[] biases2;    // Output layer biases
 
     private Random random = new Random();
 
@@ -18,26 +19,22 @@ public class NeuralNetwork
         this.biases1 = biases1;
         this.biases2 = biases2;
     }
-    public NeuralNetwork(int inputSize, int hiddenSize, int outputSize)
-    {
+    public NeuralNetwork(int inputSize, int hiddenSize, int outputSize) {
         // Initialize weights and biases with random values
         weights1 = InitializeMatrix(inputSize, hiddenSize);
         weights2 = InitializeMatrix(hiddenSize, outputSize);
         biases1 = InitializeVector(hiddenSize);
         biases2 = InitializeVector(outputSize);
-        episodeCount = 0;
     }
 
     // Forward pass: Compute outputs from inputs
-    public double[] Predict(double[] input)
-    {
+    public double[] Predict(double[] input) {
         double[] hidden = Activate(Add(Dot(input, weights1), biases1));
         return Add(Dot(hidden, weights2), biases2);
     }
 
     // Backward pass: Update weights and biases
-    public void Train(double[][] inputs, double[][] targets, double learningRate)
-    {
+    public void Train(double[][] inputs, double[][] targets, double learningRate) {
         for (int i = 0; i < inputs.Length; i++)
         {
             // For each input in the batch, perform forward pass and backpropagation
@@ -59,11 +56,9 @@ public class NeuralNetwork
 
 
     // Helper functions
-    private double[][] InitializeMatrix(int rows, int cols)
-    {
+    private double[][] InitializeMatrix(int rows, int cols) {
         double[][] matrix = new double[rows][];
-        for (int i = 0; i < rows; i++)
-        {
+        for (int i = 0; i < rows; i++) {
             matrix[i] = new double[cols];
             for (int j = 0; j < cols; j++)
                 matrix[i][j] = random.NextDouble() * 2 - 1; // Random values between -1 and 1
@@ -71,16 +66,30 @@ public class NeuralNetwork
         return matrix;
     }
 
-    private double[] InitializeVector(int size)
-    {
+    private double[] InitializeVector(int size) {
         double[] vector = new double[size];
         for (int i = 0; i < size; i++)
             vector[i] = random.NextDouble() * 2 - 1;
         return vector;
     }
 
-    private double[] Dot(double[] vector, double[][] matrix)
-    {
+    private double[] Dot(double[] vector, double[][] matrix) {
+        if (vector == null)
+            throw new ArgumentNullException(nameof(vector), "Vector cannot be null.");
+        if (matrix == null)
+            throw new ArgumentNullException(nameof(matrix), "Matrix cannot be null.");
+
+        // Check if matrix is a valid 2D array
+        if (matrix.Length == 0 || matrix[0] == null)
+            throw new ArgumentException("Matrix must have at least one row and column.");
+
+        int vectorLength = vector.Length;
+        int matrixRows = matrix.Length;
+        int matrixCols = matrix[0].Length;
+
+        // Ensure vector length matches the number of rows in the matrix
+        if (vectorLength != matrixRows)
+            throw new ArgumentException("Vector length must match the number of rows in the matrix.");
         double[] result = new double[matrix[0].Length];
         for (int j = 0; j < matrix[0].Length; j++)
             for (int i = 0; i < matrix.Length; i++)
@@ -88,8 +97,7 @@ public class NeuralNetwork
         return result;
     }
 
-    private double[] DotTranspose(double[][] matrix, double[] vector)
-    {
+    private double[] DotTranspose(double[][] matrix, double[] vector) {
         double[] result = new double[matrix.Length];
         for (int i = 0; i < matrix.Length; i++)
             for (int j = 0; j < matrix[0].Length; j++)
@@ -97,39 +105,34 @@ public class NeuralNetwork
         return result;
     }
 
-    private double[] Add(double[] vector, double[] biases)
-    {
+    private double[] Add(double[] vector, double[] biases) {
         double[] result = new double[vector.Length];
         for (int i = 0; i < vector.Length; i++)
             result[i] = vector[i] + biases[i];
         return result;
     }
 
-    private double[] Activate(double[] vector)
-    {
+    private double[] Activate(double[] vector) {
         for (int i = 0; i < vector.Length; i++)
             vector[i] = Math.Max(0, vector[i]); // ReLU activation
         return vector;
     }
 
-    private double[] Subtract(double[] vector1, double[] vector2)
-    {
+    private double[] Subtract(double[] vector1, double[] vector2) {
         double[] result = new double[vector1.Length];
         for (int i = 0; i < vector1.Length; i++)
             result[i] = vector1[i] - vector2[i];
         return result;
     }
 
-    private double[] Multiply(double[] vector1, double[] vector2, bool derivative = false)
-    {
+    private double[] Multiply(double[] vector1, double[] vector2, bool derivative = false) {
         double[] result = new double[vector1.Length];
         for (int i = 0; i < vector1.Length; i++)
             result[i] = derivative ? vector1[i] * (vector2[i] > 0 ? 1 : 0) : vector1[i] * vector2[i];
         return result;
     }
 
-    private void UpdateWeightsAndBiases(double[] input, double[] hidden, double[] outputError, double[] hiddenError, double learningRate)
-    {
+    private void UpdateWeightsAndBiases(double[] input, double[] hidden, double[] outputError, double[] hiddenError, double learningRate) {
         for (int i = 0; i < weights2.Length; i++)
             for (int j = 0; j < weights2[0].Length; j++)
                 weights2[i][j] += learningRate * hidden[i] * outputError[j];
@@ -145,8 +148,7 @@ public class NeuralNetwork
             biases1[i] += learningRate * hiddenError[i];
     }
     
-    public NeuralNetwork Clone()
-    {
+    public NeuralNetwork Clone() {
         var clonedNetwork = new NeuralNetwork(weights1.Length, biases1.Length, biases2.Length);
 
         // Deep copy weights1

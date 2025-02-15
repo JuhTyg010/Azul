@@ -1,34 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DeepQLearningBot;
 
 public class ReplayBuffer
 {
-    private Queue<(double[], int, double, double[], bool)> buffer;
-    private int capacity;
+    [JsonInclude] private List<Replay> buffer;
+    [JsonInclude]private int capacity;
+    private Random random = new Random();
 
     public ReplayBuffer(int capacity)
     {
         this.capacity = capacity;
-        buffer = new Queue<(double[], int, double, double[], bool)>();
+        buffer = new List<Replay>();
     }
 
     public void Add(double[] state, int action, double reward, double[] nextState, bool done)
     {
-        if (buffer.Count >= capacity)
-            buffer.Dequeue(); // Remove the oldest experience
-        buffer.Enqueue((state, action, reward, nextState, done));
+        if (buffer.Count >= capacity) {
+            buffer.RemoveAt(0);
+        }
+        buffer.Add(new Replay(state, action, reward, nextState, done));
     }
 
-    public List<(double[], int, double, double[], bool)> Sample(int batchSize)
-    {
-        var sample = new List<(double[], int, double, double[], bool)>();
+    public List<Replay> Sample(int batchSize) {
+        var sample = new List<Replay>();
         var bufferArray = buffer.ToArray();
-        var random = new Random();
 
-        for (int i = 0; i < batchSize; i++)
-        {
+        for (int i = 0; i < batchSize; i++) {
             int index = random.Next(bufferArray.Length);
             sample.Add(bufferArray[index]);
         }
@@ -38,3 +38,22 @@ public class ReplayBuffer
 
     public int Count => buffer.Count;
 }
+
+public struct Replay {
+    public double[] State { get; set; }
+    public int Action { get; set; }
+    public double Reward { get; set; }
+    public double[] NextState { get; set; }
+    public bool Done { get; set; }
+
+    public Replay(double[] state, int action, double reward, double[] nextState, bool done) {
+        this.State = state;
+        this.Action = action;
+        this.Reward = reward;
+        this.NextState = nextState;
+        this.Done = done;
+    }
+    
+    
+}
+

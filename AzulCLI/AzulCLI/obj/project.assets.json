@@ -12,6 +12,20 @@
           "bin/placeholder/Azul.dll": {}
         }
       },
+      "DeepQLearningBot/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Azul": "1.0.0",
+          "SaveSystem": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DeepQLearningBot.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DeepQLearningBot.dll": {}
+        }
+      },
       "randomBot/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -24,6 +38,16 @@
         "runtime": {
           "bin/placeholder/randomBot.dll": {}
         }
+      },
+      "SaveSystem/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SaveSystem.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SaveSystem.dll": {}
+        }
       }
     }
   },
@@ -33,15 +57,26 @@
       "path": "../Azul/Azul.csproj",
       "msbuildProject": "../Azul/Azul.csproj"
     },
+    "DeepQLearningBot/1.0.0": {
+      "type": "project",
+      "path": "../DeepQLearningBot/DeepQLearningBot.csproj",
+      "msbuildProject": "../DeepQLearningBot/DeepQLearningBot.csproj"
+    },
     "randomBot/1.0.0": {
       "type": "project",
       "path": "../randomBot/randomBot.csproj",
       "msbuildProject": "../randomBot/randomBot.csproj"
+    },
+    "SaveSystem/1.0.0": {
+      "type": "project",
+      "path": "../SaveSystem/SaveSystem.csproj",
+      "msbuildProject": "../SaveSystem/SaveSystem.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "Azul >= 1.0.0",
+      "DeepQLearningBot >= 1.0.0",
       "randomBot >= 1.0.0"
     ]
   },
@@ -72,6 +107,9 @@
           "projectReferences": {
             "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj": {
               "projectPath": "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj"
+            },
+            "/home/juhtyg/Desktop/Azul/AzulCLI/DeepQLearningBot/DeepQLearningBot.csproj": {
+              "projectPath": "/home/juhtyg/Desktop/Azul/AzulCLI/DeepQLearningBot/DeepQLearningBot.csproj"
             },
             "/home/juhtyg/Desktop/Azul/AzulCLI/randomBot/randomBot.csproj": {
               "projectPath": "/home/juhtyg/Desktop/Azul/AzulCLI/randomBot/randomBot.csproj"

@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Azul\Azul.csproj" />
+      <ProjectReference Include="..\DeepQLearningBot\DeepQLearningBot.csproj" />
       <ProjectReference Include="..\randomBot\randomBot.csproj" />
     </ItemGroup>
 

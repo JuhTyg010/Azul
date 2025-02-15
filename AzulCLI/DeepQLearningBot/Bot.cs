@@ -5,128 +5,200 @@ namespace DeepQLearningBot;
 
 public class Bot {
     private const string settingFile = "DQNsettings.json";
-    private DQNTrainer trainer;
-    private int stateSize; //ish 199
-    private int actionSize; //300
+    private const string replayBufferFile = "replayBuffer.json";
+    private const string networkFile = "network.json";
+    private DQNSetting settings;
+    private NeuralNetwork? policyNet;
+    private NeuralNetwork targetNet;
+    private ReplayBuffer? replayBuffer;
+    private Random random;
     public int id { get; private set; }
 
 
     public Bot(int id) {
-        DQNSetting setting = JsonSaver.Load<DQNSetting>(settingFile);
-        trainer = new DQNTrainer(setting);
-        this.stateSize = setting.stateSize;
-        this.actionSize = setting.actionSize;
-        this.id = id;
+        /*DQNSetting setting = new DQNSetting(1,1,1,1,1,1,1,1);
+        JsonSaver.Save(setting, settingFile);
+        throw new NotImplementedException();*/
+        settings = JsonSaver.Load<DQNSetting>(settingFile);
         
+        policyNet = JsonSaver.Load<NeuralNetwork>(networkFile);
+        if (policyNet == null) policyNet = new NeuralNetwork(settings.StateSize, 128, settings.ActionSize);
+
+        targetNet = policyNet.Clone();
+        
+        replayBuffer = JsonSaver.Load<ReplayBuffer>(replayBufferFile);
+        if(replayBuffer == null) replayBuffer = new ReplayBuffer(settings.ReplayBufferCapacity);
+
+        this.id = id;
+        random = new Random();
     }
 
     public string DoMove(Board board)
     {
-        double[] state = EncodeBoardState(board);
+        double[] state = board.EncodeBoardState(settings.StateSize, id);
 
-        double[] qValues = trainer.Predict(state);
-        int bestAction = GetBestAction(qValues);
+        int bestAction;
+        if (random.NextDouble() < settings.Epsilon) {
+            bestAction = GetRandomValidAction(board);
+        }
+        else {
+            double[] qValues = policyNet.Predict(state);
+            bestAction = GetBestValidAction(qValues, board); // Greedy action
+        }
+        
+        bool isLegal = IsLegalAction(bestAction, board);
+        double reward = isLegal ? CalculateReward(state, bestAction, board) : -1; // Reward for legal moves, penalty for illegal
 
-        // Convert best action index to move string
-        return DecodeAction(bestAction, board);
+        double[] nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
+
+        if (!isLegal) {
+            bestAction = GetRandomValidAction(board);
+            nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
+        }
+        replayBuffer.Add(state, bestAction, reward, nextState, isLegal);
+        
+        if (replayBuffer.Count >= settings.BatchSize) {
+            TrainFromReplayBuffer();
+        }
+        settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
+        JsonSaver.Save(settings, settingFile);
+        JsonSaver.Save(replayBuffer, replayBufferFile);
+        
+        return DecodeAction(bestAction);
+    }
+
+    private int GetRandomValidAction(Board board) {
+        Move[] validMoves = board.GetValidMoves();
+        if (validMoves.Length == 0)
+            throw new Exception("No valid moves found!");
+        int index = random.Next(validMoves.Length);
+        return EncodeAction(validMoves[index]);
     }
 
     public string Place(Board board)
     {
         //TODO: setup for better translation
-        double[] state = EncodeBoardState(board);
+        double[] state = board.EncodeBoardState(settings.StateSize, id);
 
         // Get Q-values for placement
-        double[] qValues = trainer.Predict(state);
-        int bestPlacement = GetBestAction(qValues);
+        double[] qValues = policyNet.Predict(state);
+       // int bestPlacement = GetBestAction(qValues);
 
-        return bestPlacement.ToString();
+        return "-1";
     }
     
-    private double[] EncodeBoardState(Board board)
+    private void TrainFromReplayBuffer()
     {
-        double[] state = new double[stateSize];
+        // Sample a batch of experiences from the replay buffer
+        var batch = replayBuffer.Sample(settings.BatchSize);
+        var states = new double[settings.BatchSize][];
+        var targets = new double[settings.BatchSize][];
 
-        //for plates takes max 45
-        for (int i = 0; i < board.Plates.Length; i++) {
-            for (int j = 0; j < Globals.TYPE_COUNT; j++) {
-                state[(i * Globals.TYPE_COUNT) + j] = board.Plates[i].TileCountOfType(j);
-            }
-        }
-        // center plate
-        for (int i = 0; i < Globals.TYPE_COUNT; i++) {
-            state[45 + i] = board.Center.TileCountOfType(i);
-        }
-        state[50] = board.Center.isFirst ? 0 : 1;
+        for (int i = 0; i < settings.BatchSize; i++)
+        {
+            var replay = batch[i];
 
-        int index = 51;
-        (state, index) = AddPlayerData(index, state, board.Players[id]);
+            // Predict Q-values for the current state
+            double[] qValues = policyNet.Predict(replay.State);
 
-        foreach (Player p in board.Players) {
-            if (p != board.Players[id]) {
-                (state, index) = AddPlayerData(index, state, p);
-            }
+            // Predict Q-values for the next state
+            double[] nextQValues = targetNet.Predict(replay.NextState);
+
+            // Update the Q-value for the taken action
+            qValues[replay.Action] = replay.Reward + (replay.Done ? settings.Gamma * Max(nextQValues) : 0);
+
+            states[i] = replay.State;
+            targets[i] = qValues;
         }
+
+        // Train the neural network on the batch
+        policyNet.Train(states, targets, 0.001);
+        JsonSaver.Save(policyNet, networkFile);
+        if (replayBuffer.Count % 100 == 0) {
+            targetNet = policyNet.Clone();
+        }
+    }
+
+    private double CalculateReward(double[] state, int action, Board board) {
+        double reward = 0;
+        Move move = DecodeToMove(action);
+        if (move.bufferId == Globals.WALL_DIMENSION) return -1;
         
-        return state;
-    }
-
-    private (double[], int) AddPlayerData(int startIndex, double[] data, Player player) {
-        //buffers
-        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-            var buffer = player.GetBufferData(i);
-            data[startIndex] = buffer.id;
-            startIndex++;
-            data[startIndex] = buffer.count;
-            startIndex++;
-        }
-        //floor
-        data[startIndex] = player.floor.Count;
-        startIndex++;
-        data[startIndex] = player.isFirst ? 0 : 1;
-        //wall
-        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-            for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
-                data[startIndex] = player.wall[i, j];
-                startIndex++;
-            }
-        }
-        return (data, startIndex);
-    }
-
-    private int GetBestAction(double[] qValues)
-    {
-        int bestAction = 0;
-        double maxValue = double.MinValue;
-
-        for (int i = 0; i < qValues.Length; i++) {
-            if (qValues[i] > maxValue) {
-                maxValue = qValues[i];
-                bestAction = i;
-            }
-        }
-
-        return bestAction;
+        double[] nextState = board.GetNextState(state, move, id);
+        int col = board.FindColInRow(move.bufferId, move.tileId);
+        
+        reward += board.Players[id].CalculatePointsIfFilled(move.bufferId, col);
+        reward -= nextState[56] - state[56];
+        
+        return reward;
     }
     
-    private string DecodeAction(int actionIndex, Board board)
-    {
-        // TODO: Implement conversion logic
-        int tileId = actionIndex / (10 * 6);
-        int plate = (actionIndex % (10 * 6)) / 6;
-        int buffer = (actionIndex % 6);
-        return $"{plate} {tileId} {buffer}";
+    private int GetBestValidAction(double[] qValues, Board board) {
+        
+        // Find the first valid action
+        foreach (int action in qValues) {
+            //if(action < 0) throw new Exception($"Invalid action: {action}");
+            if (IsLegalAction(action, board)) {
+                return action;
+            }
+        }
+
+        return (int) qValues[0];
+    }
+
+    private bool IsLegalAction(int action, Board board) {
+        Move move = DecodeToMove(action);
+        return board.CanMove(move);
+    }
+    
+    private Move DecodeToMove(int actionId) {
+        int tileId = actionId / (10 * 6);
+        int plate = (actionId % (10 * 6)) / 6;
+        int buffer = (actionId % 6);
+        return new Move(tileId, plate, buffer);
+    }
+
+    private int EncodeAction(Move move) {
+        int actionId = move.bufferId;
+        actionId += 60 * move.tileId;
+        actionId += 6 * move.plateId;
+        return actionId;
+    }
+    
+    private string DecodeAction(int actionId) {
+        Move move = DecodeToMove(actionId);
+        return $"{move.plateId} {move.tileId} {move.bufferId}";
+    }
+    
+    private double Max(double[] values) {
+        double max = double.MinValue;
+        foreach (var value in values)
+            if (value > max)
+                max = value;
+        return max;
     }
 }
 
-public struct DQNSetting {
-    public int actionSize;
-    public int stateSize;
-    public int replayBufferCapacity;
+public struct DQNSetting
+{
+    public int ActionSize { get; set; } //300
+    public int StateSize { get; set; } //ish 199
+    public int ReplayBufferCapacity { get; set; }
+    public int BatchSize { get; set; }
+    public double Epsilon { get; set; } // = 1.0;
+    public double EpsilonDecay { get; set; } // = 0.995;
+    public double EpsilonMin { get; set; } // = 0.01;
+    public double Gamma { get; set; } // = 0.99;
 
-    public DQNSetting(int actionSize, int stateSize, int replayBufferCapacity) {
-        this.actionSize = actionSize;
-        this.stateSize = stateSize;
-        this.replayBufferCapacity = replayBufferCapacity;
+    public DQNSetting(int actionSize, int stateSize, int replayBufferCapacity, int batchSize, double epsilon, double epsilonDecay, double epsilonMin, double gamma)
+    {
+        ActionSize = actionSize;
+        StateSize = stateSize;
+        ReplayBufferCapacity = replayBufferCapacity;
+        BatchSize = batchSize;
+        Epsilon = epsilon;
+        EpsilonDecay = epsilonDecay;
+        EpsilonMin = epsilonMin;
+        Gamma = gamma;
     }
 }
