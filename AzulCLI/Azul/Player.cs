@@ -5,7 +5,6 @@ using System.Diagnostics;
 namespace Azul {
     public class Player
     {
-        private const int floorSize = 7;
         public string name { get; private set; }
         public int pointCount { get; private set; }
         public int[,] wall { get; private set; }
@@ -47,6 +46,7 @@ namespace Azul {
             return CanPlace(row, tile.id);
         }
         
+        
         public bool Place(int row, Tile tile, bool isFirst = false) {   //row can be Globals.WALL_DIMENSION for floor
             
             bool canPlace = CanPlace(row, tile);
@@ -54,7 +54,7 @@ namespace Azul {
                 if (row == Globals.WALL_DIMENSION) {
                     Logger.WriteLine("is on floor");
                     for (int i = 0; i < tile.count; i++) {
-                        if (floor.Count < floorSize) floor.Add(tile.id);
+                        if (floor.Count < Globals.FLOOR_SIZE) floor.Add(tile.id);
                         else break;
                     }
                     return true;
@@ -67,10 +67,10 @@ namespace Azul {
                 int toFloor = tile.count - buffers[row].FreeToFill();
                 buffers[row].Assign(tile);
         
-                if (floor.Count < floorSize) {
+                if (floor.Count < Globals.FLOOR_SIZE) {
                     for (int i = 0; i < toFloor; i++) {
                         floor.Add(tile.id);
-                        if (floor.Count == floorSize) {
+                        if (floor.Count == Globals.FLOOR_SIZE) {
                             break;
                         }
                     }
@@ -90,7 +90,7 @@ namespace Azul {
         }
     
         public Tile GetBufferData(int row) {
-            Debug.Assert(row < buffers.Length, 
+            Debug.Assert(row < buffers.Length && row >= 0, 
                 "You're asking for out of range");
             return new Tile(buffers[row].typeId, buffers[row].filled);
         }
@@ -153,7 +153,7 @@ namespace Azul {
         }
 
         public int FloorSize() {
-            return floorSize;
+            return Globals.FLOOR_SIZE;
         }
     
         public bool hasFullBuffer() {

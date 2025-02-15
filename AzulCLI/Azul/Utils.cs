@@ -9,6 +9,7 @@ namespace Azul {
         public const int TOTAL_TILE_COUNT = 100;
         public const int PLATE_VOLUME = 4;
         public const int EMPTY_CELL = -1;
+        public const int FLOOR_SIZE = 7;
     }
 
     public class IllegalOptionException : Exception {
@@ -115,6 +116,24 @@ namespace Azul {
             this.tileId = tileId;
             this.plateId = plateId;
             this.bufferId = bufferId;
+        }
+
+        public Move(string data) {
+            string[] parts = data.Split(' ');
+            try {
+                this.plateId = int.Parse(parts[0]);
+                this.tileId = int.Parse(parts[1]);
+                this.bufferId = int.Parse(parts[2]);
+            }
+            catch (Exception e) {
+                Logger.WriteLine($"invalid move data: {data}");
+                throw new IllegalOptionException($"Invalid move data: {data}");
+            }
+            
+        }
+
+        public override string ToString() {
+            return $"{plateId} {tileId} {bufferId}";
         }
     }
 }
