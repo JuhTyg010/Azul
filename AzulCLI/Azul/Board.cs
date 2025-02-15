@@ -51,6 +51,7 @@ namespace Azul {
         }
 
         public bool CanMove(int plateId, int typeId, int bufferId) {
+            if(plateId < 0 || plateId > Plates.Length) return false;
             Plate p;
             if (plateId == Plates.Length) {
                 p = Center;
@@ -148,6 +149,10 @@ namespace Azul {
         
             return true;
         }
+
+        public bool Move(Move move) {
+            return Move(move.plateId, move.tileId, move.bufferId);
+        }
     
         public bool Calculate(int col = Globals.EMPTY_CELL) {
             Logger.WriteLine("Filling:");
@@ -227,6 +232,109 @@ namespace Azul {
                 }
             }
             return validMoves.ToArray();
+        }
+        
+        public double[] EncodeBoardState(int stateSize, int id) {
+            double[] state = new double[stateSize];
+
+            //for plates takes max 45
+            for (int i = 0; i < Plates.Length; i++) {
+                for (int j = 0; j < Globals.TYPE_COUNT; j++) {
+                    state[(i * Globals.TYPE_COUNT) + j] = Plates[i].TileCountOfType(j);
+                }
+            }
+            // center plate
+            for (int i = 0; i < Globals.TYPE_COUNT; i++) {
+                state[45 + i] = Center.TileCountOfType(i);
+            }
+            state[50] = Center.isFirst ? 0 : 1;
+
+            int index = 51;
+            index = AddPlayerData(index, state, Players[id]);
+
+            foreach (Player p in Players) {
+                if (p != Players[id]) {
+                    index = AddPlayerData(index, state, p);
+                }
+            }
+            
+            return state;
+        }
+
+        private int AddPlayerData(int startIndex, double[] data, Player player) {
+            //buffers
+            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+                var buffer = player.GetBufferData(i);
+                data[startIndex] = buffer.id;
+                startIndex++;
+                data[startIndex] = buffer.count;
+                startIndex++;
+            }
+            //floor
+            data[startIndex] = player.floor.Count;
+            startIndex++;
+            data[startIndex] = player.isFirst ? 0 : 1;
+            //wall
+            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+                for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
+                    data[startIndex] = player.wall[i, j];
+                    startIndex++;
+                }
+            }
+            return startIndex;
+        }
+
+        public double[] GetNextState(double[] state, Move move, int id) {
+            double[] nextState = (double[]) state.Clone();
+
+            int countOfTiles = 0;
+            //remove from plate
+            if (move.plateId != Plates.Length) {
+                //clear the plate
+                for (int i = 0; i < Globals.TYPE_COUNT; i++) {
+                    nextState[(move.plateId * Globals.TYPE_COUNT) + i] = 0;
+                }
+                //add rest to center
+                for (int i = 0; i < Globals.TYPE_COUNT; i++) {
+                    if (i == move.tileId) {
+                        countOfTiles = (int) state[move.plateId * Globals.TYPE_COUNT + i];
+                    } else nextState[45 + i] = state[move.plateId * Globals.TYPE_COUNT + i];
+                }
+            }
+            else {
+                countOfTiles = (int) nextState[45 + move.tileId];
+                nextState[45 + move.tileId] = 0;
+                nextState[50] = 0;
+            }
+            
+            //edit player data
+            int index = 51;
+            int floorIndex = index + 5;
+            if (move.bufferId != Globals.WALL_DIMENSION) {
+                int inBuffer = Players[id].GetBufferData(move.bufferId).count;
+                int capacity = move.bufferId + 1;
+                int afterFilling = Math.Min(inBuffer + countOfTiles, capacity);
+                nextState[index + move.bufferId] = afterFilling;
+                if (inBuffer + countOfTiles > capacity) {
+                    int toFloor = capacity - (inBuffer + countOfTiles);
+                    nextState[floorIndex] = Math.Min(Globals.FLOOR_SIZE, nextState[floorIndex] + toFloor);
+                }
+            }
+            else {
+                nextState[floorIndex] = Math.Min(Globals.FLOOR_SIZE, nextState[floorIndex] + countOfTiles);
+            }
+
+            nextState[floorIndex + 1] = (int) nextState[50] == (int) state[50] ? 1 : 0;
+            return nextState;
+        }
+
+        public int FindColInRow(int row, int typeId) {
+            if (isAdvanced) throw new IllegalOptionException("there is no predefined wall in advanced mode");
+            if(row < 0 || row >= Globals.WALL_DIMENSION) return Globals.EMPTY_CELL;
+            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+                if(predefinedWall[row,i] == typeId) return i;
+            }
+            return Globals.EMPTY_CELL;
         }
 
         private int[] GetValidBufferIds(int typeId) {
