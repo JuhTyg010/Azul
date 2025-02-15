@@ -1,17 +1,20 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace SaveSystem;
 
 public static class JsonSaver {
     
-    public static void Save<T>(T instance, string filePath, string name = null) where T : struct {
+    public static void Save<T>(T instance, string filePath, string name = null) {
     
         string json = JsonSerializer.Serialize(instance, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(filePath, json);
         Console.WriteLine($"[SaveSystem] {name} saved to {filePath}");
     }
 
-    public static T Load<T>(string filePath) where T : struct {
+    
+    public static T? Load<T>(string filePath) {
 
         if (!File.Exists(filePath)) {
             Console.WriteLine("[SaveSystem] No saved model found.");
