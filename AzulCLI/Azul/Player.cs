@@ -35,13 +35,18 @@ namespace Azul {
             buffers = bufferList.ToArray();
         }
 
-        public bool CanPlace(int row, Tile tile, bool isFirst = false) {
+        public bool CanPlace(int row, int tileId) {
             if (row == Globals.WALL_DIMENSION) return true;
-            if (!possibleRow(row, tile.id)) return false;
-            if (!possibleBuffer(row, tile.id)) return false;
+            if (!possibleRow(row, tileId)) return false;
+            if (!possibleBuffer(row, tileId)) return false;
             
-            return buffers[row].CanAssign(tile);
+            return buffers[row].CanAssign(tileId);
         }
+        
+        public bool CanPlace(int row, Tile tile) {
+            return CanPlace(row, tile.id);
+        }
+        
         public bool Place(int row, Tile tile, bool isFirst = false) {   //row can be Globals.WALL_DIMENSION for floor
             
             bool canPlace = CanPlace(row, tile);

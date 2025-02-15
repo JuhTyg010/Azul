@@ -50,23 +50,20 @@ namespace Azul {
             FillPlates();
         }
 
-        public bool CanMove(int plateId, int tileId, int bufferId) {
+        public bool CanMove(int plateId, int typeId, int bufferId) {
             Plate p;
-            bool isFirstInCenter = false;
             if (plateId == Plates.Length) {
                 p = Center;
-                if (!fisrtTaken) {
-                    isFirstInCenter = true;
-                }
             } else {
                 p = Plates[plateId];
-            }
-            var data = p.GetCounts();
-            if (data[tileId].count == 0) {
-                return false;
-            }
+            } 
+            if (p.TileCountOfType(typeId) == 0) return false;
 
-            return Players[CurrentPlayer].CanPlace(bufferId, data[tileId], isFirstInCenter);
+            return Players[CurrentPlayer].CanPlace(bufferId, typeId);
+        }
+
+        public bool CanMove(Move move) {
+            return CanMove(move.plateId, move.tileId, move.bufferId);
         }
         
         public bool Move(int plateId, int tileId, int bufferId) {   //center is always last
@@ -216,6 +213,45 @@ namespace Azul {
             temp.PutTile(typeId, count);
             trash.Union(temp);
             Logger.WriteLine($" {count} tiles of type {typeId} put to trash");
+        }
+
+        public Move[] GetValidMoves() {
+            List<Move> validMoves = new List<Move>();
+            for (int i = 0; i < Globals.TYPE_COUNT; i++) {
+                int[] buffers = GetValidBufferIds(i);
+                int[] plates = GetValidPlateIds(i);
+                foreach (int buffer in buffers) {
+                    foreach (var plate in plates) {
+                        validMoves.Add(new Move(i, buffer, plate));
+                    }
+                }
+            }
+            return validMoves.ToArray();
+        }
+
+        private int[] GetValidBufferIds(int typeId) {
+            if(typeId < 0 || typeId >= Globals.TYPE_COUNT) throw new IllegalOptionException("Invalid type");
+            List<int> bufferIds = new List<int>();
+            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+                if (Players[CurrentPlayer].CanPlace(i, typeId)) {
+                    bufferIds.Add(i);
+                }
+            }
+            return bufferIds.ToArray();
+        }
+
+        private int[] GetValidPlateIds(int typeId) {
+            List<int> plateIds = new List<int>();
+            for (int i = 0; i < Plates.Length; i++) {
+                if (Plates[i].TileCountOfType(typeId) != 0) {
+                    plateIds.Add(i);
+                }
+            }
+
+            if (Center.TileCountOfType(typeId) != 0) {
+                plateIds.Add(Plates.Length);
+            }
+            return plateIds.ToArray();
         }
     
     

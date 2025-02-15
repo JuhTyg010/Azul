@@ -44,7 +44,7 @@ namespace Azul {
             filled = Globals.EMPTY_CELL;
         }
 
-        public bool CanAssign(int id, int count) {
+        public bool CanAssign(int id) {
             if (filled != Globals.EMPTY_CELL && typeId != id) {
                 Logger.WriteLine($"invalid type, needed {typeId}, got {id}");
                 return false;
@@ -53,11 +53,11 @@ namespace Azul {
         }
 
         public bool CanAssign(Tile tile) {
-            return CanAssign(tile.id, tile.count);
+            return CanAssign(tile.id);
         }
         
         public bool Assign(int id, int count) {
-            if (!CanAssign(id, count)) return false;
+            if (!CanAssign(id)) return false;
 
             if (typeId == Globals.EMPTY_CELL) filled = 0;
             typeId = id;
@@ -103,6 +103,18 @@ namespace Azul {
         public Tile(int id, int count) {
             this.id = id;
             this.count = count;
+        }
+    }
+
+    public struct Move {
+        public int tileId;
+        public int plateId;
+        public int bufferId;
+
+        public Move(int tileId, int plateId, int bufferId) {
+            this.tileId = tileId;
+            this.plateId = plateId;
+            this.bufferId = bufferId;
         }
     }
 }
