@@ -1,6 +1,6 @@
 using System.Data;
 using Azul;
-using randomBot;
+using DeepQLearningBot;
 
 namespace AzulCLI;
 
@@ -12,7 +12,7 @@ public class CLIGameManager {
         Console.Write("Enter the players names (H/B_name: ");   
         string[] playerSetup = Console.ReadLine().Split();
             
-        List<randomBot.Bot> botPlayers = new List<randomBot.Bot>();
+        List<Bot> botPlayers = new List<Bot>();
         for (int i = 0; i < playerSetup.Length; i++) {
             if (playerSetup[i].Split("_")[0] == "B") {
                 botPlayers.Add(new Bot(i));
@@ -111,7 +111,7 @@ public class CLIGameManager {
         return output.ToArray();
     }
 
-    private static int FindBot(int botId, List<randomBot.Bot> botPlayers) {
+    private static int FindBot(int botId, List<Bot> botPlayers) {
         for (int i = 0; i < botPlayers.Count; i++) {
             if (botPlayers[i].id == botId) {
                 return i;
