@@ -47,14 +47,13 @@ public class Bot {
         }
         
         bool isLegal = IsLegalAction(bestAction, board);
-        double reward = isLegal ? CalculateReward(state, bestAction, board) : -1; // Reward for legal moves, penalty for illegal
-
-        double[] nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
-
+        
         if (!isLegal) {
             bestAction = GetRandomValidAction(board);
-            nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
         }
+        double reward = isLegal ? CalculateReward(state, bestAction, board) : -1;
+        var nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
+
         replayBuffer.Add(state, bestAction, reward, nextState, isLegal);
         
         if (replayBuffer.Count >= settings.BatchSize) {
@@ -147,6 +146,7 @@ public class Bot {
     }
 
     private bool IsLegalAction(int action, Board board) {
+        if (action < 0) return false;
         Move move = DecodeToMove(action);
         return board.CanMove(move);
     }
