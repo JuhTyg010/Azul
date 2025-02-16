@@ -133,6 +133,16 @@ public class NeuralNetwork
     }
 
     private void UpdateWeightsAndBiases(double[] input, double[] hidden, double[] outputError, double[] hiddenError, double learningRate) {
+        // Clip gradients to prevent exploding gradients
+        double clipValue = 1.0; // Adjust
+        for (int i = 0; i < outputError.Length; i++) {
+            outputError[i] = Math.Min(Math.Max(outputError[i], -clipValue), clipValue);
+        }
+        for (int i = 0; i < hiddenError.Length; i++) {
+            hiddenError[i] = Math.Min(Math.Max(hiddenError[i], -clipValue), clipValue);
+        }
+
+        // Update weights and biases
         for (int i = 0; i < weights2.Length; i++)
             for (int j = 0; j < weights2[0].Length; j++)
                 weights2[i][j] += learningRate * hidden[i] * outputError[j];
