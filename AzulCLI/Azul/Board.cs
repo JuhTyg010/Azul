@@ -1,9 +1,7 @@
-
 using System;
 
 namespace Azul {
-    public class Board
-    {
+    public class Board {
         public Player[] Players { get; private set; }
         public Plate[] Plates { get; private set; }
         public CenterPlate Center { get; private set; }
@@ -13,6 +11,9 @@ namespace Azul {
         public int[,] predefinedWall { get; private set; }
         public bool isAdvanced { get; private set; }
         public bool fisrtTaken;
+        
+        public event EventHandler<MyEventArgs> NextTakingMove;
+        public event EventHandler<MyEventArgs> NextPlacingMove;
         
         private Tiles trash;
         private bool isGameOver;
@@ -50,6 +51,9 @@ namespace Azul {
             FillPlates();
         }
 
+        public void StartGame() {
+            NextMove();
+        }
         public bool CanMove(int plateId, int typeId, int bufferId) {
             if(plateId < 0 || plateId > Plates.Length) return false;
             Plate p;
@@ -69,30 +73,9 @@ namespace Azul {
         
         public bool Move(int plateId, int tileId, int bufferId) {   //center is always last
 
-            #region Logging
+            StateLogData(plateId, tileId, bufferId);
 
-            Logger.WriteLine("Move:");
-            Logger.Write("Plate data: ");
-            for (int i = 0; i < Plates.Length; i++) {
-                Logger.Write($" id: {i} {Plates[i]},");
-            }
-            Logger.WriteLine($" id: {Plates.Length} {Center}");
-            Logger.Write($"Player {Players[CurrentPlayer].name} ({CurrentPlayer}) taking from plate {plateId} tile {tileId} to buffer {bufferId}: ");
-            if (Phase != Phase.Taking) {
-                Logger.WriteLine("Invalid Phase");
-                throw new IllegalOptionException("Invalid Phase");
-            }
-
-            if (plateId > Plates.Length) {
-                Logger.WriteLine("invalid plate");
-                return false;
-            }
-
-            #endregion
-
-            if (!CanMove(plateId, tileId, bufferId)) {
-                return false;
-            }
+            if (!CanMove(plateId, tileId, bufferId)) return false;
             
             Plate p;
             bool isFirstInCenter = false;
@@ -108,45 +91,34 @@ namespace Azul {
             var data = p.GetCounts();
         
             Players[CurrentPlayer].Place(bufferId, data[tileId], isFirstInCenter); //is always true cause of CanMove
+            
+            p.TakeTile(tileId);
+            var newData = p.GetCounts();
+            p.ClearPlate();
+            Tiles toPut = new Tiles(newData.Length, 0);
+            for (int i = 0; i < newData.Length; i++) {
+                toPut.PutTile(newData[i]);
+            }
 
-            #region succieded
-
-                p.TakeTile(tileId);
-                var newData = p.GetCounts();
-                p.ClearPlate();
-                Tiles toPut = new Tiles(newData.Length, 0);
-                for (int i = 0; i < newData.Length; i++) {
-                    toPut.PutTile(newData[i]);
-                }
-
-                Center.AddTiles(toPut);
-                if (ArePlatesEmpty()) {
-                    Logger.WriteLine("Phase changed to filling");
-                    CurrentPlayer = 0;
-                    bool isSkiped = false;
-                    while (!Players[CurrentPlayer].hasFullBuffer()) {
-                        Logger.WriteLine($"Player {Players[CurrentPlayer].name} has no full buffer");
-                        if (Players[CurrentPlayer].ClearFloor()) {
-                            Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
-                            nextFirst = CurrentPlayer;
-                        }
-                        CurrentPlayer++;
-                        if (CurrentPlayer == Players.Length) {
-                            isSkiped = true;
-                            Logger.WriteLine("No player has full buffer");
-                            CurrentPlayer = nextFirst;
-                        }
-                    }
-                    if (!isSkiped) Phase = Phase.Placing;
-
+            Center.AddTiles(toPut);
+            
+            NextMove();
+        
+            /*if (ArePlatesEmpty()) {
+                Logger.WriteLine("Plates are empty, starting filling");
+                if (NextWithFullBuffer()) {
+                    Phase = Phase.Placing;
                 }
                 else {
-                    CurrentPlayer++;
-                    if (CurrentPlayer == Players.Length) CurrentPlayer = 0;
+                    Logger.WriteLine("No player has full buffer");
+                    StartNextTurn();
                 }
-
-            #endregion
-        
+            }
+            else {
+                CurrentPlayer++;
+                CurrentPlayer %= Players.Length;
+            }*/
+                
             return true;
         }
 
@@ -168,47 +140,12 @@ namespace Azul {
                 return false;
             }
             if (!isAdvanced) {
-                for (int tmp = 0; tmp < predefinedWall.GetLength(0); tmp++) {
-                    if (predefinedWall[fullBuffers[0], tmp] == Players[CurrentPlayer].GetBufferData(fullBuffers[0]).id) {
-                        col = tmp;
-                        break;
-                    }
-                }
+                col = FindColInRow(fullBuffers[0], Players[CurrentPlayer].GetBufferData(fullBuffers[0]).id);
             }
             bool isFilled = Players[CurrentPlayer].Fill(fullBuffers[0], col);
-            if (isFilled && fullBuffers.Length == 1) {
-                if (Players[CurrentPlayer].ClearFloor()) {
-                    Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
-                    nextFirst = CurrentPlayer;
-                }
-                CurrentPlayer++;
-                while (CurrentPlayer < Players.Length && !Players[CurrentPlayer].hasFullBuffer()) {
-                    Logger.WriteLine($"Player {Players[CurrentPlayer].name} has no full buffer");
-                    if (Players[CurrentPlayer].ClearFloor()) {
-                        Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
-                        nextFirst = CurrentPlayer;
-                    }
-                    CurrentPlayer++;
-                }
-
-                if (CurrentPlayer == Players.Length) {
-                    //All players finished phase 2
-                    if (isGameOver) {
-                        foreach (var player in Players) player.CalculateBonusPoints();
-                        
-                        WriteGameOver();
-
-                        Phase = Phase.GameOver;
-                    }
-                    else {
-                        Logger.WriteLine("All players filled to the wall");
-                        CurrentPlayer = nextFirst;
-                        Phase = Phase.Taking;
-                        FillPlates();
-                    }
-                }
-            }
-        
+            
+            NextMove();
+            
             return isFilled;
         }
         
@@ -227,7 +164,7 @@ namespace Azul {
                 int[] plates = GetValidPlateIds(i);
                 foreach (int buffer in buffers) {
                     foreach (var plate in plates) {
-                        validMoves.Add(new Move(i, buffer, plate));
+                        validMoves.Add(new Move(i, plate, buffer));
                     }
                 }
             }
@@ -337,6 +274,29 @@ namespace Azul {
             return Globals.EMPTY_CELL;
         }
 
+        private bool NextWithFullBuffer() {
+            
+            while (!Players[CurrentPlayer].hasFullBuffer()) {
+                Logger.WriteLine($"Player {Players[CurrentPlayer].name} has no full buffer");
+                if (Players[CurrentPlayer].ClearFloor()) {
+                    Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
+                    nextFirst = CurrentPlayer;
+                }
+                CurrentPlayer++;
+                if (CurrentPlayer == Players.Length) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void StartNextTurn() {
+            Logger.WriteLine("Starting next turn");
+            Phase = Phase.Taking;
+            CurrentPlayer = nextFirst;
+            FillPlates();
+        }
+
         private int[] GetValidBufferIds(int typeId) {
             if(typeId < 0 || typeId >= Globals.TYPE_COUNT) throw new IllegalOptionException("Invalid type");
             List<int> bufferIds = new List<int>();
@@ -345,7 +305,27 @@ namespace Azul {
                     bufferIds.Add(i);
                 }
             }
+            bufferIds.Add(Globals.WALL_DIMENSION);
             return bufferIds.ToArray();
+        }
+
+        private void StateLogData(int plateId, int tileId, int bufferId) {
+            Logger.WriteLine("Move:");
+            Logger.Write("Plate data: ");
+            for (int i = 0; i < Plates.Length; i++) {
+                Logger.Write($" id: {i} {Plates[i]},");
+            }
+            Logger.WriteLine($" id: {Plates.Length} {Center}");
+            Logger.Write($"Player {Players[CurrentPlayer].name} ({CurrentPlayer}) taking from plate {plateId} tile {tileId} to buffer {bufferId}: ");
+            if (Phase != Phase.Taking) {
+                Logger.WriteLine("Invalid Phase");
+                throw new IllegalOptionException("Invalid Phase");
+            }
+
+            if (plateId > Plates.Length) {
+                Logger.WriteLine("invalid plate");
+                //return false;
+            }
         }
 
         private int[] GetValidPlateIds(int typeId) {
@@ -375,6 +355,7 @@ namespace Azul {
 
         private void FillPlates() {
             if (storage.TotalTiles() < Globals.PLATE_VOLUME * Plates.Length) {
+                Console.WriteLine("trash to storage");
                 storage.Union(trash);
             }
             foreach (var plate in Plates) {
@@ -409,6 +390,65 @@ namespace Azul {
             if (Phase == Phase.Taking)
                 throw new Exception("Something went really wrong, win cant happen if we are not placing");
             isGameOver = true;
+        }
+
+        private void NextMove() {
+            if (Phase == Phase.Taking) {
+                if (ArePlatesEmpty()) {
+                    Logger.WriteLine("Plates are empty, starting filling");
+                    CurrentPlayer = 0;
+                    if (NextWithFullBuffer()) {
+                        Logger.WriteLine($"Found full buffer player: {Players[CurrentPlayer].name}");
+                        Phase = Phase.Placing;
+                        OnNextPlacingMove(new MyEventArgs(CurrentPlayer, this));
+                    }
+                    else {
+                        Logger.WriteLine("No player has full buffer");
+                        StartNextTurn();
+                        OnNextTakingMove(new MyEventArgs(CurrentPlayer, this));
+                    }
+                }
+                else {
+                    CurrentPlayer++;
+                    CurrentPlayer %= Players.Length;
+                    Logger.WriteLine($"Player's {Players[CurrentPlayer].name} move");
+                    OnNextTakingMove(new MyEventArgs(CurrentPlayer, this));
+                }
+            } else if (Phase == Phase.Placing) {
+                if (NextWithFullBuffer()) {
+                    OnNextPlacingMove(new MyEventArgs(CurrentPlayer,this));
+                }
+                else {
+                    Logger.WriteLine("No player has full buffer");
+                    if (isGameOver) {
+                        foreach (var player in Players) player.CalculateBonusPoints();
+                        WriteGameOver();
+                        Phase = Phase.GameOver;
+                    }
+                    else {
+                        Logger.WriteLine("All players filled to the wall");
+                        StartNextTurn();
+                        OnNextTakingMove(new MyEventArgs(CurrentPlayer, this));
+                    }
+                }
+            }
+        }  
+        protected virtual void OnNextTakingMove(MyEventArgs e) {
+            NextTakingMove?.Invoke(this, e);  
+        }
+
+        protected virtual void OnNextPlacingMove(MyEventArgs e) {
+            NextPlacingMove?.Invoke(this, e);
+        }
+    }
+    
+    public class MyEventArgs : EventArgs {  
+        public int playerId;
+        public Board board;
+
+        public MyEventArgs(int playerId, Board board) {
+            this.playerId = playerId;
+            this.board = board;
         }
     }
 }
