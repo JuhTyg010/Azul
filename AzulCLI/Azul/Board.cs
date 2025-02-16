@@ -101,24 +101,7 @@ namespace Azul {
             }
 
             Center.AddTiles(toPut);
-            
             NextMove();
-        
-            /*if (ArePlatesEmpty()) {
-                Logger.WriteLine("Plates are empty, starting filling");
-                if (NextWithFullBuffer()) {
-                    Phase = Phase.Placing;
-                }
-                else {
-                    Logger.WriteLine("No player has full buffer");
-                    StartNextTurn();
-                }
-            }
-            else {
-                CurrentPlayer++;
-                CurrentPlayer %= Players.Length;
-            }*/
-                
             return true;
         }
 

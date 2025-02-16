@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Zlu++7DS+7I=",
+  "dgSpecHash": "RDIxfEVJfQA=",
   "success": true,
   "projectFilePath": "/home/juhtyg/Desktop/Azul/AzulCLI/AzulCLI/AzulCLI.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/juhtyg/.nuget/packages/commandlineparser/2.9.1/commandlineparser.2.9.1.nupkg.sha512"
+  ],
   "logs": []
 }
