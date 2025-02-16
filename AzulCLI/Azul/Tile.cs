@@ -79,7 +79,7 @@ namespace Azul {
         }
 
         private int GetTypeOfTile(int position) {
-            Debug.Assert(position < totalCount,"position must be in bounds of all counts");
+            Debug.Assert(position < totalCount,$"position: {position} must be in bounds of all counts: {totalCount}");
             int i = 0;
             while (position > counts[i]) {
                 position -= counts[i];
