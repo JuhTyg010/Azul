@@ -31,6 +31,7 @@ public class ReplayBuffer
         for (int i = 0; i < batchSize; i++) {
             int index = random.Next(bufferArray.Length);
             sample.Add(bufferArray[index]);
+            //buffer.Remove(bufferArray[index]);
         }
 
         return sample;
@@ -39,7 +40,7 @@ public class ReplayBuffer
     public int Count => buffer.Count;
 }
 
-public struct Replay {
+public record struct Replay {
     public double[] State { get; set; }
     public int Action { get; set; }
     public double Reward { get; set; }

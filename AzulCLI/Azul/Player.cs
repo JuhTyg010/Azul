@@ -163,6 +163,12 @@ namespace Azul {
             return false;
         }
 
+        public bool IsEqual(Player player) {
+            if(player.name != name) return false;
+            if(player.pointCount != pointCount) return false;
+            if(player.wall != wall) return false;
+            return true;
+        }
         public void CalculateBonusPoints() {
             int fullColumns = 0;
             int fullRows = 0;

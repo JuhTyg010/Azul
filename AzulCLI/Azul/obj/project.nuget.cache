@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/7u+HHoPvek=",
+  "dgSpecHash": "57fAmQ2iHc0=",
   "success": true,
   "projectFilePath": "/home/juhtyg/Desktop/Azul/AzulCLI/Azul/Azul.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/juhtyg/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.12/microsoft.aspnetcore.app.ref.8.0.12.nupkg.sha512"
+  ],
   "logs": []
 }

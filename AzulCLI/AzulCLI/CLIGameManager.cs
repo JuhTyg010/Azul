@@ -62,9 +62,17 @@ public class CLIGameManager {
             while (game.Phase != Phase.GameOver) Thread.Sleep(100);//ish secure 
 
             Console.WriteLine("Game over");
-            for (int i = 0; i < game.Players.Length; i++) {
-                Console.WriteLine($"Player {game.Players[i].name}: {game.Players[i].pointCount}");
+            foreach (var bot in botPlayers) {
+                bot.SaveFiles();    //?maybe save only winning bot
             }
+            Player[] players = game.Players.ToArray();
+            Array.Sort(players, (a, b) => a.pointCount > b.pointCount ? -1 : 1);
+            for (int i = 0; i < players.Length; i++) {
+                Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
+            }
+            /*for (int i = 0; i < game.Players.Length; i++) {
+                Console.WriteLine($"Player {game.Players[i].name}: {game.Players[i].pointCount}");
+            }*/
         });
     }
 

@@ -1,4 +1,5 @@
-﻿using Azul;
+﻿using System.Diagnostics;
+using Azul;
 using SaveSystem;
 
 namespace DeepQLearningBot;
@@ -46,23 +47,23 @@ public class Bot {
             bestAction = GetBestValidAction(qValues, board); // Greedy action
         }
         
-        bool isLegal = IsLegalAction(bestAction, board);
+        if(!IsLegalAction(bestAction, board)) throw new ApplicationException("Invalid action");
         
-        if (!isLegal) {
-            bestAction = GetRandomValidAction(board);
-        }
-        double reward = isLegal ? CalculateReward(state, bestAction, board) : -1;
+        double reward = CalculateReward(state, bestAction, board);
+        
+        Logger.WriteLine("Move reward: " + reward);
         var nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
 
-        replayBuffer.Add(state, bestAction, reward, nextState, isLegal);
-        
-        if (replayBuffer.Count >= settings.BatchSize) {
+        replayBuffer.Add(state, bestAction, reward, nextState, true);
+        settings.FromLastBatch++;
+        if (settings.FromLastBatch >= settings.BatchSize) {
+            settings.FromLastBatch = 0;
             TrainFromReplayBuffer();
+            settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
+            JsonSaver.Save(settings, settingFile);
+            JsonSaver.Save(replayBuffer, replayBufferFile);
         }
-        settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
-        JsonSaver.Save(settings, settingFile);
-        JsonSaver.Save(replayBuffer, replayBufferFile);
-        
+
         return DecodeAction(bestAction);
     }
 
@@ -84,6 +85,12 @@ public class Bot {
        // int bestPlacement = GetBestAction(qValues);
 
         return "-1";
+    }
+
+    public void SaveFiles() {
+        JsonSaver.Save(settings, settingFile);
+        JsonSaver.Save(replayBuffer, replayBufferFile);
+        JsonSaver.Save(targetNet, networkFile);
     }
     
     private void TrainFromReplayBuffer()
@@ -127,22 +134,26 @@ public class Bot {
         int col = board.FindColInRow(move.bufferId, move.tileId);
         
         reward += board.Players[id].CalculatePointsIfFilled(move.bufferId, col);
-        reward -= nextState[56] - state[56];
+        reward -= nextState[56] - state[56];    //floor
+        //check if first from center
+        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= 1;
         
         return reward;
     }
     
     private int GetBestValidAction(double[] qValues, Board board) {
+        int bestAction = -1;
+        double bestValue = double.MinValue;
         
-        // Find the first valid action
-        foreach (int action in qValues) {
-            //if(action < 0) throw new Exception($"Invalid action: {action}");
-            if (IsLegalAction(action, board)) {
-                return action;
+        for (int action = 0; action < qValues.Length; action++) {
+            if (IsLegalAction(action, board) && qValues[action] > bestValue) {
+                bestValue = qValues[action];
+                bestAction = action;
             }
         }
 
-        return (int) qValues[0];
+        if (bestAction == -1) throw new IllegalOptionException("no valid action"); //should be always false
+        return bestAction;
     }
 
     private bool IsLegalAction(int action, Board board) {
@@ -185,6 +196,8 @@ public struct DQNSetting
     public int StateSize { get; set; } //ish 199
     public int ReplayBufferCapacity { get; set; }
     public int BatchSize { get; set; }
+    
+    public int FromLastBatch { get; set; }
     public double Epsilon { get; set; } // = 1.0;
     public double EpsilonDecay { get; set; } // = 0.995;
     public double EpsilonMin { get; set; } // = 0.01;

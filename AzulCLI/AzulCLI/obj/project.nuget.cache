@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "RDIxfEVJfQA=",
+  "dgSpecHash": "tw2MghKmGFY=",
   "success": true,
   "projectFilePath": "/home/juhtyg/Desktop/Azul/AzulCLI/AzulCLI/AzulCLI.csproj",
   "expectedPackageFiles": [
-    "/home/juhtyg/.nuget/packages/commandlineparser/2.9.1/commandlineparser.2.9.1.nupkg.sha512"
+    "/home/juhtyg/.nuget/packages/commandlineparser/2.9.1/commandlineparser.2.9.1.nupkg.sha512",
+    "/home/juhtyg/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.12/microsoft.aspnetcore.app.ref.8.0.12.nupkg.sha512",
+    "/home/juhtyg/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.12/microsoft.netcore.app.host.linux-x64.8.0.12.nupkg.sha512"
   ],
   "logs": []
 }

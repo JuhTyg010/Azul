@@ -113,8 +113,9 @@ public class NeuralNetwork
     }
 
     private double[] Activate(double[] vector) {
-        for (int i = 0; i < vector.Length; i++)
-            vector[i] = Math.Max(0, vector[i]); // ReLU activation
+        /*for (int i = 0; i < vector.Length; i++)
+            vector[i] = Math.Max(0, vector[i]); // ReLU activation*/
+        //no ReLU activation cause of the negative values
         return vector;
     }
 
@@ -134,7 +135,7 @@ public class NeuralNetwork
 
     private void UpdateWeightsAndBiases(double[] input, double[] hidden, double[] outputError, double[] hiddenError, double learningRate) {
         // Clip gradients to prevent exploding gradients
-        double clipValue = 1.0; // Adjust
+        double clipValue = 10; // Adjust
         for (int i = 0; i < outputError.Length; i++) {
             outputError[i] = Math.Min(Math.Max(outputError[i], -clipValue), clipValue);
         }
