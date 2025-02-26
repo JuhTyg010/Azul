@@ -16,7 +16,7 @@ namespace randomBot {
             this.buffer = buffer;
         }
     }
-    public class Bot {
+    public class Bot : IBot {
         private Random random;
         public int id { get; private set; }
 

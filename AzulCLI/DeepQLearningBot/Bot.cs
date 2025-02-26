@@ -4,7 +4,7 @@ using SaveSystem;
 
 namespace DeepQLearningBot;
 
-public class Bot {
+public class Bot : IBot {
     private const string settingFile = "DQNsettings.json";
     private const string replayBufferFile = "replayBuffer.json";
     private const string networkFile = "network.json";
@@ -32,6 +32,8 @@ public class Bot {
 
         this.id = id;
         random = new Random();
+        
+        AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
     }
 
     public string DoMove(Board board)
@@ -111,7 +113,7 @@ public class Bot {
             double[] nextQValues = targetNet.Predict(replay.NextState);
 
             // Update the Q-value for the taken action
-            qValues[replay.Action] = replay.Reward + (replay.Done ? settings.Gamma * Max(nextQValues) : 0);
+            qValues[replay.Action] = replay.Reward + (replay.Reward > 0 ? settings.Gamma * Max(nextQValues) : 0);
 
             states[i] = replay.State;
             targets[i] = qValues;
@@ -128,13 +130,13 @@ public class Bot {
     private double CalculateReward(double[] state, int action, Board board) {
         double reward = 0;
         Move move = DecodeToMove(action);
-        if (move.bufferId == Globals.WALL_DIMENSION) return -1;
+        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
         
         double[] nextState = board.GetNextState(state, move, id);
         int col = board.FindColInRow(move.bufferId, move.tileId);
         
         reward += board.Players[id].CalculatePointsIfFilled(move.bufferId, col);
-        reward -= nextState[56] - state[56];    //floor
+        reward -= (nextState[56] - state[56]) * 2;    //floor
         //check if first from center
         if(Math.Abs(nextState[50] - state[50]) > .9) reward -= 1;
         
@@ -153,6 +155,7 @@ public class Bot {
         }
 
         if (bestAction == -1) throw new IllegalOptionException("no valid action"); //should be always false
+        Logger.WriteLine("Best action's Qvalue: " + bestValue);
         return bestAction;
     }
 
@@ -188,6 +191,11 @@ public class Bot {
                 max = value;
         return max;
     }
+
+    private void OnProcessExit(object sender, EventArgs e) {
+        JsonSaver.Save(settings, settingFile);
+        JsonSaver.Save(replayBuffer, replayBufferFile);
+        JsonSaver.Save(targetNet, networkFile);    }
 }
 
 public struct DQNSetting

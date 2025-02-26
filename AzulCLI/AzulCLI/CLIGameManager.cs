@@ -15,8 +15,6 @@ public class Options
     
     [Option('v', "verbose", Required = false, Default = false, HelpText = "Disable verbose logging"), ]
     public bool Verbose { get; set; }
-
-    
 }
 
 public class CLIGameManager {
@@ -59,12 +57,10 @@ public class CLIGameManager {
             game.StartGame();
             
             
-            while (game.Phase != Phase.GameOver) Thread.Sleep(100);//ish secure 
+            while (game.Phase != Phase.GameOver) Thread.Sleep(20);//ish secure 
 
             Console.WriteLine("Game over");
-            foreach (var bot in botPlayers) {
-                bot.SaveFiles();    //?maybe save only winning bot
-            }
+            
             Player[] players = game.Players.ToArray();
             Array.Sort(players, (a, b) => a.pointCount > b.pointCount ? -1 : 1);
             for (int i = 0; i < players.Length; i++) {
