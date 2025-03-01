@@ -156,7 +156,7 @@ namespace Azul {
         
         public double[] EncodeBoardState(int stateSize, int id, bool othersData = true) {
             double[] state = new double[stateSize];
-            if(stateSize < 87) throw new IllegalOptionException("To small state size");
+            if(stateSize < 87) throw new IllegalOptionException($"To small state size {stateSize}");
 
             //for plates takes max 45
             for (int i = 0; i < Plates.Length; i++) {
