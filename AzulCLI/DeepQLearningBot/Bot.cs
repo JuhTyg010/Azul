@@ -5,17 +5,15 @@ using SaveSystem;
 namespace DeepQLearningBot;
 
 public class Bot : IBot {
-    private const string settingFile = "DQNsettings.json";
-    private const string replayBufferFile = "replayBuffer.json";
-    private const string networkFile = "network.json";
+    private const string settingFile = "/home/juhtyg/Desktop/Azul/AI_Data/DQNsettings.json";
+    private const string replayBufferFile = "/home/juhtyg/Desktop/Azul/AI_Data/replayBuffer.json";
+    private const string networkFile = "/home/juhtyg/Desktop/Azul/AI_Data/network.json";
     private DQNSetting settings;
     private NeuralNetwork? policyNet;
     private NeuralNetwork targetNet;
     private ReplayBuffer? replayBuffer;
     private Random random;
-    public int id { get; private set; }
-
-
+    private int id;
     public Bot(int id) {
         /*DQNSetting setting = new DQNSetting(1,1,1,1,1,1,1,1);
         JsonSaver.Save(setting, settingFile);
@@ -67,6 +65,10 @@ public class Bot : IBot {
         }
 
         return DecodeAction(bestAction);
+    }
+
+    public int GetId() {
+        return id;
     }
 
     private int GetRandomValidAction(Board board) {

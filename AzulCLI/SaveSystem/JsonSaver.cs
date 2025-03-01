@@ -17,7 +17,7 @@ public static class JsonSaver {
     public static T? Load<T>(string filePath) {
 
         if (!File.Exists(filePath)) {
-            Console.WriteLine("[SaveSystem] No saved model found.");
+            Console.WriteLine($"[SaveSystem] No saved model found on {filePath}.");
             return default;
         }
 

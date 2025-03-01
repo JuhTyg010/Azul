@@ -19,7 +19,7 @@ public class Options
 
 public class CLIGameManager {
 
-    private static List<Bot> botPlayers;
+    private static List<IBot> botPlayers;
     private static int[] botIds;
     private static bool printTable;
     
@@ -31,7 +31,7 @@ public class CLIGameManager {
             Console.WriteLine($" You choose game for {o.ListOfIncoming.Length} players");
             string[] playerSetup = o.ListOfIncoming.Split(" ");
             
-            botPlayers = new List<Bot>();
+            botPlayers = new List<IBot>();
             for (int i = 0; i < playerSetup.Length; i++) {
                 if (playerSetup[i].Split("_")[0] == "B") {
                     botPlayers.Add(new Bot(i));
@@ -40,7 +40,7 @@ public class CLIGameManager {
             botIds = new int[botPlayers.Count];
                 
             for (int i = 0; i < botPlayers.Count; i++){
-                botIds[i] = botPlayers[i].id;
+                botIds[i] = botPlayers[i].GetId();
             }
                 
             string[] names = new string[playerSetup.Length];
@@ -149,9 +149,10 @@ public class CLIGameManager {
         return output.ToArray();
     }
 
-    private static int FindBot(int botId, List<Bot> botPlayers) {
+    private static int FindBot(int botId, List<IBot> botPlayers) {
         for (int i = 0; i < botPlayers.Count; i++) {
-            if (botPlayers[i].id == botId) {
+            
+            if (botPlayers[i].GetId() == botId) {
                 return i;
             }
         }

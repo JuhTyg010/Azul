@@ -1,4 +1,5 @@
 using System.Data;
+using System.Diagnostics;
 using CommandLine;
 using Azul;
 
@@ -17,7 +18,7 @@ public class Options {
 public class Trainer {
     private static IBot[] bots;
     public static void Main(string[] args) {
-        Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
+        /*Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
             string[] botNames = o.ListOfIncoming.Split(' ');
             int count = botNames.Length;
             string[] names = new string[count];
@@ -49,7 +50,23 @@ public class Trainer {
                 Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
             }
 
-        });
+        });*/
+            
+        Console.WriteLine("Welcome to Azul Trainer!");
+        while (true) {
+            Console.WriteLine("running game");
+            
+            if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q) {
+                Console.WriteLine("Exit condition met. Stopping process execution.");
+                break;
+            }
+            Process p = new Process();
+            p.StartInfo.FileName = "/home/juhtyg/Desktop/Azul/AzulCLI/AzulCLI/bin/Debug/net8.0/AzulCLI"; // Need full path of application
+            p.StartInfo.Arguments = "-m 0 -l \"B_a B_b\"";
+            p.StartInfo.UseShellExecute = false;
+            p.Start();
+            p.WaitForExit();
+        }
     }
 
     private static void OnNextTakingTurn(object sender, MyEventArgs e) {
