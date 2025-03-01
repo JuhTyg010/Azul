@@ -5,9 +5,9 @@ using SaveSystem;
 namespace DeepQLearningBot;
 
 public class Bot : IBot {
-    private const string settingFile = "/home/juhtyg/Desktop/Azul/AI_Data/DQNsettings.json";
-    private const string replayBufferFile = "/home/juhtyg/Desktop/Azul/AI_Data/replayBuffer.json";
-    private const string networkFile = "/home/juhtyg/Desktop/Azul/AI_Data/network.json";
+    private const string settingFile = "/home/juhtyg/Desktop/Azul/AI_Data/ComplexBot/DQNsettings.json";
+    private const string replayBufferFile = "/home/juhtyg/Desktop/Azul/AI_Data/ComplexBot/replayBuffer.json";
+    private const string networkFile = "/home/juhtyg/Desktop/Azul/AI_Data/ComplexBot/network.json";
     private DQNSetting settings;
     private NeuralNetwork? policyNet;
     private NeuralNetwork targetNet;

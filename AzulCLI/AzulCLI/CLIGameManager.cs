@@ -2,6 +2,8 @@ using System.Data;
 using Azul;
 using DeepQLearningBot;
 using CommandLine;
+using randomBot;
+using Bot = randomBot.Bot;
 
 namespace AzulCLI;
 
@@ -34,7 +36,9 @@ public class CLIGameManager {
             botPlayers = new List<IBot>();
             for (int i = 0; i < playerSetup.Length; i++) {
                 if (playerSetup[i].Split("_")[0] == "B") {
-                    botPlayers.Add(new Bot(i));
+                    string type = playerSetup[i].Split("_")[1];
+                    if(type == "random") botPlayers.Add(new randomBot.Bot(i));
+                    botPlayers.Add(BotFactory.CreateBot(type, i));
                 }
             }
             botIds = new int[botPlayers.Count];

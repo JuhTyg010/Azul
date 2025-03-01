@@ -154,8 +154,9 @@ namespace Azul {
             return validMoves.ToArray();
         }
         
-        public double[] EncodeBoardState(int stateSize, int id) {
+        public double[] EncodeBoardState(int stateSize, int id, bool othersData = true) {
             double[] state = new double[stateSize];
+            if(stateSize < 87) throw new IllegalOptionException("To small state size");
 
             //for plates takes max 45
             for (int i = 0; i < Plates.Length; i++) {
@@ -171,13 +172,14 @@ namespace Azul {
 
             int index = 51;
             index = AddPlayerData(index, state, Players[id]);
-
-            foreach (Player p in Players) {
-                if (p != Players[id]) {
-                    index = AddPlayerData(index, state, p);
+            if (othersData) {
+                foreach (Player p in Players) {
+                    if (p != Players[id]) {
+                        index = AddPlayerData(index, state, p);
+                    }
                 }
             }
-            
+
             return state;
         }
 
