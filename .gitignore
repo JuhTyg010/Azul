@@ -10,11 +10,14 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .idea
-AzulCLI/*/bin/*
-AzulCLI/*/obj/
+
+bin
+obj
 */.idea
-*/.vscode
+.vscode
 */rider.*
 AzulGUI/Library
 */Logs
 */Temp
+AI_Data
+Logs

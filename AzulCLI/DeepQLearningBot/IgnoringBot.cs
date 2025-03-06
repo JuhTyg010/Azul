@@ -89,12 +89,6 @@ public class IgnoringBot : IBot{
 
         return "-1";
     }
-
-    public void SaveFiles() {
-        JsonSaver.Save(settings, settingFile);
-        JsonSaver.Save(replayBuffer, replayBufferFile);
-        JsonSaver.Save(targetNet, networkFile);
-    }
     
     private void TrainFromReplayBuffer()
     {

@@ -17,6 +17,9 @@ public class Options
     
     [Option('v', "verbose", Required = false, Default = false, HelpText = "Disable verbose logging"), ]
     public bool Verbose { get; set; }
+    
+    [Option('d', "log-file", Required = false, Default = "", HelpText = "directory where to store log file")]
+    public string logFile { get; set; } = "";
 }
 
 public class CLIGameManager {
@@ -53,15 +56,16 @@ public class CLIGameManager {
             }
 
             printTable = !o.Verbose;
+
+            string logFile = logFileName(o.logFile + "/log");
             
-            Board game = new Board(playerSetup.Length, names, isAdvanced);
+            Board game = new Board(playerSetup.Length, names, isAdvanced, logFile);
             game.NextTakingMove += OnNextTakingTurn;
             game.NextPlacingMove += OnNextPlacingTurn;
             
             game.StartGame();
-            
-            
-            while (game.Phase != Phase.GameOver) Thread.Sleep(20);//ish secure 
+
+            while (game.Phase != Phase.GameOver);// Thread.Sleep(20);//ish secure 
 
             Console.WriteLine("Game over");
             
@@ -163,5 +167,13 @@ public class CLIGameManager {
 
         return -1;
     }
-
+    
+    private static string logFileName(string baseName) {
+        string fileName = baseName + ".txt";
+        long index = 0;
+        while (File.Exists(fileName)) {
+            fileName = $"{baseName}_{index++}.txt";
+        }
+        return fileName;
+    }
 }
