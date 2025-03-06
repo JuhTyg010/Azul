@@ -17,8 +17,11 @@ namespace Azul {
     }
 
     public static class Logger {
-        private static string fileName = "azul_log.txt";
+        private static string fileName = "log.txt";
 
+        public static void SetName(string name) {
+            fileName = name;
+        }
         public static void WriteLine(string msg) {
             File.AppendAllText(fileName, msg + Environment.NewLine);
         }

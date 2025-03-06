@@ -19,7 +19,8 @@ namespace Azul {
         private bool isGameOver;
         private int nextFirst;
 
-        public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false) {
+        public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false, string fileName = "azul_log.txt") {
+            Logger.SetName(fileName);
             Logger.WriteLine(" ");
             Logger.WriteLine("-----------------------------Game start-----------------------------");
             if (playerNames.Length != playerCount) {
@@ -417,7 +418,8 @@ namespace Azul {
                     }
                 }
             }
-        }  
+        }
+        
         protected virtual void OnNextTakingMove(MyEventArgs e) {
             NextTakingMove?.Invoke(this, e);  
         }
@@ -425,6 +427,8 @@ namespace Azul {
         protected virtual void OnNextPlacingMove(MyEventArgs e) {
             NextPlacingMove?.Invoke(this, e);
         }
+        
+        
     }
     
     public class MyEventArgs : EventArgs {  
