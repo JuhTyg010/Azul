@@ -18,7 +18,7 @@ namespace randomBot {
         public string DoMove(Azul.Board board) {
 
             var possibleMoves = board.GetValidMoves();
-            int index = random.Next(possibleMoves.Count());
+            int index = random.Next(possibleMoves.Length);
             Move option = new Move();
             int bestGain = Int32.MinValue;
             foreach (var possibleMove in possibleMoves) {

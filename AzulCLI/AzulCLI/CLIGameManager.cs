@@ -2,6 +2,10 @@ using System.Data;
 using Azul;
 using DeepQLearningBot;
 using CommandLine;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.IO;
 using randomBot;
 using Bot = randomBot.Bot;
 
