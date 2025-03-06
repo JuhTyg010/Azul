@@ -11,8 +11,9 @@ public class Bot : IBot {
     private DQNSetting settings;
     private NeuralNetwork? policyNet;
     private NeuralNetwork targetNet;
-    private ReplayBuffer? replayBuffer;
+    private ReplayBuffer replayBuffer;
     private Random random;
+    private Dictionary<int, int> result;
     private int id;
     public Bot(int id) {
         /*DQNSetting setting = new DQNSetting(1,1,1,1,1,1,1,1);
@@ -24,9 +25,8 @@ public class Bot : IBot {
         if (policyNet == null) policyNet = new NeuralNetwork(settings.StateSize, 128, settings.ActionSize);
 
         targetNet = policyNet.Clone();
-        
-        replayBuffer = JsonSaver.Load<ReplayBuffer>(replayBufferFile);
-        if(replayBuffer == null) replayBuffer = new ReplayBuffer(settings.ReplayBufferCapacity);
+
+        replayBuffer = new ReplayBuffer(200);   //to ensure whole one game can fit in there
 
         this.id = id;
         random = new Random();
@@ -55,14 +55,6 @@ public class Bot : IBot {
         var nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
 
         replayBuffer.Add(state, bestAction, reward, nextState, true);
-        settings.FromLastBatch++;
-        if (settings.FromLastBatch >= settings.BatchSize) {
-            settings.FromLastBatch = 0;
-            TrainFromReplayBuffer();
-            settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
-            JsonSaver.Save(settings, settingFile);
-            JsonSaver.Save(replayBuffer, replayBufferFile);
-        }
 
         return DecodeAction(bestAction);
     }
@@ -97,10 +89,10 @@ public class Bot : IBot {
         JsonSaver.Save(targetNet, networkFile);
     }
     
-    private void TrainFromReplayBuffer()
+    private void TrainFromReplayBuffer(ReplayBuffer moveBuffer)
     {
         // Sample a batch of experiences from the replay buffer
-        var batch = replayBuffer.Sample(settings.BatchSize);
+        var batch = moveBuffer.Sample(settings.BatchSize);
         var states = new double[settings.BatchSize][];
         var targets = new double[settings.BatchSize][];
 
@@ -124,7 +116,7 @@ public class Bot : IBot {
         // Train the neural network on the batch
         policyNet.Train(states, targets, 0.001);
         JsonSaver.Save(policyNet, networkFile);
-        if (replayBuffer.Count % 100 == 0) {
+        if (moveBuffer.Count % 100 == 0) {
             targetNet = policyNet.Clone();
         }
     }
@@ -132,18 +124,23 @@ public class Bot : IBot {
     private double CalculateReward(double[] state, int action, Board board) {
         double reward = 0;
         Move move = DecodeToMove(action);
-        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
+        if (move.bufferId == Globals.WALL_DIMENSION) return -1;
         
         double[] nextState = board.GetNextState(state, move, id);
         int col = board.FindColInRow(move.bufferId, move.tileId);
         
-        reward += board.Players[id].CalculatePointsIfFilled(move.bufferId, col);
-        reward -= (nextState[56] - state[56]) * 2;    //floor
+        reward += (double) board.Players[id].CalculatePointsIfFilled(move.bufferId, col) / 10;
+        reward -= (nextState[56] - state[56]) / 10;    //floor
         //check if first from center
-        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= 1;
+        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .5;
         
         return reward;
     }
+
+    public void Result(Dictionary<int, int> result) {
+        this.result = result;
+    }
+
     
     private int GetBestValidAction(double[] qValues, Board board) {
         int bestAction = -1;
@@ -194,9 +191,43 @@ public class Bot : IBot {
         return max;
     }
 
+    private double ResultReward() {
+        int max = int.MinValue;
+        int key = 0;
+        foreach (var value in result) {
+            if (value.Value > max) {
+                max = value.Value;
+                key = value.Key;
+            }
+        }
+
+        double reward;
+        if (id == key) reward = 100;
+        else reward = 100 * (result[id] - result[key]);
+        return reward;
+    }
+
     private void OnProcessExit(object sender, EventArgs e) {
+        
+        double reward = ResultReward();
+        replayBuffer.UpdateRewards(reward * settings.Gamma);
+        
+        var storedReplays = JsonSaver.Load<ReplayBuffer>(replayBufferFile);
+        if (storedReplays == null) storedReplays = replayBuffer;
+        else {
+            storedReplays.Marge(replayBuffer);
+        }
+        if (settings.FromLastBatch >= 5) {
+            TrainFromReplayBuffer(storedReplays);
+            settings.FromLastBatch = 0;
+        }
+        else {
+            settings.FromLastBatch++;
+        }
+        
+        
         JsonSaver.Save(settings, settingFile);
-        JsonSaver.Save(replayBuffer, replayBufferFile);
+        JsonSaver.Save(storedReplays, replayBufferFile);
         JsonSaver.Save(targetNet, networkFile);    }
 }
 

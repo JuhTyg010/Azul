@@ -10,8 +10,7 @@ public class ReplayBuffer
     [JsonInclude]private int capacity;
     private Random random = new Random();
 
-    public ReplayBuffer(int capacity)
-    {
+    public ReplayBuffer(int capacity) {
         this.capacity = capacity;
         buffer = new List<Replay>();
     }
@@ -38,6 +37,16 @@ public class ReplayBuffer
     }
 
     public int Count => buffer.Count;
+
+    public void UpdateRewards(double reward) {
+        foreach (var replay in buffer) {
+            replay.AddReward(reward);
+        }
+    }
+
+    public void Marge(ReplayBuffer replayBuffer) {    
+        buffer.AddRange(replayBuffer.buffer);
+    }
 }
 
 public record struct Replay {
@@ -54,7 +63,9 @@ public record struct Replay {
         this.NextState = nextState;
         this.Done = done;
     }
-    
-    
+
+    public void AddReward(double reward) {
+        Reward += reward;
+    }
 }
 

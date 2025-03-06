@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace Azul;
 
 public interface IBot {
@@ -5,4 +7,6 @@ public interface IBot {
     public string Place(Board board);
 
     public int GetId();
+
+    public void Result(Dictionary<int, int> result);
 }

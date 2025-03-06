@@ -70,6 +70,8 @@ public class IgnoringBot : IBot{
     public int GetId() {
         return id;
     }
+    
+    public void Result(Dictionary<int,int> result) {}
 
     private int GetRandomValidAction(Board board) {
         Move[] validMoves = board.GetValidMoves();

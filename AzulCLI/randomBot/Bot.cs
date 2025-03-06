@@ -48,6 +48,8 @@ namespace randomBot {
         public int GetId() {
             return id;
         }
+        
+        public void Result(Dictionary<int,int> result) {}
 
         private bool PossibleCol(int[,] wall, int row, int column, int chosenType) {
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {

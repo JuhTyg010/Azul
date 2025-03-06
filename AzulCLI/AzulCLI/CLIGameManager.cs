@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using randomBot;
 using Bot = randomBot.Bot;
 
@@ -75,9 +76,17 @@ public class CLIGameManager {
             
             Player[] players = game.Players.ToArray();
             Array.Sort(players, (a, b) => a.pointCount > b.pointCount ? -1 : 1);
+            Dictionary<int,int> results = new Dictionary<int,int>();
             for (int i = 0; i < players.Length; i++) {
+                results[i] = players[i].pointCount;
                 Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
             }
+
+            foreach (var bot in botPlayers) {
+                bot.Result(results);
+            }
+            
+            saveResult(results);
             /*for (int i = 0; i < game.Players.Length; i++) {
                 Console.WriteLine($"Player {game.Players[i].name}: {game.Players[i].pointCount}");
             }*/
@@ -179,5 +188,11 @@ public class CLIGameManager {
             fileName = $"{baseName}_{index++}.txt";
         }
         return fileName;
+    }
+
+    private static void saveResult(Dictionary<int, int> results) {
+        string fileName = "/home/juhtyg/Desktop/Azul/results.json";
+        var ser = JsonSerializer.Serialize<Dictionary<int, int>>(results);
+        File.AppendAllText(fileName, ser);
     }
 }

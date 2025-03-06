@@ -63,7 +63,7 @@ public class Trainer {
             }
             Process p = new Process();
             p.StartInfo.FileName = "/home/juhtyg/Desktop/Azul/AzulCLI/AzulCLI/bin/Debug/net8.0/AzulCLI"; // Need full path of application
-            p.StartInfo.Arguments = "-m 0 -l \"B_random_a B_ignoring_b\"";
+            p.StartInfo.Arguments = "-m 0 -l \"B_random_a B_complex_b\" -d /home/juhtyg/Desktop/Azul/AzulCLI/Logs";
             p.StartInfo.UseShellExecute = false;
             p.Start();
             p.WaitForExit();
