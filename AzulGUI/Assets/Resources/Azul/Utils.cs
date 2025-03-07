@@ -9,6 +9,7 @@ namespace Azul {
         public const int TOTAL_TILE_COUNT = 100;
         public const int PLATE_VOLUME = 4;
         public const int EMPTY_CELL = -1;
+        public const int FLOOR_SIZE = 7;
     }
 
     public class IllegalOptionException : Exception {
@@ -16,8 +17,11 @@ namespace Azul {
     }
 
     public static class Logger {
-        private static string fileName = "azul_log.txt";
+        private static string fileName = "log.txt";
 
+        public static void SetName(string name) {
+            fileName = name;
+        }
         public static void WriteLine(string msg) {
             File.AppendAllText(fileName, msg + Environment.NewLine);
         }
@@ -44,7 +48,7 @@ namespace Azul {
             filled = Globals.EMPTY_CELL;
         }
 
-        public bool CanAssign(int id, int count) {
+        public bool CanAssign(int id) {
             if (filled != Globals.EMPTY_CELL && typeId != id) {
                 Logger.WriteLine($"invalid type, needed {typeId}, got {id}");
                 return false;
@@ -53,11 +57,11 @@ namespace Azul {
         }
 
         public bool CanAssign(Tile tile) {
-            return CanAssign(tile.id, tile.count);
+            return CanAssign(tile.id);
         }
         
         public bool Assign(int id, int count) {
-            if (!CanAssign(id, count)) return false;
+            if (!CanAssign(id)) return false;
 
             if (typeId == Globals.EMPTY_CELL) filled = 0;
             typeId = id;
@@ -103,6 +107,36 @@ namespace Azul {
         public Tile(int id, int count) {
             this.id = id;
             this.count = count;
+        }
+    }
+
+    public struct Move {
+        public int tileId;
+        public int plateId;
+        public int bufferId;
+
+        public Move(int tileId, int plateId, int bufferId) {
+            this.tileId = tileId;
+            this.plateId = plateId;
+            this.bufferId = bufferId;
+        }
+
+        public Move(string data) {
+            string[] parts = data.Split(' ');
+            try {
+                this.plateId = int.Parse(parts[0]);
+                this.tileId = int.Parse(parts[1]);
+                this.bufferId = int.Parse(parts[2]);
+            }
+            catch (Exception e) {
+                Logger.WriteLine($"invalid move data: {data}");
+                throw new IllegalOptionException($"Invalid move data: {data}");
+            }
+            
+        }
+
+        public override string ToString() {
+            return $"{plateId} {tileId} {bufferId}";
         }
     }
 }

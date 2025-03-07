@@ -213,7 +213,7 @@ namespace Azul {
             }
             player += board.Replace($"{Globals.EMPTY_CELL}", "_");
             string floorStr = "floor: ";
-            for (int i = 0; i < floor.Count(); i++) {
+            for (int i = 0; i < floor.Count; i++) {
                 floorStr += $" {floor[i].ToString()}";
             }
             floorStr += "\n";

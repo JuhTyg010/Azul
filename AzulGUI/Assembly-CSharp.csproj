@@ -70,6 +70,7 @@
     <Compile Include="Assets/Scripts/Board/BufferHolder.cs" />
     <Compile Include="Assets/Scripts/Menu/PlayersSetup.cs" />
     <Compile Include="Assets/Scripts/Statics/State.cs" />
+    <Compile Include="Assets/Resources/Azul/IBot.cs" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
