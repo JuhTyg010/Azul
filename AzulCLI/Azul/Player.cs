@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace Azul {
     public class Player
@@ -199,18 +200,25 @@ namespace Azul {
         }
 
         public override string ToString() {
+            
+            string player = $"{name} points: {pointCount}\n";
             string board = "";
-            for (int i = 0; i < wall.GetLength(0); i++) {
-                board += " [";
-                board += buffers[i].ToString();
-                board += "] [";
+            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+                board += new String(' ', (Globals.WALL_DIMENSION - i)*2);
+                board += $" {buffers[i]} -> ";
                 for (int j = 0; j < wall.GetLength(1); j++) {
-                    board += wall[i, j].ToString();
+                    board += $"{wall[i, j].ToString()} ";
                 }
-                board += "]";
+                board += "\n";
             }
-
-            return $"{name} ({pointCount}) {board} {floor}";
+            player += board.Replace($"{Globals.EMPTY_CELL}", "_");
+            string floorStr = "floor: ";
+            for (int i = 0; i < floor.Count(); i++) {
+                floorStr += $" {floor[i].ToString()}";
+            }
+            floorStr += "\n";
+            player += floorStr.Replace($"{Globals.FIRST}", "F");
+            return player;
         }
 
         private bool possibleRow(int row, int typeId) {

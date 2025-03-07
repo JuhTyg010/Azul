@@ -51,7 +51,7 @@ public class IgnoringBot : IBot{
         
         double reward = CalculateReward(state, bestAction, board);
         
-        Logger.WriteLine("Move reward: " + reward);
+        Logger.WriteLine($"Move: {DecodeAction(bestAction)} reward: {reward}");
         var nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
 
         replayBuffer.Add(state, bestAction, reward, nextState, true);

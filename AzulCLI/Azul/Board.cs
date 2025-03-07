@@ -298,12 +298,14 @@ namespace Azul {
 
         private void StateLogData(int plateId, int tileId, int bufferId) {
             Logger.WriteLine("Move:");
-            Logger.Write("Plate data: ");
-            for (int i = 0; i < Plates.Length; i++) {
-                Logger.Write($" id: {i} {Plates[i]},");
-            }
+            Logger.WriteLine("Plate data: ");
+            int i = 0;
+            for (; i <= Plates.Length / 2; i++) Logger.Write($" id: {i} {Plates[i]},");
+            Logger.WriteLine("");
+            for(;i < Plates.Length; i++) Logger.Write($" id: {i} {Plates[i]}");
+            
             Logger.WriteLine($" id: {Plates.Length} {Center}");
-            Logger.Write($"Player {Players[CurrentPlayer].name} ({CurrentPlayer}) taking from plate {plateId} tile {tileId} to buffer {bufferId}: ");
+            Logger.Write($"Player {Players[CurrentPlayer].name} ({CurrentPlayer}) plate: {plateId} tile: {tileId} buffer: {bufferId}: ");
             if (Phase != Phase.Taking) {
                 Logger.WriteLine("Invalid Phase");
                 throw new IllegalOptionException("Invalid Phase");
@@ -419,6 +421,10 @@ namespace Azul {
                     }
                 }
             }
+        }
+
+        private void WritePlayerData() {
+            
         }
         
         protected virtual void OnNextTakingMove(MyEventArgs e) {

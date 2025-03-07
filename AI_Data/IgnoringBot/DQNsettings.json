@@ -4,7 +4,7 @@
   "ReplayBufferCapacity": 150,
   "BatchSize": 10,
   "FromLastBatch": 1,
-  "Epsilon": 0.9674905716180701,
+  "Epsilon": 0.9001824484431542,
   "EpsilonDecay": 0.997,
   "EpsilonMin": 0.01,
   "Gamma": 0.99
