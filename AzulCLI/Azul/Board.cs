@@ -367,6 +367,9 @@ namespace Azul {
         }
 
         private void WriteGameOver() {
+            foreach (var player in Players) {   
+                Logger.WriteLine($"Player {player.name}: points: {player.pointCount}");
+            }
             Logger.WriteLine("-------GGG-------A-------M------M--EEEEEE-------OOO----V-----V----EEEEEE----RRRR------");
             Logger.WriteLine("------G---G-----A-A------MM----MM--E-----------O---O---V-----V----E---------R---R-----");
             Logger.WriteLine("-----G---------A---A-----M-M--M-M--EEEE-------O-----O---V---V-----EEEE------RRRR------");
