@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using randomBot;
-using Bot = randomBot.Bot;
 
 namespace AzulCLI;
 
@@ -46,7 +45,7 @@ public class CLIGameManager {
                 if (playerSetup[i].Split("_")[0] == "B") {
                     string type = playerSetup[i].Split("_")[1];
                     if(type == "random") botPlayers.Add(new randomBot.Bot(i));
-                    botPlayers.Add(BotFactory.CreateBot(type, i));
+                    else botPlayers.Add(BotFactory.CreateBot(type, i));
                 }
             }
             botIds = new int[botPlayers.Count];

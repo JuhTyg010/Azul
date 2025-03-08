@@ -13,6 +13,7 @@ public class NeuralNetwork
 
     private Random random = new Random();
 
+    [JsonConstructor]
     public NeuralNetwork(double[][] weights1, double[][] weights2, double[] biases1, double[] biases2) {
         this.weights1 = weights1;
         this.weights2 = weights2;

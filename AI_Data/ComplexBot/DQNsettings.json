@@ -3,8 +3,8 @@
   "StateSize": 199,
   "ReplayBufferCapacity": 150,
   "BatchSize": 32,
-  "FromLastBatch": 1,
-  "Epsilon": 0.9220814271464737,
+  "FromLastBatch": 24,
+  "Epsilon": 0.04448196979639435,
   "EpsilonDecay": 0.997,
   "EpsilonMin": 0.01,
   "Gamma": 0.99

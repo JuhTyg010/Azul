@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using CommandLine;
 using Azul;
+using DeepQLearningBot;
 
 
 namespace AzulTrainer;
@@ -14,12 +15,15 @@ public class Options {
     [Option('l', "list-of-players", Required = false, Default = "deep rand", HelpText = "list of which player is which")]
     public string ListOfIncoming { get; set; } = "deep rand";
     
+    [Option('o', "output-file", Required = false, Default = "azul_log.txt", HelpText = "log file")]
+    public string logFile { get; set; } = "log.txt";
+    
 }
 
 public class Trainer {
     private static IBot[] bots;
     public static void Main(string[] args) {
-        /*Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
+        Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
             string[] botNames = o.ListOfIncoming.Split(' ');
             int count = botNames.Length;
             string[] names = new string[count];
@@ -30,43 +34,36 @@ public class Trainer {
                         break;
                     case "rand": bots[i] = new randomBot.Bot(i);
                         break;
-                    default: throw new DataException($"Unknown bot: {botNames[i]}");
+                    default: bots[i] = new DeepQLearningBot.Bot(i);
+                        break;
                 } 
                 names[i] = botNames[i] + i;
             }
 
-            Board game = new Board(count, names, o.Mode == 1);
-            game.NextTakingMove += OnNextTakingTurn;
-            game.NextPlacingMove += OnNextPlacingTurn;
+           while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
+               string logFile = logFileName(o.logFile + "/log");
 
-            Console.WriteLine("Game started");
-            game.StartGame();
-            
-            while (game.Phase != Phase.GameOver) Thread.Sleep(5);//ish secure 
+               playGame(count, names, o.Mode == 1, logFile);
+           }
 
-            Console.WriteLine("Game over");
-            Player[] players = game.Players.ToArray();
-            Array.Sort(players, (a, b) => a.pointCount > b.pointCount ? -1 : 1);
-            for (int i = 0; i < players.Length; i++) {
-                Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
-            }
+        });
+    }
 
-        });*/
+    private static void playGame(int count, string[] names, bool mode, string logFile) {
+        Board game = new Board(count, names, mode, logFile);
+        game.NextTakingMove += OnNextTakingTurn;
+        game.NextPlacingMove += OnNextPlacingTurn;
+
+        Console.WriteLine("Game started");
+        game.StartGame();
             
-        Console.WriteLine("Welcome to Azul Trainer!");
-        while (true) {
-            Console.WriteLine("running game");
-            
-            if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q) {
-                Console.WriteLine("Exit condition met. Stopping process execution.");
-                break;
-            }
-            Process p = new Process();
-            p.StartInfo.FileName = "/home/juhtyg/Desktop/Azul/AzulCLI/AzulCLI/bin/Debug/net8.0/AzulCLI"; // Need full path of application
-            p.StartInfo.Arguments = "-m 0 -l \"B_random_a B_ignoring_b\" -d /home/juhtyg/Desktop/Azul/AzulCLI/Logs";
-            p.StartInfo.UseShellExecute = false;
-            p.Start();
-            p.WaitForExit();
+        while (game.Phase != Phase.GameOver) Thread.Sleep(5);//ish secure 
+
+        Console.WriteLine("Game over");
+        Player[] players = game.Players.ToArray();
+        Array.Sort(players, (a, b) => a.pointCount > b.pointCount ? -1 : 1);
+        for (int i = 0; i < players.Length; i++) {
+            Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
         }
     }
 
@@ -102,5 +99,14 @@ public class Trainer {
         }
 
         return output.ToArray();
+    }
+    
+    private static string logFileName(string baseName) {
+        string fileName = baseName + ".txt";
+        long index = 0;
+        while (File.Exists(fileName)) {
+            fileName = $"{baseName}_{index++}.txt";
+        }
+        return fileName;
     }
 }
