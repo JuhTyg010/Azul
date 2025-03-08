@@ -131,6 +131,7 @@ namespace Board {
             bool playerChanged = currentPlayer != board.CurrentPlayer;
             
             if(playerChanged) notification.ShowStableMessage("Press any key to end move");
+            //else notification.StopVibratingMessage();
             if(!IsBotMove()) yield return new WaitUntil(() => Input.anyKey); //wait till previous player presses button
             if(playerChanged) yield return new WaitUntil(() => !Input.anyKey);
             currentPlayer = board.CurrentPlayer;
@@ -221,7 +222,7 @@ namespace Board {
                 UpdatePlates();
                 UpdatePlayers();
                 
-                notification.ShowStableMessage("Press any key to end turn");
+                //notification.ShowStableMessage("Press any key to end turn");
             }
             Debug.Log("emptying hand");
             holding.EmptyHand();

@@ -45,7 +45,6 @@ namespace Board {
 
         public void OnPointerEnter(PointerEventData eventData) {
             if (gameController.holding.isHolding) {
-                gameController.ShowMessage("You probably don't want to put it here");
                 foreach (var tile in tiles) {
                     tile.SetColor(new Color(0, 0, 0, .3f));
                 }
