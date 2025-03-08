@@ -9093,3 +9093,4087 @@ Player Player_1 will start next turn
 ------G---G---A-----A----M------M--E-----------O---O-----V-V------E---------R---R-----
 -------GGG---A-------A---M------M--EEEEEE-------OOO-------V-------EEEEEE----R---R-----
 Filling:
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 2, 0, 2, ], id: 1 [ 0, 3, 0, 1, 0, ], id: 2 [ 2, 0, 1, 1, 0, ],
+ id: 3 [ 2, 1, 1, 0, 0, ] id: 4 [ 0, 0, 1, 2, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) plate: 0 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Move:
+Plate data: 
+ id: 0 [ 0, 3, 0, 1, 0, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 0, 1, 0, 1, 2, ],
+ id: 3 [ 0, 1, 0, 2, 1, ] id: 4 [ 0, 2, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) plate: 0 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 0, 1, 0, 1, 2, ],
+ id: 3 [ 0, 1, 0, 2, 1, ] id: 4 [ 0, 2, 1, 1, 0, ] id: 5 [ 0, 0, 0, 1, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 1, 0, 1, 2, ],
+ id: 3 [ 0, 1, 0, 2, 1, ] id: 4 [ 0, 2, 1, 1, 0, ] id: 5 [ 0, 0, 2, 2, 0, ]
+Player Player_2 (0) plate: 4 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 1, 0, 1, 2, ],
+ id: 3 [ 0, 1, 0, 2, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 3, 3, 0, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 1, 0, 1, 2, ],
+ id: 3 [ 0, 1, 0, 2, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 3, 0, ]
+Player Player_2 (0) plate: 3 tile: 3 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 1, 0, 1, 2, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 3, 1, ]
+Player Player_1 (1) plate: 2 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 0, 4, 1, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 0, 4, 0, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 0, 0, 0, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 4: successfully filled, current state 2 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           4  -> _ _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       1 1 1  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 1 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 4 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ _ _ 4 
+         1 1  -> _ _ _ _ _ 
+       1 1 1  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 1 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_2 points: 2
+           _  -> _ _ _ _ 4 
+         _ _  -> _ _ 1 _ _ 
+       1 1 1  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 1 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 2 tiles of type 1 put to trash
+successfully placed on wall new points: 3
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 3
+Filling:
+Player's data: Player_1 points: 0
+           0  -> _ _ _ _ _ 
+         4 4  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> 0 _ _ _ _ 
+         4 4  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 3
+Filling:
+Player's data: Player_1 points: 3
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 4
+Filling:
+Player's data: Player_1 points: 4
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ _ _ _ 
+       _ _ _  -> _ _ _ _ 2 
+     3 3 3 3  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 3 tiles of type 3 put to trash
+successfully placed on wall new points: 5
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 4
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Filling:
+Player's data: Player_1 points: 4
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ _ _ _ 
+       _ _ _  -> _ _ _ _ 2 
+     _ _ _ _  -> _ 3 _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+Invalid Phase
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 0, 3, 1, 0, ], id: 2 [ 2, 0, 0, 1, 1, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 1, 2, 0, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ _ _ _ 4 
+         _ _  -> _ _ 1 _ _ 
+       _ _ _  -> _ _ _ 1 _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 1 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+Invalid Phase
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ _ _ _ 4 
+         _ _  -> _ _ 1 _ _ 
+       _ _ _  -> _ _ _ 1 _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 1 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+Invalid Phase
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ _ _ _ 4 
+         _ _  -> _ _ 1 _ _ 
+       _ _ _  -> _ _ _ 1 _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 1 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+Invalid Phase
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ _ _ _ 4 
+         _ _  -> _ _ 1 _ _ 
+       _ _ _  -> _ _ _ 1 _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 1 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+Invalid Phase
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 0, 3, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 1, 2, 0, 0, 1, ] id: 5 [ 0, 0, 0, 1, 1, ]
+Player Player_2 (0) plate: 1 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 1, 2, 0, 0, 1, ] id: 5 [ 0, 0, 0, 2, 1, ]
+Player Player_1 (1) plate: 0 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 1, 2, 0, 0, 1, ] id: 5 [ 1, 0, 0, 3, 2, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 1, 2, 0, 0, 1, ] id: 5 [ 1, 0, 0, 0, 2, ]
+Player Player_1 (1) plate: 4 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 0, 0, 3, ]
+Player Player_2 (0) plate: 3 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 1, 1, 3, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 1, 1, 0, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 4: successfully filled, current state 4 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 0, 1, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 1, 1, 0, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 4: successfully filled, current state 1 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 3
+           2  -> _ _ _ _ 4 
+         4 4  -> _ _ 1 _ _ 
+       2 2 2  -> _ _ _ 1 _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   1 1 1 1 _  -> _ _ _ _ _ 
+floor:  F 3
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 5
+Filling:
+Player's data: Player_2 points: 5
+           _  -> _ _ 2 _ 4 
+         4 4  -> _ _ 1 _ _ 
+       2 2 2  -> _ _ _ 1 _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   1 1 1 1 _  -> _ _ _ _ _ 
+floor:  F 3
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 6
+Filling:
+Player's data: Player_2 points: 6
+           _  -> _ _ 2 _ 4 
+         _ _  -> 4 _ 1 _ _ 
+       2 2 2  -> _ _ _ 1 _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   1 1 1 1 _  -> _ _ _ _ _ 
+floor:  F 3
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 8
+Filling:
+Player's data: Player_2 points: 8
+           _  -> _ _ 2 _ 4 
+         _ _  -> 4 _ 1 _ _ 
+       _ _ _  -> _ _ _ 1 2 
+     3 3 3 3  -> _ _ _ _ _ 
+   1 1 1 1 _  -> _ _ _ _ _ 
+floor:  F 3
+
+ 3 tiles of type 3 put to trash
+successfully placed on wall new points: 9
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 7
+ 1 tiles of type 3 put to trash
+Player Player_2 will start next turn
+Filling:
+Player's data: Player_1 points: 4
+           1  -> 0 _ _ _ _ 
+         0 0  -> 4 _ _ _ _ 
+       4 4 4  -> _ _ _ _ 2 
+     _ _ _ _  -> _ 3 _ _ _ 
+   3 _ _ _ _  -> _ _ _ _ _ 
+floor:  0 0
+
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 6
+Filling:
+Player's data: Player_1 points: 6
+           _  -> 0 1 _ _ _ 
+         0 0  -> 4 _ _ _ _ 
+       4 4 4  -> _ _ _ _ 2 
+     _ _ _ _  -> _ 3 _ _ _ 
+   3 _ _ _ _  -> _ _ _ _ _ 
+floor:  0 0
+
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 10
+Filling:
+Player's data: Player_1 points: 10
+           _  -> 0 1 _ _ _ 
+         _ _  -> 4 0 _ _ _ 
+       4 4 4  -> _ _ _ _ 2 
+     _ _ _ _  -> _ 3 _ _ _ 
+   3 _ _ _ _  -> _ _ _ _ _ 
+floor:  0 0
+
+ 2 tiles of type 4 put to trash
+successfully placed on wall new points: 14
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 12
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Filling:
+Player's data: Player_2 points: 7
+           _  -> _ _ 2 _ 4 
+         _ _  -> 4 _ 1 _ _ 
+       _ _ _  -> _ _ _ 1 2 
+     _ _ _ _  -> _ 3 _ _ _ 
+   1 1 1 1 _  -> _ _ _ _ _ 
+floor: 
+
+Invalid Phase
+Filling:
+Player's data: Player_2 points: 7
+           _  -> _ _ 2 _ 4 
+         _ _  -> 4 _ 1 _ _ 
+       _ _ _  -> _ _ _ 1 2 
+     _ _ _ _  -> _ 3 _ _ _ 
+   1 1 1 1 _  -> _ _ _ _ _ 
+floor: 
+
+Invalid Phase
+Filling:
+Player's data: Player_2 points: 7
+           _  -> _ _ 2 _ 4 
+         _ _  -> 4 _ 1 _ _ 
+       _ _ _  -> _ _ _ 1 2 
+     _ _ _ _  -> _ 3 _ _ _ 
+   1 1 1 1 _  -> _ _ _ _ _ 
+floor: 
+
+Invalid Phase
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 2, 0, ], id: 1 [ 0, 1, 1, 1, 1, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 1, 0, 1, 2, 0, ] id: 4 [ 0, 1, 0, 1, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 2, 0, 2, 0, ], id: 1 [ 0, 1, 0, 2, 1, ], id: 2 [ 0, 0, 1, 1, 2, ],
+ id: 3 [ 0, 1, 1, 0, 2, ] id: 4 [ 1, 0, 2, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 4 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 2, 0, 1, ], id: 1 [ 3, 1, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 1, 1, 1, 0, 1, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 2, 0, 2, 0, ], id: 1 [ 0, 0, 3, 1, 0, ], id: 2 [ 1, 1, 1, 1, 0, ],
+ id: 3 [ 1, 1, 1, 1, 0, ] id: 4 [ 2, 0, 0, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 1, 0, 1, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 1, 0, 0, 2, 1, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 0, 4, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 1, 0, 0, 2, 1, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 0, 4, 0, 0, 0, ] id: 5 [ 0, 1, 1, 0, 1, ]
+Player Player_2 (0) plate: 4 tile: 1 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 1, 0, 0, 2, 1, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 1, 0, 1, ]
+Player Player_1 (1) plate: 1 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 0, 2, 1, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 1, 1, 1, 1, ]
+Player Player_2 (0) plate: 2 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 1, 1, 1, 2, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 1, 1, 2, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 1, 1, 0, ]
+Player Player_1 (1) plate: 3 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 1, 2, 1, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 0, 2, 1, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 2, 1, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 4: successfully filled, current state 2 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 1, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 4: successfully filled, current state 1 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           2  -> _ _ _ _ _ 
+         3 3  -> _ _ _ _ _ 
+       4 4 _  -> _ _ _ _ _ 
+     1 1 1 1  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ 2 _ _ 
+         3 3  -> _ _ _ _ _ 
+       4 4 _  -> _ _ _ _ _ 
+     1 1 1 1  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 3 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_2 points: 2
+           _  -> _ _ 2 _ _ 
+         _ _  -> _ _ _ _ 3 
+       4 4 _  -> _ _ _ _ _ 
+     1 1 1 1  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 3 tiles of type 1 put to trash
+successfully placed on wall new points: 3
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 3
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: Invalid Phase
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 1, 1, 0, ], id: 1 [ 1, 1, 0, 2, 0, ], id: 2 [ 1, 0, 3, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 1, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 3, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 0, 1, 0, 2, 0, ]
+Player Player_2 (0) plate: 2 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 1, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 1, 1, 0, 2, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 1, 1, 1, 3, 0, ]
+Player Player_2 (0) plate: 3 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 2, 1, 1, 4, 0, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 2, 1, 1, 0, 0, ]
+Player Player_2 (0) plate: 4 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 1, 2, 2, 0, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 2, 2, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 2, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 4: successfully filled, current state 2 of 5
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 0, 0, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 4: successfully filled, current state 1 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           0  -> _ _ _ _ _ 
+         4 4  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> 0 _ _ _ _ 
+         4 4  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 3
+Filling:
+Player's data: Player_2 points: 3
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   1 _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 4
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 4
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: Invalid Phase
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 1, 1, 1, 1, ], id: 2 [ 1, 1, 0, 2, 0, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 1, 2, 0, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 1, 1, 1, 1, ], id: 2 [ 1, 1, 0, 2, 0, ],
+ id: 3 [ 0, 1, 1, 1, 1, ] id: 4 [ 1, 2, 0, 0, 1, ] id: 5 [ 0, 1, 0, 1, 1, ]
+Player Player_2 (0) plate: 2 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 1, 1, 0, ], id: 1 [ 0, 1, 1, 1, 1, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 1, 2, 1, 0, ] id: 4 [ 0, 2, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 1, 1, 1, 1, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 1, 2, 1, 0, ] id: 4 [ 0, 2, 1, 1, 0, ] id: 5 [ 0, 1, 1, 1, 0, ]
+Player Player_2 (0) plate: 4 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 1, 1, 1, 1, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 1, 2, 1, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 2, 2, 0, ]
+Player Player_1 (1) plate: 3 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 1, 1, 1, 1, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 2, 3, 0, ]
+Player Player_2 (0) plate: 1 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 2, 4, 1, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 2, 4, 1, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 2, 0, 1, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 2, 1, 2, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 2, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 2, 1, 0, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 4: successfully filled, current state 2 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 3: successfully filled, current state 1 of 4
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           2  -> _ _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       4 4 _  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   2 2 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ 2 _ _ 
+         1 1  -> _ _ _ _ _ 
+       4 4 _  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   2 2 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 3
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ _ 2 _ _ 
+         _ _  -> _ _ 1 _ _ 
+       4 4 _  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   2 2 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 3 tiles of type 3 put to trash
+successfully placed on wall new points: 4
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 4
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: Invalid Phase
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 2, 1, 0, ], id: 1 [ 3, 1, 0, 0, 0, ], id: 2 [ 0, 4, 0, 0, 0, ],
+ id: 3 [ 1, 0, 1, 0, 2, ] id: 4 [ 0, 0, 1, 1, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 3 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 2, 1, 0, ], id: 1 [ 3, 1, 0, 0, 0, ], id: 2 [ 0, 4, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 1, 1, 2, ] id: 5 [ 0, 0, 1, 0, 2, ]
+Player Player_2 (0) plate: 2 tile: 1 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 2, 1, 0, ], id: 1 [ 3, 1, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 1, 1, 2, ] id: 5 [ 0, 0, 1, 0, 2, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 0, 1, 0, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 2, 0, 0, 2, 0, ],
+ id: 3 [ 0, 2, 0, 2, 0, ] id: 4 [ 0, 1, 1, 2, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 2, 0, 0, 2, 0, ],
+ id: 3 [ 0, 2, 0, 2, 0, ] id: 4 [ 0, 1, 1, 2, 0, ] id: 5 [ 0, 2, 0, 1, 0, ]
+Player Player_2 (0) plate: 3 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 2, 0, 0, 2, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 1, 1, 2, 0, ] id: 5 [ 0, 4, 0, 1, 0, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 2, 0, 1, ], id: 1 [ 1, 0, 2, 0, 1, ], id: 2 [ 2, 1, 1, 0, 0, ],
+ id: 3 [ 1, 0, 1, 2, 0, ] id: 4 [ 0, 1, 1, 0, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 0, 1, ], id: 2 [ 2, 1, 1, 0, 0, ],
+ id: 3 [ 1, 0, 1, 2, 0, ] id: 4 [ 0, 1, 1, 0, 2, ] id: 5 [ 0, 0, 2, 0, 1, ]
+Player Player_2 (0) plate: 4 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 0, 1, ], id: 2 [ 2, 1, 1, 0, 0, ],
+ id: 3 [ 1, 0, 1, 2, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 3, 0, 1, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 1, 2, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 4, 0, 1, ]
+Player Player_2 (0) plate: 1 tile: 2 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 1, 2, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 4, 0, 2, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 1, 2, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 0, 0, 2, ]
+Player Player_2 (0) plate: 3 tile: 3 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 2, 1, 0, 2, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 1, 0, 1, 1, 1, ], id: 2 [ 0, 0, 3, 1, 0, ],
+ id: 3 [ 3, 0, 1, 0, 0, ] id: 4 [ 0, 1, 2, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 3, 1, 0, ],
+ id: 3 [ 3, 0, 1, 0, 0, ] id: 4 [ 0, 1, 2, 1, 0, ] id: 5 [ 0, 0, 1, 1, 1, ]
+Player Player_2 (0) plate: 3 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 3, 1, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 1, 2, 1, 0, ] id: 5 [ 0, 0, 2, 1, 1, ]
+Player Player_1 (1) plate: 4 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 2, 0, ], id: 1 [ 2, 1, 0, 0, 1, ], id: 2 [ 2, 1, 0, 0, 1, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 2, 0, 0, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 1, 0, 0, 1, ], id: 2 [ 2, 1, 0, 0, 1, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 2, 0, 0, 1, 1, ] id: 5 [ 0, 0, 1, 2, 0, ]
+Player Player_2 (0) plate: 4 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 1, 0, 0, 1, ], id: 2 [ 2, 1, 0, 0, 1, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 1, 3, 1, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 1, 0, 1, ], id: 1 [ 2, 0, 0, 1, 1, ], id: 2 [ 1, 0, 1, 1, 1, ],
+ id: 3 [ 2, 0, 0, 1, 1, ] id: 4 [ 0, 1, 2, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 1, 0, 1, ], id: 1 [ 2, 0, 0, 1, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 2, 0, 0, 1, 1, ] id: 4 [ 0, 1, 2, 0, 1, ] id: 5 [ 0, 0, 1, 1, 1, ]
+Player Player_2 (0) plate: 0 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 0, 0, 1, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 2, 0, 0, 1, 1, ] id: 4 [ 0, 1, 2, 0, 1, ] id: 5 [ 0, 0, 2, 1, 2, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 2, 0, 0, 1, 1, ] id: 4 [ 0, 1, 2, 0, 1, ] id: 5 [ 0, 0, 2, 2, 3, ]
+Player Player_2 (0) plate: 4 tile: 2 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 2, 0, 0, 1, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 2, 2, 4, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 0, 1, 2, ], id: 1 [ 0, 3, 0, 0, 1, ], id: 2 [ 0, 0, 2, 1, 1, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 1, 0, 2, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 3, 0, 0, 1, ], id: 2 [ 0, 0, 2, 1, 1, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 1, 0, 2, 1, 0, ] id: 5 [ 0, 0, 0, 1, 2, ]
+Player Player_2 (0) plate: 1 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 2, 1, 1, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 1, 0, 2, 1, 0, ] id: 5 [ 0, 0, 0, 1, 3, ]
+Player Player_1 (1) plate: 3 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 2, 1, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 0, 2, 1, 0, ] id: 5 [ 1, 0, 1, 1, 3, ]
+Player Player_2 (0) plate: 2 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 0, 2, 1, 0, ] id: 5 [ 1, 0, 1, 2, 4, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 2, 1, 0, 0, 1, ],
+ id: 3 [ 3, 0, 0, 0, 1, ] id: 4 [ 1, 1, 1, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 2, 1, 0, 0, 1, ],
+ id: 3 [ 3, 0, 0, 0, 1, ] id: 4 [ 1, 1, 1, 0, 1, ] id: 5 [ 0, 1, 0, 2, 0, ]
+Player Player_2 (0) plate: 3 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 2, 1, 0, 0, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 1, 1, 0, 1, ] id: 5 [ 0, 1, 0, 2, 1, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 1, 1, 0, 1, ] id: 5 [ 0, 2, 0, 2, 2, ]
+Player Player_2 (0) plate: 4 tile: 4 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 3, 1, 2, 2, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 0, 1, 2, 2, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 0, 1, 0, 2, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 1, 2, 0, 3, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 1, 2, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 2, 0, 0, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 4: successfully filled, current state 2 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Plates are empty, starting filling
+Found full buffer player: Player_2
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 2, 1, 0, ], id: 1 [ 2, 0, 1, 1, 0, ], id: 2 [ 0, 0, 1, 1, 2, ],
+ id: 3 [ 0, 0, 2, 1, 1, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 2, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 1, 1, 2, ],
+ id: 3 [ 0, 0, 2, 1, 1, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 1, 1, 0, ]
+Player Player_2 (0) plate: 2 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 2, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 2, 1, 1, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 2, 2, 0, ]
+Player Player_1 (1) plate: 0 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 2, 1, 1, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 4, 3, 0, ]
+Player Player_2 (0) plate: 3 tile: 2 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 4, 4, 1, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 0, 4, 1, ]
+Player Player_2 (0) plate: 4 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 5, 2, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 4: successfully filled, current state 5 of 5
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 0, 2, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 2, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 2: successfully filled, current state 2 of 3
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           1  -> _ _ _ _ _ 
+         4 4  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     _ _ _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ 1 _ _ _ 
+         4 4  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     _ _ _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_2 points: 2
+           _  -> _ 1 _ _ _ 
+         _ _  -> 4 _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     _ _ _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 3
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 3
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: Invalid Phase
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 0, 2, 1, 1, ], id: 2 [ 1, 1, 1, 0, 1, ],
+ id: 3 [ 0, 0, 0, 3, 1, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 0, 2, 1, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 3, 1, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 1, 1, 0, 1, ]
+Player Player_2 (0) plate: 3 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 0, 2, 1, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 1, 1, 0, 2, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 2, 1, 1, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 2, 1, 1, 2, ]
+Player Player_2 (0) plate: 1 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 2, 1, 2, 3, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 2, 1, 2, 0, ]
+Player Player_2 (0) plate: 4 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 2, 2, 1, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 2, 2, 1, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 2, 1, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 2, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 4: successfully filled, current state 2 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           3  -> _ _ _ _ _ 
+         2 2  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 3 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ _ 3 _ 
+         2 2  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 3
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ _ _ 3 _ 
+         _ _  -> _ _ _ 2 _ 
+       3 3 3  -> _ _ _ _ _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 2 tiles of type 3 put to trash
+successfully placed on wall new points: 4
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 4
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: Invalid Phase
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 0, 1, 0, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 0, 0, 3, 0, 1, ],
+ id: 3 [ 1, 2, 0, 1, 0, ] id: 4 [ 0, 0, 1, 3, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 0, 0, 3, 0, 1, ],
+ id: 3 [ 1, 2, 0, 1, 0, ] id: 4 [ 0, 0, 1, 3, 0, ] id: 5 [ 0, 2, 0, 1, 0, ]
+Player Player_2 (0) plate: 2 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 2, 0, 1, 0, ] id: 4 [ 0, 0, 1, 3, 0, ] id: 5 [ 0, 2, 0, 1, 1, ]
+Player Player_1 (1) plate: 3 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 2, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 1, 3, 0, ] id: 5 [ 1, 2, 0, 2, 1, ]
+Player Player_2 (0) plate: 1 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 1, 3, 0, ] id: 5 [ 2, 2, 0, 3, 1, ]
+Player Player_1 (1) plate: 4 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 2, 1, 3, 1, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 0, 1, 3, 1, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 0, 1, 0, 1, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 0, 0, 0, 1, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 1, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 4: successfully filled, current state 1 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           2  -> _ _ _ _ _ 
+         2 2  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     1 1 _ _  -> _ _ _ _ _ 
+   4 _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ 2 _ _ 
+         2 2  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     1 1 _ _  -> _ _ _ _ _ 
+   4 _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_2 points: 2
+           _  -> _ _ 2 _ _ 
+         _ _  -> _ _ _ 2 _ 
+       2 2 2  -> _ _ _ _ _ 
+     1 1 _ _  -> _ _ _ _ _ 
+   4 _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 3
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 2
+Player Player_2 will start next turn
+Filling:
+Player's data: Player_1 points: 0
+           0  -> _ _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  0 0
+
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> 0 _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  0 0
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_1 points: 2
+           _  -> 0 _ _ _ _ 
+         _ _  -> _ _ 1 _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  0 0
+
+ 2 tiles of type 3 put to trash
+successfully placed on wall new points: 3
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 1
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 0, 2, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ],
+ id: 3 [ 3, 0, 0, 0, 1, ] id: 4 [ 1, 0, 1, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) plate: 4 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 0, 2, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ],
+ id: 3 [ 3, 0, 0, 0, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 0, 1, 0, 1, ]
+Player Player_1 (1) plate: 0 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 2, 1, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ],
+ id: 3 [ 3, 0, 0, 0, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 0, 2, 0, 1, ]
+Player Player_2 (0) plate: 1 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ],
+ id: 3 [ 3, 0, 0, 0, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 3, 0, 3, 0, 1, ]
+Player Player_1 (1) plate: 3 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 2, 0, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 3, 0, 3, 0, 2, ]
+Player Player_2 (0) plate: 2 tile: 4 buffer: 4: successfully filled, current state 2 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 0, 5, 0, 2, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 4: successfully filled, current state 5 of 5
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 0, 0, 0, 2, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 4: successfully filled, current state 4 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 2
+           3  -> _ _ 2 _ _ 
+         1 1  -> _ _ _ 2 _ 
+       _ _ _  -> _ _ _ _ 2 
+     1 1 _ _  -> _ _ _ _ _ 
+   4 4 4 4 _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 3 put to trash
+successfully placed on wall new points: 6
+Filling:
+Player's data: Player_2 points: 6
+           _  -> _ _ 2 3 _ 
+         1 1  -> _ _ _ 2 _ 
+       _ _ _  -> _ _ _ _ 2 
+     1 1 _ _  -> _ _ _ _ _ 
+   4 4 4 4 _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 10
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 10
+Filling:
+Player's data: Player_1 points: 1
+           _  -> 0 _ _ _ _ 
+         4 4  -> _ _ 1 _ _ 
+       0 0 0  -> 3 _ _ _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  F 0 0 0 0
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 4
+Filling:
+Player's data: Player_1 points: 4
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ 1 _ _ 
+       0 0 0  -> 3 _ _ _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  F 0 0 0 0
+
+ 2 tiles of type 0 put to trash
+successfully placed on wall new points: 6
+Filling:
+Player's data: Player_1 points: 6
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ 1 _ _ 
+       _ _ _  -> 3 _ 0 _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  F 0 0 0 0
+
+ 4 tiles of type 2 put to trash
+successfully placed on wall new points: 7
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points -1
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Filling:
+Player's data: Player_1 points: -1
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ 1 _ _ 
+       _ _ _  -> 3 _ 0 _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ 2 _ _ _ 
+floor: 
+
+Invalid Phase
+Filling:
+Player's data: Player_1 points: -1
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ 1 _ _ 
+       _ _ _  -> 3 _ 0 _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ 2 _ _ _ 
+floor: 
+
+Invalid Phase
+Filling:
+Player's data: Player_1 points: -1
+           _  -> 0 _ _ _ _ 
+         _ _  -> 4 _ 1 _ _ 
+       _ _ _  -> 3 _ 0 _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ 2 _ _ _ 
+floor: 
+
+Invalid Phase
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 0, 2, 1, ], id: 1 [ 2, 0, 0, 2, 0, ], id: 2 [ 1, 0, 2, 0, 1, ],
+ id: 3 [ 1, 2, 0, 1, 0, ] id: 4 [ 0, 2, 0, 0, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 0, 1, 1, 2, 0, ], id: 2 [ 0, 0, 0, 2, 2, ],
+ id: 3 [ 0, 0, 0, 2, 2, ] id: 4 [ 1, 2, 1, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 1, 1, 2, 0, ], id: 2 [ 0, 0, 0, 2, 2, ],
+ id: 3 [ 0, 0, 0, 2, 2, ] id: 4 [ 1, 2, 1, 0, 0, ] id: 5 [ 0, 1, 0, 1, 1, ]
+Player Player_2 (0) plate: 1 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 2, 2, ],
+ id: 3 [ 0, 0, 0, 2, 2, ] id: 4 [ 1, 2, 1, 0, 0, ] id: 5 [ 0, 2, 1, 1, 1, ]
+Player Player_1 (1) plate: 4 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 2, 2, ],
+ id: 3 [ 0, 0, 0, 2, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 2, 1, 1, ]
+Player Player_2 (0) plate: 2 tile: 3 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 2, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 2, 1, 3, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 2, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 2, 1, 0, ]
+Player Player_2 (0) plate: 3 tile: 3 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 2, 1, 2, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 2, 1, 2, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 4: successfully filled, current state 2 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 2, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 2, 1, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 2, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 3: successfully filled, current state 2 of 4
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           _  -> _ _ _ _ _ 
+         3 3  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   4 4 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 3 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ _ _ _ 
+         _ _  -> _ _ _ _ 3 
+       3 3 3  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   4 4 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 2 tiles of type 3 put to trash
+successfully placed on wall new points: 2
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 2
+Filling:
+Player's data: Player_1 points: 0
+           0  -> _ _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       4 4 4  -> _ _ _ _ _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 1 1
+
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> 0 _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       4 4 4  -> _ _ _ _ _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 1 1
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_1 points: 2
+           _  -> 0 _ _ _ _ 
+         _ _  -> _ _ 1 _ _ 
+       4 4 4  -> _ _ _ _ _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 1 1
+
+ 2 tiles of type 4 put to trash
+successfully placed on wall new points: 3
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points -3
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 1 put to trash
+ 1 tiles of type 1 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 2, 0, ], id: 1 [ 1, 0, 1, 2, 0, ], id: 2 [ 0, 0, 1, 0, 3, ],
+ id: 3 [ 1, 1, 2, 0, 0, ] id: 4 [ 1, 1, 0, 0, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 1: successfully filled, current state 1 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 2, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 1, 0, 3, ],
+ id: 3 [ 1, 1, 2, 0, 0, ] id: 4 [ 1, 1, 0, 0, 2, ] id: 5 [ 0, 0, 1, 2, 0, ]
+Player Player_2 (0) plate: 2 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 2, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 2, 0, 0, ] id: 4 [ 1, 1, 0, 0, 2, ] id: 5 [ 0, 0, 2, 2, 0, ]
+Player Player_1 (1) plate: 3 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 2, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 1, 0, 0, 2, ] id: 5 [ 0, 1, 4, 2, 0, ]
+Player Player_2 (0) plate: 0 tile: 3 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 1, 0, 0, 2, ] id: 5 [ 0, 2, 5, 2, 0, ]
+Player Player_1 (1) plate: 4 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 5, 2, 2, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 5, 2, 0, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 5, 2, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 5, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 4: successfully filled, current state 5 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 2
+           3  -> _ _ _ _ _ 
+         4 4  -> _ _ _ _ 3 
+       4 4 4  -> 3 _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   4 4 _ _ _  -> _ _ _ _ _ 
+floor:  F 3
+
+ 0 tiles of type 3 put to trash
+successfully placed on wall new points: 3
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ _ _ 3 _ 
+         4 4  -> _ _ _ _ 3 
+       4 4 4  -> 3 _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   4 4 _ _ _  -> _ _ _ _ _ 
+floor:  F 3
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 5
+Filling:
+Player's data: Player_2 points: 5
+           _  -> _ _ _ 3 _ 
+         _ _  -> 4 _ _ _ 3 
+       4 4 4  -> 3 _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   4 4 _ _ _  -> _ _ _ _ _ 
+floor:  F 3
+
+ 2 tiles of type 4 put to trash
+successfully placed on wall new points: 7
+Filling:
+Player's data: Player_2 points: 7
+           _  -> _ _ _ 3 _ 
+         _ _  -> 4 _ _ _ 3 
+       _ _ _  -> 3 4 _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   4 4 _ _ _  -> _ _ _ _ _ 
+floor:  F 3
+
+ 3 tiles of type 3 put to trash
+successfully placed on wall new points: 9
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 7
+ 1 tiles of type 3 put to trash
+Player Player_2 will start next turn
+Filling:
+Player's data: Player_1 points: -3
+           _  -> 0 _ _ _ _ 
+         0 0  -> _ _ 1 _ _ 
+       1 1 1  -> _ 4 _ _ _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  0
+
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> 0 _ _ _ _ 
+         _ _  -> _ 0 1 _ _ 
+       1 1 1  -> _ 4 _ _ _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  0
+
+ 2 tiles of type 1 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_1 points: 2
+           _  -> 0 _ _ _ _ 
+         _ _  -> _ 0 1 _ _ 
+       _ _ _  -> _ 4 _ 1 _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  0
+
+ 4 tiles of type 2 put to trash
+successfully placed on wall new points: 3
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 2
+ 1 tiles of type 0 put to trash
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 0, 3, 0, 1, 0, ], id: 2 [ 0, 0, 0, 1, 3, ],
+ id: 3 [ 1, 0, 2, 0, 1, ] id: 4 [ 3, 0, 0, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) plate: 2 tile: 4 buffer: 4: successfully filled, current state 5 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 0, 3, 0, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 2, 0, 1, ] id: 4 [ 3, 0, 0, 0, 1, ] id: 5 [ 0, 0, 0, 1, 0, ]
+Player Player_1 (1) plate: 4 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 0, 3, 0, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 2, 0, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 1, 1, ]
+Player Player_2 (0) plate: 1 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 2, 0, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 2, 1, ]
+Player Player_1 (1) plate: 0 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 2, 0, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 1, 3, 2, ]
+Player Player_2 (0) plate: 3 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 0, 1, 3, 3, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 1, 3, 3, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 1, 3, 0, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 1: successfully filled, current state 1 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 3, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 0: Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 3, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 5: is on floor
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 7
+           _  -> _ _ _ 3 _ 
+         2 2  -> 4 _ _ _ 3 
+       1 1 1  -> 3 4 _ _ _ 
+     4 4 4 _  -> _ 3 _ _ _ 
+   4 4 4 4 4  -> _ _ _ _ _ 
+floor:  3 3 3
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 11
+Filling:
+Player's data: Player_2 points: 11
+           _  -> _ _ _ 3 _ 
+         _ _  -> 4 _ _ 2 3 
+       1 1 1  -> 3 4 _ _ _ 
+     4 4 4 _  -> _ 3 _ _ _ 
+   4 4 4 4 4  -> _ _ _ _ _ 
+floor:  3 3 3
+
+ 2 tiles of type 1 put to trash
+successfully placed on wall new points: 14
+Filling:
+Player's data: Player_2 points: 14
+           _  -> _ _ _ 3 _ 
+         _ _  -> 4 _ _ 2 3 
+       _ _ _  -> 3 4 _ 1 _ 
+     4 4 4 _  -> _ 3 _ _ _ 
+   4 4 4 4 4  -> _ _ _ _ _ 
+floor:  3 3 3
+
+ 4 tiles of type 4 put to trash
+successfully placed on wall new points: 15
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 11
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+Filling:
+Player's data: Player_1 points: 2
+           1  -> 0 _ _ _ _ 
+         2 _  -> _ 0 1 _ _ 
+       0 0 0  -> _ 4 _ 1 _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ 2 _ _ _ 
+floor:  F 0
+
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 7
+Filling:
+Player's data: Player_1 points: 7
+           _  -> 0 1 _ _ _ 
+         2 _  -> _ 0 1 _ _ 
+       0 0 0  -> _ 4 _ 1 _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ 2 _ _ _ 
+floor:  F 0
+
+ 2 tiles of type 0 put to trash
+successfully placed on wall new points: 12
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 10
+ 1 tiles of type 0 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 1, 2, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 2, 1, 1, 0, 0, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 2, 1, 1, 0, 0, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 0, 1, 2, ]
+Player Player_2 (0) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 2, 1, 1, 0, 0, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 1, 1, 3, ]
+Player Player_1 (1) plate: 2 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 2, 1, 1, 1, 3, ]
+Player Player_2 (0) plate: 4 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 2, 1, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 3, 1, 2, 2, 3, ]
+Player Player_1 (1) plate: 3 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 3, 2, 2, 3, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 3, 0, 2, 3, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 3, 0, 0, 3, ]
+Player Player_2 (0) plate: 5 tile: 0 buffer: 4: successfully filled, current state 4 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 0, 0, 3, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 4: successfully filled, current state 3 of 5
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 3, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 3: successfully filled, current state 4 of 4
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 11
+           1  -> _ _ _ 3 _ 
+         0 0  -> 4 _ _ 2 3 
+       2 2 _  -> 3 4 _ 1 _ 
+     4 4 4 4  -> _ 3 _ _ _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  F 4 4
+
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 12
+Filling:
+Player's data: Player_2 points: 12
+           _  -> _ 1 _ 3 _ 
+         0 0  -> 4 _ _ 2 3 
+       2 2 _  -> 3 4 _ 1 _ 
+     4 4 4 4  -> _ 3 _ _ _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  F 4 4
+
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 18
+Filling:
+Player's data: Player_2 points: 18
+           _  -> _ 1 _ 3 _ 
+         _ _  -> 4 0 _ 2 3 
+       2 2 _  -> 3 4 _ 1 _ 
+     4 4 4 4  -> _ 3 _ _ _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  F 4 4
+
+ 3 tiles of type 4 put to trash
+successfully placed on wall new points: 20
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 16
+ 1 tiles of type 4 put to trash
+ 1 tiles of type 4 put to trash
+Player Player_2 will start next turn
+Filling:
+Player's data: Player_1 points: 10
+           2  -> 0 1 _ _ _ 
+         2 _  -> _ 0 1 _ _ 
+       3 3 _  -> _ 4 0 1 _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   1 1 1 _ _  -> _ 2 _ _ _ 
+floor:  2 2
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 16
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 14
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 2 put to trash
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 1, 1, 0, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 2, 1, 1, 0, ],
+ id: 3 [ 2, 1, 1, 0, 0, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) plate: 2 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 1, 1, 0, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 2, 1, 1, 0, 0, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 0, 0, 1, 1, 0, ]
+Player Player_1 (1) plate: 0 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 2, 1, 1, 0, 0, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 1, 1, 1, 2, 0, ]
+Player Player_2 (0) plate: 3 tile: 0 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 1, 2, 2, 2, 0, ]
+Player Player_1 (1) plate: 1 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 0, 1, 2, 0, ] id: 5 [ 3, 3, 2, 2, 0, ]
+Player Player_2 (0) plate: 4 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 3, 2, 4, 0, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 3, 0, 4, 0, ]
+Player Player_2 (0) plate: 5 tile: 0 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 0, 4, 0, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 4: successfully filled, current state 5 of 5
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 4, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 5: is on floor
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 16
+           _  -> _ 1 _ 3 _ 
+         1 1  -> 4 0 _ 2 3 
+       2 2 2  -> 3 4 _ 1 _ 
+     0 0 0 0  -> _ 3 4 _ _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  0 0 3 3 3 3
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 21
+Player_2 points: 21
+           _  -> _ 1 _ 3 _ 
+         1 1  -> 4 0 1 2 3 
+       2 2 2  -> 3 4 _ 1 _ 
+     0 0 0 0  -> _ 3 4 _ _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  0 0 3 3 3 3
+ win
+Filling:
+Player's data: Player_2 points: 21
+           _  -> _ 1 _ 3 _ 
+         _ _  -> 4 0 1 2 3 
+       2 2 2  -> 3 4 _ 1 _ 
+     0 0 0 0  -> _ 3 4 _ _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  0 0 3 3 3 3
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 25
+Player_2 points: 25
+           _  -> _ 1 _ 3 _ 
+         _ _  -> 4 0 1 2 3 
+       2 2 2  -> 3 4 _ 1 2 
+     0 0 0 0  -> _ 3 4 _ _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  0 0 3 3 3 3
+ win
+Filling:
+Player's data: Player_2 points: 25
+           _  -> _ 1 _ 3 _ 
+         _ _  -> 4 0 1 2 3 
+       _ _ _  -> 3 4 _ 1 2 
+     0 0 0 0  -> _ 3 4 _ _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  0 0 3 3 3 3
+
+ 3 tiles of type 0 put to trash
+successfully placed on wall new points: 33
+Player_2 points: 33
+           _  -> _ 1 _ 3 _ 
+         _ _  -> 4 0 1 2 3 
+       _ _ _  -> 3 4 _ 1 2 
+     0 0 0 0  -> _ 3 4 0 _ 
+   0 0 0 0 _  -> _ _ _ 4 _ 
+floor:  0 0 3 3 3 3
+ win
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 22
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+Filling:
+Player's data: Player_1 points: 14
+           _  -> 0 1 2 _ _ 
+         2 2  -> _ 0 1 _ _ 
+       3 3 _  -> _ 4 0 1 _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   1 1 1 1 1  -> _ 2 _ _ _ 
+floor:  2 F 2 2 1
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 19
+Filling:
+Player's data: Player_1 points: 19
+           _  -> 0 1 2 _ _ 
+         _ _  -> _ 0 1 2 _ 
+       3 3 _  -> _ 4 0 1 _ 
+     2 2 _ _  -> _ _ _ _ _ 
+   1 1 1 1 1  -> _ 2 _ _ _ 
+floor:  2 F 2 2 1
+
+ 4 tiles of type 1 put to trash
+successfully placed on wall new points: 21
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 13
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 1 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+Player Player_2: points: 31
+Player Player_1: points: 13
+-------GGG-------A-------M------M--EEEEEE-------OOO----V-----V----EEEEEE----RRRR------
+------G---G-----A-A------MM----MM--E-----------O---O---V-----V----E---------R---R-----
+-----G---------A---A-----M-M--M-M--EEEE-------O-----O---V---V-----EEEE------RRRR------
+-----G--GGG---AAAAAAA----M--MM--M--EEEE-------O-----O---V---V-----EEEE------R--R------
+------G---G---A-----A----M------M--E-----------O---O-----V-V------E---------R---R-----
+-------GGG---A-------A---M------M--EEEEEE-------OOO-------V-------EEEEEE----R---R-----
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 0, 2, ], id: 1 [ 2, 0, 0, 0, 2, ], id: 2 [ 2, 0, 1, 0, 1, ],
+ id: 3 [ 1, 1, 0, 0, 2, ] id: 4 [ 0, 2, 0, 0, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 0, 0, 0, 2, ], id: 2 [ 2, 0, 1, 0, 1, ],
+ id: 3 [ 1, 1, 0, 0, 2, ] id: 4 [ 0, 2, 0, 0, 2, ] id: 5 [ 0, 1, 0, 0, 2, ]
+Player Player_2 (0) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 2, 0, 1, 0, 1, ],
+ id: 3 [ 1, 1, 0, 0, 2, ] id: 4 [ 0, 2, 0, 0, 2, ] id: 5 [ 0, 1, 0, 0, 4, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 0, 0, 2, ] id: 4 [ 0, 2, 0, 0, 2, ] id: 5 [ 0, 1, 1, 0, 5, ]
+Player Player_2 (0) plate: 3 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 2, 0, 0, 2, ] id: 5 [ 1, 1, 1, 0, 7, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 2, 0, 0, 2, ] id: 5 [ 0, 1, 1, 0, 7, ]
+Player Player_2 (0) plate: 4 tile: 4 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 1, 0, 7, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 1, 0, 7, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 3: successfully filled, current state 1 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 7, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 3: successfully filled, current state 4 of 4
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           1  -> _ _ _ _ _ 
+         0 0  -> _ _ _ _ _ 
+       4 4 _  -> _ _ _ _ _ 
+     2 _ _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ 1 _ _ _ 
+         0 0  -> _ _ _ _ _ 
+       4 4 _  -> _ _ _ _ _ 
+     2 _ _ _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 3
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 3
+Filling:
+Player's data: Player_1 points: 0
+           0  -> _ _ _ _ _ 
+         0 0  -> _ _ _ _ _ 
+       1 1 1  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 4 4 4
+
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> 0 _ _ _ _ 
+         0 0  -> _ _ _ _ _ 
+       1 1 1  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 4 4 4
+
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_1 points: 2
+           _  -> 0 _ _ _ _ 
+         _ _  -> _ 0 _ _ _ 
+       1 1 1  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 4 4 4
+
+ 2 tiles of type 1 put to trash
+successfully placed on wall new points: 3
+Filling:
+Player's data: Player_1 points: 3
+           _  -> 0 _ _ _ _ 
+         _ _  -> _ 0 _ _ _ 
+       _ _ _  -> _ _ _ 1 _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 4 4 4
+
+ 3 tiles of type 4 put to trash
+successfully placed on wall new points: 4
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points -4
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 4 put to trash
+ 1 tiles of type 4 put to trash
+ 1 tiles of type 4 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 0, 3, 0, 0, 1, ], id: 1 [ 1, 0, 0, 1, 2, ], id: 2 [ 0, 0, 2, 2, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 2, 0, 0, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 3, 0, 0, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 2, 2, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 2, 0, 0, 1, 1, ] id: 5 [ 1, 0, 0, 1, 0, ]
+Player Player_2 (0) plate: 4 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 3, 0, 0, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 2, 2, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 3, 0, 0, 2, 0, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 3, 0, 0, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 2, 2, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 2, 0, ]
+Player Player_2 (0) plate: 2 tile: 2 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 3, 0, 0, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 4, 0, ]
+Player Player_1 (1) plate: 0 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 1, 1, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 0, 4, 0, ]
+Player Player_2 (0) plate: 3 tile: 2 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 0, 5, 2, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 4: successfully filled, current state 5 of 5
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 0, 0, 2, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 3, 0, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ 1 _ _ _ 
+         4 4  -> _ 0 _ _ _ 
+       4 4 4  -> _ _ _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 5
+Filling:
+Player's data: Player_2 points: 5
+           _  -> _ 1 _ _ _ 
+         _ _  -> 4 0 _ _ _ 
+       4 4 4  -> _ _ _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 2 tiles of type 4 put to trash
+successfully placed on wall new points: 8
+Filling:
+Player's data: Player_2 points: 8
+           _  -> _ 1 _ _ _ 
+         _ _  -> 4 0 _ _ _ 
+       _ _ _  -> _ 4 _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 3 tiles of type 2 put to trash
+successfully placed on wall new points: 9
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 9
+Filling:
+Player's data: Player_1 points: -4
+           1  -> 0 _ _ _ _ 
+         4 4  -> _ 0 _ _ _ 
+       0 0 0  -> _ _ _ 1 _ 
+     _ _ _ _  -> _ _ 4 _ _ 
+   3 3 3 3 3  -> _ _ _ _ _ 
+floor:  F 4 1 1
+
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 0
+Filling:
+Player's data: Player_1 points: 0
+           _  -> 0 1 _ _ _ 
+         4 4  -> _ 0 _ _ _ 
+       0 0 0  -> _ _ _ 1 _ 
+     _ _ _ _  -> _ _ 4 _ _ 
+   3 3 3 3 3  -> _ _ _ _ _ 
+floor:  F 4 1 1
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 4
+Filling:
+Player's data: Player_1 points: 4
+           _  -> 0 1 _ _ _ 
+         _ _  -> 4 0 _ _ _ 
+       0 0 0  -> _ _ _ 1 _ 
+     _ _ _ _  -> _ _ 4 _ _ 
+   3 3 3 3 3  -> _ _ _ _ _ 
+floor:  F 4 1 1
+
+ 2 tiles of type 0 put to trash
+successfully placed on wall new points: 8
+Filling:
+Player's data: Player_1 points: 8
+           _  -> 0 1 _ _ _ 
+         _ _  -> 4 0 _ _ _ 
+       _ _ _  -> _ _ 0 1 _ 
+     _ _ _ _  -> _ _ 4 _ _ 
+   3 3 3 3 3  -> _ _ _ _ _ 
+floor:  F 4 1 1
+
+ 4 tiles of type 3 put to trash
+successfully placed on wall new points: 11
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 5
+ 1 tiles of type 4 put to trash
+ 1 tiles of type 1 put to trash
+ 1 tiles of type 1 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 1, 0, 1, 2, 0, ], id: 2 [ 0, 1, 1, 2, 0, ],
+ id: 3 [ 0, 1, 3, 0, 0, ] id: 4 [ 0, 0, 1, 2, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 1 buffer: 1: successfully filled, current state 1 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 1, 2, 0, ], id: 2 [ 0, 1, 1, 2, 0, ],
+ id: 3 [ 0, 1, 3, 0, 0, ] id: 4 [ 0, 0, 1, 2, 1, ] id: 5 [ 1, 0, 0, 2, 0, ]
+Player Player_2 (0) plate: 2 tile: 3 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 1, 2, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 1, 3, 0, 0, ] id: 4 [ 0, 0, 1, 2, 1, ] id: 5 [ 1, 1, 1, 2, 0, ]
+Player Player_1 (1) plate: 3 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 1, 2, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 1, 2, 1, ] id: 5 [ 1, 1, 4, 2, 0, ]
+Player Player_2 (0) plate: 1 tile: 3 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 1, 2, 1, ] id: 5 [ 2, 1, 5, 2, 0, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 1, 2, 1, ] id: 5 [ 2, 0, 5, 2, 0, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 4: successfully filled, current state 5 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 1, 2, 1, ] id: 5 [ 2, 0, 0, 2, 0, ]
+Player Player_1 (1) plate: 4 tile: 4 buffer: 2: successfully filled, current state 1 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 0, 1, 4, 0, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 0, 0, 4, 0, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 4, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 9
+           2  -> _ 1 _ _ _ 
+         _ _  -> 4 0 _ _ _ 
+       3 3 3  -> _ 4 _ _ _ 
+     3 3 3 3  -> 2 _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  3
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 11
+Filling:
+Player's data: Player_2 points: 11
+           _  -> _ 1 2 _ _ 
+         _ _  -> 4 0 _ _ _ 
+       3 3 3  -> _ 4 _ _ _ 
+     3 3 3 3  -> 2 _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  3
+
+ 2 tiles of type 3 put to trash
+successfully placed on wall new points: 16
+Filling:
+Player's data: Player_2 points: 16
+           _  -> _ 1 2 _ _ 
+         _ _  -> 4 0 _ _ _ 
+       _ _ _  -> 3 4 _ _ _ 
+     3 3 3 3  -> 2 _ _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  3
+
+ 3 tiles of type 3 put to trash
+successfully placed on wall new points: 22
+Filling:
+Player's data: Player_2 points: 22
+           _  -> _ 1 2 _ _ 
+         _ _  -> 4 0 _ _ _ 
+       _ _ _  -> 3 4 _ _ _ 
+     _ _ _ _  -> 2 3 _ _ _ 
+   2 2 2 2 2  -> _ _ _ _ _ 
+floor:  3
+
+ 4 tiles of type 2 put to trash
+successfully placed on wall new points: 27
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 26
+ 1 tiles of type 3 put to trash
+Filling:
+Player's data: Player_1 points: 5
+           _  -> 0 1 _ _ _ 
+         1 1  -> 4 0 _ _ _ 
+       4 _ _  -> _ _ 0 1 _ 
+     0 0 _ _  -> _ _ 4 _ _ 
+   _ _ _ _ _  -> _ _ 3 _ _ 
+floor:  F 1
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 12
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 10
+ 1 tiles of type 1 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 0, 1, 0, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 2, 2, 0, 0, 0, ],
+ id: 3 [ 0, 1, 1, 0, 2, ] id: 4 [ 2, 2, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 2, 2, 0, 0, 0, ],
+ id: 3 [ 0, 1, 1, 0, 2, ] id: 4 [ 2, 2, 0, 0, 0, ] id: 5 [ 2, 1, 0, 0, 0, ]
+Player Player_2 (0) plate: 2 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 1, 1, 0, 2, ] id: 4 [ 2, 2, 0, 0, 0, ] id: 5 [ 4, 1, 0, 0, 0, ]
+Player Player_1 (1) plate: 3 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 2, 2, 0, 0, 0, ] id: 5 [ 4, 2, 0, 0, 2, ]
+Player Player_2 (0) plate: 4 tile: 0 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 4, 0, 0, 2, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 4, 0, 0, 0, ]
+Player Player_2 (0) plate: 0 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 4, 6, 0, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 6, 0, 1, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 6, 0, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 4: successfully filled, current state 5 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 26
+           3  -> _ 1 2 _ _ 
+         1 1  -> 4 0 _ _ _ 
+       0 0 0  -> 3 4 _ _ _ 
+     _ _ _ _  -> 2 3 _ _ _ 
+   _ _ _ _ _  -> _ 2 _ _ _ 
+floor: 
+
+ 0 tiles of type 3 put to trash
+successfully placed on wall new points: 29
+Filling:
+Player's data: Player_2 points: 29
+           _  -> _ 1 2 3 _ 
+         1 1  -> 4 0 _ _ _ 
+       0 0 0  -> 3 4 _ _ _ 
+     _ _ _ _  -> 2 3 _ _ _ 
+   _ _ _ _ _  -> _ 2 _ _ _ 
+floor: 
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 34
+Filling:
+Player's data: Player_2 points: 34
+           _  -> _ 1 2 3 _ 
+         _ _  -> 4 0 1 _ _ 
+       0 0 0  -> 3 4 _ _ _ 
+     _ _ _ _  -> 2 3 _ _ _ 
+   _ _ _ _ _  -> _ 2 _ _ _ 
+floor: 
+
+ 2 tiles of type 0 put to trash
+successfully placed on wall new points: 40
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 40
+Filling:
+Player's data: Player_1 points: 10
+           2  -> 0 1 _ _ _ 
+         _ _  -> 4 0 1 _ _ 
+       4 4 4  -> _ _ 0 1 _ 
+     0 0 0 0  -> _ _ 4 _ _ 
+   1 1 1 1 1  -> _ _ 3 _ _ 
+floor:  2 F 0 0 1
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 18
+Filling:
+Player's data: Player_1 points: 18
+           _  -> 0 1 2 _ _ 
+         _ _  -> 4 0 1 _ _ 
+       4 4 4  -> _ _ 0 1 _ 
+     0 0 0 0  -> _ _ 4 _ _ 
+   1 1 1 1 1  -> _ _ 3 _ _ 
+floor:  2 F 0 0 1
+
+ 2 tiles of type 4 put to trash
+successfully placed on wall new points: 24
+Filling:
+Player's data: Player_1 points: 24
+           _  -> 0 1 2 _ _ 
+         _ _  -> 4 0 1 _ _ 
+       _ _ _  -> _ 4 0 1 _ 
+     0 0 0 0  -> _ _ 4 _ _ 
+   1 1 1 1 1  -> _ _ 3 _ _ 
+floor:  2 F 0 0 1
+
+ 3 tiles of type 0 put to trash
+successfully placed on wall new points: 28
+Filling:
+Player's data: Player_1 points: 28
+           _  -> 0 1 2 _ _ 
+         _ _  -> 4 0 1 _ _ 
+       _ _ _  -> _ 4 0 1 _ 
+     _ _ _ _  -> _ _ 4 0 _ 
+   1 1 1 1 1  -> _ _ 3 _ _ 
+floor:  2 F 0 0 1
+
+ 4 tiles of type 1 put to trash
+successfully placed on wall new points: 29
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 21
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 1 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 3, 0, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 0, 1, 2, 1, ],
+ id: 3 [ 1, 0, 3, 0, 0, ] id: 4 [ 1, 1, 2, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 4 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 3, 0, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 0, 1, 2, 1, ],
+ id: 3 [ 1, 0, 3, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 1, 0, 0, 0, ]
+Player Player_2 (0) plate: 2 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 3, 0, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 3, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 1, 1, 0, 1, ]
+Player Player_1 (1) plate: 0 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 3, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 1, 2, 0, 1, ]
+Player Player_2 (0) plate: 3 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 1, 2, 0, 1, ]
+Player Player_1 (1) plate: 1 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 3, 2, 2, 1, 1, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 3, 2, 2, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 3, 2, 2, 0, 0, ]
+Player Player_2 (0) plate: 5 tile: 0 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 2, 0, 0, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 0, 0, 0, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 4: successfully filled, current state 2 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 40
+           4  -> _ 1 2 3 _ 
+         3 3  -> 4 0 1 _ _ 
+       2 2 2  -> 3 4 0 _ _ 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 _ _ _  -> _ 2 _ _ _ 
+floor:  F
+
+ 0 tiles of type 4 put to trash
+successfully placed on wall new points: 44
+Filling:
+Player's data: Player_2 points: 44
+           _  -> _ 1 2 3 4 
+         3 3  -> 4 0 1 _ _ 
+       2 2 2  -> 3 4 0 _ _ 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 _ _ _  -> _ 2 _ _ _ 
+floor:  F
+
+ 1 tiles of type 3 put to trash
+successfully placed on wall new points: 46
+Filling:
+Player's data: Player_2 points: 46
+           _  -> _ 1 2 3 4 
+         _ _  -> 4 0 1 _ 3 
+       2 2 2  -> 3 4 0 _ _ 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 _ _ _  -> _ 2 _ _ _ 
+floor:  F
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 49
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 48
+Player Player_2 will start next turn
+Filling:
+Player's data: Player_1 points: 21
+           _  -> 0 1 2 _ _ 
+         2 2  -> 4 0 1 _ _ 
+       3 3 3  -> _ 4 0 1 _ 
+     _ _ _ _  -> _ _ 4 0 _ 
+   _ _ _ _ _  -> 1 _ 3 _ _ 
+floor:  2 3 2 2
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 28
+Filling:
+Player's data: Player_1 points: 28
+           _  -> 0 1 2 _ _ 
+         _ _  -> 4 0 1 2 _ 
+       3 3 3  -> _ 4 0 1 _ 
+     _ _ _ _  -> _ _ 4 0 _ 
+   _ _ _ _ _  -> 1 _ 3 _ _ 
+floor:  2 3 2 2
+
+ 2 tiles of type 3 put to trash
+successfully placed on wall new points: 35
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 29
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 2 put to trash
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 2, 1, 1, 0, ],
+ id: 3 [ 1, 1, 1, 0, 1, ] id: 4 [ 0, 0, 3, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) plate: 2 tile: 1 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 1, 0, 1, ] id: 4 [ 0, 0, 3, 0, 1, ] id: 5 [ 0, 0, 1, 1, 0, ]
+Player Player_1 (1) plate: 0 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 1, 0, 1, ] id: 4 [ 0, 0, 3, 0, 1, ] id: 5 [ 0, 1, 2, 1, 1, ]
+Player Player_2 (0) plate: 3 tile: 1 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 3, 0, 1, ] id: 5 [ 1, 1, 3, 1, 2, ]
+Player Player_1 (1) plate: 1 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 3, 0, 1, ] id: 5 [ 2, 2, 4, 1, 2, ]
+Player Player_2 (0) plate: 4 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 2, 4, 1, 3, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 2, 4, 0, 3, ]
+Player Player_2 (0) plate: 5 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 4, 0, 3, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 0, 0, 3, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 4: successfully filled, current state 4 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 3, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 4: successfully filled, current state 3 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 48
+           0  -> _ 1 2 3 4 
+         2 2  -> 4 0 1 _ 3 
+       1 1 1  -> 3 4 0 _ 2 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 1 1 _  -> _ 2 _ _ _ 
+floor:  2 0
+
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 57
+Player_2 points: 57
+           0  -> 0 1 2 3 4 
+         2 2  -> 4 0 1 _ 3 
+       1 1 1  -> 3 4 0 _ 2 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 1 1 _  -> _ 2 _ _ _ 
+floor:  2 0
+ win
+Filling:
+Player's data: Player_2 points: 57
+           _  -> 0 1 2 3 4 
+         2 2  -> 4 0 1 _ 3 
+       1 1 1  -> 3 4 0 _ 2 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 1 1 _  -> _ 2 _ _ _ 
+floor:  2 0
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 64
+Player_2 points: 64
+           _  -> 0 1 2 3 4 
+         2 2  -> 4 0 1 2 3 
+       1 1 1  -> 3 4 0 _ 2 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 1 1 _  -> _ 2 _ _ _ 
+floor:  2 0
+ win
+Filling:
+Player's data: Player_2 points: 64
+           _  -> 0 1 2 3 4 
+         _ _  -> 4 0 1 2 3 
+       1 1 1  -> 3 4 0 _ 2 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 1 1 _  -> _ 2 _ _ _ 
+floor:  2 0
+
+ 2 tiles of type 1 put to trash
+successfully placed on wall new points: 72
+Player_2 points: 72
+           _  -> 0 1 2 3 4 
+         _ _  -> 4 0 1 2 3 
+       1 1 1  -> 3 4 0 1 2 
+     0 0 0 _  -> 2 3 _ _ _ 
+   1 1 1 1 _  -> _ 2 _ _ _ 
+floor:  2 0
+ win
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 70
+ 1 tiles of type 2 put to trash
+ 1 tiles of type 0 put to trash
+Filling:
+Player's data: Player_1 points: 29
+           3  -> 0 1 2 _ _ 
+         _ _  -> 4 0 1 2 _ 
+       _ _ _  -> 3 4 0 1 _ 
+     2 2 2 2  -> _ _ 4 0 _ 
+   4 4 4 _ _  -> 1 _ 3 _ _ 
+floor:  3 F 3
+
+ 0 tiles of type 3 put to trash
+successfully placed on wall new points: 37
+Filling:
+Player's data: Player_1 points: 37
+           _  -> 0 1 2 3 _ 
+         _ _  -> 4 0 1 2 _ 
+       _ _ _  -> 3 4 0 1 _ 
+     2 2 2 2  -> _ _ 4 0 _ 
+   4 4 4 _ _  -> 1 _ 3 _ _ 
+floor:  3 F 3
+
+ 3 tiles of type 2 put to trash
+successfully placed on wall new points: 42
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 38
+ 1 tiles of type 3 put to trash
+ 1 tiles of type 3 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+Player Player_2: points: 93
+Player Player_1: points: 52
+-------GGG-------A-------M------M--EEEEEE-------OOO----V-----V----EEEEEE----RRRR------
+------G---G-----A-A------MM----MM--E-----------O---O---V-----V----E---------R---R-----
+-----G---------A---A-----M-M--M-M--EEEE-------O-----O---V---V-----EEEE------RRRR------
+-----G--GGG---AAAAAAA----M--MM--M--EEEE-------O-----O---V---V-----EEEE------R--R------
+------G---G---A-----A----M------M--E-----------O---O-----V-V------E---------R---R-----
+-------GGG---A-------A---M------M--EEEEEE-------OOO-------V-------EEEEEE----R---R-----
+ 
+-----------------------------Game start-----------------------------
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 0, 1, 2, 0, 1, ], id: 3 [ 0, 0, 0, 2, 2, ],
+ id: 4 [ 2, 0, 1, 1, 0, ] id: 5 [ 2, 1, 0, 0, 1, ] id: 6 [ 0, 1, 2, 1, 0, ] id: 7 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (1) plate: 3 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 0, 1, 2, 0, 1, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 2, 0, 1, 1, 0, ] id: 5 [ 2, 1, 0, 0, 1, ] id: 6 [ 0, 1, 2, 1, 0, ] id: 7 [ 0, 0, 0, 0, 2, ]
+Player Player_1 (2) plate: 6 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_3 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 0, 1, 2, 0, 1, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 2, 0, 1, 1, 0, ] id: 5 [ 2, 1, 0, 0, 1, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 1, 0, 1, 2, ]
+Player Player_3 (0) plate: 5 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 0, 1, 2, 0, 1, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 2, 0, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 2, 0, 1, 3, ]
+Player Player_2 (1) plate: 2 tile: 2 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 2, 0, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 3, 0, 1, 4, ]
+Player Player_1 (2) plate: 4 tile: 0 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_3 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 3, 1, 2, 4, ]
+Player Player_3 (0) plate: 7 tile: 4 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 3, 1, 2, 0, ]
+Player Player_2 (1) plate: 1 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 2, 3, 1, 2, 1, ]
+Player Player_1 (2) plate: 0 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_3 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 2, 4, 1, 4, 1, ]
+Player Player_3 (0) plate: 7 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 2, 4, 0, 4, 1, ]
+Player Player_2 (1) plate: 7 tile: 3 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 2, 4, 0, 0, 1, ]
+Player Player_1 (2) plate: 7 tile: 1 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_3 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 2, 0, 0, 0, 1, ]
+Player Player_3 (0) plate: 7 tile: 0 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 0, 0, 0, 1, ]
+Player Player_2 (1) plate: 7 tile: 4 buffer: 0: successfully filled, current state 1 of 1
+Plates are empty, starting filling
+Found full buffer player: Player_3
+Filling:
+Player's data: Player_3 points: 0
+           2  -> _ _ _ _ _ 
+         0 0  -> _ _ _ _ _ 
+       0 0 _  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_3 points: 1
+           _  -> _ _ 2 _ _ 
+         0 0  -> _ _ _ _ _ 
+       0 0 _  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_3 points: 2
+           _  -> _ _ 2 _ _ 
+         _ _  -> _ 0 _ _ _ 
+       0 0 _  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 3 tiles of type 4 put to trash
+successfully placed on wall new points: 3
+Player Player_3 has no full buffer
+Player Player_3 is clearing the floor new points 2
+Player Player_3 will start next turn
+Filling:
+Player's data: Player_2 points: 0
+           4  -> _ _ _ _ _ 
+         3 3  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 4 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ _ _ 4 
+         3 3  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 3 put to trash
+successfully placed on wall new points: 3
+Filling:
+Player's data: Player_2 points: 3
+           _  -> _ _ _ _ 4 
+         _ _  -> _ _ _ _ 3 
+       2 2 2  -> _ _ _ _ _ 
+     3 3 3 3  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 6
+Filling:
+Player's data: Player_2 points: 6
+           _  -> _ _ _ _ 4 
+         _ _  -> _ _ _ _ 3 
+       _ _ _  -> _ _ _ _ 2 
+     3 3 3 3  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 3 tiles of type 3 put to trash
+successfully placed on wall new points: 7
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 7
+ 
+-----------------------------Game start-----------------------------
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 1, 1, ], id: 1 [ 0, 1, 1, 0, 2, ], id: 2 [ 1, 1, 0, 1, 1, ], id: 3 [ 1, 1, 1, 0, 1, ],
+ id: 4 [ 1, 1, 0, 2, 0, ] id: 5 [ 1, 0, 2, 0, 1, ] id: 6 [ 1, 1, 1, 0, 1, ] id: 7 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (1) plate: 1 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ], id: 3 [ 1, 1, 1, 0, 1, ],
+ id: 4 [ 1, 1, 0, 2, 0, ] id: 5 [ 1, 0, 2, 0, 1, ] id: 6 [ 1, 1, 1, 0, 1, ] id: 7 [ 0, 1, 1, 0, 0, ]
+Player Player_1 (2) plate: 4 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_3 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ], id: 3 [ 1, 1, 1, 0, 1, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 0, 2, 0, 1, ] id: 6 [ 1, 1, 1, 0, 1, ] id: 7 [ 1, 2, 1, 0, 0, ]
+Player Player_3 (0) plate: 5 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ], id: 3 [ 1, 1, 1, 0, 1, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 1, 1, 1, 0, 1, ] id: 7 [ 2, 2, 1, 0, 1, ]
+Player Player_2 (1) plate: 3 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 1, 1, 1, 0, 1, ] id: 7 [ 3, 3, 1, 0, 2, ]
+Player Player_1 (2) plate: 2 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_3 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 1, 1, 1, 0, 1, ] id: 7 [ 4, 3, 1, 1, 3, ]
+Player Player_3 (0) plate: 7 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 1, 1, 1, 0, 1, ] id: 7 [ 4, 3, 1, 1, 0, ]
+Player Player_2 (1) plate: 6 tile: 2 buffer: 2: successfully filled, current state 1 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 5, 4, 1, 1, 1, ]
+Player Player_1 (2) plate: 0 tile: 2 buffer: 2: successfully filled, current state 1 of 3
+Player's Player_3 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 6, 4, 1, 2, 2, ]
+Player Player_3 (0) plate: 7 tile: 0 buffer: 4: successfully filled, current state 5 of 5
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 4, 1, 2, 2, ]
+Player Player_2 (1) plate: 7 tile: 1 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 0, 1, 2, 2, ]
+Player Player_1 (2) plate: 7 tile: 2 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_3 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 0, 0, 2, 2, ]
+Player Player_3 (0) plate: 7 tile: 3 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ], id: 3 [ 0, 0, 0, 0, 0, ],
+ id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ] id: 6 [ 0, 0, 0, 0, 0, ] id: 7 [ 0, 0, 0, 0, 2, ]
+Player Player_2 (1) plate: 7 tile: 4 buffer: 4: successfully filled, current state 2 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_3
+Filling:
+Player's data: Player_3 points: 0
+           _  -> _ _ _ _ _ 
+         2 2  -> _ _ _ _ _ 
+       4 4 4  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   0 0 0 0 0  -> _ _ _ _ _ 
+floor:  F 0
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_3 points: 1
+           _  -> _ _ _ _ _ 
+         _ _  -> _ _ _ 2 _ 
+       4 4 4  -> _ _ _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   0 0 0 0 0  -> _ _ _ _ _ 
+floor:  F 0
+
+ 2 tiles of type 4 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_3 points: 2
+           _  -> _ _ _ _ _ 
+         _ _  -> _ _ _ 2 _ 
+       _ _ _  -> _ 4 _ _ _ 
+     3 3 _ _  -> _ _ _ _ _ 
+   0 0 0 0 0  -> _ _ _ _ _ 
+floor:  F 0
+
+ 4 tiles of type 0 put to trash
+successfully placed on wall new points: 3
+Player Player_3 has no full buffer
+Player Player_3 is clearing the floor new points 1
+ 1 tiles of type 0 put to trash
+Player Player_3 will start next turn
+Filling:
+Player's data: Player_2 points: 0
+           2  -> _ _ _ _ _ 
+         4 4  -> _ _ _ _ _ 
+       2 _ _  -> _ _ _ _ _ 
+     1 1 1 1  -> _ _ _ _ _ 
+   4 4 _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 1
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 3, 1, 0, 0, 0, ], id: 2 [ 1, 1, 0, 2, 0, ],
+ id: 3 [ 1, 1, 0, 2, 0, ] id: 4 [ 2, 1, 1, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 2 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 3, 1, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 0, 2, 0, ] id: 4 [ 2, 1, 1, 0, 0, ] id: 5 [ 1, 1, 0, 0, 0, ]
+Player Player_2 (0) plate: 1 tile: 0 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 0, 2, 0, ] id: 4 [ 2, 1, 1, 0, 0, ] id: 5 [ 1, 2, 0, 0, 0, ]
+Player Player_1 (1) plate: 4 tile: 0 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 0, 2, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 3, 1, 0, 0, ]
+Player Player_2 (0) plate: 0 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 0, 2, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 3, 2, 1, 1, ]
+Player Player_1 (1) plate: 3 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 3, 2, 3, 1, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 3, 0, 3, 1, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 3, 0, 0, 1, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 0, 0, 0, 1, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 4: successfully filled, current state 1 of 5
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 0, 0, 0, 0, ]
+Player Player_2 (0) plate: 5 tile: 0 buffer: 4: successfully filled, current state 2 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           1  -> _ _ _ _ _ 
+         2 2  -> _ _ _ _ _ 
+       0 0 0  -> _ _ _ _ _ 
+     1 1 1 _  -> _ _ _ _ _ 
+   0 0 _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ 1 _ _ _ 
+         2 2  -> _ _ _ _ _ 
+       0 0 0  -> _ _ _ _ _ 
+     1 1 1 _  -> _ _ _ _ _ 
+   0 0 _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_2 points: 2
+           _  -> _ 1 _ _ _ 
+         _ _  -> _ _ _ 2 _ 
+       0 0 0  -> _ _ _ _ _ 
+     1 1 1 _  -> _ _ _ _ _ 
+   0 0 _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 2 tiles of type 0 put to trash
+successfully placed on wall new points: 3
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 2
+Player Player_2 will start next turn
+Filling:
+Player's data: Player_1 points: 0
+           1  -> _ _ _ _ _ 
+         3 3  -> _ _ _ _ _ 
+       0 0 _  -> _ _ _ _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   4 _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 1 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> _ 1 _ _ _ 
+         3 3  -> _ _ _ _ _ 
+       0 0 _  -> _ _ _ _ _ 
+     3 3 3 _  -> _ _ _ _ _ 
+   4 _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 3 put to trash
+successfully placed on wall new points: 2
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 2
+No player has full buffer
+All players filled to the wall
+Starting next turn
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 2, 1, ], id: 1 [ 0, 2, 1, 1, 0, ], id: 2 [ 1, 0, 1, 1, 1, ],
+ id: 3 [ 2, 0, 0, 0, 2, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 2, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 1, 1, 1, ],
+ id: 3 [ 2, 0, 0, 0, 2, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 1, 1, 0, ]
+Player Player_2 (0) plate: 3 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 2, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 1, 1, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 1, 1, 2, ]
+Player Player_1 (1) plate: 0 tile: 3 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 1, 1, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 2, 1, 3, ]
+Player Player_2 (0) plate: 2 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 1, 0, 3, 1, 4, ]
+Player Player_1 (1) plate: 4 tile: 3 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 1, 4, 1, 4, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 1, 0, 1, 4, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 2, 1, 0, 1, 0, ]
+Player Player_2 (0) plate: 5 tile: 0 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 0, 0, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 4: successfully filled, current state 1 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           3  -> _ _ _ _ _ 
+         0 0  -> _ _ _ _ _ 
+       0 0 _  -> _ _ _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   1 _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 0 tiles of type 3 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ _ 3 _ 
+         0 0  -> _ _ _ _ _ 
+       0 0 _  -> _ _ _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   1 _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 1 tiles of type 0 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_2 points: 2
+           _  -> _ _ _ 3 _ 
+         _ _  -> _ 0 _ _ _ 
+       0 0 _  -> _ _ _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   1 _ _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 3 tiles of type 2 put to trash
+successfully placed on wall new points: 3
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 2
+Player Player_2 will start next turn
+Filling:
+Player's data: Player_1 points: 0
+           3  -> _ _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 0 tiles of type 3 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> _ _ _ 3 _ 
+         1 1  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_1 points: 2
+           _  -> _ _ _ 3 _ 
+         _ _  -> _ _ 1 _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 2 tiles of type 3 put to trash
+successfully placed on wall new points: 3
+Filling:
+Player's data: Player_1 points: 3
+           _  -> _ _ _ 3 _ 
+         _ _  -> _ _ 1 _ _ 
+       _ _ _  -> 3 _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor: 
+
+ 3 tiles of type 4 put to trash
+successfully placed on wall new points: 4
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 4
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 1, 0, 2, 0, 1, ], id: 2 [ 0, 0, 0, 1, 3, ],
+ id: 3 [ 1, 1, 2, 0, 0, ] id: 4 [ 1, 1, 0, 0, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_2 (0) plate: 3 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 2, 0, 2, ], id: 1 [ 2, 0, 1, 0, 1, ], id: 2 [ 0, 2, 0, 1, 1, ],
+ id: 3 [ 1, 0, 1, 1, 1, ] id: 4 [ 1, 2, 1, 0, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 3 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 3, 0, 0, 0, ], id: 1 [ 1, 0, 0, 3, 0, ], id: 2 [ 1, 0, 2, 1, 0, ],
+ id: 3 [ 0, 1, 0, 0, 3, ] id: 4 [ 2, 0, 0, 2, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 0, 0, 3, 0, ], id: 2 [ 1, 0, 2, 1, 0, ],
+ id: 3 [ 0, 1, 0, 0, 3, ] id: 4 [ 2, 0, 0, 2, 0, ] id: 5 [ 0, 3, 0, 0, 0, ]
+Player Player_2 (0) plate: 1 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 2, 0, 1, 1, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 1, 2, 0, 1, 0, ],
+ id: 3 [ 0, 1, 1, 2, 0, ] id: 4 [ 1, 0, 0, 2, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 2, 0, 1, 1, ], id: 1 [ 2, 1, 1, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 1, 1, 2, 0, ] id: 4 [ 1, 0, 0, 2, 1, ] id: 5 [ 0, 2, 0, 1, 0, ]
+Player Player_2 (0) plate: 4 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 0, 1, 1, ], id: 1 [ 1, 1, 1, 1, 0, ], id: 2 [ 0, 1, 1, 0, 2, ],
+ id: 3 [ 0, 1, 3, 0, 0, ] id: 4 [ 2, 0, 0, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 0, 1, 1, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 1, 1, 0, 2, ],
+ id: 3 [ 0, 1, 3, 0, 0, ] id: 4 [ 2, 0, 0, 1, 1, ] id: 5 [ 0, 1, 1, 1, 0, ]
+Player Player_2 (0) plate: 2 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 1, 3, ], id: 1 [ 0, 0, 2, 2, 0, ], id: 2 [ 1, 1, 1, 1, 0, ],
+ id: 3 [ 1, 1, 1, 0, 1, ] id: 4 [ 2, 0, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 1, 3, ], id: 1 [ 0, 0, 2, 2, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 1, 0, 1, ] id: 4 [ 2, 0, 1, 1, 0, ] id: 5 [ 0, 1, 1, 1, 0, ]
+Player Player_2 (0) plate: 0 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 1, 1, ], id: 1 [ 2, 1, 0, 0, 1, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 1, 2, 0, 1, ] id: 4 [ 1, 1, 0, 0, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 1, 0, 0, 1, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 1, 2, 0, 1, ] id: 4 [ 1, 1, 0, 0, 2, ] id: 5 [ 0, 1, 0, 1, 1, ]
+Player Player_2 (0) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 1, 0, 1, 1, 1, ], id: 2 [ 1, 0, 1, 0, 2, ],
+ id: 3 [ 0, 1, 1, 2, 0, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 2, 1, 0, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 0, 1, 0, 2, ],
+ id: 3 [ 0, 1, 1, 2, 0, ] id: 4 [ 0, 1, 1, 1, 1, ] id: 5 [ 0, 0, 1, 1, 1, ]
+Player Player_2 (0) plate: 2 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 0, 2, ], id: 1 [ 0, 0, 3, 1, 0, ], id: 2 [ 1, 1, 1, 1, 0, ],
+ id: 3 [ 1, 1, 1, 1, 0, ] id: 4 [ 1, 1, 1, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 2 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 1, 1, 0, 2, ], id: 1 [ 0, 0, 3, 1, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 1, 1, 1, 0, ] id: 4 [ 1, 1, 1, 0, 1, ] id: 5 [ 0, 1, 1, 1, 0, ]
+Player Player_2 (0) plate: 1 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 0, 1, 1, ], id: 1 [ 0, 1, 2, 1, 0, ], id: 2 [ 0, 0, 2, 1, 1, ],
+ id: 3 [ 1, 0, 0, 2, 1, ] id: 4 [ 2, 1, 0, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 3 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 0, 1, 1, ], id: 1 [ 0, 1, 2, 1, 0, ], id: 2 [ 0, 0, 2, 1, 1, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 2, 1, 0, 0, 1, ] id: 5 [ 0, 0, 0, 2, 1, ]
+Player Player_2 (0) plate: 1 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 1, 2, ], id: 1 [ 1, 0, 3, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 1, 0, 1, 1, 1, ] id: 4 [ 0, 0, 0, 1, 3, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 1, 2, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 1, 0, 1, 1, 1, ] id: 4 [ 0, 0, 0, 1, 3, ] id: 5 [ 0, 0, 3, 0, 0, ]
+Player Player_2 (0) plate: 2 tile: 4 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 1, 2, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 1, 1, 1, ] id: 4 [ 0, 0, 0, 1, 3, ] id: 5 [ 1, 1, 3, 1, 0, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 1, 1, 2, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 1, 1, 1, ] id: 4 [ 0, 0, 0, 1, 3, ] id: 5 [ 1, 1, 0, 1, 0, ]
+Player Player_2 (0) plate: 4 tile: 4 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 2, 1, 1, 0, ], id: 1 [ 1, 1, 2, 0, 0, ], id: 2 [ 0, 0, 1, 1, 2, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 0, 0, 0, 2, 2, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 2, 1, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 1, 1, 2, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 0, 0, 0, 2, 2, ] id: 5 [ 0, 1, 2, 0, 0, ]
+Player Player_2 (0) plate: 2 tile: 4 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 2, 1, 1, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 0, 0, 0, 2, 2, ] id: 5 [ 0, 1, 3, 1, 0, ]
+Player Player_1 (1) plate: 0 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 0, 0, 0, 2, 2, ] id: 5 [ 0, 1, 4, 2, 0, ]
+Player Player_2 (0) plate: 4 tile: 3 buffer: 2: successfully filled, current state 2 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 4, 2, 2, ]
+Player Player_1 (1) plate: 5 tile: 2 buffer: 3: successfully filled, current state 4 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 2, 2, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 1, 0, 0, 1, 2, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 2, 0, ]
+Player Player_1 (1) plate: 3 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 3, 2, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 4: successfully filled, current state 3 of 5
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 1, 0, 0, 2, ]
+Player Player_1 (1) plate: 5 tile: 1 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 0, 2, ]
+Player Player_2 (0) plate: 5 tile: 4 buffer: 3: successfully filled, current state 4 of 4
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           _  -> _ _ _ _ _ 
+         4 4  -> _ _ _ _ _ 
+       3 3 _  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   3 3 3 _ _  -> _ _ _ _ _ 
+floor: 
+
+ 1 tiles of type 4 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ _ _ _ 
+         _ _  -> 4 _ _ _ _ 
+       3 3 _  -> _ _ _ _ _ 
+     4 4 4 4  -> _ _ _ _ _ 
+   3 3 3 _ _  -> _ _ _ _ _ 
+floor: 
+
+ 3 tiles of type 4 put to trash
+successfully placed on wall new points: 2
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 2
+Filling:
+Player's data: Player_1 points: 0
+           0  -> _ _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       _ _ _  -> _ _ _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 1
+
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> 0 _ _ _ _ 
+         1 1  -> _ _ _ _ _ 
+       _ _ _  -> _ _ _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 1
+
+ 1 tiles of type 1 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_1 points: 2
+           _  -> 0 _ _ _ _ 
+         _ _  -> _ _ 1 _ _ 
+       _ _ _  -> _ _ _ _ _ 
+     2 2 2 2  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  F 0 1
+
+ 3 tiles of type 2 put to trash
+successfully placed on wall new points: 3
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points -1
+ 1 tiles of type 0 put to trash
+ 1 tiles of type 1 put to trash
+Player Player_1 will start next turn
+No player has full buffer
+All players filled to the wall
+Starting next turn
+Move:
+Plate data: 
+ id: 0 [ 1, 2, 1, 0, 0, ], id: 1 [ 0, 1, 0, 0, 3, ], id: 2 [ 1, 1, 0, 1, 1, ],
+ id: 3 [ 0, 0, 1, 3, 0, ] id: 4 [ 1, 1, 1, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 1 tile: 1 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 1, 0, 2, 0, ], id: 1 [ 2, 1, 0, 1, 0, ], id: 2 [ 3, 0, 1, 0, 0, ],
+ id: 3 [ 2, 0, 1, 0, 1, ] id: 4 [ 0, 0, 2, 1, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 2, 1, 0, 1, 0, ], id: 2 [ 3, 0, 1, 0, 0, ],
+ id: 3 [ 2, 0, 1, 0, 1, ] id: 4 [ 0, 0, 2, 1, 1, ] id: 5 [ 0, 1, 0, 2, 0, ]
+Player Player_2 (0) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 3, 0, 1, 0, 0, ],
+ id: 3 [ 2, 0, 1, 0, 1, ] id: 4 [ 0, 0, 2, 1, 1, ] id: 5 [ 0, 2, 0, 3, 0, ]
+Player Player_1 (1) plate: 3 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 1, 0, 0, 1, 2, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 1, 1, 2, 0, ],
+ id: 3 [ 0, 0, 1, 3, 0, ] id: 4 [ 0, 0, 3, 1, 0, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 0 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 1, 1, 2, 0, ],
+ id: 3 [ 0, 0, 1, 3, 0, ] id: 4 [ 0, 0, 3, 1, 0, ] id: 5 [ 0, 0, 0, 1, 2, ]
+Player Player_2 (0) plate: 3 tile: 3 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 1, 1, 2, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 3, 1, 0, ] id: 5 [ 0, 0, 1, 1, 2, ]
+Player Player_1 (1) plate: 4 tile: 2 buffer: 2: successfully filled, current state 3 of 3
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 1, 1, 1, 0, 1, ], id: 2 [ 0, 1, 1, 2, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 1, 2, 2, ]
+Player Player_2 (0) plate: 1 tile: 2 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 1, 1, 2, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 1, 1, 2, 3, ]
+Player Player_1 (1) plate: 2 tile: 3 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 2, 2, 3, ]
+Player Player_2 (0) plate: 5 tile: 2 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 1, 2, 0, 2, 3, ]
+Player Player_1 (1) plate: 5 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 0, 2, 3, ]
+Player Player_2 (0) plate: 5 tile: 1 buffer: 3: successfully filled, current state 2 of 4
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 2, 3, ]
+Player Player_1 (1) plate: 5 tile: 4 buffer: 3: successfully filled, current state 3 of 4
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 0, 0, 0, 0, 0, ], id: 1 [ 0, 0, 0, 0, 0, ], id: 2 [ 0, 0, 0, 0, 0, ],
+ id: 3 [ 0, 0, 0, 0, 0, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 0, 0, 2, 0, ]
+Player Player_2 (0) plate: 5 tile: 3 buffer: 4: successfully filled, current state 2 of 5
+Plates are empty, starting filling
+Found full buffer player: Player_2
+Filling:
+Player's data: Player_2 points: 0
+           2  -> _ _ _ _ _ 
+         2 2  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     1 1 _ _  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 0 tiles of type 2 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_2 points: 1
+           _  -> _ _ 2 _ _ 
+         2 2  -> _ _ _ _ _ 
+       3 3 3  -> _ _ _ _ _ 
+     1 1 _ _  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 1 tiles of type 2 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_2 points: 2
+           _  -> _ _ 2 _ _ 
+         _ _  -> _ _ _ 2 _ 
+       3 3 3  -> _ _ _ _ _ 
+     1 1 _ _  -> _ _ _ _ _ 
+   3 3 _ _ _  -> _ _ _ _ _ 
+floor:  F
+
+ 2 tiles of type 3 put to trash
+successfully placed on wall new points: 3
+Player Player_2 has no full buffer
+Player Player_2 is clearing the floor new points 2
+Player Player_2 will start next turn
+Filling:
+Player's data: Player_1 points: 0
+           0  -> _ _ _ _ _ 
+         3 3  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     4 4 4 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  0
+
+ 0 tiles of type 0 put to trash
+successfully placed on wall new points: 1
+Filling:
+Player's data: Player_1 points: 1
+           _  -> 0 _ _ _ _ 
+         3 3  -> _ _ _ _ _ 
+       2 2 2  -> _ _ _ _ _ 
+     4 4 4 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  0
+
+ 1 tiles of type 3 put to trash
+successfully placed on wall new points: 2
+Filling:
+Player's data: Player_1 points: 2
+           _  -> 0 _ _ _ _ 
+         _ _  -> _ _ _ _ 3 
+       2 2 2  -> _ _ _ _ _ 
+     4 4 4 _  -> _ _ _ _ _ 
+   _ _ _ _ _  -> _ _ _ _ _ 
+floor:  0
+
+ 2 tiles of type 2 put to trash
+successfully placed on wall new points: 4
+Player Player_1 has no full buffer
+Player Player_1 is clearing the floor new points 3
+ 1 tiles of type 0 put to trash
+No player has full buffer
+All players filled to the wall
+Starting next turn
+ 
+-----------------------------Game start-----------------------------
+Player's Player_1 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 1, 0, 1, ], id: 1 [ 2, 0, 2, 0, 0, ], id: 2 [ 0, 2, 0, 1, 1, ],
+ id: 3 [ 2, 0, 1, 0, 1, ] id: 4 [ 1, 2, 0, 0, 1, ] id: 5 [ 0, 0, 0, 0, 0, ]
+Player Player_1 (1) plate: 4 tile: 0 buffer: 0: successfully filled, current state 1 of 1
+Player's Player_2 move
+Move:
+Plate data: 
+ id: 0 [ 2, 0, 1, 0, 1, ], id: 1 [ 2, 0, 2, 0, 0, ], id: 2 [ 0, 2, 0, 1, 1, ],
+ id: 3 [ 2, 0, 1, 0, 1, ] id: 4 [ 0, 0, 0, 0, 0, ] id: 5 [ 0, 2, 0, 0, 1, ]
+Player Player_2 (0) plate: 1 tile: 0 buffer: 1: successfully filled, current state 2 of 2
+Player's Player_1 move

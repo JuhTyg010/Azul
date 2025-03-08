@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using randomBot;
 using Unity.VisualScripting;
+using UnityEditor;
 
 namespace Board {
     public class GameController : MonoBehaviour
@@ -53,27 +54,30 @@ namespace Board {
         
         private int currentPlayer;
         public Azul.Board board;
-        private List<Bot> bots = new List<Bot>();
+        private Dictionary<int, IBot> bots = new Dictionary<int, IBot>();
         public List<GameObject> plates = new List<GameObject>();
         public List<GameObject> players = new List<GameObject>();
         
         
-        private bool keyPressed = false;
+        private bool isStart;
+        private bool wasTaking;
         
-        void Awake()
-        {
+        void Awake() {
             int playerCount = PlayerPrefs.GetInt("PlayerCount");
             string[] names = new string[playerCount];
             string[] passedNames = PlayerPrefs.GetString("PlayerNames").Split('\n');
             string[] passedTypes = PlayerPrefs.GetString("PlayerTypes").Split('\n');
             
             for (int i = 0; i < playerCount; i++) {
-                if(passedTypes[i] == "AI") bots.Add(new Bot(i));
+                if(passedTypes[i] == "AI") bots.Add(i, new Bot(i));
                 names[i] = passedNames[i];
             }
             
             
             board = new Azul.Board(playerCount, names);
+            
+            board.NextTakingMove += OnNextTakingTurn;
+            board.NextPlacingMove += OnNextPlacingTurn;
             
             phase = board.Phase;
             isAdvanced = board.isAdvanced;
@@ -84,17 +88,81 @@ namespace Board {
             GenerateOtherPlayersBoards();
             mainPlayerBoard.GetComponent<PlayersBoard>().Init(board.Players[currentPlayer]);
             
-            
-            DisplayNextPlayerPanel();
+            //DisplayNextPlayerPanel();
+            isStart = true;
+            board.StartGame();
             
         }
 
+        private void OnNextPlacingTurn(object sender, MyEventArgs e) {
+            Debug.Log("OnNextPlacingTurn");
+            phase = Phase.Placing;
+            StartCoroutine(HandleNextPlacingMove());
+        }
+
+        private void OnNextTakingTurn(object sender, MyEventArgs e) {
+            Debug.Log("OnNextTakingTurn");
+            phase = Phase.Taking;
+            StartCoroutine(HandleNextTakingMove());
+        }
+
+        private IEnumerator HandleNextTakingMove() {
+            notification.ShowStableMessage("Press any key to end move");
+            if(!IsBotMove() && !isStart) yield return new WaitUntil(() => Input.anyKey); //wait till previous player presses button
+            yield return new WaitUntil(() => !Input.anyKey);
+            notification.StopVibratingMessage();
+            isStart = false;
+            currentPlayer = board.CurrentPlayer;
+            
+            UpdatePlates();
+            UpdatePlayers();
+            if(IsBotMove()) BotMove(bots[currentPlayer]); //to complex maybe simplify
+            else {
+                yield return StartCoroutine(DisplayNextPlayerPanel());
+                notification.ShowStableMessage("Choose plate, and take some tile to buffer");
+                Debug.Log("Setting up taking bool");
+                isTaking = true;
+            }
+            UpdatePlates();
+            UpdatePlayers();
+        }
+        
+        private IEnumerator HandleNextPlacingMove() {
+            bool playerChanged = currentPlayer != board.CurrentPlayer;
+            
+            if(playerChanged) notification.ShowStableMessage("Press any key to end move");
+            if(!IsBotMove()) yield return new WaitUntil(() => Input.anyKey); //wait till previous player presses button
+            if(playerChanged) yield return new WaitUntil(() => !Input.anyKey);
+            currentPlayer = board.CurrentPlayer;
+            notification.StopVibratingMessage();
+            UpdatePlates();
+            UpdatePlayers();
+            if (IsBotMove()) BotMove(bots[currentPlayer]);
+            else {
+                if(playerChanged) yield return StartCoroutine(DisplayNextPlayerPanel());
+                isPlacing = true;
+
+                if (board.isAdvanced) {
+                    notification.ShowStableMessage(
+                        "Choose a column on the wall where you would like to place a tile from the buffer");
+                    //Action from player trigger some functions
+                }
+                else {
+                    notification.ShowStableMessage("Press any button to move tile from buffer to the wall");
+                    yield return new WaitUntil(() => Input.anyKey);
+                    yield return new WaitUntil(() => !Input.anyKey);
+                    PlaceNextTileToWall();
+                }
+            }
+            UpdatePlayers();
+        }
+
         void Update() {
-            if(!Input.anyKey) keyPressed = false;
-            if (isPlacing && !isAdvanced && Input.anyKey && !keyPressed && !IsBotMove()) {
+            //if(!Input.anyKey) keyPressed = false;
+            /*if (isPlacing && !isAdvanced && Input.anyKey && !keyPressed && !IsBotMove()) {
                 keyPressed = true;
                 PlaceNextTileToWall();
-            }
+            }*/
 
             if (holding.isHolding && Input.GetMouseButtonDown(1)) {
                 cursorSprite.SetVisible(false, nextMoveFirstTile);
@@ -102,6 +170,10 @@ namespace Board {
                     centerPlateBoard.GetComponent<CenterPlate>().ReturnFromHand();
                 else plates[holding.plateId].GetComponent<Plate>().ReturnFromHand();
                 holding.EmptyHand();
+            }
+
+            if (board.Phase == Phase.GameOver) {
+                ShowGameOverPanel();
             }
         }
 
@@ -145,13 +217,13 @@ namespace Board {
             else {
                 isTaking = false;
                 if(holding.plateId < plates.Count) plates[holding.plateId].GetComponent<Plate>().EmptyTiles();
+                
                 UpdatePlates();
                 UpdatePlayers();
                 
-                currentPlayer = board.CurrentPlayer; //cause in board it's already updated and we need previous player
-                StartCoroutine(NextMoveInputWaiter());
-                notification.ShowMessage("Press any key to end turn");
+                notification.ShowStableMessage("Press any key to end turn");
             }
+            Debug.Log("emptying hand");
             holding.EmptyHand();
         }
 
@@ -162,7 +234,7 @@ namespace Board {
             if (!answer) {
                 ShowMessage("You tried to place on illegal position on the wall");
             }
-            else {
+            /*else {
                 isPlacing = false;
                 if (currentPlayer != board.CurrentPlayer || phase != Phase.Placing) {
                     StartCoroutine(NextMoveInputWaiter());
@@ -170,7 +242,7 @@ namespace Board {
                 else {  //player still have fullBuffers
                     NextMove(); //skip the nextPlayerPanel
                 }
-            }
+            }*/
         }
 
         public void TryPlaceOnWall(int x, int y) {
@@ -193,48 +265,22 @@ namespace Board {
             return tileSprites[id];
         }
 
-        private void NextMove() {
-            currentPlayer = board.CurrentPlayer;
-            phase = board.Phase;
-            nextPlayerPanel.SetActive(false);
-            if (phase == Phase.Taking && !IsBotMove()) {
-                notification.ShowLongMessage("Choose plate, and take some tile to buffer");
-                isTaking = true;
-            }
-            else if (phase == Phase.Placing && !IsBotMove()) {
-                
-                isPlacing = true;
-
-                if (board.isAdvanced) {
-                    notification.ShowLongMessage(
-                        "Choose a column on the wall where you would like to place a tile from the buffer");
-                }
-                else {
-                    notification.ShowLongMessage("Press any button to move tile from buffer to the wall");
-                }
-            }
-            UpdatePlates();
-            UpdatePlayers();
-        }
-
         private void PlaceNextTileToWall() {
             isPlacing = false;
             board.Calculate();
-            if (currentPlayer != board.CurrentPlayer || board.Phase != Phase.Placing) {
+            /*if (currentPlayer != board.CurrentPlayer || board.Phase != Phase.Placing) {
                 UpdatePlayers();
                 if(!IsBotMove()) StartCoroutine(NextMoveInputWaiter());
                 else DisplayNextPlayerPanel();
                 Debug.Log("Next one placing");
-            } 
-            else {  //player still have fullBuffers
+            } */
+            /*else {  //player still have fullBuffers
                 NextMove(); //skip the nextPlayerPanel
                 Debug.Log("I still can place a tile");
-            }
+            }*/
         }
         
-        private void BotMove(Bot bot) {
-            Debug.Log("hiding panel");
-            nextPlayerPanel.SetActive(false);
+        private void BotMove(IBot bot) {
             if (phase == Phase.Taking) {
                 var response = bot.DoMove(board).Split();
                 int typeId = int.Parse(response[1]);
@@ -245,21 +291,18 @@ namespace Board {
 
             } else if (phase == Phase.Placing) {
                 if (!isAdvanced) {
-                    while(currentPlayer == board.CurrentPlayer)
-                        PlaceNextTileToWall();
+                    PlaceNextTileToWall();
                 }
                 else {
-                    while (currentPlayer == board.CurrentPlayer) {
-                        var response = int.Parse(bot.Place(board));
-                        board.Calculate(response);
-                    }
+                    var response = int.Parse(bot.Place(board));
+                    board.Calculate(response);
                 }
                 isPlacing = false;
             }
             else {
                 Debug.LogError($"Unknown possible move for bot in this phase: {phase}");
             }
-            DisplayNextPlayerPanel();
+            //DisplayNextPlayerPanel();
         }
 
         private void ShowGameOverPanel() {
@@ -325,42 +368,37 @@ namespace Board {
             }
         }
         
-        private void DisplayNextPlayerPanel() {
-            currentPlayer = board.CurrentPlayer;
+        private IEnumerator DisplayNextPlayerPanel() {
             var panelHandler = nextPlayerPanel.GetComponent<NextPlayerPanel>();
+            Debug.Log("inside of the display panel");
             if (board.Phase == Phase.GameOver) {
                 ShowGameOverPanel();
-                return;
+                yield break; // Exit if the game is over
             }
-            NextMove();
+
             string currentPhase = phase == Phase.Placing ? "placing" : "taking";
             nextPlayerPanel.GetComponentInChildren<TMP_Text>().text = board.Players[currentPlayer].name;
-            if(IsBotMove()) panelHandler.SetText($"It's {currentPhase} phase. Press to let <color=red>Bot</color> play");
             panelHandler.SetText($"It's {currentPhase} phase. Press any button to continue");
             nextPlayerPanel.SetActive(true);
-            StartCoroutine(NextPlayerReactionWaiter());
+            Debug.Log("Activated player panel");
+
+            yield return StartCoroutine(NextPlayerReactionWaiter()); // Wait for player input
+
+            Debug.Log("Deactivating player panel");
+            nextPlayerPanel.SetActive(false);
         }
 
         private bool IsBotMove() {
-            return bots.Exists(x => x.id == currentPlayer);
-        }
-       
-        IEnumerator NextMoveInputWaiter()
-        {
-            ShowMessage("Press any key to end turn");
-            yield return new WaitUntil(() => Input.anyKey && !keyPressed);
-            keyPressed = true;
-            DisplayNextPlayerPanel();
+            return bots.ContainsKey(currentPlayer);
         }
 
         IEnumerator NextPlayerReactionWaiter() {
-            yield return new WaitUntil(() => Input.anyKey && !keyPressed);
-            keyPressed = true;
-            nextPlayerPanel.SetActive(false);
-            NextMove();
-            if (IsBotMove()) {
-                BotMove(bots.Find(x => x.id == currentPlayer));
-            }
+            Debug.Log("inside of the ReactionWaiter");
+
+            if(!IsBotMove()) yield return new WaitUntil(() => Input.anyKey);
+            Debug.Log("waiting to reliese the button");
+            yield return new WaitUntil(() => !Input.anyKey);
+            
         }
 
         

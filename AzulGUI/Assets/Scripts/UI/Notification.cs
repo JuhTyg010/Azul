@@ -12,7 +12,8 @@ public class Notification : MonoBehaviour {
     private bool notificationActive;
     private float timer;
     private CanvasGroup canvasGroup;
-
+    private int iters;
+    private bool isVibrating;
 
    
     
@@ -25,6 +26,12 @@ public class Notification : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
+    public void ShowStableMessage(string message) {
+        notificationActive = true;
+        text.text = message;
+        gameObject.SetActive(true);
+    }
+    
     public void ShowMessage(string message) {
         notificationActive = true;
         text.text = message;
@@ -44,17 +51,54 @@ public class Notification : MonoBehaviour {
         timer = notificationDuration * 2;
         gameObject.SetActive(true);
     }
+
+    public void StartVibratingMessage(string message) {
+        notificationActive = true;
+        isVibrating = true;
+        text.text = message;
+        gameObject.SetActive(true);
+        
+    }
+
+    public void StopVibratingMessage() {
+        isVibrating = false;
+        notificationActive = false;
+        iters = 0;
+        gameObject.SetActive(false);
+    }
     
     void Update() {
-        if (notificationActive) {
-            Color color = image.color;
-            color.a -= Time.deltaTime / timer;
-            text.color = new Color(text.color.r, text.color.g, text.color.b, color.a);
-            if (color.a <= 0) {
-                notificationActive = false;
-                gameObject.SetActive(false);
+        /*if (notificationActive) {
+            if (isVibrating) {
+                if (iters < 40) {
+                    Vector3 temp = gameObject.GetComponent<RectTransform>().localScale;
+                    temp.x += .01f;
+                    temp.y += .01f;
+                    temp.z += .01f;
+                    gameObject.GetComponent<RectTransform>().localScale = temp;
+
+                }
+                else if(iters > 40) {
+                    Vector3 temp = gameObject.GetComponent<RectTransform>().localScale;
+                    temp.x -= .01f;
+                    temp.y -= .01f;
+                    temp.z -= .01f;
+                    gameObject.GetComponent<RectTransform>().localScale = temp;
+                    if(iters > 80) iters = -1;
+                }
+                iters++;
             }
-            image.color = color;
-        }
+            else {
+                Color color = image.color;
+                color.a -= Time.deltaTime / timer;
+                text.color = new Color(text.color.r, text.color.g, text.color.b, color.a);
+                if (color.a <= 0) {
+                    notificationActive = false;
+                    gameObject.SetActive(false);
+                }
+
+                image.color = color;
+            }
+        }*/
     }
 }
