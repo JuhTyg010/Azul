@@ -1,0 +1,5 @@
+Game Title: Azul  
+Developed by: Marek Sádovský 
+Programming: Marek Sádovský
+Art & Design: Marek Sádovský, Philippe Guérin, Chris Quilliams
+Powered by Unity  

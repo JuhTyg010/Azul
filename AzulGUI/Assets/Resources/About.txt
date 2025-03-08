@@ -1,0 +1,10 @@
+Welcome to Azul!  
+Azul takes its theme from Portugese history, when the then King was amazed by the Moorish decorative tiles used in an Alhambra in southern Spain.
+He immediately set workers to using the stunning tiles to decorate the walls of his palace in Evora.
+The players of Azul take on the roles of a tiler, seeking to create the best work of art to impress the King.  
+
+ **Controls:**  
+- left button of the mouse to grab things
+- right button of the mouse to drop things
+
+Thank you for playing!  

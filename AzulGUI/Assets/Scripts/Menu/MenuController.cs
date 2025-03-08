@@ -1,10 +1,14 @@
 using System.IO;
 using UnityEngine;
 using Azul;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
+    
+    [SerializeField] private GameObject infoPanel;
+    [SerializeField] private TMP_Text infoText;
     public void OnPlayButtonClicked() {
         var players = GameObject.FindObjectsOfType<PlayerConfig>();
         int playerCount = players.Length;
@@ -27,9 +31,16 @@ public class MenuController : MonoBehaviour
     public void OnQuitButtonClicked() {
         Application.Quit();
     }
-    
-    public void OnAboutButtonClicked(){} //TODO: here will be the rules 
-    
-    public void OnCreditsButtonClicked(){} //TODO: this will open message with all the credits
-    
+
+    public void OnAboutButtonClicked() {
+        infoText.text = Resources.Load<TextAsset>("About").text;
+        infoPanel.SetActive(true);
+    }
+
+
+    public void OnCreditsButtonClicked() {
+        infoText.text = Resources.Load<TextAsset>("Credits").text;
+        infoPanel.SetActive(true);
+    }
+
 }
