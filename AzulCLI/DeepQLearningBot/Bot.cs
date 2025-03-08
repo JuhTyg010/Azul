@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using Azul;
 using SaveSystem;
 
@@ -19,8 +20,10 @@ public class Bot : IBot {
         /*DQNSetting setting = new DQNSetting(1,1,1,1,1,1,1,1);
         JsonSaver.Save(setting, settingFile);
         throw new NotImplementedException();*/
-        settings = JsonSaver.Load<DQNSetting>(settingFile);
         
+        Console.WriteLine("Constructor Called");
+        settings = JsonSaver.Load<DQNSetting>(settingFile);
+        Console.WriteLine("Constructor Called");
         policyNet = JsonSaver.Load<NeuralNetwork>(networkFile);
         if (policyNet == null) policyNet = new NeuralNetwork(settings.StateSize, 128, settings.ActionSize);
 
@@ -55,7 +58,13 @@ public class Bot : IBot {
         var nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
 
         replayBuffer.Add(state, bestAction, reward, nextState, true);
+        settings.FromLastBatch++;
 
+        if (settings.FromLastBatch >= settings.BatchSize) {
+            settings.FromLastBatch = 0;
+            TrainFromReplayBuffer(replayBuffer);
+            settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
+        }
         return DecodeAction(bestAction);
     }
 
@@ -81,12 +90,6 @@ public class Bot : IBot {
        // int bestPlacement = GetBestAction(qValues);
 
         return "-1";
-    }
-
-    public void SaveFiles() {
-        JsonSaver.Save(settings, settingFile);
-        JsonSaver.Save(replayBuffer, replayBufferFile);
-        JsonSaver.Save(targetNet, networkFile);
     }
     
     private void TrainFromReplayBuffer(ReplayBuffer moveBuffer)
@@ -115,7 +118,6 @@ public class Bot : IBot {
 
         // Train the neural network on the batch
         policyNet.Train(states, targets, 0.001);
-        JsonSaver.Save(policyNet, networkFile);
         if (moveBuffer.Count % 100 == 0) {
             targetNet = policyNet.Clone();
         }
@@ -209,7 +211,7 @@ public class Bot : IBot {
 
     private void OnProcessExit(object sender, EventArgs e) {
         
-        double reward = ResultReward();
+        /*double reward = ResultReward();
         replayBuffer.UpdateRewards(reward * settings.Gamma);
         
         var storedReplays = JsonSaver.Load<ReplayBuffer>(replayBufferFile);
@@ -220,18 +222,18 @@ public class Bot : IBot {
         if (settings.FromLastBatch >= 5) {
             TrainFromReplayBuffer(storedReplays);
             settings.FromLastBatch = 0;
+            settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
         }
         else {
             settings.FromLastBatch++;
-        }
-        
-        
+        }*/
         JsonSaver.Save(settings, settingFile);
-        JsonSaver.Save(storedReplays, replayBufferFile);
-        JsonSaver.Save(targetNet, networkFile);    }
+        JsonSaver.Save(replayBuffer, replayBufferFile);
+        JsonSaver.Save(targetNet, networkFile);
+    }
 }
 
-public struct DQNSetting
+public class DQNSetting
 {
     public int ActionSize { get; set; } //300
     public int StateSize { get; set; } //ish 199
@@ -244,6 +246,7 @@ public struct DQNSetting
     public double EpsilonMin { get; set; } // = 0.01;
     public double Gamma { get; set; } // = 0.99;
 
+    [JsonConstructor]
     public DQNSetting(int actionSize, int stateSize, int replayBufferCapacity, int batchSize, double epsilon, double epsilonDecay, double epsilonMin, double gamma)
     {
         ActionSize = actionSize;

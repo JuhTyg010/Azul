@@ -60,8 +60,8 @@ public class IgnoringBot : IBot{
             settings.FromLastBatch = 0;
             TrainFromReplayBuffer();
             settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
-            JsonSaver.Save(settings, settingFile);
-            JsonSaver.Save(replayBuffer, replayBufferFile);
+            //JsonSaver.Save(settings, settingFile);
+            //JsonSaver.Save(replayBuffer, replayBufferFile);
         }
 
         return DecodeAction(bestAction);
@@ -119,7 +119,7 @@ public class IgnoringBot : IBot{
 
         // Train the neural network on the batch
         policyNet.Train(states, targets, 0.001);
-        JsonSaver.Save(policyNet, networkFile);
+        //JsonSaver.Save(policyNet, networkFile);
         if (replayBuffer.Count % 100 == 0) {
             targetNet = policyNet.Clone();
         }
@@ -241,5 +241,6 @@ public class IgnoringBot : IBot{
     private void OnProcessExit(object sender, EventArgs e) {
         JsonSaver.Save(settings, settingFile);
         JsonSaver.Save(replayBuffer, replayBufferFile);
-        JsonSaver.Save(targetNet, networkFile);    }
+        JsonSaver.Save(targetNet, networkFile);    
+    }
 }
