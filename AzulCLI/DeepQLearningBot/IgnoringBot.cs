@@ -15,9 +15,6 @@ public class IgnoringBot : IBot{
     private Random random;
     private int id;
     public IgnoringBot(int id) {
-        /*DQNSetting setting = new DQNSetting(1,1,1,1,1,1,1,1);
-        JsonSaver.Save(setting, settingFile);
-        throw new NotImplementedException();*/
         settings = JsonSaver.Load<DQNSetting>(settingFile);
         
         policyNet = JsonSaver.Load<NeuralNetwork>(networkFile);
@@ -26,7 +23,6 @@ public class IgnoringBot : IBot{
         targetNet = policyNet.Clone();
         
         replayBuffer = new ReplayBuffer(settings.ReplayBufferCapacity);
-        //if(replayBuffer == null) replayBuffer = new ReplayBuffer(settings.ReplayBufferCapacity);
 
         this.id = id;
         random = new Random();
@@ -60,8 +56,6 @@ public class IgnoringBot : IBot{
             settings.FromLastBatch = 0;
             TrainFromReplayBuffer();
             settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
-            //JsonSaver.Save(settings, settingFile);
-            //JsonSaver.Save(replayBuffer, replayBufferFile);
         }
 
         return DecodeAction(bestAction);
@@ -126,7 +120,21 @@ public class IgnoringBot : IBot{
     }
 
     private double CalculateReward(double[] state, int action, Board board) {
-        return GainIfPlayed(DecodeToMove(action), board);
+        double reward = 0;
+        
+        Move move = DecodeToMove(action);
+        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
+        
+        double[] nextState = board.GetNextState(state, move, id);
+        reward += 0.1 * board.Plates[move.plateId].TileCountOfType(move.tileId);
+        int col = board.FindColInRow(move.bufferId, move.tileId);
+        
+        reward += (double) board.Players[id].CalculatePointsIfFilled(move.bufferId, col) / 10;
+        reward -= (nextState[56] - state[56]) / 10;    //floor
+        //check if first from center
+        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .1;
+        
+        return reward;
     }
     
     private int GainIfPlayed(Move possibleMove, Azul.Board board) {
