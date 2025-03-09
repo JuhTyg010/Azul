@@ -126,7 +126,8 @@ public class IgnoringBot : IBot{
         if (move.bufferId == Globals.WALL_DIMENSION) return -10;
         
         double[] nextState = board.GetNextState(state, move, id);
-        reward += 0.1 * board.Plates[move.plateId].TileCountOfType(move.tileId);
+        if (move.plateId == board.Plates.Length) reward += 0.1 * board.Center.TileCountOfType(move.tileId);
+        else reward += 0.1 * board.Plates[move.plateId].TileCountOfType(move.tileId);
         int col = board.FindColInRow(move.bufferId, move.tileId);
         
         reward += (double) board.Players[id].CalculatePointsIfFilled(move.bufferId, col) / 10;
