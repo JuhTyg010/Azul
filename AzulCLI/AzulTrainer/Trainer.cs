@@ -29,14 +29,9 @@ public class Trainer {
             string[] names = new string[count];
             bots = new IBot[count];
             for (int i = 0; i < count; i++) {
-                switch (botNames[i]) {
-                    case "deep": bots[i] = new DeepQLearningBot.Bot(i);
-                        break;
-                    case "rand": bots[i] = new randomBot.Bot(i);
-                        break;
-                    default: bots[i] = new DeepQLearningBot.Bot(i);
-                        break;
-                } 
+                string type = botNames[i];
+                if(type == "random") bots[i] = new randomBot.Bot(i);
+                else bots[i] = BotFactory.CreateBot(type, i);
                 names[i] = botNames[i] + i;
             }
 
