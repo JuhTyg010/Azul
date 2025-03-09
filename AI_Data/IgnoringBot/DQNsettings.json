@@ -2,9 +2,9 @@
   "ActionSize": 300,
   "StateSize": 87,
   "ReplayBufferCapacity": 150,
-  "BatchSize": 10,
+  "BatchSize": 30,
   "FromLastBatch": 4,
-  "Epsilon": 0.1937114844585008,
+  "Epsilon": 1,
   "EpsilonDecay": 0.95,
   "EpsilonMin": 0.01,
   "Gamma": 0.99

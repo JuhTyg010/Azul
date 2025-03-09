@@ -211,24 +211,8 @@ public class Bot : IBot {
 
     private void OnProcessExit(object sender, EventArgs e) {
         
-        /*double reward = ResultReward();
-        replayBuffer.UpdateRewards(reward * settings.Gamma);
-        
-        var storedReplays = JsonSaver.Load<ReplayBuffer>(replayBufferFile);
-        if (storedReplays == null) storedReplays = replayBuffer;
-        else {
-            storedReplays.Marge(replayBuffer);
-        }
-        if (settings.FromLastBatch >= 5) {
-            TrainFromReplayBuffer(storedReplays);
-            settings.FromLastBatch = 0;
-            settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
-        }
-        else {
-            settings.FromLastBatch++;
-        }*/
-        JsonSaver.Save(settings, settingFile);
-        JsonSaver.Save(replayBuffer, replayBufferFile);
+        //JsonSaver.Save(settings, settingFile);
+        //JsonSaver.Save(replayBuffer, replayBufferFile);
         JsonSaver.Save(targetNet, networkFile);
     }
 }

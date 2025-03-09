@@ -25,8 +25,8 @@ public class IgnoringBot : IBot{
 
         targetNet = policyNet.Clone();
         
-        replayBuffer = JsonSaver.Load<ReplayBuffer>(replayBufferFile);
-        if(replayBuffer == null) replayBuffer = new ReplayBuffer(settings.ReplayBufferCapacity);
+        replayBuffer = new ReplayBuffer(settings.ReplayBufferCapacity);
+        //if(replayBuffer == null) replayBuffer = new ReplayBuffer(settings.ReplayBufferCapacity);
 
         this.id = id;
         random = new Random();
@@ -239,8 +239,8 @@ public class IgnoringBot : IBot{
     }
 
     private void OnProcessExit(object sender, EventArgs e) {
-        JsonSaver.Save(settings, settingFile);
-        JsonSaver.Save(replayBuffer, replayBufferFile);
+        //JsonSaver.Save(settings, settingFile);
+        //JsonSaver.Save(replayBuffer, replayBufferFile);
         JsonSaver.Save(targetNet, networkFile);    
     }
 }
