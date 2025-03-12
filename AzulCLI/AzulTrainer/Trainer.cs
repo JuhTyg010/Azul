@@ -21,7 +21,12 @@ public class Options {
 }
 
 public class Trainer {
+    const int BALANCER = 10;
     private static IBot[] bots;
+    
+    private const string networkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
+
+    
     public static void Main(string[] args) {
         Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
             string[] botNames = o.ListOfIncoming.Split(' ');
@@ -39,6 +44,17 @@ public class Trainer {
             while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
                 string logFile = logFileName(o.logFile + "/log");
                 lastWinner = playGame(count, names, o.Mode == 1, logFile);
+                if (bots[lastWinner] is IgnoringBot ignoringBot) {
+                    NeuralNetwork nc;
+                    nc = ignoringBot.GetNetwork();
+                    //SaveSystem.JsonSaver.Save(nc,networkFile);
+                    Console.WriteLine("Updateting network...");
+                    foreach (var bot in bots) {
+                        if (bot is IgnoringBot iBot) {
+                            iBot.LoadNetwork(nc);
+                        }
+                    }
+                }
             }
             if (bots[lastWinner] is IgnoringBot ignorantBot) {
                 ignorantBot.saveThis = true;

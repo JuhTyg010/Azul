@@ -31,8 +31,7 @@ public class IgnoringBot : IBot{
         AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
     }
 
-    public string DoMove(Board board)
-    {
+    public string DoMove(Board board) {
         double[] state = board.EncodeBoardState(id, false);
 
         int bestAction;
@@ -67,6 +66,14 @@ public class IgnoringBot : IBot{
     }
 
     public void Result(Dictionary<int, int> result) {
+    }
+
+    public void LoadNetwork(NeuralNetwork nc) {
+        policyNet = nc;
+    }
+
+    public NeuralNetwork GetNetwork() {
+        return policyNet;
     }
 
     private int GetRandomValidAction(Board board) {

@@ -28,6 +28,13 @@ public class NeuralNetwork
         biases2 = InitializeVector(outputSize);
     }
 
+    public NeuralNetwork(NeuralNetwork other) {
+        this.weights1 = other.weights1;
+        this.weights2 = other.weights2;
+        this.biases1 = other.biases1;
+        this.biases2 = other.biases2;
+    }
+
     // Forward pass: Compute outputs from inputs
     public double[] Predict(double[] input) {
         double[] hidden = Activate(Add(Dot(input, weights1), biases1));
