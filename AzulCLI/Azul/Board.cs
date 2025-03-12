@@ -20,6 +20,22 @@ namespace Azul {
         private bool isGameOver;
         private int nextFirst;
 
+        private Board(Board other) {
+            Center = other.Center;
+            Players = other.Players;
+            Plates = other.Plates;
+            storage = other.storage;
+            CurrentPlayer = other.CurrentPlayer;
+            Phase = other.Phase;
+            predefinedWall = other.predefinedWall;
+            isAdvanced = other.isAdvanced;
+            fisrtTaken = other.fisrtTaken;
+            trash = other.trash;
+            isGameOver = other.isGameOver;
+            nextFirst = other.nextFirst;
+
+        }
+        
         public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false, string fileName = "azul_log.txt") {
             Logger.SetName(fileName);
             Logger.WriteLine(" ");
@@ -153,12 +169,14 @@ namespace Azul {
                     }
                 }
             }
+
             return validMoves.ToArray();
         }
-        
-        public double[] EncodeBoardState(int stateSize, int id, bool othersData = true) {
+
+        public double[] EncodeBoardState(int id, bool othersData = true) {
+            int stateSize = 199;
             double[] state = new double[stateSize];
-            if(stateSize < 87) throw new IllegalOptionException($"To small state size {stateSize}");
+            //if(stateSize < 87) throw new IllegalOptionException($"To small state size {stateSize}");
 
             //for plates takes max 45
             for (int i = 0; i < Plates.Length; i++) {

@@ -39,7 +39,7 @@ public class Bot : IBot {
 
     public string DoMove(Board board)
     {
-        double[] state = board.EncodeBoardState(settings.StateSize, id);
+        double[] state = board.EncodeBoardState(id);
 
         int bestAction;
         if (random.NextDouble() < settings.Epsilon) {
@@ -83,7 +83,7 @@ public class Bot : IBot {
     public string Place(Board board)
     {
         //TODO: setup for better translation
-        double[] state = board.EncodeBoardState(settings.StateSize, id);
+        double[] state = board.EncodeBoardState(id);
 
         // Get Q-values for placement
         double[] qValues = policyNet.Predict(state);

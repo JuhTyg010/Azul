@@ -14,6 +14,7 @@ public class IgnoringBot : IBot{
     private ReplayBuffer? replayBuffer;
     private Random random;
     private int id;
+    public bool saveThis = false;
     public IgnoringBot(int id) {
         settings = JsonSaver.Load<DQNSetting>(settingFile);
         
@@ -32,7 +33,7 @@ public class IgnoringBot : IBot{
 
     public string DoMove(Board board)
     {
-        double[] state = board.EncodeBoardState(settings.StateSize, id, false);
+        double[] state = board.EncodeBoardState(id, false);
 
         int bestAction;
         if (random.NextDouble() < settings.Epsilon) {
@@ -54,7 +55,7 @@ public class IgnoringBot : IBot{
         settings.FromLastBatch++;
         if (settings.FromLastBatch >= settings.BatchSize) {
             settings.FromLastBatch = 0;
-            TrainFromReplayBuffer();
+            TrainFromReplayBuffer(board);
             settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
         }
 
@@ -64,8 +65,9 @@ public class IgnoringBot : IBot{
     public int GetId() {
         return id;
     }
-    
-    public void Result(Dictionary<int,int> result) {}
+
+    public void Result(Dictionary<int, int> result) {
+    }
 
     private int GetRandomValidAction(Board board) {
         Move[] validMoves = board.GetValidMoves();
@@ -78,7 +80,7 @@ public class IgnoringBot : IBot{
     public string Place(Board board)
     {
         //TODO: setup for better translation
-        double[] state = board.EncodeBoardState(settings.StateSize, id, false);
+        double[] state = board.EncodeBoardState(id, false);
 
         // Get Q-values for placement
         double[] qValues = policyNet.Predict(state);
@@ -87,7 +89,7 @@ public class IgnoringBot : IBot{
         return "-1";
     }
     
-    private void TrainFromReplayBuffer()
+    private void TrainFromReplayBuffer(Board board)
     {
         // Sample a batch of experiences from the replay buffer
         var batch = replayBuffer.Sample(settings.BatchSize);
@@ -97,15 +99,23 @@ public class IgnoringBot : IBot{
         for (int i = 0; i < settings.BatchSize; i++)
         {
             var replay = batch[i];
-
-            // Predict Q-values for the current state
             double[] qValues = policyNet.Predict(replay.State);
 
-            // Predict Q-values for the next state
-            double[] nextQValues = targetNet.Predict(replay.NextState);
+            double[] opponentQValues = targetNet.Predict(replay.NextState);
+
+            Move opponentPredicted = new Move(0,0,0);
+            double maxVal = Max(opponentQValues);
+            for (int index = 0; index < settings.ActionSize; index++) {
+                if (Math.Abs(opponentQValues[index] - maxVal) < 0.01) {
+                    opponentPredicted = DecodeToMove(index);
+                }
+            }
+            
+            double[] ourNextState = board.GetNextState(replay.NextState, opponentPredicted, id);
+            double[] ourNextQValues = targetNet.Predict(ourNextState);
 
             // Update the Q-value for the taken action
-            qValues[replay.Action] = replay.Reward + (replay.Reward > 0 ? settings.Gamma * Max(nextQValues) : 0);
+            qValues[replay.Action] = replay.Reward + settings.Gamma * Max(ourNextQValues);
 
             states[i] = replay.State;
             targets[i] = qValues;
@@ -246,10 +256,18 @@ public class IgnoringBot : IBot{
                 max = value;
         return max;
     }
+    
+    private double Min(double[] values) {
+        double min = double.MaxValue;
+        foreach (var value in values)
+            if (value < min)
+                min = value;
+        return min;
+    }
 
     private void OnProcessExit(object sender, EventArgs e) {
         //JsonSaver.Save(settings, settingFile);
         //JsonSaver.Save(replayBuffer, replayBufferFile);
-        JsonSaver.Save(targetNet, networkFile);    
+        if(saveThis) JsonSaver.Save(targetNet, networkFile);    
     }
 }

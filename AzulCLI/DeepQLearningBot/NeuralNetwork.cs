@@ -165,16 +165,14 @@ public class NeuralNetwork
 
         // Deep copy weights1
         clonedNetwork.weights1 = new double[weights1.Length][];
-        for (int i = 0; i < weights1.Length; i++)
-        {
+        for (int i = 0; i < weights1.Length; i++) {
             clonedNetwork.weights1[i] = new double[weights1[i].Length];
             Array.Copy(weights1[i], clonedNetwork.weights1[i], weights1[i].Length);
         }
 
         // Deep copy weights2
         clonedNetwork.weights2 = new double[weights2.Length][];
-        for (int i = 0; i < weights2.Length; i++)
-        {
+        for (int i = 0; i < weights2.Length; i++) {
             clonedNetwork.weights2[i] = new double[weights2[i].Length];
             Array.Copy(weights2[i], clonedNetwork.weights2[i], weights2[i].Length);
         }

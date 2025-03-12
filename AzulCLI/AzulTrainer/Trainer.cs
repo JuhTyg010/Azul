@@ -35,16 +35,19 @@ public class Trainer {
                 names[i] = botNames[i] + i;
             }
 
-           while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
-               string logFile = logFileName(o.logFile + "/log");
-
-               playGame(count, names, o.Mode == 1, logFile);
-           }
+            int lastWinner = 0;
+            while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
+                string logFile = logFileName(o.logFile + "/log");
+                lastWinner = playGame(count, names, o.Mode == 1, logFile);
+            }
+            if (bots[lastWinner] is IgnoringBot ignorantBot) {
+                ignorantBot.saveThis = true;
+            }
 
         });
     }
 
-    private static void playGame(int count, string[] names, bool mode, string logFile) {
+    private static int playGame(int count, string[] names, bool mode, string logFile) {
         Board game = new Board(count, names, mode, logFile);
         game.NextTakingMove += OnNextTakingTurn;
         game.NextPlacingMove += OnNextPlacingTurn;
@@ -56,10 +59,20 @@ public class Trainer {
 
         Console.WriteLine("Game over");
         Player[] players = game.Players.ToArray();
+        int maxScore = Int32.MinValue;
+        int index = 0;
+        for (int i = 0; i < players.Length; i++) {
+            if (players[i].pointCount > maxScore) {
+                maxScore = players[i].pointCount;
+                index = i;
+            }
+        }
         Array.Sort(players, (a, b) => a.pointCount > b.pointCount ? -1 : 1);
         for (int i = 0; i < players.Length; i++) {
             Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
         }
+
+        return index;
     }
 
     private static void OnNextTakingTurn(object sender, MyEventArgs e) {

@@ -1,6 +1,6 @@
 {
   "ActionSize": 300,
-  "StateSize": 87,
+  "StateSize": 199,
   "ReplayBufferCapacity": 150,
   "BatchSize": 30,
   "FromLastBatch": 4,
