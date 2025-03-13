@@ -158,6 +158,7 @@ public class IgnoringBot : IBot{
                 bestValue = qValues[action];
                 bestAction = action;
             } else if (qValues[action] > bestValue) {
+                Logger.WriteLine($"tried invalid move: {DecodeAction(bestAction)} qValues: {qValues[action]}");
                 _replayBuffer.Add(board.EncodeBoardState(_id), action, -10, board.EncodeBoardState(_id), false);
             }
         }
