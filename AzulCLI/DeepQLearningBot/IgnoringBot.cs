@@ -96,8 +96,7 @@ public class IgnoringBot : IBot{
         return "-1";
     }
     
-    private void TrainFromReplayBuffer(Board board)
-    {
+    private void TrainFromReplayBuffer(Board board) {
         // Sample a batch of experiences from the replay buffer
         var batch = replayBuffer.Sample(settings.BatchSize);
         var states = new double[settings.BatchSize][];
@@ -223,6 +222,8 @@ public class IgnoringBot : IBot{
             if (IsLegalAction(action, board) && qValues[action] > bestValue) {
                 bestValue = qValues[action];
                 bestAction = action;
+            } else if (qValues[action] > bestValue) {
+                replayBuffer.Add(board.EncodeBoardState(id), action, -10, board.EncodeBoardState(id), false);
             }
         }
 
