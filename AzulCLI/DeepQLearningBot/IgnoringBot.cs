@@ -1,45 +1,45 @@
 using Azul;
 using SaveSystem;
-using System;
 
 namespace DeepQLearningBot;
 
 public class IgnoringBot : IBot{
-    private const string settingFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/DQNsettings.json";
-    private const string replayBufferFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/replayBuffer.json";
-    private const string networkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
-    private DQNSetting settings;
-    private NeuralNetwork? policyNet;
-    private NeuralNetwork targetNet;
-    private ReplayBuffer? replayBuffer;
-    private Random random;
-    private int id;
-    public bool saveThis = false;
+    private const string SettingFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/DQNsettings.json";
+    private const string ReplayBufferFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/replayBuffer.json";
+    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
+    private DQNSetting _settings;
+    private NeuralNetwork _policyNet;
+    private NeuralNetwork _targetNet;
+    private ReplayBuffer _replayBuffer;
+    private Random _random;
+    private int _id;
+    public bool SaveThis = false;
     public IgnoringBot(int id) {
-        settings = JsonSaver.Load<DQNSetting>(settingFile);
+        _settings = JsonSaver.Load<DQNSetting>(SettingFile) ?? 
+                   new DQNSetting(300,199,300,30,1,0.95,0.01,0.8);
         
-        policyNet = JsonSaver.Load<NeuralNetwork>(networkFile);
-        if (policyNet == null) policyNet = new NeuralNetwork(settings.StateSize, 128, settings.ActionSize);
+        _policyNet = JsonSaver.Load<NeuralNetwork>(NetworkFile) ?? 
+                    new NeuralNetwork(_settings.StateSize, 128, _settings.ActionSize);
 
-        targetNet = policyNet.Clone();
+        _targetNet = _policyNet.Clone();
         
-        replayBuffer = new ReplayBuffer(settings.ReplayBufferCapacity);
+        _replayBuffer = new ReplayBuffer(_settings.ReplayBufferCapacity);
 
-        this.id = id;
-        random = new Random();
+        this._id = id;
+        _random = new Random();
         
         AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
     }
 
     public string DoMove(Board board) {
-        double[] state = board.EncodeBoardState(id, false);
+        double[] state = board.EncodeBoardState(_id, false);
 
         int bestAction;
-        if (random.NextDouble() < settings.Epsilon) {
+        if (_random.NextDouble() < _settings.Epsilon) {
             bestAction = GetRandomValidAction(board);
         }
         else {
-            double[] qValues = policyNet.Predict(state);
+            double[] qValues = _policyNet.Predict(state);
             bestAction = GetBestValidAction(qValues, board); // Greedy action
         }
         
@@ -48,90 +48,85 @@ public class IgnoringBot : IBot{
         double reward = CalculateReward(state, bestAction, board);
         
         Logger.WriteLine($"Move: {DecodeAction(bestAction)} reward: {reward}");
-        var nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
+        var nextState = board.GetNextState(state, DecodeToMove(bestAction), _id);
 
-        replayBuffer.Add(state, bestAction, reward, nextState, true);
-        settings.FromLastBatch++;
-        if (settings.FromLastBatch >= settings.BatchSize) {
-            settings.FromLastBatch = 0;
+        _replayBuffer.Add(state, bestAction, reward, nextState, true);
+        _settings.FromLastBatch++;
+        if (_settings.FromLastBatch >= _settings.BatchSize) {
+            _settings.FromLastBatch = 0;
             TrainFromReplayBuffer(board);
-            settings.Epsilon = Math.Max(settings.EpsilonMin, settings.Epsilon * settings.EpsilonDecay);
+            _settings.Epsilon = Math.Max(_settings.EpsilonMin, _settings.Epsilon * _settings.EpsilonDecay);
         }
 
         return DecodeAction(bestAction);
     }
 
     public int GetId() {
-        return id;
+        return _id;
     }
 
     public void Result(Dictionary<int, int> result) {
     }
 
     public void LoadNetwork(NeuralNetwork nc) {
-        policyNet = nc;
+        _policyNet = nc;
     }
 
     public NeuralNetwork GetNetwork() {
-        return policyNet;
+        return _policyNet;
     }
 
     private int GetRandomValidAction(Board board) {
         Move[] validMoves = board.GetValidMoves();
         if (validMoves.Length == 0)
             throw new Exception("No valid moves found!");
-        int index = random.Next(validMoves.Length);
+        int index = _random.Next(validMoves.Length);
         return EncodeAction(validMoves[index]);
     }
 
     public string Place(Board board)
     {
         //TODO: setup for better translation
-        double[] state = board.EncodeBoardState(id, false);
-
-        // Get Q-values for placement
-        double[] qValues = policyNet.Predict(state);
-       // int bestPlacement = GetBestAction(qValues);
 
         return "-1";
     }
     
     private void TrainFromReplayBuffer(Board board) {
         // Sample a batch of experiences from the replay buffer
-        var batch = replayBuffer.Sample(settings.BatchSize);
-        var states = new double[settings.BatchSize][];
-        var targets = new double[settings.BatchSize][];
+        var batch = _replayBuffer.Sample(_settings.BatchSize);
+        var states = new double[_settings.BatchSize][];
+        var targets = new double[_settings.BatchSize][];
 
-        for (int i = 0; i < settings.BatchSize; i++)
+        for (int i = 0; i < _settings.BatchSize; i++)
         {
             var replay = batch[i];
-            double[] qValues = policyNet.Predict(replay.State);
+            double[] qValues = _policyNet.Predict(replay.State);
 
-            double[] opponentQValues = targetNet.Predict(replay.NextState);
+            double[] opponentQValues = _targetNet.Predict(replay.NextState);
 
             Move opponentPredicted = new Move(0,0,0);
             double maxVal = Max(opponentQValues);
-            for (int index = 0; index < settings.ActionSize; index++) {
+            for (int index = 0; index < _settings.ActionSize; index++) {
                 if (Math.Abs(opponentQValues[index] - maxVal) < 0.01) {
                     opponentPredicted = DecodeToMove(index);
                 }
             }
             
-            double[] ourNextState = board.GetNextState(replay.NextState, opponentPredicted, id);
-            double[] ourNextQValues = targetNet.Predict(ourNextState);
+            double[] ourNextState = board.GetNextState(replay.NextState, opponentPredicted, _id);
+            double[] ourNextQValues = _targetNet.Predict(ourNextState);
 
             // Update the Q-value for the taken action
-            qValues[replay.Action] = replay.Reward + settings.Gamma * Max(ourNextQValues);
+            qValues[replay.Action] = replay.Reward + _settings.Gamma * Max(ourNextQValues);
 
             states[i] = replay.State;
             targets[i] = qValues;
         }
 
         // Train the neural network on the batch
-        policyNet.Train(states, targets, 0.001);
+        _policyNet.Train(states, targets, 0.001);
         //JsonSaver.Save(policyNet, networkFile);
-        if (replayBuffer.Count % 100 == 0) {
-            targetNet = policyNet.Clone();
+        if (_replayBuffer.Count % 100 == 0) {
+            _targetNet = _policyNet.Clone();
         }
     }
 
@@ -141,78 +136,18 @@ public class IgnoringBot : IBot{
         Move move = DecodeToMove(action);
         if (move.bufferId == Globals.WALL_DIMENSION) return -1;
         
-        double[] nextState = board.GetNextState(state, move, id);
-        if (move.plateId == board.Plates.Length) reward += 0.1 * board.Center.TileCountOfType(move.tileId);
-        else reward += 0.1 * board.Plates[move.plateId].TileCountOfType(move.tileId);
+        double[] nextState = board.GetNextState(state, move, _id);
+        if (move.plateId == board.Plates.Length) reward += 0.3 * board.Center.TileCountOfType(move.tileId);
+        else reward += 0.3 * board.Plates[move.plateId].TileCountOfType(move.tileId);
         int col = board.FindColInRow(move.bufferId, move.tileId);
         
-        reward += (double) board.Players[id].CalculatePointsIfFilled(move.bufferId, col) / 10;
+        reward += (double) board.Players[_id].CalculatePointsIfFilled(move.bufferId, col) / 10;
         reward -= (nextState[56] - state[56]) / 10;    //floor
         //check if first from center
         if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .1;
         
         return reward;
     }
-    
-    private int GainIfPlayed(Move possibleMove, Azul.Board board) {
-            int gain = 0;
-            if (possibleMove.bufferId >= Globals.WALL_DIMENSION) {
-                return -10;
-            }
-            Player me = board.Players[id];
-            int bufferSize = possibleMove.bufferId + 1;
-            Tile buffTile = me.GetBufferData(possibleMove.bufferId);
-            Plate p = possibleMove.plateId < board.Plates.Length ? board.Plates[possibleMove.plateId] : board.Center;
-            int toFill = p.TileCountOfType(possibleMove.tileId);
-            if (buffTile.id == possibleMove.tileId) {
-                int toFloor = toFill - (bufferSize - buffTile.count);
-                if (toFloor >= 0) {
-                    gain -= toFloor;
-                    int clearGain = 0;
-                    if (board.isAdvanced) {
-                        int currGain = 0;
-                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
-                            currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
-                            if(currGain > clearGain) clearGain = currGain;
-                        }
-                    }
-                    else {
-                        int row = possibleMove.bufferId;
-                        int col = 0;
-                        for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.predefinedWall[row, col] == possibleMove.tileId)
-                                break;
-                        clearGain = me.CalculatePointsIfFilled(row,col);
-                    }
-                    gain += clearGain;
-                }
-            }
-            else {
-                int toFloor = bufferSize - toFill;
-                if (toFloor >= 0) {
-                    gain -= toFloor;
-                    int clearGain = 0;
-                    if (board.isAdvanced) {
-                        int currGain = 0;
-                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
-                            currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
-                            if(currGain > clearGain) clearGain = currGain;
-                        }
-                    }
-                    else {
-                        int row = possibleMove.bufferId;
-                        int col = 0;
-                        for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.predefinedWall[row, col] == possibleMove.tileId)
-                                break;
-                        clearGain = me.CalculatePointsIfFilled(row,col);
-                    }
-                    gain += clearGain;
-                }
-            }
-            
-            return gain;
-        }
     
     private int GetBestValidAction(double[] qValues, Board board) {
         int bestAction = -1;
@@ -223,7 +158,7 @@ public class IgnoringBot : IBot{
                 bestValue = qValues[action];
                 bestAction = action;
             } else if (qValues[action] > bestValue) {
-                replayBuffer.Add(board.EncodeBoardState(id), action, -10, board.EncodeBoardState(id), false);
+                _replayBuffer.Add(board.EncodeBoardState(_id), action, -10, board.EncodeBoardState(_id), false);
             }
         }
 
@@ -276,6 +211,6 @@ public class IgnoringBot : IBot{
     private void OnProcessExit(object sender, EventArgs e) {
         //JsonSaver.Save(settings, settingFile);
         //JsonSaver.Save(replayBuffer, replayBufferFile);
-        if(saveThis) JsonSaver.Save(targetNet, networkFile);    
+        if(SaveThis) JsonSaver.Save(_targetNet, NetworkFile);    
     }
 }
