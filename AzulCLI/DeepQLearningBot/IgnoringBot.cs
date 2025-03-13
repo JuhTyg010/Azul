@@ -139,7 +139,7 @@ public class IgnoringBot : IBot{
         double reward = 0;
         
         Move move = DecodeToMove(action);
-        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
+        if (move.bufferId == Globals.WALL_DIMENSION) return -1;
         
         double[] nextState = board.GetNextState(state, move, id);
         if (move.plateId == board.Plates.Length) reward += 0.1 * board.Center.TileCountOfType(move.tileId);
