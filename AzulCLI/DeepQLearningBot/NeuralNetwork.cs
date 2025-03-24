@@ -61,6 +61,45 @@ public class NeuralNetwork
             UpdateWeightsAndBiases(input, hidden, outputError, hiddenError, learningRate);
         }
     }
+    
+    public void TrainPPO(double[][] states, int[] actions, double[] rewards, double[][] oldActionProbs, double epsilon, double learningRate) {
+        for (int i = 0; i < states.Length; i++) {
+            var state = states[i];
+            var action = actions[i];
+            var reward = rewards[i];
+            double oldProb = Math.Max(oldActionProbs[i][action], 1e-6);
+            double oldLogProb = Math.Log(oldProb);
+
+            double[] actionProbs = Predict(state);
+            double logProb = LogProbability(actionProbs, action);
+
+            double logRatio = Math.Clamp(logProb - oldLogProb, -10, 10);
+            double ratio = Math.Exp(logRatio);
+            double clippedRatio = Math.Clamp(ratio, 1 - epsilon, 1 + epsilon);
+
+            // Compute policy loss
+            double advantage = reward;  // Consider using GAE here
+            double policyLoss = -Math.Min(ratio * advantage, clippedRatio * advantage);
+
+            // Compute value loss (prevent large values)
+            double valueLoss = Math.Pow(advantage, 2);
+            double totalLoss = policyLoss + 0.5 * valueLoss;
+            
+            for (int j = 0; j < actionProbs.Length; j++) {
+                actionProbs[j] = Math.Max(actionProbs[j], 1e-6);  // Prevent 0 probabilities
+            }
+
+
+            UpdateWeightsAndBiases(state, actionProbs, totalLoss, learningRate);
+        }
+    }
+    
+    private  double LogProbability(double[] actionProbs, int action) {
+        double probability = Math.Max(actionProbs[action], 0.0); // Clamp to 0 if negative
+        return Math.Log(probability + 1e-8);
+    }
+
+
 
 
     // Helper functions
@@ -166,6 +205,30 @@ public class NeuralNetwork
         for (int i = 0; i < biases1.Length; i++)
             biases1[i] += learningRate * hiddenError[i];
     }
+    
+    private void UpdateWeightsAndBiases(double[] input, double[] actionProbs, double totalLoss, double learningRate) {
+        double clippedLoss = Math.Clamp(totalLoss, -1.0, 1.0);
+
+        double lambda = 0.01; // Regularization strength
+
+        for (int i = 0; i < weights2.Length; i++)
+        for (int j = 0; j < weights2[0].Length; j++)
+            weights2[i][j] -= learningRate * (clippedLoss * actionProbs[j] + lambda * weights2[i][j]); // L2 penalty
+
+        for (int i = 0; i < biases2.Length; i++) {
+            biases2[i] -= learningRate * clippedLoss;
+        }
+
+        for (int i = 0; i < weights1.Length; i++)
+        for (int j = 0; j < weights1[0].Length; j++)
+            weights1[i][j] -= learningRate * (clippedLoss * input[i] + lambda * weights1[i][j]); // L2 penalty
+
+
+        for (int i = 0; i < biases1.Length; i++) {
+            biases1[i] -= learningRate * clippedLoss;
+        }
+    }
+
     
     public NeuralNetwork Clone() {
         var clonedNetwork = new NeuralNetwork(weights1.Length, biases1.Length, biases2.Length);

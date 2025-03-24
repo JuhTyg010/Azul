@@ -14,6 +14,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Azul\Azul.csproj" />
       <ProjectReference Include="..\DeepQLearningBot\DeepQLearningBot.csproj" />
+      <ProjectReference Include="..\ProximalPolicyOptimalization\ProximalPolicyOptimalization.csproj" />
       <ProjectReference Include="..\randomBot\randomBot.csproj" />
       <ProjectReference Include="..\SaveSystem\SaveSystem.csproj" />
     </ItemGroup>

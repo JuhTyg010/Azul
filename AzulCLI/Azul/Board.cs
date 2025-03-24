@@ -19,6 +19,7 @@ namespace Azul {
         private Tiles trash;
         private bool isGameOver;
         private int nextFirst;
+        private string[] playerNames;
 
         private Board(Board other) {
             Center = other.Center;
@@ -33,29 +34,37 @@ namespace Azul {
             trash = other.trash;
             isGameOver = other.isGameOver;
             nextFirst = other.nextFirst;
+            playerNames = other.playerNames;
 
         }
         
         public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false, string fileName = "azul_log.txt") {
+            isAdvanced = isAdvanced_;
+            this.playerNames = playerNames;
             Logger.SetName(fileName);
-            Logger.WriteLine(" ");
-            Logger.WriteLine("-----------------------------Game start-----------------------------");
+            
             if (playerNames.Length != playerCount) {
                 Logger.WriteLine("died cause of incorrect names of players");
                 throw new Exception("incorrect number of names, or players");
             }
-
-            isAdvanced = isAdvanced_;
-            Center = new CenterPlate(Globals.TYPE_COUNT);
-            storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT);
-            trash = new Tiles(Globals.TYPE_COUNT, 0);
-        
+            
             Plates = new Plate[playerCount * 2 + 1];
             for (int i = 0; i < playerCount * 2 + 1; i++) {
                 Plates[i] = new Plate(Globals.TYPE_COUNT);
             }
 
-            Players = InitializePlayers(playerCount, playerNames);
+        }
+
+        public void StartGame() {
+            
+            Logger.WriteLine(" ");
+            Logger.WriteLine("-----------------------------Game start-----------------------------");
+
+            Center = new CenterPlate(Globals.TYPE_COUNT);
+            storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT);
+            trash = new Tiles(Globals.TYPE_COUNT, 0);
+            
+            Players = InitializePlayers(playerNames.Length, playerNames);
 
             predefinedWall = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
@@ -67,9 +76,6 @@ namespace Azul {
             CurrentPlayer = 0;
             Phase = Phase.Taking;
             FillPlates();
-        }
-
-        public void StartGame() {
             NextMove();
         }
         public bool CanMove(int plateId, int typeId, int bufferId) {

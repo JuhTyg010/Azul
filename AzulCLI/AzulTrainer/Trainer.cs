@@ -4,7 +4,7 @@ using System.Diagnostics;
 using CommandLine;
 using Azul;
 using DeepQLearningBot;
-
+using PPO;
 
 namespace AzulTrainer;
 
@@ -28,7 +28,9 @@ public class Trainer {
 
     
     public static void Main(string[] args) {
-        Parser.Default.ParseArguments<Options>(args).WithParsed(o => {
+        PPO.Trainer.Run();
+
+        /*Parser.Default.ParseArguments<Options>(args).WithParsed(o => {
             string[] botNames = o.ListOfIncoming.Split(' ');
             int count = botNames.Length;
             string[] names = new string[count];
@@ -59,7 +61,9 @@ public class Trainer {
                 ignorantBot.SaveThis = true;
             }
 
-        });
+        });*/
+
+
     }
 
     private static int PlayGame(int count, string[] names, bool mode, string logFile) {

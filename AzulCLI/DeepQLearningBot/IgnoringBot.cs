@@ -151,20 +151,26 @@ public class IgnoringBot : IBot{
     
     private int GetBestValidAction(double[] qValues, Board board) {
         int bestAction = -1;
+        int incorrectCount = 0;
         double bestValue = double.MinValue;
         
         for (int action = 0; action < qValues.Length; action++) {
             if (IsLegalAction(action, board) && qValues[action] > bestValue) {
                 bestValue = qValues[action];
                 bestAction = action;
-            } else if (qValues[action] > bestValue) {
-                Logger.WriteLine($"tried invalid move: {DecodeAction(bestAction)} qValues: {qValues[action]}");
+            } 
+        }
+        
+        for (int action = 0; action < qValues.Length; action++) {
+            if (qValues[action] > bestValue) {
+                incorrectCount++;
+                Logger.WriteLine($"tried invalid move: {DecodeAction(action)} qValues: {qValues[action]}");
                 _replayBuffer.Add(board.EncodeBoardState(_id), action, -10, board.EncodeBoardState(_id), false);
             }
         }
 
         if (bestAction == -1) throw new IllegalOptionException("no valid action"); //should be always false
-        Logger.WriteLine("Best action's Qvalue: " + bestValue);
+        Logger.WriteLine($"Best action's Qvalue: {bestValue} after {incorrectCount} failed actions");
         return bestAction;
     }
 
