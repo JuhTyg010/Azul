@@ -11,6 +11,7 @@ public class Trainer {
     static List<int> actions = new List<int>();
     static List<double> rewards = new List<double>();
     static List<double[]> probs = new List<double[]>();
+    static List<double> imidiateRewards = new List<double>();
     
     public static void Run() {
         board.NextTakingMove += OnNextTakingTurn!;
@@ -21,9 +22,17 @@ public class Trainer {
             board.StartGame();
 
             while (board.Phase != Phase.GameOver) { }
+            
+            ComputeFinalRewards();
 
             agent.Train(states, actions, rewards, probs);
             Console.WriteLine($"Episode {episode}: Reward = {rewards.Sum()}");
+            
+            states.Clear();
+            actions.Clear();
+            rewards.Clear();
+            probs.Clear();
+            
         }
         agent.SavePolicy(PolicyNetworkPath);
     }
@@ -33,6 +42,11 @@ public class Trainer {
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
         Console.WriteLine($"Player {player.name} : placing");
+        if (imidiateRewards.Count > 0) {
+            AddFloorPenalty();
+            rewards.AddRange(imidiateRewards);
+            imidiateRewards.Clear();
+        }
         
         if (!game.isAdvanced) {
             game.Calculate();
@@ -49,12 +63,15 @@ public class Trainer {
         
         
         var action = agent.SelectAction(state, validActions);
-        
+        if (!board.CanMove(DecodeAction(action.Item1))) {
+            //board.Move(Random.Shared.GetItems(game.GetValidMoves()))
+            //todo: get random valid
+        }
         states.Add(state);
         actions.Add(action.Item1);
-        rewards.Add(CalculateReward(DecodeAction(action.Item1), state));
+        imidiateRewards.Add(CalculateReward(DecodeAction(action.Item1), state));
         probs.Add(action.Item2);
-
+        //TODO: handle sizes of the numbers to prevent NaN
         if (!game.Move(DecodeAction(action.Item1))) {
             agent.SelectAction(state, validActions);
             throw new IllegalOptionException("Illegal move");
@@ -67,6 +84,31 @@ public class Trainer {
         int buffer = (action % 6);
         return new Move(tileId, plate, buffer);
     }
+    
+    private static void ComputeFinalRewards() {
+        //TODO: punish loosing sequence and reward winning one
+        (int,int) added = (0,0);
+        if (board.Players[0].pointCount > board.Players[1].pointCount) {
+            added.Item1 = 10;
+            added.Item2 = -10;
+        }
+        else {
+            added.Item1 = -10;
+            added.Item2 = 10;
+        }
+
+        for (int i = 0; i < rewards.Count; i++) {
+            rewards[i] += i % 2 == 0 ? added.Item1 : added.Item2;
+        }
+    }
+
+    private static void AddFloorPenalty() {
+        //TODO: separate moves and states based on player and punish moves based on forcing to floor
+        for (int i = 0; i < imidiateRewards.Count; i++) {
+            imidiateRewards[i] -= board.Players[i % 2].floor.Count;           
+        }
+    }
+
 
     private static double CalculateReward(Move move, double[] state) {
         double reward = 0;
