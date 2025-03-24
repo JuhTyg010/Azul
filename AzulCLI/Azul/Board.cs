@@ -75,6 +75,7 @@ namespace Azul {
 
             CurrentPlayer = 0;
             Phase = Phase.Taking;
+            isGameOver = false;
             FillPlates();
             NextMove();
         }

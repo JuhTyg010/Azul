@@ -16,6 +16,40 @@ namespace Azul {
         private Board game;
         
         public event EventHandler? OnWin;
+
+        public static int CalculatePointReward(int row, int col, int[,] wall) {
+            int colPoints = 0;
+            int rowPoints = 0;
+            int colTmp = col;
+            while (colTmp >= 0 && wall[row, colTmp] != Globals.EMPTY_CELL || colTmp == col) {
+                colPoints++;
+                colTmp--;
+            }
+
+            colTmp = col + 1;
+            while (colTmp < wall.GetLength(1) &&
+                   wall[row, colTmp] != Globals.EMPTY_CELL) {
+                
+                colPoints++;
+                colTmp++;
+            }
+            
+            int rowTmp = row;
+            while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EMPTY_CELL || row == rowTmp) {
+                rowPoints++;
+                rowTmp--;
+            }
+            rowTmp = row + 1;
+            while (rowTmp < wall.GetLength(0) &&
+                   wall[rowTmp, col] != Globals.EMPTY_CELL) {
+                rowPoints++;
+                rowTmp++;
+            }
+
+            if (rowPoints > 1 && colPoints > 1) return rowPoints + colPoints;
+        
+            return Math.Max(colPoints, rowPoints); // at least one is 1
+        }
     
 
         public Player(string name, Board game) {
@@ -244,72 +278,10 @@ namespace Azul {
         }
 
         public int CalculatePointsIfFilled(int row, int col) {
-            int colPoints = 0;
-            int rowPoints = 0;
-            int colTmp = col;
-            while (colTmp >= 0 && wall[row, colTmp] != Globals.EMPTY_CELL || colTmp == col) {
-                colPoints++;
-                colTmp--;
-            }
-
-            colTmp = col + 1;
-            while (colTmp < wall.GetLength(1) &&
-                   wall[row, colTmp] != Globals.EMPTY_CELL) {
-                
-                colPoints++;
-                colTmp++;
-            }
-            
-            int rowTmp = row;
-            while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EMPTY_CELL || row == rowTmp) {
-                rowPoints++;
-                rowTmp--;
-            }
-            rowTmp = row + 1;
-            while (rowTmp < wall.GetLength(0) &&
-                   wall[rowTmp, col] != Globals.EMPTY_CELL) {
-                rowPoints++;
-                rowTmp++;
-            }
-
-            if (rowPoints > 1 && colPoints > 1) return rowPoints + colPoints;
-            
-        
-            return Math.Max(colPoints, rowPoints); // at least one is 1
+            return Player.CalculatePointReward(row, col, wall);
         }
         private int calculatePoints(int row, int col) {
-            int colPoints = 0;
-            int rowPoints = 0;
-            int colTmp = col;
-            while (colTmp >= 0 && wall[row, colTmp] != Globals.EMPTY_CELL) {
-                colPoints++;
-                colTmp--;
-            }
-
-            colTmp = col + 1;
-            while (colTmp < wall.GetLength(1) &&
-                   wall[row, colTmp] != Globals.EMPTY_CELL) {
-                
-                colPoints++;
-                colTmp++;
-            }
-            
-            int rowTmp = row;
-            while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EMPTY_CELL) {
-                rowPoints++;
-                rowTmp--;
-            }
-            rowTmp = row + 1;
-            while (rowTmp < wall.GetLength(0) &&
-                   wall[rowTmp, col] != Globals.EMPTY_CELL) {
-                rowPoints++;
-                rowTmp++;
-            }
-
-            if (rowPoints > 1 && colPoints > 1) return rowPoints + colPoints;
-            
-        
-            return Math.Max(colPoints, rowPoints); // at least one is 1
+            return Player.CalculatePointReward(row, col, wall);
         }
 
         private bool IsWinCheck() {
