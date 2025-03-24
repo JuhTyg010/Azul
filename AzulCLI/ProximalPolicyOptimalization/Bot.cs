@@ -33,6 +33,7 @@ public class Bot : IBot {
                 actionProbs[i] /= sum;
 
         Move move = DecodeAction(SampleAction(actionProbs));
+        if(!board.CanMove(move)) move = board.GetValidMoves()[_random.Next(validActions.Length)];
         return $"{move.plateId} {move.tileId} {move.bufferId}";
     }
 

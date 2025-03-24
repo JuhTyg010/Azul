@@ -160,7 +160,7 @@ public class NeuralNetwork
     }
 
     private double[] Activate(double[] vector) {
-        /*for (int i = 0; i < vector.Length; i++)
+        for (int i = 0; i < vector.Length; i++)
             vector[i] = Math.Max(0, vector[i]); // ReLU activation*/
         //no ReLU activation cause of the negative values
         return vector;
