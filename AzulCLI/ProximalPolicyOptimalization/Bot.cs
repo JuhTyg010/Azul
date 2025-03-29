@@ -79,14 +79,17 @@ public class Bot : IBot {
         }
 
         private int SampleAction(double[] probs) {
-            double randomValue = _random.NextDouble();
-            double cumulative = 0;
+            //double randomValue = _random.NextDouble();
+            double best = 0;
+            int bestIndex = 0;
             for (int i = 0; i < probs.Length; i++) {
-                cumulative += probs[i];
-                if (randomValue < cumulative)
-                    return i;
+                
+                if (probs[i] > best) {
+                    best = probs[i];
+                    bestIndex = i;
+                }
             }
-
-            return probs.Length - 1;
+            Logger.WriteLine($"best value: {best}");
+            return bestIndex;
         }
 }

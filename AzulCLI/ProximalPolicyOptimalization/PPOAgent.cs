@@ -8,8 +8,8 @@ namespace PPO {
         private NeuralNetwork policyNet;
         private NeuralNetwork valueNet;
         private Random random;
-        public double gamma { get; private set; } = 0.99;
-        private double epsilon = 0.4;
+        public double gamma { get; private set; } = 0.9;
+        private double epsilon = 0.2;
         private double learningRate = 0.001;
 
         public PPOAgent(int stateSize, int actionSize) {
@@ -94,15 +94,18 @@ namespace PPO {
         }
 
         private int SampleAction(double[] probs) {
-            double randomValue = random.NextDouble();
+            //double randomValue = random.NextDouble();
             double cumulative = 0;
+            int index = 0;
             for (int i = 0; i < probs.Length; i++) {
-                cumulative += probs[i];
-                if (randomValue < cumulative)
-                    return i;
+                //cumulative += probs[i];
+                if (probs[i] > cumulative) {
+                    cumulative = probs[i];
+                    index = i;
+                }
             }
 
-            return probs.Length - 1;
+            return index;
         }
     }
 }

@@ -61,7 +61,7 @@ public class Trainer {
                 ignorantBot.SaveThis = true;
             }
 
-        });*/
+        });//*/
 
 
     }

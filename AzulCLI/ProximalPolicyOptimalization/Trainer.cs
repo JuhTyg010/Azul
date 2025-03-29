@@ -2,23 +2,30 @@ using Azul;
 namespace PPO;
 
 public class Trainer {
+    private const int botsCount = 2;
     private const string LogPath = "/home/juhtyg/Desktop/Azul/proximalpolicyoptimalization.log";
     private const string PolicyNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
     private const string ValueNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/value_network.json";
     static PPOAgent agent = new PPOAgent(stateSize: 199, actionSize: 300);
-    static Board board = new Board(2,new string[]{"a","b"}, false, LogPath);
+    static Board board = new Board(botsCount,new string[]{"a","b"}, false, LogPath);
     static List<double[]> states = new List<double[]>();
     static List<int> actions = new List<int>();
     static List<double> rewards = new List<double>();
     static List<double[]> probs = new List<double[]>();
-    static List<double> imidiateRewards = new List<double>();
+    static List<double>[] eachPlayerRewards = new List<double>[botsCount];
+    static private bool wasReevaluated;
     
     public static void Run() {
         board.NextTakingMove += OnNextTakingTurn!;
         board.NextPlacingMove += OnNextPlacingTurn!;
+
+        for (int i = 0; i < botsCount; i++) {
+            eachPlayerRewards[i] = new List<double>();
+        }
         
         for (int episode = 0; episode < 1000; episode++) {
             Console.WriteLine($"Episode {episode}");
+            wasReevaluated = false;
             board.StartGame();
 
             while (board.Phase != Phase.GameOver) { }
@@ -28,10 +35,7 @@ public class Trainer {
             agent.Train(states, actions, rewards, probs);
             Console.WriteLine($"Episode {episode}: Reward = {rewards.Sum()}");
             
-            states.Clear();
-            actions.Clear();
-            rewards.Clear();
-            probs.Clear();
+            ClearData();
             
         }
         agent.SavePolicy(PolicyNetworkPath);
@@ -42,10 +46,9 @@ public class Trainer {
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
         Console.WriteLine($"Player {player.name} : placing");
-        if (imidiateRewards.Count > 0) {
+        if (!wasReevaluated) {
             AddFloorPenalty();
-            rewards.AddRange(imidiateRewards);
-            imidiateRewards.Clear();
+            wasReevaluated = true;
         }
         
         if (!game.isAdvanced) {
@@ -63,15 +66,11 @@ public class Trainer {
         
         
         var action = agent.SelectAction(state, validActions);
-        if (!board.CanMove(DecodeAction(action.Item1))) {
-            //board.Move(Random.Shared.GetItems(game.GetValidMoves()))
-            //todo: get random valid
-        }
         states.Add(state);
         actions.Add(action.Item1);
-        imidiateRewards.Add(CalculateReward(DecodeAction(action.Item1), state));
+        eachPlayerRewards[game.CurrentPlayer].Add(CalculateReward(DecodeAction(action.Item1), state));
+        wasReevaluated = false;
         probs.Add(action.Item2);
-        //TODO: handle sizes of the numbers to prevent NaN
         if (!game.Move(DecodeAction(action.Item1))) {
             agent.SelectAction(state, validActions);
             throw new IllegalOptionException("Illegal move");
@@ -86,26 +85,36 @@ public class Trainer {
     }
     
     private static void ComputeFinalRewards() {
-        //TODO: punish loosing sequence and reward winning one
-        (int,int) added = (0,0);
-        if (board.Players[0].pointCount > board.Players[1].pointCount) {
-            added.Item1 = 10;
-            added.Item2 = -10;
-        }
-        else {
-            added.Item1 = -10;
-            added.Item2 = 10;
+        int winnigPlayer = 0;
+        int winnerCount = Int32.MinValue;
+        for (int i = 0; i < botsCount; i++) {
+            if (board.Players[i].pointCount > winnerCount) {
+                winnigPlayer = i;
+                winnerCount = board.Players[i].pointCount;
+            }
         }
 
-        for (int i = 0; i < rewards.Count; i++) {
-            rewards[i] += i % 2 == 0 ? added.Item1 : added.Item2;
+        for (int i = 0; i < botsCount; i++) {
+            if (winnigPlayer == i) AddValueInRange(30, ref eachPlayerRewards[i]);
+            else AddValueInRange(-30, ref eachPlayerRewards[i]);
         }
+
+        for (int i = 0; i < botsCount; i++) {
+            rewards.AddRange(eachPlayerRewards[i]);
+        }
+
     }
 
     private static void AddFloorPenalty() {
         //TODO: separate moves and states based on player and punish moves based on forcing to floor
-        for (int i = 0; i < imidiateRewards.Count; i++) {
-            imidiateRewards[i] -= board.Players[i % 2].floor.Count;           
+        for (int i = 0; i < botsCount; i++) {
+            AddValueInRange(-board.Players[i].floor.Count * 4, ref eachPlayerRewards[i]);
+        }
+    }
+
+    private static void AddValueInRange(double value, ref List<double> list) {
+        for (int i = 0; i < list.Count; i++) {
+            list[i] += value;
         }
     }
 
@@ -113,17 +122,34 @@ public class Trainer {
     private static double CalculateReward(Move move, double[] state) {
         double reward = 0;
         
-        if (move.bufferId == Globals.WALL_DIMENSION) return -1;
+        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
         var nextState = board.GetNextState(state, move, board.CurrentPlayer);
-        if (move.plateId == board.Plates.Length) reward += 0.3 * board.Center.TileCountOfType(move.tileId);
-        else reward += 0.3 * board.Plates[move.plateId].TileCountOfType(move.tileId);
+        int takenCount = 0;
+        if (move.plateId == board.Plates.Length) takenCount = board.Center.TileCountOfType(move.tileId);
+        else takenCount = board.Plates[move.plateId].TileCountOfType(move.tileId);
+        if (board.Players[board.CurrentPlayer].GetBufferData(move.bufferId).count + takenCount >= move.bufferId + 1) {
+            reward += takenCount * 10;
+        }
+        else {
+            return takenCount * 5;
+        }
         int col = board.FindColInRow(move.bufferId, move.tileId);
         
-        reward += (double) board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col) / 10;
-        reward -= (nextState[56] - state[56]) / 10;    //floor
+        reward += 4 * board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
+       // reward -= (nextState[56] - state[56]) * 2;    //floor
         //check if first from center
-        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .1;
+        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= 2;
         
         return reward;
+    }
+
+    private static void ClearData() {
+        for (int i = 0; i < botsCount; i++) {
+            eachPlayerRewards[i].Clear();
+        }
+        states.Clear();
+        actions.Clear();
+        rewards.Clear();
+        probs.Clear();
     }
 }
