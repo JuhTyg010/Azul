@@ -9,7 +9,7 @@ namespace PPO {
         private NeuralNetwork valueNet;
         private Random random;
         public double gamma { get; private set; } = 0.9;
-        private double epsilon = 0.2;
+        private double epsilon = 0.3;
         private double learningRate = 0.001;
 
         public PPOAgent(int stateSize, int actionSize) {
@@ -19,7 +19,7 @@ namespace PPO {
         }
 
         public (int, double[]) SelectAction(double[] state, Move[] validMoves) {
-            double[] actionProbs = Softmax(policyNet.Predict(state),10);
+            double[] actionProbs = Softmax(policyNet.Predict(state));
             int[] validActions = EncodeMoves(validMoves);
             // Mask invalid actions by setting their probability to zero
             for (int i = 0; i < actionProbs.Length; i++)
@@ -94,17 +94,14 @@ namespace PPO {
         }
 
         private int SampleAction(double[] probs) {
-            //double randomValue = random.NextDouble();
-            double cumulative = 0;
+            double bestProb = 0;
             int index = 0;
             for (int i = 0; i < probs.Length; i++) {
-                //cumulative += probs[i];
-                if (probs[i] > cumulative) {
-                    cumulative = probs[i];
+                if (probs[i] > bestProb) {
+                    bestProb = probs[i];
                     index = i;
                 }
             }
-
             return index;
         }
     }
