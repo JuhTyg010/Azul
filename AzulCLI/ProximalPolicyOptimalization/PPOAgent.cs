@@ -5,21 +5,21 @@ namespace PPO {
 
 
     public class PPOAgent {
-        private NeuralNetwork policyNet;
-        private NeuralNetwork valueNet;
+        private PPONeuralNetwork policyNet;
+        //private NeuralNetwork valueNet;
         private Random random;
         public double gamma { get; private set; } = 0.9;
         private double epsilon = 0.3;
         private double learningRate = 0.001;
 
         public PPOAgent(int stateSize, int actionSize) {
-            policyNet = new NeuralNetwork(stateSize, 128, actionSize);
-            valueNet = new NeuralNetwork(stateSize, 128, 1);
+            policyNet = new PPONeuralNetwork(stateSize, 128, actionSize, epsilon, learningRate);
+            //valueNet = new NeuralNetwork(stateSize, 128, 1);
             random = new Random();
         }
 
         public (int, double[]) SelectAction(double[] state, Move[] validMoves) {
-            double[] actionProbs = Softmax(policyNet.Predict(state));
+            double[] actionProbs = Softmax(policyNet.PredictPolicy(state));
             int[] validActions = EncodeMoves(validMoves);
             // Mask invalid actions by setting their probability to zero
             for (int i = 0; i < actionProbs.Length; i++)
@@ -51,17 +51,12 @@ namespace PPO {
 
         public void Train(List<double[]> states, List<int> actions, List<double> rewards, List<double[]> oldProbs) {
 
-            policyNet.TrainPPO(states.ToArray(), actions.ToArray(), rewards.ToArray(), oldProbs.ToArray(), epsilon,
-                learningRate);
+            policyNet.Train(states, actions, rewards, oldProbs);
             //SaveSystem.JsonSaver.Save(policyNet, "/home/juhtyg/Desktop/Azul/AI_Data/PPO/network.json");
         }
 
         public void SavePolicy(string path) {
             SaveSystem.JsonSaver.Save(policyNet, path);
-        }
-
-        public void SaveValue(string path) {
-            SaveSystem.JsonSaver.Save(valueNet, path);
         }
 
         private List<double[]> ComputeReturns(List<double> rewards) {
@@ -94,15 +89,16 @@ namespace PPO {
         }
 
         private int SampleAction(double[] probs) {
-            double bestProb = 0;
-            int index = 0;
+            double commutative = random.NextDouble();
+            double prob = 0;
             for (int i = 0; i < probs.Length; i++) {
-                if (probs[i] > bestProb) {
-                    bestProb = probs[i];
-                    index = i;
+                prob += probs[i];
+                if (prob > commutative) {
+                    return i;
                 }
             }
-            return index;
+
+            return 0;
         }
     }
 }

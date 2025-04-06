@@ -11,6 +11,8 @@ public class NeuralNetwork
     [JsonInclude] private double[] biases1;    // Hidden layer biases
     [JsonInclude] private double[] biases2;    // Output layer biases
 
+    private double gamma = 0.8;
+
     private Random random = new Random();
 
     [JsonConstructor]
@@ -62,11 +64,12 @@ public class NeuralNetwork
         }
     }
     
-    public void TrainPPO(double[][] states, int[] actions, double[] rewards, double[][] oldActionProbs, double epsilon, double learningRate) {
+    public void TrainPPO(double[][] states, int[] actions, double[] advantages, double[][] oldActionProbs, 
+        double epsilon, double learningRate) {
         for (int i = 0; i < states.Length; i++) {
             var state = states[i];
             var action = actions[i];
-            var reward = rewards[i];
+            var advantage = advantages[i]; // <-- from value net
             double oldProb = Math.Max(oldActionProbs[i][action], 1e-6);
             double oldLogProb = Math.Log(oldProb);
 
@@ -77,18 +80,17 @@ public class NeuralNetwork
             double ratio = Math.Exp(logRatio);
             double clippedRatio = Math.Clamp(ratio, 1 - epsilon, 1 + epsilon);
 
-            // Compute policy loss
-            double advantage = reward;  // Consider using GAE here
+            // PPO clipped surrogate loss
             double policyLoss = -Math.Min(ratio * advantage, clippedRatio * advantage);
 
-            // Compute value loss (prevent large values)
-            double valueLoss = Math.Pow(advantage, 2);
-            double totalLoss = policyLoss + 0.5 * valueLoss;
-            
-            for (int j = 0; j < actionProbs.Length; j++) {
-                actionProbs[j] = Math.Max(actionProbs[j], 1e-6);  // Prevent 0 probabilities
-            }
+            // You don't need value loss here — that's handled in valueNet.Train()
 
+            double totalLoss = policyLoss;
+
+            // Prevent NaNs
+            for (int j = 0; j < actionProbs.Length; j++) {
+                actionProbs[j] = Math.Max(actionProbs[j], 1e-6);
+            }
 
             UpdateWeightsAndBiases(state, actionProbs, totalLoss, learningRate);
         }
@@ -98,9 +100,6 @@ public class NeuralNetwork
         double probability = Math.Max(actionProbs[action], 0.0); // Clamp to 0 if negative
         return Math.Log(probability + 1e-8);
     }
-
-
-
 
     // Helper functions
     private double[][] InitializeMatrix(int rows, int cols) {

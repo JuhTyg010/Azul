@@ -1,9 +1,11 @@
+using System.Collections.Concurrent;
 using Azul;
 namespace PPO;
 
 public class Trainer {
-    private const int botsCount = 2;
-    private const string LogPath = "/home/juhtyg/Desktop/Azul/proximalpolicyoptimalization.log";
+    public const int botsCount = 2;
+    public const int sampleCount = 5;
+    public const string LogPath = "/home/juhtyg/Desktop/Azul/proximalpolicyoptimalization.log";
     private const string ScorePath = "/home/juhtyg/Desktop/Azul/proximalscore.txt";
     private const string PolicyNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
     private const string ValueNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/value_network.json";
@@ -14,35 +16,46 @@ public class Trainer {
     static List<double> rewards = new List<double>();
     static List<double[]> probs = new List<double[]>();
     static List<double>[] eachPlayerRewards = new List<double>[botsCount];
-    static private bool wasReevaluated;
+    private static bool wasReevaluated;
     
+    private const int N = 20;  // parallel envs
+    private const int M = 30; // steps per env per update
+    private const long totalTimesteps = 1_000_000;
+
     public static void Run() {
-        board.NextTakingMove += OnNextTakingTurn!;
-        board.NextPlacingMove += OnNextPlacingTurn!;
+        EnvWrapper[] envs = new EnvWrapper[N];
+        for (int i = 0; i < N; i++) envs[i] = new EnvWrapper(agent);
 
-        for (int i = 0; i < botsCount; i++) {
-            eachPlayerRewards[i] = new List<double>();
-        }
-        
-        for (int episode = 0; episode < 10000; episode++) {
-            Console.WriteLine($"Episode {episode}");
-            wasReevaluated = false;
-            board.StartGame();
+        long updates = totalTimesteps / (N * M);
 
-            while (board.Phase != Phase.GameOver) { }
-            
-            ComputeFinalRewards();
+        for (long update = 0; update < updates; update++) {
+            ConcurrentBag<double[]> batchStates = new();
+            ConcurrentBag<int> batchActions = new();
+            ConcurrentBag<double> batchRewards = new();
+            ConcurrentBag<double[]> batchProbs = new();
 
-            agent.Train(states, actions, rewards, probs);
-            Console.WriteLine($"Episode {episode}: Reward = {rewards.Sum()}");
-            string score = "";
-            foreach (var player in board.Players) {
-                score += $"{player.pointCount} ";
+            for (int step = 0; step < M; step++) {
+                Parallel.For(0, N, i => {
+                    var (obs, reward, done, action, prob) = envs[i].Step();
+                    if (done) envs[i].Reset();
+                    if (action != -1) {
+                        batchStates.Add(obs);
+                        batchActions.Add(action);
+                        batchRewards.Add(reward);
+                        batchProbs.Add(prob);
+                    }
+                });
             }
-            File.AppendAllText(ScorePath, score + Environment.NewLine);
-            ClearData();
-            
+
+            var statesList = batchStates.ToList();
+            var actionsList = batchActions.ToList();
+            var rewardsList = batchRewards.ToList();
+            var probsList = batchProbs.ToList();
+
+            agent.Train(statesList, actionsList, rewardsList, probsList);
+            Console.WriteLine($"Update {update} | Avg Reward: {batchRewards.Average():F2}");
         }
+
         agent.SavePolicy(PolicyNetworkPath);
     }
 
@@ -69,8 +82,18 @@ public class Trainer {
         double[] state = game.EncodeBoardState(game.CurrentPlayer);
         var validActions = game.GetValidMoves();
         
-        
+        //using multiple asking cause agent uses commutative counter
         var action = agent.SelectAction(state, validActions);
+        int gain = GainIfPlayed(DecodeAction(action.Item1), board);
+        for (int i = 0; i < sampleCount; i++) {
+            var tempAction = agent.SelectAction(state, validActions);
+            var tempGain = GainIfPlayed(DecodeAction(tempAction.Item1), board);
+            if (tempGain > gain) {
+                gain = tempGain;
+                action = tempAction;
+            }
+        }
+        
         states.Add(state);
         actions.Add(action.Item1);
         eachPlayerRewards[game.CurrentPlayer].Add(CalculateReward(DecodeAction(action.Item1), state, board));
@@ -82,7 +105,7 @@ public class Trainer {
         }
     }
 
-    private static Move DecodeAction(int action) {
+    public static Move DecodeAction(int action) {
         int tileId = action / (10 * 6);
         int plate = (action % (10 * 6)) / 6;
         int buffer = (action % 6);
@@ -91,7 +114,7 @@ public class Trainer {
     
     private static void ComputeFinalRewards() {
         int winnigPlayer = 0;
-        double baseReward = 20;
+        double baseReward = 40;
         int winnerCount = Int32.MinValue;
         for (int i = 0; i < botsCount; i++) {
             if (board.Players[i].pointCount > winnerCount) {
@@ -109,7 +132,7 @@ public class Trainer {
             if (board.Players[i].pointCount > 0)
                 AddValueInRange(10 * ratio, ref eachPlayerRewards[i]);
             else {
-                AddValueInRange(-10 * ratio, ref eachPlayerRewards[i]);
+                AddValueInRange(-2 * ratio, ref eachPlayerRewards[i]);
             }
         }
 
@@ -142,17 +165,21 @@ public class Trainer {
             : board.Plates[move.plateId].TileCountOfType(move.tileId);
         
         if (board.Players[board.CurrentPlayer].GetBufferData(move.bufferId).count + takenCount >= move.bufferId + 1) {
-            reward += takenCount * 12;
+            reward += takenCount * takenCount * .2;
         }
         else {
-            return takenCount * 8;
+            return takenCount * takenCount *  .1;
         }
         int col = board.FindColInRow(move.bufferId, move.tileId);
+        var addedAfterFilled = board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
         
-        reward += 9 * board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
-       // reward -= (nextState[56] - state[56]) * 2;    //floor
+        reward += .2 * addedAfterFilled * addedAfterFilled;
+
+        var newOnFloor = nextState[56] - state[56];
+        
+        reward -= newOnFloor * newOnFloor * .2;    //floor
         //check if first from center
-        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= 1;
+        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .1;
         
         return reward;
     }
@@ -167,7 +194,7 @@ public class Trainer {
         probs.Clear();
     }
     
-    private int GainIfPlayed(Move possibleMove, Azul.Board board) {
+    public static int GainIfPlayed(Move possibleMove, Azul.Board board) {
             int gain = 0;
             if (possibleMove.bufferId >= Globals.WALL_DIMENSION) {
                 return -10;
