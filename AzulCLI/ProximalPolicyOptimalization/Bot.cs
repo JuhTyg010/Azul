@@ -6,10 +6,9 @@ namespace PPO;
 
 public class Bot : IBot {
 
-    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
     private const int LearnBuffer = 15;
     
-    private NeuralNetwork _policyNet;
+    private PPONeuralNetwork _policyNet;
     private int _id;
     private Random _random;
     private int _fromLastLearn = 0;
@@ -23,10 +22,11 @@ public class Bot : IBot {
     
     public Bot(int id) {
         
-        _policyNet = JsonSaver.Load<NeuralNetwork>(NetworkFile) ?? 
-                     new NeuralNetwork(199, 128, 300);
-        //TODO: maybe handle that network must exist
-        this._id = id;
+        _policyNet = new PPONeuralNetwork(88, 128, 300);
+        _policyNet.TryLoadPolicy(Trainer.PolicyNetworkPath);
+        _policyNet.TryLoadValue(Trainer.ValueNetworkPath);
+        
+        _id = id;
         _random = new Random();
         
         AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
@@ -35,7 +35,7 @@ public class Bot : IBot {
 
     public string DoMove(Board board) {
         var state = board.EncodeBoardState(_id);
-        double[] actionProbs = Softmax(_policyNet.Predict(state));
+        double[] actionProbs = Softmax(_policyNet.PredictPolicy(state));
         int[] validActions = EncodeMoves(board.GetValidMoves());
         // Mask invalid actions by setting their probability to zero
         for (int i = 0; i < actionProbs.Length; i++)
@@ -49,6 +49,19 @@ public class Bot : IBot {
                 actionProbs[i] /= sum;
 
         Move move = DecodeAction(SampleAction(actionProbs));
+        var gain = Trainer.GainIfPlayed(move, board);
+        for (int i = 0; i < Trainer.sampleCount; i++) {
+            var tempMove = DecodeAction(SampleAction(actionProbs));
+            var tempGain = Trainer.GainIfPlayed(move, board);
+            var tempReward = Trainer.CalculateReward(move, state, board);
+            string vals = $"{tempGain} {tempReward}";
+            
+            File.AppendAllText("/home/juhtyg/Desktop/Azul/gainReward.txt", vals + Environment.NewLine);            
+            if (tempGain > gain) {
+                gain = tempGain;
+                move = tempMove;
+            }
+        }
         if (!board.CanMove(move)) move = board.GetValidMoves()[_random.Next(validActions.Length)];
 
         //train mechanism
@@ -60,8 +73,7 @@ public class Bot : IBot {
 
         if (_fromLastLearn >= LearnBuffer) {
             _fromLastLearn = 0;
-            _policyNet.TrainPPO(states.ToArray(), actions.ToArray(), rewards.ToArray(), 
-                probs.ToArray(), 0.5, 0.001);
+            _policyNet.Train(states, actions, rewards, probs);
             states.Clear();
             actions.Clear();
             probs.Clear();
@@ -113,23 +125,21 @@ public class Bot : IBot {
         }
 
         private int SampleAction(double[] probs) {
-            //double randomValue = _random.NextDouble();
-            double best = 0;
-            int bestIndex = 0;
+            double randomValue = _random.NextDouble();
+            double prob = 0;
+            //int bestIndex = 0;
             for (int i = 0; i < probs.Length; i++) {
-                
-                if (probs[i] > best) {
-                    best = probs[i];
-                    bestIndex = i;
+                prob += probs[i];
+                if (prob > randomValue) {
+                    return i;
                 }
             }
-            Logger.WriteLine($"best value: {best}");
-            return bestIndex;
+            //Logger.WriteLine($"best value: {best}"); 
+            return 0;
         }
         
         private void OnProcessExit(object sender, EventArgs e) {
-            //JsonSaver.Save(settings, settingFile);
-            //JsonSaver.Save(replayBuffer, replayBufferFile);
-            JsonSaver.Save(_policyNet, NetworkFile);    
+            _policyNet.SavePolicy(Trainer.PolicyNetworkPath);
+            _policyNet.SaveValue(Trainer.ValueNetworkPath);
         }
 }

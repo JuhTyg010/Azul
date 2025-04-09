@@ -1,19 +1,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using DeepQLearningBot;
 
 namespace PPO;
 
 public class PPONeuralNetwork {
-    private NeuralNetwork policyNet;
-    private NeuralNetwork valueNet;
-    private double epsilon;
-    private double learningRate;
+    [JsonInclude] private NeuralNetwork policyNet;
+    [JsonInclude] private NeuralNetwork valueNet;
+    [JsonInclude] private double epsilon;
+    [JsonInclude] private double learningRate;
 
+    
+    [JsonConstructor]
     public PPONeuralNetwork(int inputSize, int hiddenSize, int actionSize, double epsilon = 0.2, double learningRate = 0.001) {
         this.policyNet = new NeuralNetwork(inputSize, hiddenSize, actionSize);
         this.valueNet = new NeuralNetwork(inputSize, hiddenSize, 1);
+        this.epsilon = epsilon;
+        this.learningRate = learningRate;
+    }
+
+    public PPONeuralNetwork(string policyPath, string valuePath, double epsilon = 0.2, double learningRate = 0.001) {
+        this.policyNet = SaveSystem.JsonSaver.Load<NeuralNetwork>(policyPath) ??
+                         throw new FileNotFoundException("Could not load policy");
+        this.valueNet = SaveSystem.JsonSaver.Load<NeuralNetwork>(valuePath) ??
+                        throw new FileNotFoundException("Could not load value");
         this.epsilon = epsilon;
         this.learningRate = learningRate;
     }
@@ -80,4 +92,12 @@ public class PPONeuralNetwork {
 
     public NeuralNetwork GetPolicyNet() => policyNet;
     public NeuralNetwork GetValueNet() => valueNet;
+
+    public void TryLoadPolicy(string path) {
+        policyNet = SaveSystem.JsonSaver.Load<NeuralNetwork>(path);
+    }
+
+    public void TryLoadValue(string path) {
+        valueNet = SaveSystem.JsonSaver.Load<NeuralNetwork>(path);
+    }
 }

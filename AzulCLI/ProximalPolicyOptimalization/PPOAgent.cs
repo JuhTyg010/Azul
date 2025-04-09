@@ -56,9 +56,13 @@ namespace PPO {
         }
 
         public void SavePolicy(string path) {
-            SaveSystem.JsonSaver.Save(policyNet, path);
+            policyNet.SavePolicy(path);
         }
 
+        public void SaveValue(string path) {
+            policyNet.SaveValue(path);
+        }
+        
         private List<double[]> ComputeReturns(List<double> rewards) {
             List<double[]> returns = new List<double[]>();
             double G = 0;
