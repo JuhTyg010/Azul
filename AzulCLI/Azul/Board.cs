@@ -258,7 +258,7 @@ namespace Azul {
 
             }
             else {
-                var centerPlateData = DecodePlateData((int)state[move.plateId]);
+                var centerPlateData = DecodePlateData((int)state[9]);
                 countOfTiles = centerPlateData[move.tileId];
                 centerPlateData[move.tileId] = 0;
                 nextState[9] = EncodePlateData(centerPlateData);
