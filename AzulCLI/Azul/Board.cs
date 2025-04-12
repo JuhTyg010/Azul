@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Azul {
     public class Board {
+
+        private const int EncodeBase = 21;
+        
         public Player[] Players { get; private set; }
         public Plate[] Plates { get; private set; }
         public CenterPlate Center { get; private set; }
@@ -180,100 +183,107 @@ namespace Azul {
             return validMoves.ToArray();
         }
 
-        public double[] EncodeBoardState(int id, bool othersData = true) {
-            int stateSize = 199;
+        public double[] EncodeBoardState(int id) {
+            int stateSize = 59;    //59 -> all data
             double[] state = new double[stateSize];
-            //if(stateSize < 87) throw new IllegalOptionException($"To small state size {stateSize}");
 
-            //for plates takes max 45
+            //for plates takes max 10
             for (int i = 0; i < Plates.Length; i++) {
-                for (int j = 0; j < Globals.TYPE_COUNT; j++) {
-                    state[(i * Globals.TYPE_COUNT) + j] = Plates[i].TileCountOfType(j);
-                }
+                state[i] = EncodePlateData(Plates[i]);
             }
             // center plate
-            for (int i = 0; i < Globals.TYPE_COUNT; i++) {
-                state[45 + i] = Center.TileCountOfType(i);
-            }
-            state[50] = Center.isFirst ? 0 : 1;
+            state[9] = EncodePlateData(Center);
+            state[10] = Center.isFirst ? 0 : 1;
 
-            int index = 51;
+            int index = 11;
             index = AddPlayerData(index, state, Players[id]);
-            if (othersData) {
-                foreach (Player p in Players) {
-                    if (p != Players[id]) {
-                        index = AddPlayerData(index, state, p);
-                    }
+            
+            foreach (Player p in Players) {
+                if (p != Players[id]) {
+                    index = AddPlayerData(index, state, p);
                 }
             }
-
             return state;
         }
 
+        /**
+         * encodes player to 12 numbers
+         */
         private int AddPlayerData(int startIndex, double[] data, Player player) {
             //buffers
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
                 var buffer = player.GetBufferData(i);
-                data[startIndex] = buffer.id;
-                startIndex++;
-                data[startIndex] = buffer.count;
+                data[startIndex] = EncodeBufferData(buffer);
                 startIndex++;
             }
+            
             //floor
             data[startIndex] = player.floor.Count;
             startIndex++;
             data[startIndex] = player.isFirst ? 0 : 1;
+            startIndex++;
+            
             //wall
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+                double value = 0;
                 for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
-                    data[startIndex] = player.wall[i, j];
-                    startIndex++;
+                    value += player.wall[i,j] != Globals.EMPTY_CELL ? Math.Pow(EncodeBase, j) : 0;
                 }
+                data[startIndex] = value;
+                startIndex++;
             }
             return startIndex;
         }
 
-        public double[] GetNextState(double[] state, Move move, int id) {
+        public double[] GetNextState(double[] state, Move move) {
             double[] nextState = (double[]) state.Clone();
 
             int countOfTiles = 0;
             //remove from plate
             if (move.plateId != Plates.Length) {
+                
                 //clear the plate
-                for (int i = 0; i < Globals.TYPE_COUNT; i++) {
-                    nextState[(move.plateId * Globals.TYPE_COUNT) + i] = 0;
-                }
+                nextState[move.plateId] = 0;
                 //add rest to center
-                for (int i = 0; i < Globals.TYPE_COUNT; i++) {
-                    if (i == move.tileId) {
-                        countOfTiles = (int) state[move.plateId * Globals.TYPE_COUNT + i];
-                    } else nextState[45 + i] = state[move.plateId * Globals.TYPE_COUNT + i];
+                var centerBefore = DecodePlateData((int)state[9]);
+                var oldPlateData = DecodePlateData((int)state[move.plateId]);
+                countOfTiles = oldPlateData[move.tileId];
+                oldPlateData[move.tileId] = 0;
+                
+                var newCenter = new int[centerBefore.Length];
+                for (int i = 0; i < newCenter.Length; i++) {
+                    newCenter[i] = centerBefore[i] + oldPlateData[i];
                 }
+                nextState[9] = EncodePlateData(newCenter);
+
             }
             else {
-                countOfTiles = (int) nextState[45 + move.tileId];
-                nextState[45 + move.tileId] = 0;
-                nextState[50] = 0;
+                var centerPlateData = DecodePlateData((int)state[move.plateId]);
+                countOfTiles = centerPlateData[move.tileId];
+                centerPlateData[move.tileId] = 0;
+                nextState[9] = EncodePlateData(centerPlateData);
+                nextState[10] = 0;  //if is first: 1->0 else: 0->0
             }
             
             //edit player data
-            int index = 51;
+            int index = 11;
             int floorIndex = index + 5;
             if (move.bufferId != Globals.WALL_DIMENSION) {
-                int inBuffer = Players[id].GetBufferData(move.bufferId).count;
+                int inBuffer = DecodeBufferData((int) state[index + move.bufferId])[1];
                 int capacity = move.bufferId + 1;
                 int afterFilling = Math.Min(inBuffer + countOfTiles, capacity);
-                nextState[index + move.bufferId] = afterFilling;
+                int newId = inBuffer == 0 ? move.tileId : DecodeBufferData((int) state[index + move.bufferId])[0];
+                nextState[index + move.bufferId] = EncodeBufferData(new int[] { newId, afterFilling });
                 if (inBuffer + countOfTiles > capacity) {
-                    int toFloor = capacity - (inBuffer + countOfTiles);
-                    nextState[floorIndex] = Math.Min(Globals.FLOOR_SIZE, nextState[floorIndex] + toFloor);
+                    int toFloor = (inBuffer + countOfTiles) - capacity;
+                    nextState[floorIndex] = Math.Min(Globals.FLOOR_SIZE, state[floorIndex] + toFloor);
                 }
             }
             else {
-                nextState[floorIndex] = Math.Min(Globals.FLOOR_SIZE, nextState[floorIndex] + countOfTiles);
+                nextState[floorIndex] = Math.Min(Globals.FLOOR_SIZE, state[floorIndex] + countOfTiles);
             }
 
-            nextState[floorIndex + 1] = (int) nextState[50] == (int) state[50] ? 1 : 0;
+            nextState[floorIndex + 1] = (int) nextState[10] == (int) state[10] ? 1 : 0;
             return nextState;
         }
 
@@ -284,6 +294,57 @@ namespace Azul {
                 if(predefinedWall[row,i] == typeId) return i;
             }
             return Globals.EMPTY_CELL;
+        }
+
+        public int[] GetPlatesData() {
+            int[] plates = new int[Plates.Length + 1];
+            for (int i = 0; i < Plates.Length; i++) {
+                plates[i] = EncodePlateData(Plates[i]);
+            }
+            plates[Plates.Length] = EncodePlateData(Center);
+            
+            return plates;
+        }
+
+        public int EncodePlateData(Plate plate) {
+            var data = plate.GetCounts();
+            int[] arrData = new int[data.Length];
+            foreach (var tile in data) {
+                arrData[tile.id] = tile.count;
+            }
+            return EncodePlateData(arrData);
+        }
+
+        public int EncodePlateData(int[] plateData) {
+            int encoded = 0;
+            for (int i = 0; i < plateData.Length; i++) {
+                encoded += (int) Math.Pow(EncodeBase, i) * plateData[i];
+            }
+            return encoded;
+        }
+        
+        public int EncodeBufferData(Tile tile) {
+            return EncodeBufferData(new int[] {tile.id , tile.count});
+        }
+
+        public int EncodeBufferData(int[] arrData) {
+            return arrData[0] + 1 + (arrData[1] + 1) * 6;
+        }
+
+        public int[] DecodeBufferData(int encoded) {
+            int first = (encoded % 6) - 1;
+            int second = (encoded / 6) - 1;
+            return new int[] {first, second};
+        }
+        
+
+        public int[] DecodePlateData(int encoded) {
+            int[] arr = new int[Globals.TYPE_COUNT];
+            for (int i = 0; i < Globals.TYPE_COUNT; i++) {
+                arr[i] = encoded % EncodeBase;
+                encoded /= EncodeBase;
+            }
+            return arr;
         }
 
         private bool NextWithFullBuffer() {
