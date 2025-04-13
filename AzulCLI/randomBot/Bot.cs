@@ -26,7 +26,8 @@ namespace randomBot {
                     option = possibleMove;
                     bestGain = gain;
                 }
-            }
+            }//*/
+            //option = possibleMoves[random.Next(possibleMoves.Length)];
             return $"{option.plateId} {option.tileId} {option.bufferId}";
 
         }

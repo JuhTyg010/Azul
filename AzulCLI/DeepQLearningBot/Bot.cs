@@ -25,7 +25,7 @@ public class Bot : IBot {
         settings = JsonSaver.Load<DQNSetting>(settingFile);
         Console.WriteLine("Constructor Called");
         policyNet = JsonSaver.Load<NeuralNetwork>(networkFile);
-        if (policyNet == null) policyNet = new NeuralNetwork(settings.StateSize, 128, settings.ActionSize);
+        if (policyNet == null) policyNet = new NeuralNetwork(settings.StateSize, 128, 128, settings.ActionSize);
 
         targetNet = policyNet.Clone();
 
@@ -55,7 +55,7 @@ public class Bot : IBot {
         double reward = CalculateReward(state, bestAction, board);
         
         Logger.WriteLine("Move reward: " + reward);
-        var nextState = board.GetNextState(state, DecodeToMove(bestAction), id);
+        var nextState = board.GetNextState(state, DecodeToMove(bestAction));
 
         replayBuffer.Add(state, bestAction, reward, nextState, true);
         settings.FromLastBatch++;
@@ -128,7 +128,7 @@ public class Bot : IBot {
         Move move = DecodeToMove(action);
         if (move.bufferId == Globals.WALL_DIMENSION) return -1;
         
-        double[] nextState = board.GetNextState(state, move, id);
+        double[] nextState = board.GetNextState(state, move);
         int col = board.FindColInRow(move.bufferId, move.tileId);
         
         reward += (double) board.Players[id].CalculatePointsIfFilled(move.bufferId, col) / 10;
