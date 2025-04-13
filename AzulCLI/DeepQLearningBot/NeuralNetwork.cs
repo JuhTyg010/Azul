@@ -50,17 +50,17 @@ public class NeuralNetwork {
             double[] target = targets[i];
             // Forward pass
             double[] hidden1_pre = Add(Dot(input, weights1), biases1);
-            double[] hidden1 = ReLU(hidden1_pre);
+            double[] hidden1 = (hidden1_pre);
             
             double[] hidden2_pre = Add(Dot(hidden1, weightsHidden2), biasesHidden2);
-            double[] hidden2 = ReLU(hidden2_pre);
+            double[] hidden2 = (hidden2_pre);
             double[] output_pre = Add(Dot(hidden2, weights2), biases2);
-            double[] probs = Softmax(output_pre);
+            double[] probs = (output_pre);
             
             // Cross entropy loss gradient: dL/dz = probs - target
             double[] outputError = Subtract(probs, target);
-            double[] hidden2Error = Multiply(DotTranspose(weights2, outputError), hidden2_pre, derivative: true);
-            double[] hidden1Error = Multiply(DotTranspose(weightsHidden2, hidden2Error), hidden1_pre, derivative: true);
+            double[] hidden2Error = Multiply(DotTranspose(weights2, outputError), hidden2_pre, true);
+            double[] hidden1Error = Multiply(DotTranspose(weightsHidden2, hidden2Error), hidden1_pre, true);
             
             UpdateWeightsAndBiases(input, hidden1, hidden2, outputError, hidden2Error, hidden1Error, learningRate);
         }
@@ -133,15 +133,17 @@ public class NeuralNetwork {
     
     private double[] Clip(double[] vector, double min, double max) {
         double[] result = new double[vector.Length];
-        for (int i = 0; i < vector.Length; i++)
+        
+        Parallel.For(0, vector.Length, i => {
             result[i] = Math.Clamp(vector[i], min, max);
+        });
         return result;
     }
 
     private void ClipWeights(double[][] weights, double min, double max) {
         for (int i = 0; i < weights.Length; i++)
-        for (int j = 0; j < weights[i].Length; j++)
-            weights[i][j] = Math.Clamp(weights[i][j], min, max);
+            for (int j = 0; j < weights[i].Length; j++)
+                weights[i][j] = Math.Clamp(weights[i][j], min, max);
     }
 
     private double[] Dot(double[] vector, double[][] matrix) {
@@ -162,24 +164,29 @@ public class NeuralNetwork {
 
     private double[] Add(double[] vector, double[] biases) {
         double[] result = new double[vector.Length];
-        for (int i = 0; i < vector.Length; i++)
+
+        Parallel.For(0, vector.Length, i => {
             result[i] = vector[i] + biases[i];
+        });
         return result;
     }
 
     private double[] Subtract(double[] vector1, double[] vector2) {
         double[] result = new double[vector1.Length];
-        for (int i = 0; i < vector1.Length; i++)
+        Parallel.For(0, vector1.Length, i => {
             result[i] = vector1[i] - vector2[i];
+        });
         return result;
     }
 
     private double[] Multiply(double[] vector, double[] preActivation, bool derivative = false) {
         double[] result = new double[vector.Length];
-        for (int i = 0; i < vector.Length; i++) {
+    
+        Parallel.For(0, vector.Length, i => {
             double grad = derivative ? (preActivation[i] > 0 ? 1 : 0) : 1;
             result[i] = vector[i] * grad;
-        }
+        });
+
         return result;
     }
 
