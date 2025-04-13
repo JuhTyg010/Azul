@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 
 namespace Azul {
+    
+    /// <summary>
+    /// Represent access point between Game library and frontend
+    /// </summary>
     public class Board {
 
         private const int EncodeBase = 21;
@@ -24,6 +28,10 @@ namespace Azul {
         private int nextFirst;
         private string[] playerNames;
 
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="other"> other Board class to be copied</param>
         private Board(Board other) {
             Center = other.Center;
             Players = other.Players;
@@ -41,6 +49,14 @@ namespace Azul {
 
         }
         
+        /// <summary>
+        /// Default constructor, used to initialize a game
+        /// </summary>
+        /// <param name="playerCount"> Specifies number of players</param>
+        /// <param name="playerNames"> Names to be assigned to the players</param>
+        /// <param name="isAdvanced_"> Mode of the game false  for basec</param>
+        /// <param name="fileName"> Name of the file where are logs added</param>
+        /// <exception cref="Exception"></exception>
         public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false, string fileName = "azul_log.txt") {
             isAdvanced = isAdvanced_;
             this.playerNames = playerNames;
@@ -58,6 +74,9 @@ namespace Azul {
 
         }
 
+        /// <summary>
+        /// Reinitialize the game to the beginning, restarts all the structs
+        /// </summary>
         public void StartGame() {
             
             Logger.WriteLine(" ");
@@ -82,6 +101,15 @@ namespace Azul {
             FillPlates();
             NextMove();
         }
+        
+        
+        /// <summary>
+        /// Method to recognize if some move is playable
+        /// </summary>
+        /// <param name="plateId"> Id of the plate we are taking from</param>
+        /// <param name="typeId"> Id of the type we are taking from plate</param>
+        /// <param name="bufferId">Id of the buffer where to put the tiles</param>
+        /// <returns>if it's possible to do move from input</returns>
         public bool CanMove(int plateId, int typeId, int bufferId) {
             if(plateId < 0 || plateId > Plates.Length) return false;
             Plate p;
@@ -95,10 +123,22 @@ namespace Azul {
             return Players[CurrentPlayer].CanPlace(bufferId, typeId);
         }
 
+        /// <summary>
+        /// Method to recognize if some move is playable
+        /// </summary>
+        /// <param name="move"> Struct with parameters plateId, typeId, bufferId</param>
+        /// <returns>if it's possible to do move from input</returns>
         public bool CanMove(Move move) {
             return CanMove(move.plateId, move.tileId, move.bufferId);
         }
         
+        /// <summary>
+        /// Method which manage some move
+        /// </summary>
+        /// <param name="plateId"> Id of the plate we are taking from</param>
+        /// <param name="typeId"> Id of the type we are taking from plate</param>
+        /// <param name="bufferId">Id of the buffer where to put the tiles</param>
+        /// <returns>if it's possible to do move from input</returns>
         public bool Move(int plateId, int tileId, int bufferId) {   //center is always last
 
             StateLogData(plateId, tileId, bufferId);
@@ -133,10 +173,21 @@ namespace Azul {
             return true;
         }
 
+        /// <summary>
+        /// Method which manage some move
+        /// </summary>
+        /// <param name="move"> Struct with parameters plateId, typeId, bufferId</param>
+        /// <returns>if it's possible to do move from input</returns>
         public bool Move(Move move) {
             return Move(move.plateId, move.tileId, move.bufferId);
         }
     
+        /// <summary>
+        /// Method used to calculate addition to players wall
+        /// </summary>
+        /// <param name="col">in advanced game specifying column chosen for tile from buffer</param>
+        /// <returns> in advanced game returns if it was possible</returns>
+        /// <exception cref="IllegalOptionException"> If called in other phase than placing</exception>
         public bool Calculate(int col = Globals.EMPTY_CELL) {
             Logger.WriteLine("Filling:");
             Logger.WriteLine($"Player's data: {Players[CurrentPlayer]}");
@@ -160,7 +211,7 @@ namespace Azul {
             return isFilled;
         }
         
-        public void PutToTrash(int typeId, int count) {
+        internal void PutToTrash(int typeId, int count) {
 
             Tiles temp = new Tiles(Globals.TYPE_COUNT, 0);
             temp.PutTile(typeId, count);
@@ -168,6 +219,10 @@ namespace Azul {
             Logger.WriteLine($" {count} tiles of type {typeId} put to trash");
         }
 
+        /// <summary>
+        /// This method handles for frontend list of possible moves (useful for AI training)
+        /// </summary>
+        /// <returns> array of possible moves</returns>
         public Move[] GetValidMoves() {
             List<Move> validMoves = new List<Move>();
             for (int i = 0; i < Globals.TYPE_COUNT; i++) {
@@ -183,6 +238,11 @@ namespace Azul {
             return validMoves.ToArray();
         }
 
+        /// <summary>
+        /// This method transforms state to array of doubles for AI training
+        /// </summary>
+        /// <param name="id"> id of player from which perspective it is</param>
+        /// <returns> array of doubles representing game state</returns>
         public double[] EncodeBoardState(int id) {
             int stateSize = 59;    //59 -> all data
             double[] state = new double[stateSize];
@@ -235,6 +295,12 @@ namespace Azul {
             return startIndex;
         }
 
+        /// <summary>
+        /// This method shows how the board would look like if move was made in state
+        /// </summary>
+        /// <param name="state">State from method calculates</param>
+        /// <param name="move">Move that is applied to the move</param>
+        /// <returns> Array of doubles representing state after move </returns>
         public double[] GetNextState(double[] state, Move move) {
             double[] nextState = (double[]) state.Clone();
 
@@ -287,6 +353,13 @@ namespace Azul {
             return nextState;
         }
 
+        /// <summary>
+        /// This method helps to find in witch column of the row will be tile of specific type
+        /// </summary>
+        /// <param name="row"> row of the wall</param>
+        /// <param name="typeId">id of tile type</param>
+        /// <returns>index of the column</returns>
+        /// <exception cref="IllegalOptionException">In advanced game it's not predefined</exception>
         public int FindColInRow(int row, int typeId) {
             if (isAdvanced) throw new IllegalOptionException("there is no predefined wall in advanced mode");
             if(row < 0 || row >= Globals.WALL_DIMENSION) return Globals.EMPTY_CELL;
@@ -296,6 +369,10 @@ namespace Azul {
             return Globals.EMPTY_CELL;
         }
 
+        /// <summary>
+        /// This method transforms data of all plates to numeric array
+        /// </summary>
+        /// <returns>array of ints representing transformed data</returns>
         public int[] GetPlatesData() {
             int[] plates = new int[Plates.Length + 1];
             for (int i = 0; i < Plates.Length; i++) {
@@ -306,6 +383,11 @@ namespace Azul {
             return plates;
         }
 
+        /// <summary>
+        /// This method encodes data of the plate (tiles on it) to one value
+        /// </summary>
+        /// <param name="plate"> specifies which plate to encode</param>
+        /// <returns>int representing plate data</returns>
         public int EncodePlateData(Plate plate) {
             var data = plate.GetCounts();
             int[] arrData = new int[data.Length];
@@ -315,6 +397,11 @@ namespace Azul {
             return EncodePlateData(arrData);
         }
 
+        /// <summary>
+        /// This method encodes data of the plate (tiles on it) to one value
+        /// </summary>
+        /// <param name="plateData"> specifies tiles on the plate</param>
+        /// <returns>int representing plate data</returns>
         public int EncodePlateData(int[] plateData) {
             int encoded = 0;
             for (int i = 0; i < plateData.Length; i++) {
@@ -323,14 +410,29 @@ namespace Azul {
             return encoded;
         }
         
+        /// <summary>
+        /// This method encodes buffer data to one value
+        /// </summary>
+        /// <param name="tile"> tile representing buffer data</param>
+        /// <returns>int representing specific buffer data</returns>
         public int EncodeBufferData(Tile tile) {
             return EncodeBufferData(new int[] {tile.id , tile.count});
         }
 
+        /// <summary>
+        /// This method encodes buffer data to one value
+        /// </summary>
+        /// <param name="arrData"> array representing data of the buffer</param>
+        /// <returns>int representing specific buffer data</returns>
         public int EncodeBufferData(int[] arrData) {
             return arrData[0] + 1 + (arrData[1] + 1) * 6;
         }
 
+        /// <summary>
+        /// This method decodes buffer data from one value
+        /// </summary>
+        /// <param name="encoded"> value representing data</param>
+        /// <returns>array of ints representing buffer data</returns>
         public int[] DecodeBufferData(int encoded) {
             int first = (encoded % 6) - 1;
             int second = (encoded / 6) - 1;
@@ -338,6 +440,11 @@ namespace Azul {
         }
         
 
+        /// <summary>
+        /// This method decodes plate data from one value
+        /// </summary>
+        /// <param name="encoded">value representing specific plate data </param>
+        /// <returns>array of ints representing tiles and ich count on the plate</returns>
         public int[] DecodePlateData(int encoded) {
             int[] arr = new int[Globals.TYPE_COUNT];
             for (int i = 0; i < Globals.TYPE_COUNT; i++) {
