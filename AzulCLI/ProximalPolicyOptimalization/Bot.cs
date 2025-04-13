@@ -12,19 +12,19 @@ public class Bot : IBot {
     private const string RewardAveragePath = "/home/juhtyg/Desktop/Azul/AzulCLI/reward_avg.txt";
     private const int LearnBuffer = 100;
     
-    private NeuralNetwork _policyNet;
-    private NeuralNetwork _valueNet;
+    private readonly NeuralNetwork _policyNet;
+    private readonly NeuralNetwork _valueNet;
 
-    private int _id;
+    private readonly int _id;
     private Random _random;
     private int _fromLastLearn = 0;
 
-    private double gamma = 0.99;
+    private double _gamma = 0.99;
     
-    static List<double[]> states = new List<double[]>();
-    static List<int> actions = new List<int>();
-    static List<double> rewards = new List<double>();
-    static List<double[]> probs = new List<double[]>();
+    static List<double[]> _states = new List<double[]>();
+    static List<int> _actions = new List<int>();
+    static List<double> _rewards = new List<double>();
+    static List<double[]> _probs = new List<double[]>();
     
     
     
@@ -40,7 +40,7 @@ public class Bot : IBot {
         this._id = id;
         _random = new Random();
         
-        AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
+        AppDomain.CurrentDomain.ProcessExit += OnProcessExit!;
 
     }
 
@@ -64,26 +64,26 @@ public class Bot : IBot {
         if (!board.CanMove(move)) move = board.GetValidMoves()[_random.Next(validActions.Length)];
 
         //train mechanism
-        states.Add(state);
-        actions.Add(Trainer.EncodeMove(move));
-        probs.Add(actionProbs);
-        rewards.Add(Trainer.CalculateReward(move, state, board));
+        _states.Add(state);
+        _actions.Add(Trainer.EncodeMove(move));
+        _probs.Add(actionProbs);
+        _rewards.Add(Trainer.CalculateReward(move, state, board));
         _fromLastLearn++;
 
         if (_fromLastLearn >= LearnBuffer) {
             
-            double averageReward = rewards.Average();
+            double averageReward = _rewards.Average();
             File.AppendAllText(RewardAveragePath, averageReward.ToString() + Environment.NewLine);
             
-            double[][] stateArray = states.ToArray();
-            double[] rewardsArray = rewards.ToArray();
-            double[][] probsArray = probs.ToArray();
-            int[] actionsArray = actions.ToArray();
+            double[][] stateArray = _states.ToArray();
+            double[] rewardsArray = _rewards.ToArray();
+            double[][] probsArray = _probs.ToArray();
+            int[] actionsArray = _actions.ToArray();
             
             double[] discountedRewards = new double[rewardsArray.Length];
             double runningReward = 0;
             for (int t = rewardsArray.Length - 1; t >= 0; t--) {
-                runningReward = rewardsArray[t] + gamma * runningReward;
+                runningReward = rewardsArray[t] + _gamma * runningReward;
                 discountedRewards[t] = runningReward;
             }
 
@@ -104,10 +104,10 @@ public class Bot : IBot {
             _fromLastLearn = 0;
             _policyNet.TrainPPO(stateArray, actionsArray, advantages, probsArray, 0.5, 0.001);
 
-            states.Clear();
-            actions.Clear();
-            probs.Clear();
-            rewards.Clear();
+            _states.Clear();
+            _actions.Clear();
+            _probs.Clear();
+            _rewards.Clear();
         }
 
     return $"{move.plateId} {move.tileId} {move.bufferId}";

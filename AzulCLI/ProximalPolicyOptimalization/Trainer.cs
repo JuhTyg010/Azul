@@ -61,7 +61,7 @@ public class Trainer {
     }
 
     private static void OnNextPlacingTurn(object? sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
         Console.WriteLine($"Player {player.name} : placing");
@@ -70,7 +70,7 @@ public class Trainer {
             wasReevaluated = true;
         }
         
-        if (!game.isAdvanced) {
+        if (!game.IsAdvanced) {
             game.Calculate();
         }
         else {
@@ -79,7 +79,7 @@ public class Trainer {
     }
 
     private static void OnNextTakingTurn(object? sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         double[] state = game.EncodeBoardState(game.CurrentPlayer);
         var validActions = game.GetValidMoves();
         
@@ -226,7 +226,7 @@ public class Trainer {
                 if (toFloor >= 0) {
                     gain -= toFloor;
                     int clearGain = 0;
-                    if (board.isAdvanced) {
+                    if (board.IsAdvanced) {
                         int currGain = 0;
                         for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
                             currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
@@ -237,7 +237,7 @@ public class Trainer {
                         int row = possibleMove.bufferId;
                         int col = 0;
                         for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.predefinedWall[row, col] == possibleMove.tileId)
+                            if (board.PredefinedWall[row, col] == possibleMove.tileId)
                                 break;
                         clearGain = me.CalculatePointsIfFilled(row,col);
                     }
@@ -249,7 +249,7 @@ public class Trainer {
                 if (toFloor >= 0) {
                     gain -= toFloor;
                     int clearGain = 0;
-                    if (board.isAdvanced) {
+                    if (board.IsAdvanced) {
                         int currGain = 0;
                         for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
                             currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
@@ -260,7 +260,7 @@ public class Trainer {
                         int row = possibleMove.bufferId;
                         int col = 0;
                         for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.predefinedWall[row, col] == possibleMove.tileId)
+                            if (board.PredefinedWall[row, col] == possibleMove.tileId)
                                 break;
                         clearGain = me.CalculatePointsIfFilled(row,col);
                     }
