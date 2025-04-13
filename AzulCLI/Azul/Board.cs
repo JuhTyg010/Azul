@@ -438,7 +438,6 @@ namespace Azul {
             int second = (encoded / 6) - 1;
             return new int[] {first, second};
         }
-        
 
         /// <summary>
         /// This method decodes plate data from one value
@@ -454,6 +453,10 @@ namespace Azul {
             return arr;
         }
 
+        /// <summary>
+        /// This method finds next player which has full buffer
+        /// </summary>
+        /// <returns>true if there is someone with full buffer</returns>
         private bool NextWithFullBuffer() {
             
             while (!Players[CurrentPlayer].hasFullBuffer()) {
@@ -470,13 +473,22 @@ namespace Azul {
             return true;
         }
 
-        private void StartNextTurn() {
+        /// <summary>
+        /// This method is prep method for start taking phase
+        /// </summary>
+        private void StartNextTakingPhase() {
             Logger.WriteLine("Starting next turn");
             Phase = Phase.Taking;
             CurrentPlayer = nextFirst;
             FillPlates();
         }
 
+        /// <summary>
+        /// This method finds ids of buffers where current player can place tile with type id
+        /// </summary>
+        /// <param name="typeId">tile type to check for</param>
+        /// <returns>array of ints representing ids of buffers</returns>
+        /// <exception cref="IllegalOptionException"> type id in range check</exception>
         private int[] GetValidBufferIds(int typeId) {
             if(typeId < 0 || typeId >= Globals.TYPE_COUNT) throw new IllegalOptionException("Invalid type");
             List<int> bufferIds = new List<int>();
@@ -523,8 +535,7 @@ namespace Azul {
             }
             return plateIds.ToArray();
         }
-    
-    
+        
         private bool ArePlatesEmpty() {
             foreach (var plate in Plates) {
                 if (!plate.isEmpty) {
@@ -589,7 +600,7 @@ namespace Azul {
                     }
                     else {
                         Logger.WriteLine("No player has full buffer");
-                        StartNextTurn();
+                        StartNextTakingPhase();
                         OnNextTakingMove(new MyEventArgs(CurrentPlayer, this));
                     }
                 }
@@ -612,7 +623,7 @@ namespace Azul {
                     }
                     else {
                         Logger.WriteLine("All players filled to the wall");
-                        StartNextTurn();
+                        StartNextTakingPhase();
                         OnNextTakingMove(new MyEventArgs(CurrentPlayer, this));
                     }
                 }

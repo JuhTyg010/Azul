@@ -5,7 +5,7 @@ namespace Azul {
     public class Tiles
     {
         private int[] counts;
-        private Random rand = new Random(10);
+        private Random rand = new Random();
         private int totalCount;
         public int typesCount;
 
