@@ -8,6 +8,8 @@ namespace DeepQLearningBot;
 public class NeuralNetwork {
     private const double Epsilon = 1e-6; // Small value to prevent NaN in log calculations
     private const double WeightInitRange = 1.0; // Range for weight initialization
+    private const int ClipMin = -50;
+    private const int ClipMax = 50;
     [JsonInclude] private double[][] weights1;
     [JsonInclude] private double[][] weightsHidden2;
     [JsonInclude] private double[][] weights2;
@@ -88,8 +90,13 @@ public class NeuralNetwork {
             //-min( r_t * A_t , clip(r_t, 1 − e , 1 + e )A_t) pre loss = -L
             double ratio = Math.Exp(logProb - oldLogProb); // log(a/b) = log(a) - log(b)
             double clippedRatio = Math.Clamp(ratio, 1 - epsilon, 1 + epsilon);
-            double safeAdv = Math.Clamp(advantage, -10, 10);
-            double gradCoef = -Math.Min(ratio * safeAdv, clippedRatio * safeAdv);            
+            double safeAdv = Math.Clamp(advantage, ClipMin, ClipMax);
+            double gradCoef = -Math.Min(ratio * safeAdv, clippedRatio * safeAdv);
+            
+            //for support of exploration
+            double entropy = -probs.Sum(p => p > 0 ? p * Math.Log(p) : 0);
+            double entropyBonus = 0.01 * entropy;
+            gradCoef += entropyBonus;
             
             double[] outputError = new double[probs.Length];
             outputError[action] = gradCoef;
@@ -103,32 +110,32 @@ public class NeuralNetwork {
     private void UpdateWeightsAndBiases(double[] input, double[] hidden1, double[] hidden2,
         double[] outputError, double[] hidden2Error, double[] hidden1Error, double learningRate) {
         
-        double clipMin = -50, clipMax = 50;
+        
         
         for (int i = 0; i < weights2.Length; i++)
             for(int j = 0; j < weights2[0].Length; j++)
                 weights2[i][j] -= learningRate * hidden2[i] * outputError[j];
-        ClipWeights(weights2, clipMin, clipMax);
+        ClipWeights(weights2, ClipMin, ClipMax);
         for (int i = 0; i < biases2.Length; i++)
             biases2[i] -= learningRate * outputError[i];
 
-        biases2 = Clip(biases2, clipMin, clipMax);
+        biases2 = Clip(biases2, ClipMin, ClipMax);
         for (int i = 0; i < weightsHidden2.Length; i++)
             for (int j = 0; j < weightsHidden2[0].Length; j++)
                 weightsHidden2[i][j] -= learningRate * hidden1[i] * hidden2Error[j];
             
-        ClipWeights(weightsHidden2, clipMin, clipMax);
+        ClipWeights(weightsHidden2, ClipMin, ClipMax);
         for(int i = 0; i < biasesHidden2.Length; i++)
             biasesHidden2[i] -= learningRate * hidden2Error[i];
         
-        biasesHidden2 = Clip(biasesHidden2, clipMin, clipMax);
+        biasesHidden2 = Clip(biasesHidden2, ClipMin, ClipMax);
         for (int i = 0; i < weights1.Length; i++)
             for (int j = 0; j < weights1[0].Length; j++)
                 weights1[i][j] -= learningRate * input[i] * hidden1Error[j];
-        ClipWeights(weights1, clipMin, clipMax);
+        ClipWeights(weights1, ClipMin, ClipMax);
         for (int i = 0; i < biases1.Length; i++)
             biases1[i] -= learningRate * hidden1Error[i];
-        biases1 = Clip(biases1, clipMin, clipMax);
+        biases1 = Clip(biases1, ClipMin, ClipMax);
     }
     
     private double[] Clip(double[] vector, double min, double max) {
