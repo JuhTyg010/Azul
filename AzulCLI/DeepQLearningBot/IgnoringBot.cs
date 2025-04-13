@@ -1,3 +1,4 @@
+using System.Transactions;
 using Azul;
 using SaveSystem;
 
@@ -19,7 +20,7 @@ public class IgnoringBot : IBot{
                    new DQNSetting(300,199,300,30,1,0.95,0.01,0.8);
         
         _policyNet = JsonSaver.Load<NeuralNetwork>(NetworkFile) ?? 
-                    new NeuralNetwork(_settings.StateSize, 128, _settings.ActionSize);
+                    new NeuralNetwork(_settings.StateSize, 128, 128, _settings.ActionSize);
 
         _targetNet = _policyNet.Clone();
         
@@ -32,7 +33,7 @@ public class IgnoringBot : IBot{
     }
 
     public string DoMove(Board board) {
-        double[] state = board.EncodeBoardState(_id, false);
+        double[] state = board.EncodeBoardState(_id);
 
         int bestAction;
         if (_random.NextDouble() < _settings.Epsilon) {
@@ -48,7 +49,7 @@ public class IgnoringBot : IBot{
         double reward = CalculateReward(state, bestAction, board);
         
         Logger.WriteLine($"Move: {DecodeAction(bestAction)} reward: {reward}");
-        var nextState = board.GetNextState(state, DecodeToMove(bestAction), _id);
+        var nextState = board.GetNextState(state, DecodeToMove(bestAction));
 
         _replayBuffer.Add(state, bestAction, reward, nextState, true);
         _settings.FromLastBatch++;
@@ -112,7 +113,7 @@ public class IgnoringBot : IBot{
                 }
             }
             
-            double[] ourNextState = board.GetNextState(replay.NextState, opponentPredicted, _id);
+            double[] ourNextState = board.GetNextState(replay.NextState, opponentPredicted);
             double[] ourNextQValues = _targetNet.Predict(ourNextState);
 
             // Update the Q-value for the taken action
@@ -131,7 +132,7 @@ public class IgnoringBot : IBot{
     }
 
     private double CalculateReward(double[] state, int action, Board board) {
-        double reward = 0;
+        /*double reward = 0;
         
         Move move = DecodeToMove(action);
         if (move.bufferId == Globals.WALL_DIMENSION) return -1;
@@ -146,7 +147,66 @@ public class IgnoringBot : IBot{
         //check if first from center
         if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .1;
         
-        return reward;
+        return reward;*/
+        
+        int gain = 0;
+        Move possibleMove = DecodeToMove(action);
+            if (possibleMove.bufferId >= Globals.WALL_DIMENSION) {
+                return -10;
+            }
+            Player me = board.Players[_id];
+            int bufferSize = possibleMove.bufferId + 1;
+            Tile buffTile = me.GetBufferData(possibleMove.bufferId);
+            Plate p = possibleMove.plateId < board.Plates.Length ? board.Plates[possibleMove.plateId] : board.Center;
+            int toFill = p.TileCountOfType(possibleMove.tileId);
+            if (buffTile.id == possibleMove.tileId) {
+                int toFloor = toFill - (bufferSize - buffTile.count);
+                if (toFloor >= 0) {
+                    gain -= toFloor;
+                    int clearGain = 0;
+                    if (board.isAdvanced) {
+                        int currGain = 0;
+                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
+                            currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
+                            if(currGain > clearGain) clearGain = currGain;
+                        }
+                    }
+                    else {
+                        int row = possibleMove.bufferId;
+                        int col = 0;
+                        for(;col < Globals.WALL_DIMENSION; col++)
+                            if (board.predefinedWall[row, col] == possibleMove.tileId)
+                                break;
+                        clearGain = me.CalculatePointsIfFilled(row,col);
+                    }
+                    gain += clearGain;
+                }
+            }
+            else {
+                int toFloor = bufferSize - toFill;
+                if (toFloor >= 0) {
+                    gain -= toFloor;
+                    int clearGain = 0;
+                    if (board.isAdvanced) {
+                        int currGain = 0;
+                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
+                            currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
+                            if(currGain > clearGain) clearGain = currGain;
+                        }
+                    }
+                    else {
+                        int row = possibleMove.bufferId;
+                        int col = 0;
+                        for(;col < Globals.WALL_DIMENSION; col++)
+                            if (board.predefinedWall[row, col] == possibleMove.tileId)
+                                break;
+                        clearGain = me.CalculatePointsIfFilled(row,col);
+                    }
+                    gain += clearGain;
+                }
+            }
+            
+            return gain;
     }
     
     private int GetBestValidAction(double[] qValues, Board board) {

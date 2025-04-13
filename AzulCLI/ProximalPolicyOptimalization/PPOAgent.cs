@@ -5,21 +5,21 @@ namespace PPO {
 
 
     public class PPOAgent {
-        private PPONeuralNetwork policyNet;
-        //private NeuralNetwork valueNet;
+        private NeuralNetwork policyNet;
+        private NeuralNetwork valueNet;
         private Random random;
         public double gamma { get; private set; } = 0.9;
         private double epsilon = 0.3;
         private double learningRate = 0.001;
 
         public PPOAgent(int stateSize, int actionSize) {
-            policyNet = new PPONeuralNetwork(stateSize, 128, actionSize, epsilon, learningRate);
-            //valueNet = new NeuralNetwork(stateSize, 128, 1);
+            policyNet = new NeuralNetwork(stateSize, 256,256, actionSize);
+            valueNet = new NeuralNetwork(stateSize, 128,128, 1);
             random = new Random();
         }
 
         public (int, double[]) SelectAction(double[] state, Move[] validMoves) {
-            double[] actionProbs = Softmax(policyNet.PredictPolicy(state));
+            double[] actionProbs = Softmax(policyNet.Predict(state));
             int[] validActions = EncodeMoves(validMoves);
             // Mask invalid actions by setting their probability to zero
             for (int i = 0; i < actionProbs.Length; i++)
@@ -51,18 +51,19 @@ namespace PPO {
 
         public void Train(List<double[]> states, List<int> actions, List<double> rewards, List<double[]> oldProbs) {
 
-            policyNet.Train(states, actions, rewards, oldProbs);
+            policyNet.TrainPPO(states.ToArray(), actions.ToArray(), rewards.ToArray(), oldProbs.ToArray(), 
+                epsilon, learningRate);
             //SaveSystem.JsonSaver.Save(policyNet, "/home/juhtyg/Desktop/Azul/AI_Data/PPO/network.json");
         }
 
         public void SavePolicy(string path) {
-            policyNet.SavePolicy(path);
+            SaveSystem.JsonSaver.Save(policyNet, path);
         }
 
         public void SaveValue(string path) {
-            policyNet.SaveValue(path);
+            SaveSystem.JsonSaver.Save(valueNet, path);
         }
-        
+
         private List<double[]> ComputeReturns(List<double> rewards) {
             List<double[]> returns = new List<double[]>();
             double G = 0;
