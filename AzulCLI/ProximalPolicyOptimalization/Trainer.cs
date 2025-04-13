@@ -159,26 +159,33 @@ public class Trainer {
     public static double CalculateReward(Move move, double[] state, Board board) {
         double reward = 0;
         
-        if (move.bufferId == Globals.WALL_DIMENSION) return -6;
+        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
         var nextState = board.GetNextState(state, move);
         int takenCount = move.plateId == board.Plates.Length 
             ? board.DecodePlateData((int) state[9])[move.tileId]
             : board.DecodePlateData((int) state[move.plateId])[move.tileId];
         
-        if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
-            reward += takenCount * takenCount * .2;
-        }
-        else {
-            return takenCount * takenCount *  .1;
-        }
         int col = board.FindColInRow(move.bufferId, move.tileId);
         var addedAfterFilled = board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
         
-        reward += .2 * addedAfterFilled * addedAfterFilled;
+        if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
+            //reward += takenCount * .5;
+            reward += 3;
+            reward += 2 * addedAfterFilled;
+
+        }
+        else {
+            reward += 1;
+            reward += addedAfterFilled * .5;
+            //reward +=  takenCount;
+        }
 
         var newOnFloor = nextState[16] - state[16];
         
-        reward -= newOnFloor * newOnFloor * .2;    //floor
+        if(newOnFloor * 2 >= addedAfterFilled) reward -= newOnFloor;
+        else reward += newOnFloor * .2;
+        
+        //TODO: maybe connect to addedAfterFilled
         //check if first from center
         if(Math.Abs(nextState[10] - state[10]) > .9) reward -= .1;
         
@@ -194,6 +201,15 @@ public class Trainer {
         rewards.Clear();
         probs.Clear();
     }
+    
+    public static int EncodeMove(Move move) {
+        int actionId = move.bufferId;
+        actionId += 60 * move.tileId;
+        actionId += 6 * move.plateId;
+        return actionId;
+    }
+    
+    
     
     public static int GainIfPlayed(Move possibleMove, Azul.Board board) {
             int gain = 0;
