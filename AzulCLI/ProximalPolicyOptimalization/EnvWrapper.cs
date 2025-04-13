@@ -79,7 +79,7 @@ public class EnvWrapper {
     }
 
     private void OnNextPlacingTurn(object? sender, MyEventArgs e) {
-        if (!board.isAdvanced) {
+        if (!board.IsAdvanced) {
             board.Calculate();
         }
     }

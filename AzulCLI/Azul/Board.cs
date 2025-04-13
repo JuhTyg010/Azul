@@ -13,20 +13,20 @@ namespace Azul {
         public Player[] Players { get; private set; }
         public Plate[] Plates { get; private set; }
         public CenterPlate Center { get; private set; }
-        public Tiles storage { get; private set; }
+        public Tiles Storage { get; private set; }
         public int CurrentPlayer { get; private set; }
         public Phase Phase { get; private set; }
-        public int[,] predefinedWall { get; private set; }
-        public bool isAdvanced { get; private set; }
-        public bool fisrtTaken;
+        public int[,] PredefinedWall { get; private set; }
+        public bool IsAdvanced { get; private set; }
+        public bool FisrtTaken;
         
         public event EventHandler<MyEventArgs> NextTakingMove;
         public event EventHandler<MyEventArgs> NextPlacingMove;
         
-        private Tiles trash;
-        private bool isGameOver;
-        private int nextFirst;
-        private string[] playerNames;
+        private Tiles _trash;
+        private bool _isGameOver;
+        private int _nextFirst;
+        private string[] _playerNames;
 
         /// <summary>
         /// Copy constructor
@@ -36,16 +36,16 @@ namespace Azul {
             Center = other.Center;
             Players = other.Players;
             Plates = other.Plates;
-            storage = other.storage;
+            Storage = other.Storage;
             CurrentPlayer = other.CurrentPlayer;
             Phase = other.Phase;
-            predefinedWall = other.predefinedWall;
-            isAdvanced = other.isAdvanced;
-            fisrtTaken = other.fisrtTaken;
-            trash = other.trash;
-            isGameOver = other.isGameOver;
-            nextFirst = other.nextFirst;
-            playerNames = other.playerNames;
+            PredefinedWall = other.PredefinedWall;
+            IsAdvanced = other.IsAdvanced;
+            FisrtTaken = other.FisrtTaken;
+            _trash = other._trash;
+            _isGameOver = other._isGameOver;
+            _nextFirst = other._nextFirst;
+            _playerNames = other._playerNames;
 
         }
         
@@ -54,12 +54,12 @@ namespace Azul {
         /// </summary>
         /// <param name="playerCount"> Specifies number of players</param>
         /// <param name="playerNames"> Names to be assigned to the players</param>
-        /// <param name="isAdvanced_"> Mode of the game false  for basec</param>
+        /// <param name="isAdvanced"> Mode of the game false  for basec</param>
         /// <param name="fileName"> Name of the file where are logs added</param>
         /// <exception cref="Exception"></exception>
-        public Board(int playerCount, string[] playerNames, bool isAdvanced_ = false, string fileName = "azul_log.txt") {
-            isAdvanced = isAdvanced_;
-            this.playerNames = playerNames;
+        public Board(int playerCount, string[] playerNames, bool isAdvanced = false, string fileName = "azul_log.txt") {
+            IsAdvanced = isAdvanced;
+            this._playerNames = playerNames;
             Logger.SetName(fileName);
             
             if (playerNames.Length != playerCount) {
@@ -83,21 +83,21 @@ namespace Azul {
             Logger.WriteLine("-----------------------------Game start-----------------------------");
 
             Center = new CenterPlate(Globals.TYPE_COUNT);
-            storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT);
-            trash = new Tiles(Globals.TYPE_COUNT, 0);
+            Storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT);
+            _trash = new Tiles(Globals.TYPE_COUNT, 0);
             
-            Players = InitializePlayers(playerNames.Length, playerNames);
+            Players = InitializePlayers(_playerNames.Length, _playerNames);
 
-            predefinedWall = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
+            PredefinedWall = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
                 for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
-                    predefinedWall[j % Globals.WALL_DIMENSION, (i + j) % Globals.WALL_DIMENSION] = i;
+                    PredefinedWall[j % Globals.WALL_DIMENSION, (i + j) % Globals.WALL_DIMENSION] = i;
                 }
             }
 
             CurrentPlayer = 0;
             Phase = Phase.Taking;
-            isGameOver = false;
+            _isGameOver = false;
             FillPlates();
             NextMove();
         }
@@ -149,9 +149,9 @@ namespace Azul {
             bool isFirstInCenter = false;
             if (plateId == Plates.Length) {
                 p = Center;
-                if (!fisrtTaken) {
+                if (!FisrtTaken) {
                     isFirstInCenter = true;
-                    fisrtTaken = true;
+                    FisrtTaken = true;
                 }
             } else {
                 p = Plates[plateId];
@@ -197,11 +197,11 @@ namespace Azul {
             }
             int[] fullBuffers = Players[CurrentPlayer].FullBuffers();
 
-            if (col < 0 && isAdvanced) {
+            if (col < 0 && IsAdvanced) {
                 Logger.WriteLine("invalid col");
                 return false;
             }
-            if (!isAdvanced) {
+            if (!IsAdvanced) {
                 col = FindColInRow(fullBuffers[0], Players[CurrentPlayer].GetBufferData(fullBuffers[0]).id);
             }
             bool isFilled = Players[CurrentPlayer].Fill(fullBuffers[0], col);
@@ -215,7 +215,7 @@ namespace Azul {
 
             Tiles temp = new Tiles(Globals.TYPE_COUNT, 0);
             temp.PutTile(typeId, count);
-            trash.Union(temp);
+            _trash.Union(temp);
             Logger.WriteLine($" {count} tiles of type {typeId} put to trash");
         }
 
@@ -361,10 +361,10 @@ namespace Azul {
         /// <returns>index of the column</returns>
         /// <exception cref="IllegalOptionException">In advanced game it's not predefined</exception>
         public int FindColInRow(int row, int typeId) {
-            if (isAdvanced) throw new IllegalOptionException("there is no predefined wall in advanced mode");
+            if (IsAdvanced) throw new IllegalOptionException("there is no predefined wall in advanced mode");
             if(row < 0 || row >= Globals.WALL_DIMENSION) return Globals.EMPTY_CELL;
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-                if(predefinedWall[row,i] == typeId) return i;
+                if(PredefinedWall[row,i] == typeId) return i;
             }
             return Globals.EMPTY_CELL;
         }
@@ -463,7 +463,7 @@ namespace Azul {
                 Logger.WriteLine($"Player {Players[CurrentPlayer].name} has no full buffer");
                 if (Players[CurrentPlayer].ClearFloor()) {
                     Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
-                    nextFirst = CurrentPlayer;
+                    _nextFirst = CurrentPlayer;
                 }
                 CurrentPlayer++;
                 if (CurrentPlayer == Players.Length) {
@@ -479,7 +479,7 @@ namespace Azul {
         private void StartNextTakingPhase() {
             Logger.WriteLine("Starting next turn");
             Phase = Phase.Taking;
-            CurrentPlayer = nextFirst;
+            CurrentPlayer = _nextFirst;
             FillPlates();
         }
 
@@ -547,16 +547,16 @@ namespace Azul {
         }
 
         private void FillPlates() {
-            if (storage.TotalTiles() < Globals.PLATE_VOLUME * Plates.Length) {
+            if (Storage.TotalTiles() < Globals.PLATE_VOLUME * Plates.Length) {
                 Console.WriteLine("trash to storage");
-                storage.Union(trash);
+                Storage.Union(_trash);
             }
             foreach (var plate in Plates) {
-                plate.SetTiles(storage.GetRandom(Globals.PLATE_VOLUME));
+                plate.SetTiles(Storage.GetRandom(Globals.PLATE_VOLUME));
             }
 
             Center = new CenterPlate(Globals.TYPE_COUNT);
-            fisrtTaken = false;
+            FisrtTaken = false;
         }
 
         private Player[] InitializePlayers(int playerCount, string[] playerNames) {
@@ -585,7 +585,7 @@ namespace Azul {
         private void OnWin(object? sender, EventArgs args) {
             if (Phase == Phase.Taking)
                 throw new Exception("Something went really wrong, win cant happen if we are not placing");
-            isGameOver = true;
+            _isGameOver = true;
         }
 
         private void NextMove() {
@@ -616,7 +616,7 @@ namespace Azul {
                 }
                 else {
                     Logger.WriteLine("No player has full buffer");
-                    if (isGameOver) {
+                    if (_isGameOver) {
                         foreach (var player in Players) player.CalculateBonusPoints();
                         WriteGameOver();
                         Phase = Phase.GameOver;
@@ -645,13 +645,11 @@ namespace Azul {
         
     }
     
-    public class MyEventArgs : EventArgs {  
-        public int playerId;
-        public Board board;
+    public class MyEventArgs : EventArgs {
+        public Board Board;
 
         public MyEventArgs(int playerId, Board board) {
-            this.playerId = playerId;
-            this.board = board;
+            this.Board = board;
         }
     }
 }

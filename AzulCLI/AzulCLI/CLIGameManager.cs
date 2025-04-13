@@ -7,7 +7,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using randomBot;
 
 namespace AzulCLI;
 
@@ -44,7 +43,7 @@ public class CLIGameManager {
             for (int i = 0; i < playerSetup.Length; i++) {
                 if (playerSetup[i].Split("_")[0] == "B") {
                     string type = playerSetup[i].Split("_")[1];
-                    if(type == "random") botPlayers.Add(new randomBot.Bot(i));
+                    if(type == "random") botPlayers.Add(new NonML.Bot(i));
                     else if(type == "PPO") botPlayers.Add(new PPO.Bot(i));
                     else botPlayers.Add(BotFactory.CreateBot(type, i));
                 }
@@ -94,7 +93,7 @@ public class CLIGameManager {
     }
 
     private static void OnNextTakingTurn(object? sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         
         Console.WriteLine($" Next turn {game.Players[curr].name} (press enter to go)");
@@ -136,7 +135,7 @@ public class CLIGameManager {
     }
 
     private static void OnNextPlacingTurn(object? sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         
         if(printTable)
@@ -145,7 +144,7 @@ public class CLIGameManager {
         
         Console.WriteLine($" Next turn in filling {game.Players[curr].name} (press enter to go)");
         if(!botIds.Contains(curr)) Console.ReadLine();
-        if (!game.isAdvanced) {
+        if (!game.IsAdvanced) {
             game.Calculate();
         }
         else {

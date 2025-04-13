@@ -25,7 +25,7 @@ public class Trainer {
     private static IBot[] _bots = null!;
     
     private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
-    private const string ScorePath = "/home/juhtyg/Desktop/Azul/AzulCLI/score.txt";
+    private const string ScorePath = "/home/juhtyg/Desktop/Azul/AzulCLI/score_new.txt";
 
 
     
@@ -39,7 +39,7 @@ public class Trainer {
             _bots = new IBot[count];
             for (int i = 0; i < count; i++) {
                 string type = botNames[i];
-                if(type == "random") _bots[i] = new randomBot.Bot(i);
+                if(type == "random") _bots[i] = new NonML.Bot(i);
                 else if (type == "PPO") _bots[i] = new PPO.Bot(i);
                 else _bots[i] = BotFactory.CreateBot(type, i);
                 names[i] = botNames[i] + i;
@@ -104,7 +104,7 @@ public class Trainer {
     }
 
     private static void OnNextTakingTurn(object sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
         var botMove = _bots[curr].DoMove(game);
@@ -114,12 +114,12 @@ public class Trainer {
     }
 
     private static void OnNextPlacingTurn(object sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
         Console.WriteLine($"Player {player.name} : placing");
         
-        if (!game.isAdvanced) {
+        if (!game.IsAdvanced) {
             game.Calculate();
         }
         else {

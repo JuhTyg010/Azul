@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzulCLI", "AzulCLI\AzulCLI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azul", "Azul\Azul.csproj", "{2779E82B-C355-4DF9-ABEA-1CCED088BBD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "randomBot", "randomBot\randomBot.csproj", "{55CD83E0-B9A6-4334-B130-94CD126D1213}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NonMLBots", "NonMLBots\NonMLBots.csproj", "{55CD83E0-B9A6-4334-B130-94CD126D1213}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepQLearningBot", "DeepQLearningBot\DeepQLearningBot.csproj", "{23BC34B5-8704-4CFA-8F27-5FE6A2DADEED}"
 EndProject

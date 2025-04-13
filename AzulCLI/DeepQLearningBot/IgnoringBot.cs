@@ -164,7 +164,7 @@ public class IgnoringBot : IBot{
                 if (toFloor >= 0) {
                     gain -= toFloor;
                     int clearGain = 0;
-                    if (board.isAdvanced) {
+                    if (board.IsAdvanced) {
                         int currGain = 0;
                         for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
                             currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
@@ -175,7 +175,7 @@ public class IgnoringBot : IBot{
                         int row = possibleMove.bufferId;
                         int col = 0;
                         for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.predefinedWall[row, col] == possibleMove.tileId)
+                            if (board.PredefinedWall[row, col] == possibleMove.tileId)
                                 break;
                         clearGain = me.CalculatePointsIfFilled(row,col);
                     }
@@ -187,7 +187,7 @@ public class IgnoringBot : IBot{
                 if (toFloor >= 0) {
                     gain -= toFloor;
                     int clearGain = 0;
-                    if (board.isAdvanced) {
+                    if (board.IsAdvanced) {
                         int currGain = 0;
                         for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
                             currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
@@ -198,7 +198,7 @@ public class IgnoringBot : IBot{
                         int row = possibleMove.bufferId;
                         int col = 0;
                         for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.predefinedWall[row, col] == possibleMove.tileId)
+                            if (board.PredefinedWall[row, col] == possibleMove.tileId)
                                 break;
                         clearGain = me.CalculatePointsIfFilled(row,col);
                     }
