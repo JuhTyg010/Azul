@@ -6,9 +6,13 @@ namespace PPO;
 
 public class Bot : IBot {
 
-    private const int LearnBuffer = 15;
+    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
+    private const string ValueNetwork = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/value_network.json";
+    private const int LearnBuffer = 100;
     
-    private PPONeuralNetwork _policyNet;
+    private NeuralNetwork _policyNet;
+    private NeuralNetwork _valueNet;
+
     private int _id;
     private Random _random;
     private int _fromLastLearn = 0;
@@ -22,11 +26,14 @@ public class Bot : IBot {
     
     public Bot(int id) {
         
-        _policyNet = new PPONeuralNetwork(88, 128, 300);
-        _policyNet.TryLoadPolicy(Trainer.PolicyNetworkPath);
-        _policyNet.TryLoadValue(Trainer.ValueNetworkPath);
+        _policyNet = JsonSaver.Load<NeuralNetwork>(NetworkFile) ?? 
+                     new NeuralNetwork(59, 256, 256, 300);
+        //TODO: maybe handle that network must exist
         
-        _id = id;
+        _valueNet = JsonSaver.Load<NeuralNetwork>(ValueNetwork) ??
+                    new NeuralNetwork(59, 256, 256, 1);
+        
+        this._id = id;
         _random = new Random();
         
         AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
@@ -35,7 +42,7 @@ public class Bot : IBot {
 
     public string DoMove(Board board) {
         var state = board.EncodeBoardState(_id);
-        double[] actionProbs = Softmax(_policyNet.PredictPolicy(state));
+        double[] actionProbs = _policyNet.Predict(state);
         int[] validActions = EncodeMoves(board.GetValidMoves());
         // Mask invalid actions by setting their probability to zero
         for (int i = 0; i < actionProbs.Length; i++)
@@ -49,19 +56,7 @@ public class Bot : IBot {
                 actionProbs[i] /= sum;
 
         Move move = DecodeAction(SampleAction(actionProbs));
-        var gain = Trainer.GainIfPlayed(move, board);
-        for (int i = 0; i < Trainer.sampleCount; i++) {
-            var tempMove = DecodeAction(SampleAction(actionProbs));
-            var tempGain = Trainer.GainIfPlayed(move, board);
-            var tempReward = Trainer.CalculateReward(move, state, board);
-            string vals = $"{tempGain} {tempReward}";
-            
-            File.AppendAllText("/home/juhtyg/Desktop/Azul/gainReward.txt", vals + Environment.NewLine);            
-            if (tempGain > gain) {
-                gain = tempGain;
-                move = tempMove;
-            }
-        }
+        
         if (!board.CanMove(move)) move = board.GetValidMoves()[_random.Next(validActions.Length)];
 
         //train mechanism
@@ -72,8 +67,28 @@ public class Bot : IBot {
         _fromLastLearn++;
 
         if (_fromLastLearn >= LearnBuffer) {
+            double[][] stateArray = states.ToArray();
+            double[] rewardsArray = rewards.ToArray();
+            double[][] probsArray = probs.ToArray();
+            int[] actionsArray = actions.ToArray();
+
+            double[] values = stateArray.Select(s => _valueNet.Predict(s)[0]).ToArray();
+
+            double[] advantages = new double[rewardsArray.Length];
+            for (int i = 0; i < rewardsArray.Length; i++)
+                advantages[i] = rewardsArray[i] - values[i];
+
+            double mean = advantages.Average();
+            double std = Math.Sqrt(advantages.Select(a => Math.Pow(a - mean, 2)).Average());
+            if (std < 1e-8) std = 1e-8;
+            advantages = advantages.Select(a => (a - mean) / std).ToArray();
+
+            double[][] valueTargets = rewardsArray.Select(r => new double[] { r }).ToArray();
+            _valueNet.Train(stateArray, valueTargets, 0.001); 
+
             _fromLastLearn = 0;
-            _policyNet.Train(states, actions, rewards, probs);
+            _policyNet.TrainPPO(stateArray, actionsArray, advantages, probsArray, 0.5, 0.001);
+
             states.Clear();
             actions.Clear();
             probs.Clear();
@@ -82,7 +97,7 @@ public class Bot : IBot {
 
     return $"{move.plateId} {move.tileId} {move.bufferId}";
     }
-
+    
     public string Place(Board board) {
         throw new NotImplementedException();
     }
@@ -139,7 +154,7 @@ public class Bot : IBot {
         }
         
         private void OnProcessExit(object sender, EventArgs e) {
-            _policyNet.SavePolicy(Trainer.PolicyNetworkPath);
-            _policyNet.SaveValue(Trainer.ValueNetworkPath);
+            JsonSaver.Save(_policyNet, NetworkFile);
+            JsonSaver.Save(_valueNet, ValueNetwork);
         }
 }

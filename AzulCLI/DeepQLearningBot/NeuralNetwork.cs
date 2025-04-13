@@ -1,141 +1,147 @@
 using System;
+
 using System.Text.Json.Serialization;
+
 
 namespace DeepQLearningBot;
 
-public class NeuralNetwork
-{
+public class NeuralNetwork {
+    private const double Epsilon = 1e-6; // Small value to prevent NaN in log calculations
+    private const double WeightInitRange = 1.0; // Range for weight initialization
+    [JsonInclude] private double[][] weights1;
+    [JsonInclude] private double[][] weightsHidden2;
+    [JsonInclude] private double[][] weights2;
     
-    [JsonInclude] private double[][] weights1; // Input to hidden layer
-    [JsonInclude] private double[][] weights2; // Hidden layer to output
-    [JsonInclude] private double[] biases1;    // Hidden layer biases
-    [JsonInclude] private double[] biases2;    // Output layer biases
-
-    private double gamma = 0.8;
-
+    [JsonInclude] private double[] biases1;
+    [JsonInclude] private double[] biasesHidden2;
+    [JsonInclude] private double[] biases2;
     private Random random = new Random();
-
+    
     [JsonConstructor]
-    public NeuralNetwork(double[][] weights1, double[][] weights2, double[] biases1, double[] biases2) {
+    public NeuralNetwork(double[][] weights1, double[][] weightsHidden2, double[][] weights2,
+        double[] biases1, double[] biasesHidden2, double[] biases2) {
         this.weights1 = weights1;
+        this.weightsHidden2 = weightsHidden2;
         this.weights2 = weights2;
         this.biases1 = biases1;
+        this.biasesHidden2 = biasesHidden2;
         this.biases2 = biases2;
     }
-    public NeuralNetwork(int inputSize, int hiddenSize, int outputSize) {
-        // Initialize weights and biases with random values
-        weights1 = InitializeMatrix(inputSize, hiddenSize);
-        weights2 = InitializeMatrix(hiddenSize, outputSize);
-        biases1 = InitializeVector(hiddenSize);
+    
+    public NeuralNetwork(int inputSize, int hiddenSize1, int hiddenSize2, int outputSize) {
+        weights1 = InitializeMatrix(inputSize, hiddenSize1);
+        biases1 = InitializeVector(hiddenSize1);
+        weightsHidden2 = InitializeMatrix(hiddenSize1, hiddenSize2);
+        biasesHidden2 = InitializeVector(hiddenSize2);
+        
+        weights2 = InitializeMatrix(hiddenSize2, outputSize);
         biases2 = InitializeVector(outputSize);
     }
-
-    public NeuralNetwork(NeuralNetwork other) {
-        this.weights1 = other.weights1;
-        this.weights2 = other.weights2;
-        this.biases1 = other.biases1;
-        this.biases2 = other.biases2;
-    }
-
-    // Forward pass: Compute outputs from inputs
     public double[] Predict(double[] input) {
-        double[] hidden = Activate(Add(Dot(input, weights1), biases1));
-        return Add(Dot(hidden, weights2), biases2);
+        double[] hidden1 = ReLU(Add(Dot(input, weights1), biases1));
+        double[] hidden2 = ReLU(Add(Dot(hidden1, weightsHidden2), biasesHidden2));
+        double[] output = Add(Dot(hidden2, weights2), biases2);
+        return Softmax(output);
     }
-
-    // Backward pass: Update weights and biases
+    
     public void Train(double[][] inputs, double[][] targets, double learningRate) {
-        for (int i = 0; i < inputs.Length; i++)
-        {
-            // For each input in the batch, perform forward pass and backpropagation
-            var input = inputs[i];
-            var target = targets[i];
-
+        for (int i = 0; i < inputs.Length; i++) {
+            double[] input = inputs[i];
+            double[] target = targets[i];
             // Forward pass
-            double[] hidden = Activate(Add(Dot(input, weights1), biases1));
-            double[] output = Add(Dot(hidden, weights2), biases2);
-
-            // Calculate errors
-            double[] outputError = Subtract(target, output); // Error at output
-            double[] hiddenError = Multiply(DotTranspose(weights2, outputError), hidden, derivative: true);
-
-            // Update weights and biases
-            UpdateWeightsAndBiases(input, hidden, outputError, hiddenError, learningRate);
+            double[] hidden1_pre = Add(Dot(input, weights1), biases1);
+            double[] hidden1 = ReLU(hidden1_pre);
+            
+            double[] hidden2_pre = Add(Dot(hidden1, weightsHidden2), biasesHidden2);
+            double[] hidden2 = ReLU(hidden2_pre);
+            double[] output_pre = Add(Dot(hidden2, weights2), biases2);
+            double[] probs = Softmax(output_pre);
+            
+            // Cross entropy loss gradient: dL/dz = probs - target
+            double[] outputError = Subtract(probs, target);
+            double[] hidden2Error = Multiply(DotTranspose(weights2, outputError), hidden2_pre, derivative: true);
+            double[] hidden1Error = Multiply(DotTranspose(weightsHidden2, hidden2Error), hidden1_pre, derivative: true);
+            
+            UpdateWeightsAndBiases(input, hidden1, hidden2, outputError, hidden2Error, hidden1Error, learningRate);
         }
     }
-    
-    public void TrainPPO(double[][] states, int[] actions, double[] advantages, double[][] oldActionProbs, 
-        double epsilon, double learningRate) {
+
+    public void TrainPPO(double[][] states, int[] actions, double[] advantages,
+                         double[][] oldActionProbs, double epsilon, double learningRate) {
         for (int i = 0; i < states.Length; i++) {
-            var state = states[i];
-            var action = actions[i];
-            var advantage = advantages[i]; // <-- from value net
-            double oldProb = Math.Max(oldActionProbs[i][action], 1e-6);
+            double[] state = states[i];
+            int action = actions[i];
+            double advantage = advantages[i];
+            double oldProb = Math.Max(oldActionProbs[i][action], Epsilon);
             double oldLogProb = Math.Log(oldProb);
-
-            double[] actionProbs = Predict(state);
-            double logProb = LogProbability(actionProbs, action);
-
-            double logRatio = Math.Clamp(logProb - oldLogProb, -10, 10);
-            double ratio = Math.Exp(logRatio);
+            
+            double[] hidden1_pre = Add(Dot(state, weights1), biases1);
+            double[] hidden1 = ReLU(hidden1_pre);
+            double[] hidden2_pre = Add(Dot(hidden1, weightsHidden2), biasesHidden2);
+            double[] hidden2 = ReLU(hidden2_pre);
+            
+            double[] output_pre = Add(Dot(hidden2, weights2), biases2);
+            double[] probs = Softmax(output_pre);
+            double logProb = Math.Log(Math.Max(probs[action], Epsilon));
+            double ratio = Math.Exp(logProb - oldLogProb);
             double clippedRatio = Math.Clamp(ratio, 1 - epsilon, 1 + epsilon);
-
-            // PPO clipped surrogate loss
-            double policyLoss = -Math.Min(ratio * advantage, clippedRatio * advantage);
-
-            // You don't need value loss here — that's handled in valueNet.Train()
-
-            double totalLoss = policyLoss;
-
-            // Prevent NaNs
-            for (int j = 0; j < actionProbs.Length; j++) {
-                actionProbs[j] = Math.Max(actionProbs[j], 1e-6);
-            }
-
-            UpdateWeightsAndBiases(state, actionProbs, totalLoss, learningRate);
+            
+            double safeAdv = Math.Clamp(advantage, -10, 10);
+            double gradCoef = -Math.Min(ratio * safeAdv, clippedRatio * safeAdv);            
+            double[] outputError = new double[probs.Length];
+            outputError[action] = gradCoef;
+            
+            double[] hidden2Error = Multiply(DotTranspose(weights2, outputError), hidden2_pre, derivative: true);
+            double[] hidden1Error = Multiply(DotTranspose(weightsHidden2, hidden2Error), hidden1_pre, derivative: true);
+            UpdateWeightsAndBiases(state, hidden1, hidden2, outputError, hidden2Error, hidden1Error, learningRate);
         }
     }
     
-    private  double LogProbability(double[] actionProbs, int action) {
-        double probability = Math.Max(actionProbs[action], 0.0); // Clamp to 0 if negative
-        return Math.Log(probability + 1e-8);
+    private void UpdateWeightsAndBiases(double[] input, double[] hidden1, double[] hidden2,
+        double[] outputError, double[] hidden2Error, double[] hidden1Error, double learningRate) {
+        
+        double clipMin = -50, clipMax = 50;
+        
+        for (int i = 0; i < weights2.Length; i++)
+            for(int j = 0; j < weights2[0].Length; j++)
+                weights2[i][j] -= learningRate * hidden2[i] * outputError[j];
+        ClipWeights(weights2, clipMin, clipMax);
+        for (int i = 0; i < biases2.Length; i++)
+            biases2[i] -= learningRate * outputError[i];
+
+        Clip(biases2, clipMin, clipMax);
+        for (int i = 0; i < weightsHidden2.Length; i++)
+            for (int j = 0; j < weightsHidden2[0].Length; j++)
+                weightsHidden2[i][j] -= learningRate * hidden1[i] * hidden2Error[j];
+            
+        ClipWeights(weightsHidden2, clipMin, clipMax);
+        for(int i = 0; i < biasesHidden2.Length; i++)
+            biasesHidden2[i] -= learningRate * hidden2Error[i];
+        
+        Clip(biasesHidden2, clipMin, clipMax);
+        for (int i = 0; i < weights1.Length; i++)
+            for (int j = 0; j < weights1[0].Length; j++)
+                weights1[i][j] -= learningRate * input[i] * hidden1Error[j];
+        ClipWeights(weights1, clipMin, clipMax);
+        for (int i = 0; i < biases1.Length; i++)
+            biases1[i] -= learningRate * hidden1Error[i];
+        Clip(biases1, clipMin, clipMax);
+    }
+    
+    private double[] Clip(double[] vector, double min, double max) {
+        double[] result = new double[vector.Length];
+        for (int i = 0; i < vector.Length; i++)
+            result[i] = Math.Clamp(vector[i], min, max);
+        return result;
     }
 
-    // Helper functions
-    private double[][] InitializeMatrix(int rows, int cols) {
-        double[][] matrix = new double[rows][];
-        for (int i = 0; i < rows; i++) {
-            matrix[i] = new double[cols];
-            for (int j = 0; j < cols; j++)
-                matrix[i][j] = random.NextDouble() * 2 - 1; // Random values between -1 and 1
-        }
-        return matrix;
-    }
-
-    private double[] InitializeVector(int size) {
-        double[] vector = new double[size];
-        for (int i = 0; i < size; i++)
-            vector[i] = random.NextDouble() * 2 - 1;
-        return vector;
+    private void ClipWeights(double[][] weights, double min, double max) {
+        for (int i = 0; i < weights.Length; i++)
+        for (int j = 0; j < weights[i].Length; j++)
+            weights[i][j] = Math.Clamp(weights[i][j], min, max);
     }
 
     private double[] Dot(double[] vector, double[][] matrix) {
-        if (vector == null)
-            throw new ArgumentNullException(nameof(vector), "Vector cannot be null.");
-        if (matrix == null)
-            throw new ArgumentNullException(nameof(matrix), "Matrix cannot be null.");
-
-        // Check if matrix is a valid 2D array
-        if (matrix.Length == 0 || matrix[0] == null)
-            throw new ArgumentException("Matrix must have at least one row and column.");
-
-        int vectorLength = vector.Length;
-        int matrixRows = matrix.Length;
-        int matrixCols = matrix[0].Length;
-
-        // Ensure vector length matches the number of rows in the matrix
-        if (vectorLength != matrixRows)
-            throw new ArgumentException("Vector length must match the number of rows in the matrix.");
         double[] result = new double[matrix[0].Length];
         for (int j = 0; j < matrix[0].Length; j++)
             for (int i = 0; i < matrix.Length; i++)
@@ -158,13 +164,6 @@ public class NeuralNetwork
         return result;
     }
 
-    private double[] Activate(double[] vector) {
-        for (int i = 0; i < vector.Length; i++)
-            vector[i] = Math.Max(0, vector[i]); // ReLU activation*/
-        //no ReLU activation cause of the negative values
-        return vector;
-    }
-
     private double[] Subtract(double[] vector1, double[] vector2) {
         double[] result = new double[vector1.Length];
         for (int i = 0; i < vector1.Length; i++)
@@ -172,98 +171,109 @@ public class NeuralNetwork
         return result;
     }
 
-    private double[] Multiply(double[] vector1, double[] vector2, bool derivative = false) {
-        double[] result = new double[vector1.Length];
-        for (int i = 0; i < vector1.Length; i++)
-            result[i] = derivative ? vector1[i] * (vector2[i] > 0 ? 1 : 0) : vector1[i] * vector2[i];
+    private double[] Multiply(double[] vector, double[] preActivation, bool derivative = false) {
+        double[] result = new double[vector.Length];
+        for (int i = 0; i < vector.Length; i++) {
+            double grad = derivative ? (preActivation[i] > 0 ? 1 : 0) : 1;
+            result[i] = vector[i] * grad;
+        }
         return result;
     }
 
-    private void UpdateWeightsAndBiases(double[] input, double[] hidden, double[] outputError, double[] hiddenError, double learningRate) {
-        // Clip gradients to prevent exploding gradients
-        double clipValue = 10; // Adjust
-        for (int i = 0; i < outputError.Length; i++) {
-            outputError[i] = Math.Min(Math.Max(outputError[i], -clipValue), clipValue);
-        }
-        for (int i = 0; i < hiddenError.Length; i++) {
-            hiddenError[i] = Math.Min(Math.Max(hiddenError[i], -clipValue), clipValue);
-        }
+    private double[] Softmax(double[] logits) {
+        double max = double.MinValue;
+        foreach (var logit in logits)
+            if (logit > max) max = logit;
 
-        // Update weights and biases
-        for (int i = 0; i < weights2.Length; i++)
-            for (int j = 0; j < weights2[0].Length; j++)
-                weights2[i][j] += learningRate * hidden[i] * outputError[j];
-
-        for (int i = 0; i < biases2.Length; i++)
-            biases2[i] += learningRate * outputError[i];
-
-        for (int i = 0; i < weights1.Length; i++)
-            for (int j = 0; j < weights1[0].Length; j++)
-                weights1[i][j] += learningRate * input[i] * hiddenError[j];
-
-        for (int i = 0; i < biases1.Length; i++)
-            biases1[i] += learningRate * hiddenError[i];
-    }
-    
-    private void UpdateWeightsAndBiases(double[] input, double[] actionProbs, double totalLoss, double learningRate) {
-        double clippedLoss = Math.Clamp(totalLoss, -1.0, 1.0);
-
-        double lambda = 0.01; // Regularization strength
-
-        for (int i = 0; i < weights2.Length; i++)
-        for (int j = 0; j < weights2[0].Length; j++)
-            weights2[i][j] -= learningRate * (clippedLoss * actionProbs[j] + lambda * weights2[i][j]); // L2 penalty
-
-        for (int i = 0; i < biases2.Length; i++) {
-            biases2[i] -= learningRate * clippedLoss;
+        double sum = 0;
+        double[] exp = new double[logits.Length];
+        for (int i = 0; i < logits.Length; i++) {
+            double shifted = logits[i] - max;
+            if (shifted > 700) shifted = 700; // Prevent overflow in exp
+            exp[i] = Math.Exp(shifted);
+            sum += exp[i];
         }
 
-        for (int i = 0; i < weights1.Length; i++)
-        for (int j = 0; j < weights1[0].Length; j++)
-            weights1[i][j] -= learningRate * (clippedLoss * input[i] + lambda * weights1[i][j]); // L2 penalty
+        if (sum < Epsilon) sum = Epsilon;
 
+        for (int i = 0; i < logits.Length; i++)
+            exp[i] /= sum;
 
-        for (int i = 0; i < biases1.Length; i++) {
-            biases1[i] -= learningRate * clippedLoss;
-        }
+        return exp;
     }
 
-    
+
+    private double[] ReLU(double[] vector) {
+        double[] result = new double[vector.Length];
+        for (int i = 0; i < vector.Length; i++)
+            result[i] = Math.Max(0, vector[i]);
+        return result;
+    }
+
+    private double[][] InitializeMatrix(int rows, int cols) {
+        var matrix = new double[rows][];
+        double scale = Math.Sqrt(2.0 / rows); // He initialization
+        for (int i = 0; i < rows; i++) {
+            matrix[i] = new double[cols];
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] = random.NextDouble() * 2 - 1;
+                matrix[i][j] *= scale;
+            }
+        }
+        return matrix;
+    }
+
+
+    private double[] InitializeVector(int size) {
+        var vector = new double[size];
+        for (int i = 0; i < size; i++)
+            vector[i] = random.NextDouble() * 2 - 1;
+        return vector;
+    }
+
+    private double[] Activate(double[] vector) {
+        for (int i = 0; i < vector.Length; i++)
+            vector[i] = Math.Max(0, vector[i]);
+        return vector;
+    }
+
     public NeuralNetwork Clone() {
-        var clonedNetwork = new NeuralNetwork(weights1.Length, biases1.Length, biases2.Length);
+        var clone = new NeuralNetwork(weights1.Length, biases1.Length, biasesHidden2.Length, biases2.Length);
 
-        // Deep copy weights1
-        clonedNetwork.weights1 = new double[weights1.Length][];
-        for (int i = 0; i < weights1.Length; i++) {
-            clonedNetwork.weights1[i] = new double[weights1[i].Length];
-            Array.Copy(weights1[i], clonedNetwork.weights1[i], weights1[i].Length);
+        clone.weights1 = CloneMatrix(weights1);
+        clone.biases1 = (double[])biases1.Clone();
+
+        clone.weightsHidden2 = CloneMatrix(weightsHidden2);
+        clone.biasesHidden2 = (double[])biasesHidden2.Clone();
+
+        clone.weights2 = CloneMatrix(weights2);
+        clone.biases2 = (double[])biases2.Clone();
+
+        return clone;
+    }
+
+    private double[][] CloneMatrix(double[][] matrix) {
+        double[][] result = new double[matrix.Length][];
+        for (int i = 0; i < matrix.Length; i++) {
+            result[i] = new double[matrix[i].Length];
+            Array.Copy(matrix[i], result[i], matrix[i].Length);
         }
-
-        // Deep copy weights2
-        clonedNetwork.weights2 = new double[weights2.Length][];
-        for (int i = 0; i < weights2.Length; i++) {
-            clonedNetwork.weights2[i] = new double[weights2[i].Length];
-            Array.Copy(weights2[i], clonedNetwork.weights2[i], weights2[i].Length);
-        }
-
-        // Deep copy biases1
-        clonedNetwork.biases1 = new double[biases1.Length];
-        Array.Copy(biases1, clonedNetwork.biases1, biases1.Length);
-
-        // Deep copy biases2
-        clonedNetwork.biases2 = new double[biases2.Length];
-        Array.Copy(biases2, clonedNetwork.biases2, biases2.Length);
-
-        return clonedNetwork;
+        return result;
     }
 
     public double[][] GetWeights1() => weights1;
+    public double[][] GetWeightsHidden2() => weightsHidden2;
     public double[][] GetWeights2() => weights2;
+
     public double[] GetBiases1() => biases1;
+    public double[] GetBiasesHidden2() => biasesHidden2;
     public double[] GetBiases2() => biases2;
 
-    public void SetWeights1(double[][] newWeights) => weights1 = newWeights;
-    public void SetWeights2(double[][] newWeights) => weights2 = newWeights;
-    public void SetBiases1(double[] newBiases) => biases1 = newBiases;
-    public void SetBiases2(double[] newBiases) => biases2 = newBiases;
+    public void SetWeights1(double[][] w) => weights1 = w;
+    public void SetWeightsHidden2(double[][] w) => weightsHidden2 = w;
+    public void SetWeights2(double[][] w) => weights2 = w;
+
+    public void SetBiases1(double[] b) => biases1 = b;
+    public void SetBiasesHidden2(double[] b) => biasesHidden2 = b;
+    public void SetBiases2(double[] b) => biases2 = b;
 }

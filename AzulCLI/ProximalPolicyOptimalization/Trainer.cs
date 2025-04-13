@@ -4,11 +4,11 @@ namespace PPO;
 
 public class Trainer {
     public const int botsCount = 2;
-    public const int sampleCount = 5;
+    public const int sampleCount = 15;
     public const string LogPath = "/home/juhtyg/Desktop/Azul/proximalpolicyoptimalization.log";
     private const string ScorePath = "/home/juhtyg/Desktop/Azul/proximalscore.txt";
-    private const string PolicyNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
-    private const string ValueNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/value_network.json";
+    public const string PolicyNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
+    public const string ValueNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/value_network.json";
     static PPOAgent agent = new PPOAgent(stateSize: 199, actionSize: 300);
     static Board board = new Board(botsCount,new string[]{"a","b"}, false, LogPath);
     static List<double[]> states = new List<double[]>();
@@ -20,7 +20,7 @@ public class Trainer {
     
     private const int N = 20;  // parallel envs
     private const int M = 30; // steps per env per update
-    private const long totalTimesteps = 1_000_000;
+    private const long totalTimesteps = 1000_000;
 
     public static void Run() {
         EnvWrapper[] envs = new EnvWrapper[N];
@@ -57,6 +57,7 @@ public class Trainer {
         }
 
         agent.SavePolicy(PolicyNetworkPath);
+        agent.SaveValue(ValueNetworkPath);
     }
 
     private static void OnNextPlacingTurn(object? sender, MyEventArgs e) {
@@ -158,13 +159,13 @@ public class Trainer {
     public static double CalculateReward(Move move, double[] state, Board board) {
         double reward = 0;
         
-        if (move.bufferId == Globals.WALL_DIMENSION) return -1;
-        var nextState = board.GetNextState(state, move, board.CurrentPlayer);
+        if (move.bufferId == Globals.WALL_DIMENSION) return -6;
+        var nextState = board.GetNextState(state, move);
         int takenCount = move.plateId == board.Plates.Length 
-            ? board.Center.TileCountOfType(move.tileId) 
-            : board.Plates[move.plateId].TileCountOfType(move.tileId);
+            ? board.DecodePlateData((int) state[9])[move.tileId]
+            : board.DecodePlateData((int) state[move.plateId])[move.tileId];
         
-        if (board.Players[board.CurrentPlayer].GetBufferData(move.bufferId).count + takenCount >= move.bufferId + 1) {
+        if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
             reward += takenCount * takenCount * .2;
         }
         else {
@@ -175,11 +176,11 @@ public class Trainer {
         
         reward += .2 * addedAfterFilled * addedAfterFilled;
 
-        var newOnFloor = nextState[56] - state[56];
+        var newOnFloor = nextState[16] - state[16];
         
         reward -= newOnFloor * newOnFloor * .2;    //floor
         //check if first from center
-        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .1;
+        if(Math.Abs(nextState[10] - state[10]) > .9) reward -= .1;
         
         return reward;
     }
