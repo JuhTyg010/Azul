@@ -6,8 +6,8 @@ namespace PPO;
 
 public class Bot : IBot {
 
-    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
-    private const string ValueNetwork = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/value_network.json";
+    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/policy_network.json";
+    private const string ValueNetwork = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/value_network.json";
     private const int LearnBuffer = 100;
     
     private NeuralNetwork _policyNet;

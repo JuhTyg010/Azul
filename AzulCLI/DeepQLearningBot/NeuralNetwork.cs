@@ -37,7 +37,7 @@ public class NeuralNetwork {
         weights2 = InitializeMatrix(hiddenSize2, outputSize);
         biases2 = InitializeVector(outputSize);
     }
-    public double[] Predict(double[] input) {
+    public double[] Predict(double[] input) {//ReLU cause there cant be negative probability
         double[] hidden1 = ReLU(Add(Dot(input, weights1), biases1));
         double[] hidden2 = ReLU(Add(Dot(hidden1, weightsHidden2), biasesHidden2));
         double[] output = Add(Dot(hidden2, weights2), biases2);
@@ -72,8 +72,6 @@ public class NeuralNetwork {
             double[] state = states[i];
             int action = actions[i];
             double advantage = advantages[i];
-            double oldProb = Math.Max(oldActionProbs[i][action], Epsilon);
-            double oldLogProb = Math.Log(oldProb);
             
             double[] hidden1_pre = Add(Dot(state, weights1), biases1);
             double[] hidden1 = ReLU(hidden1_pre);
@@ -81,18 +79,23 @@ public class NeuralNetwork {
             double[] hidden2 = ReLU(hidden2_pre);
             
             double[] output_pre = Add(Dot(hidden2, weights2), biases2);
-            double[] probs = Softmax(output_pre);
+            double[] probs = Softmax(output_pre);//same as in predict
             double logProb = Math.Log(Math.Max(probs[action], Epsilon));
-            double ratio = Math.Exp(logProb - oldLogProb);
-            double clippedRatio = Math.Clamp(ratio, 1 - epsilon, 1 + epsilon);
             
+            double oldProb = Math.Max(oldActionProbs[i][action], Epsilon);
+            double oldLogProb = Math.Log(oldProb);
+            
+            //-min( r_t * A_t , clip(r_t, 1 − e , 1 + e )A_t) pre loss = -L
+            double ratio = Math.Exp(logProb - oldLogProb); // log(a/b) = log(a) - log(b)
+            double clippedRatio = Math.Clamp(ratio, 1 - epsilon, 1 + epsilon);
             double safeAdv = Math.Clamp(advantage, -10, 10);
             double gradCoef = -Math.Min(ratio * safeAdv, clippedRatio * safeAdv);            
+            
             double[] outputError = new double[probs.Length];
             outputError[action] = gradCoef;
             
-            double[] hidden2Error = Multiply(DotTranspose(weights2, outputError), hidden2_pre, derivative: true);
-            double[] hidden1Error = Multiply(DotTranspose(weightsHidden2, hidden2Error), hidden1_pre, derivative: true);
+            double[] hidden2Error = Multiply(DotTranspose(weights2, outputError), hidden2_pre, true);
+            double[] hidden1Error = Multiply(DotTranspose(weightsHidden2, hidden2Error), hidden1_pre, true);
             UpdateWeightsAndBiases(state, hidden1, hidden2, outputError, hidden2Error, hidden1Error, learningRate);
         }
     }
@@ -109,7 +112,7 @@ public class NeuralNetwork {
         for (int i = 0; i < biases2.Length; i++)
             biases2[i] -= learningRate * outputError[i];
 
-        Clip(biases2, clipMin, clipMax);
+        biases2 = Clip(biases2, clipMin, clipMax);
         for (int i = 0; i < weightsHidden2.Length; i++)
             for (int j = 0; j < weightsHidden2[0].Length; j++)
                 weightsHidden2[i][j] -= learningRate * hidden1[i] * hidden2Error[j];
@@ -118,14 +121,14 @@ public class NeuralNetwork {
         for(int i = 0; i < biasesHidden2.Length; i++)
             biasesHidden2[i] -= learningRate * hidden2Error[i];
         
-        Clip(biasesHidden2, clipMin, clipMax);
+        biasesHidden2 = Clip(biasesHidden2, clipMin, clipMax);
         for (int i = 0; i < weights1.Length; i++)
             for (int j = 0; j < weights1[0].Length; j++)
                 weights1[i][j] -= learningRate * input[i] * hidden1Error[j];
         ClipWeights(weights1, clipMin, clipMax);
         for (int i = 0; i < biases1.Length; i++)
             biases1[i] -= learningRate * hidden1Error[i];
-        Clip(biases1, clipMin, clipMax);
+        biases1 = Clip(biases1, clipMin, clipMax);
     }
     
     private double[] Clip(double[] vector, double min, double max) {

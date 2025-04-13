@@ -25,12 +25,14 @@ public class Trainer {
     private static IBot[] _bots = null!;
     
     private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
+    private const string ScorePath = "/home/juhtyg/Desktop/Azul/AzulCLI/score.txt";
+
 
     
     public static void Main(string[] args) {
-        PPO.Trainer.Run();
+        //PPO.Trainer.Run();
 
-        /*Parser.Default.ParseArguments<Options>(args).WithParsed(o => {
+        Parser.Default.ParseArguments<Options>(args).WithParsed(o => {
             string[] botNames = o.ListOfIncoming.Split(' ');
             int count = botNames.Length;
             string[] names = new string[count];
@@ -38,6 +40,7 @@ public class Trainer {
             for (int i = 0; i < count; i++) {
                 string type = botNames[i];
                 if(type == "random") _bots[i] = new randomBot.Bot(i);
+                else if (type == "PPO") _bots[i] = new PPO.Bot(i);
                 else _bots[i] = BotFactory.CreateBot(type, i);
                 names[i] = botNames[i] + i;
             }
@@ -46,6 +49,7 @@ public class Trainer {
             while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
                 string logFile = LogFileName(o.LogFile + "/log");
                 lastWinner = PlayGame(count, names, o.Mode == 1, logFile);
+                
                 if (_bots[lastWinner] is IgnoringBot ignoringBot) {
                     NeuralNetwork nc;
                     nc = ignoringBot.GetNetwork();
@@ -74,7 +78,7 @@ public class Trainer {
         Console.WriteLine("Game started");
         game.StartGame();
             
-        while (game.Phase != Phase.GameOver) Thread.Sleep(5);//ish secure 
+        while (game.Phase != Phase.GameOver) Thread.Sleep(1);//ish secure 
 
         Console.WriteLine("Game over");
         Player[] players = game.Players.ToArray();
@@ -90,6 +94,11 @@ public class Trainer {
         for (int i = 0; i < players.Length; i++) {
             Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
         }
+        string score = "";
+        foreach (var player in game.Players) {
+            score += $"{player.pointCount} ";
+        }
+        File.AppendAllText(ScorePath, score + Environment.NewLine);
 
         return index;
     }
