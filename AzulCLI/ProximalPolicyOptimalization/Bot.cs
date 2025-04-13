@@ -32,7 +32,6 @@ public class Bot : IBot {
         
         _policyNet = JsonSaver.Load<NeuralNetwork>(NetworkFile) ?? 
                      new NeuralNetwork(59, 256, 256, 300);
-        //TODO: maybe handle that network must exist
         
         _valueNet = JsonSaver.Load<NeuralNetwork>(ValueNetwork) ??
                     new NeuralNetwork(59, 256, 256, 1);
