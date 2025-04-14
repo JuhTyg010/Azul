@@ -39,7 +39,7 @@ public class Trainer {
             _bots = new IBot[count];
             for (int i = 0; i < count; i++) {
                 string type = botNames[i];
-                if(type == "random") _bots[i] = new NonML.Bot(i);
+                if(type == "random") _bots[i] = new NonML.RandomBot(i);
                 else if (type == "PPO") _bots[i] = new PPO.Bot(i);
                 else _bots[i] = BotFactory.CreateBot(type, i);
                 names[i] = botNames[i] + i;
