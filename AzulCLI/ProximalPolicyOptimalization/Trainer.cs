@@ -128,54 +128,57 @@ public class Trainer {
 
     public static double CalculateReward(Move move, double[] state, Board board) {
         double reward = 0;
-        
-        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
-        var nextState = board.GetNextState(state, move);
-        int takenCount = move.plateId == board.Plates.Length 
-            ? board.DecodePlateData((int) state[9])[move.tileId]
-            : board.DecodePlateData((int) state[move.plateId])[move.tileId];
-        
-        int col = board.FindColInRow(move.bufferId, move.tileId);
-        var addedAfterFilled = board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
-        var wall = board.Players[board.CurrentPlayer].wall;
-        var inSameCol = Globals.WALL_DIMENSION - Enumerable
-            .Range(0, wall.GetLength(0))
-            .Count(row => wall[row, col] == Globals.EMPTY_CELL);
-       
-        var sameType = Enumerable.Range(0, wall.GetLength(0))
-            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-                .Select(column => wall[row, column])).Count(value => value == move.tileId);
-        
-        var empty = Enumerable.Range(0, wall.GetLength(0))
-            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-                .Select(column => wall[row, column])).Count(value => value == Globals.EMPTY_CELL);
-        var filled = (Globals.WALL_DIMENSION * Globals.WALL_DIMENSION) - empty; 
-        reward -= filled * .5;
+                              
+      if (move.bufferId == Globals.WALL_DIMENSION) return -10;
+      var nextState = board.GetNextState(state, move);
+      int takenCount = move.plateId == board.Plates.Length 
+          ? board.DecodePlateData((int) state[9])[move.tileId]
+          : board.DecodePlateData((int) state[move.plateId])[move.tileId];
+      
+      int col = board.FindColInRow(move.bufferId, move.tileId);
+      var addedAfterFilled = board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
+      
+      
+      
+      var wall = board.Players[board.CurrentPlayer].wall;
+      var inSameCol = Globals.WALL_DIMENSION - Enumerable
+          .Range(0, wall.GetLength(0))
+          .Count(row => wall[row, col] == Globals.EMPTY_CELL);
+     
+      var sameType = Enumerable.Range(0, wall.GetLength(0))
+          .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+              .Select(column => wall[row, column])).Count(value => value == move.tileId);
+      
+      var empty = Enumerable.Range(0, wall.GetLength(0))
+          .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+              .Select(column => wall[row, column])).Count(value => value == Globals.EMPTY_CELL);
+      var filled = (Globals.WALL_DIMENSION * Globals.WALL_DIMENSION) - empty; 
+      reward -= filled;
 
-        reward += sameType;
-        if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
-            //reward += takenCount * .5;
-            reward += 2 * takenCount;
-            reward += 2 * addedAfterFilled;
-            reward += inSameCol;
+      reward += inSameCol;
+      
+      if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
+          //reward += takenCount * .5;
+          reward += 1 + .3 * takenCount;
+          reward += 2 * addedAfterFilled;
+          reward += sameType;
+      }
+      else {
+          reward += 1;
+          reward += addedAfterFilled * .5;
+          //reward +=  takenCount;
+      }
 
-        }
-        else {
-            reward += 1;
-            reward += addedAfterFilled * .5;
-            //reward +=  takenCount;
-        }
-
-        var newOnFloor = nextState[16] - state[16];
-        
-        if(newOnFloor * 2 >= addedAfterFilled) reward -= newOnFloor;
-        else reward += newOnFloor * 2;
-        
-        //TODO: maybe connect to addedAfterFilled
-        //check if first from center
-        if(Math.Abs(nextState[10] - state[10]) > .9) reward -= .1;
-        
-        return reward;
+      var newOnFloor = nextState[16] - state[16];
+      
+      if(newOnFloor * 2 >= addedAfterFilled) reward -= newOnFloor;
+      else reward += newOnFloor * 2;
+      
+      //TODO: maybe connect to addedAfterFilled
+      //check if first from center
+      if(Math.Abs(nextState[10] - state[10]) > .9) reward -= .1;
+      
+      return reward;
     }
 
     private static void ClearData() {

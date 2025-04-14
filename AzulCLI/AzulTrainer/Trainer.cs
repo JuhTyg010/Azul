@@ -42,7 +42,7 @@ public class Trainer {
                     _bots[i] = NonML.BotFactory.CreateBot(type, i, o.WorkingDir);
                 }
                 else if (type == "PPO") _bots[i] = new PPO.Bot(i, o.WorkingDir);
-                else _bots[i] = BotFactory.CreateBot(type, i);
+                else if(type == "ignoring") _bots[i] = new IgnoringBot(i, o.WorkingDir);
                 names[i] = botNames[i] + i;
             }
 

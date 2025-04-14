@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using System.Transactions;
 using Azul;
 using SaveSystem;
@@ -9,9 +10,9 @@ public class IgnoringBot : IBot{
     public int Id { get; private set; }
     public string WorkingDirectory { get; private set; }
     
-    private const string SettingFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/DQNsettings.json";
-    private const string ReplayBufferFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/replayBuffer.json";
-    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
+    private const string SettingFile = "IgnoringBot/DQNsettings.json";
+    private const string ReplayBufferFile = "IgnoringBot/replayBuffer.json";
+    private const string NetworkFile = "IgnoringBot/network.json";
     private DQNSetting _settings;
     private NeuralNetwork _policyNet;
     private NeuralNetwork _targetNet;
@@ -23,11 +24,14 @@ public class IgnoringBot : IBot{
         workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
         WorkingDirectory = workingDirectory;
         
-        _settings = JsonSaver.Load<DQNSetting>(SettingFile) ?? 
-                   new DQNSetting(300,199,300,30,1,0.95,0.01,0.8);
+        string networkDir = PathCombiner(WorkingDirectory, "IgnoringBot");
+        if (!Path.Exists(networkDir)) Directory.CreateDirectory(networkDir);
         
-        _policyNet = JsonSaver.Load<NeuralNetwork>(NetworkFile) ?? 
-                    new NeuralNetwork(_settings.StateSize, 128, 128, _settings.ActionSize);
+        _settings = JsonSaver.Load<DQNSetting>(PathCombiner(WorkingDirectory,SettingFile)) ?? 
+                                               new DQNSetting(300, 59, 300, 30, 1, 0.95, 0.01, 0.8);
+        
+        _policyNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, NetworkFile)) ?? 
+                                                   new NeuralNetwork(_settings.StateSize, 128, 128, _settings.ActionSize);
 
         _targetNet = _policyNet.Clone();
         
@@ -88,9 +92,7 @@ public class IgnoringBot : IBot{
         return EncodeAction(validMoves[index]);
     }
 
-    public string Place(Board board)
-    {
-        //TODO: setup for better translation
+    public string Place(Board board) {
 
         return "-1";
     }
@@ -127,89 +129,63 @@ public class IgnoringBot : IBot{
         }
 
         // Train the neural network on the batch
-        _policyNet.Train(states, targets, 0.001);
-        //JsonSaver.Save(policyNet, networkFile);
-        if (_replayBuffer.Count % 100 == 0) {
-            _targetNet = _policyNet.Clone();
-        }
+        _policyNet.Train(states, targets, 0.001, 0.5);
+        _targetNet = _policyNet.Clone();
     }
 
     private double CalculateReward(double[] state, int action, Board board) {
-        /*double reward = 0;
-        
+        double reward = 0;
         Move move = DecodeToMove(action);
-        if (move.bufferId == Globals.WALL_DIMENSION) return -1;
+        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
+        var nextState = board.GetNextState(state, move);
+        int takenCount = move.plateId == board.Plates.Length 
+            ? board.DecodePlateData((int) state[9])[move.tileId]
+            : board.DecodePlateData((int) state[move.plateId])[move.tileId];
         
-        double[] nextState = board.GetNextState(state, move, _id);
-        if (move.plateId == board.Plates.Length) reward += 0.3 * board.Center.TileCountOfType(move.tileId);
-        else reward += 0.3 * board.Plates[move.plateId].TileCountOfType(move.tileId);
         int col = board.FindColInRow(move.bufferId, move.tileId);
+        var addedAfterFilled = board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
         
-        reward += (double) board.Players[_id].CalculatePointsIfFilled(move.bufferId, col) / 10;
-        reward -= (nextState[56] - state[56]) / 10;    //floor
+        
+        
+        var wall = board.Players[board.CurrentPlayer].wall;
+        var inSameCol = Globals.WALL_DIMENSION - Enumerable
+            .Range(0, wall.GetLength(0))
+            .Count(row => wall[row, col] == Globals.EMPTY_CELL);
+       
+        var sameType = Enumerable.Range(0, wall.GetLength(0))
+            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+                .Select(column => wall[row, column])).Count(value => value == move.tileId);
+        
+        var empty = Enumerable.Range(0, wall.GetLength(0))
+            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+                .Select(column => wall[row, column])).Count(value => value == Globals.EMPTY_CELL);
+        var filled = (Globals.WALL_DIMENSION * Globals.WALL_DIMENSION) - empty; 
+        reward -= filled;
+
+        reward += inSameCol;
+        
+        if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
+            //reward += takenCount * .5;
+            reward += 1 + .3 * takenCount;
+            reward += 2 * addedAfterFilled;
+            reward += sameType;
+        }
+        else {
+            reward += 1;
+            reward += addedAfterFilled * .5;
+            //reward +=  takenCount;
+        }
+
+        var newOnFloor = nextState[16] - state[16];
+        
+        if(newOnFloor * 2 >= addedAfterFilled) reward -= newOnFloor;
+        else reward += newOnFloor * 2;
+        
+        //TODO: maybe connect to addedAfterFilled
         //check if first from center
-        if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .1;
+        if(Math.Abs(nextState[10] - state[10]) > .9) reward -= .1;
         
-        return reward;*/
-        
-        int gain = 0;
-        Move possibleMove = DecodeToMove(action);
-            if (possibleMove.bufferId >= Globals.WALL_DIMENSION) {
-                return -10;
-            }
-            Player me = board.Players[Id];
-            int bufferSize = possibleMove.bufferId + 1;
-            Tile buffTile = me.GetBufferData(possibleMove.bufferId);
-            Plate p = possibleMove.plateId < board.Plates.Length ? board.Plates[possibleMove.plateId] : board.Center;
-            int toFill = p.TileCountOfType(possibleMove.tileId);
-            if (buffTile.id == possibleMove.tileId) {
-                int toFloor = toFill - (bufferSize - buffTile.count);
-                if (toFloor >= 0) {
-                    gain -= toFloor;
-                    int clearGain = 0;
-                    if (board.IsAdvanced) {
-                        int currGain = 0;
-                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
-                            currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
-                            if(currGain > clearGain) clearGain = currGain;
-                        }
-                    }
-                    else {
-                        int row = possibleMove.bufferId;
-                        int col = 0;
-                        for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.PredefinedWall[row, col] == possibleMove.tileId)
-                                break;
-                        clearGain = me.CalculatePointsIfFilled(row,col);
-                    }
-                    gain += clearGain;
-                }
-            }
-            else {
-                int toFloor = bufferSize - toFill;
-                if (toFloor >= 0) {
-                    gain -= toFloor;
-                    int clearGain = 0;
-                    if (board.IsAdvanced) {
-                        int currGain = 0;
-                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
-                            currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
-                            if(currGain > clearGain) clearGain = currGain;
-                        }
-                    }
-                    else {
-                        int row = possibleMove.bufferId;
-                        int col = 0;
-                        for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.PredefinedWall[row, col] == possibleMove.tileId)
-                                break;
-                        clearGain = me.CalculatePointsIfFilled(row,col);
-                    }
-                    gain += clearGain;
-                }
-            }
-            
-            return gain;
+        return reward;
     }
     
     private int GetBestValidAction(double[] qValues, Board board) {
@@ -281,6 +257,38 @@ public class IgnoringBot : IBot{
     private void OnProcessExit(object sender, EventArgs e) {
         //JsonSaver.Save(settings, settingFile);
         //JsonSaver.Save(replayBuffer, replayBufferFile);
-        if(SaveThis) JsonSaver.Save(_targetNet, NetworkFile);    
+        JsonSaver.Save(_targetNet, PathCombiner(WorkingDirectory, NetworkFile));    
+    }
+    
+    private static string PathCombiner(string baseName, string fileName) {
+        if (baseName[^1] != '/') baseName += '/';
+        return baseName + fileName;
+    }
+}
+
+public class DQNSetting
+{
+    public int ActionSize { get; set; } //300
+    public int StateSize { get; set; }
+    public int ReplayBufferCapacity { get; set; }
+    public int BatchSize { get; set; }
+    
+    public int FromLastBatch { get; set; }
+    public double Epsilon { get; set; }
+    public double EpsilonDecay { get; set; }
+    public double EpsilonMin { get; set; }
+    public double Gamma { get; set; }
+
+    [JsonConstructor]
+    public DQNSetting(int actionSize, int stateSize, int replayBufferCapacity, int batchSize, double epsilon, double epsilonDecay, double epsilonMin, double gamma)
+    {
+        ActionSize = actionSize;
+        StateSize = stateSize;
+        ReplayBufferCapacity = replayBufferCapacity;
+        BatchSize = batchSize;
+        Epsilon = epsilon;
+        EpsilonDecay = epsilonDecay;
+        EpsilonMin = epsilonMin;
+        Gamma = gamma;
     }
 }

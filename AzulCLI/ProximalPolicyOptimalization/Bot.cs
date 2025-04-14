@@ -39,14 +39,13 @@ public class Bot : IBot {
         WorkingDirectory = workingDirectory;
 
         string networkDir = PathCombiner(WorkingDirectory, "PPO");
-        if(!Path.Exists(networkDir)) 
-            Directory.CreateDirectory(networkDir);
+        if (!Path.Exists(networkDir)) Directory.CreateDirectory(networkDir);
         
         _policyNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, PolicyNetwork)) ?? 
-                     new NeuralNetwork(59, 128, 256, 300);
+                     new NeuralNetwork(59, 256, 256, 300);
         
         _valueNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, ValueNetwork)) ??
-                    new NeuralNetwork(59, 128, 256, 1);
+                    new NeuralNetwork(59, 256, 256, 1);
         
         this.Id = id;
         _random = new Random();
