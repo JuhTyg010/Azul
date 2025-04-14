@@ -29,17 +29,24 @@ public class Bot : IBot {
     static List<double> _rewards = new List<double>();
     static List<double[]> _probs = new List<double[]>();
     
+    private static List<double> _lastGameRewards = new List<double>();
+    
     
     
     public Bot(int id, string workingDirectory = null) {
 
         workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
         WorkingDirectory = workingDirectory;
+
+        string networkDir = PathCombiner(WorkingDirectory, "PPO");
+        if(!Path.Exists(networkDir)) 
+            Directory.CreateDirectory(networkDir);
+        
         _policyNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, PolicyNetwork)) ?? 
-                     new NeuralNetwork(59, 256, 256, 300);
+                     new NeuralNetwork(59, 512, 512, 300);
         
         _valueNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, ValueNetwork)) ??
-                    new NeuralNetwork(59, 256, 256, 1);
+                    new NeuralNetwork(59, 512, 512, 1);
         
         this.Id = id;
         _random = new Random();
@@ -52,6 +59,7 @@ public class Bot : IBot {
         var state = board.EncodeBoardState(Id);
         double[] actionProbs = _policyNet.Predict(state);
         int[] validActions = EncodeMoves(board.GetValidMoves());
+        
         // Mask invalid actions by setting their probability to zero
         for (int i = 0; i < actionProbs.Length; i++)
             if (!validActions.Contains(i))
@@ -67,54 +75,12 @@ public class Bot : IBot {
         
         if (!board.CanMove(move)) move = board.GetValidMoves()[_random.Next(validActions.Length)];
 
-        //train mechanism
         _states.Add(state);
         _actions.Add(Trainer.EncodeMove(move));
         _probs.Add(actionProbs);
-        _rewards.Add(Trainer.CalculateReward(move, state, board));
-        _fromLastLearn++;
+        _lastGameRewards.Add(Trainer.CalculateReward(move, state, board));
 
-        if (_fromLastLearn >= LearnBuffer) {
-            
-            double averageReward = _rewards.Average();
-            File.AppendAllText(RewardAveragePath, averageReward.ToString() + Environment.NewLine);
-            
-            double[][] stateArray = _states.ToArray();
-            double[] rewardsArray = _rewards.ToArray();
-            double[][] probsArray = _probs.ToArray();
-            int[] actionsArray = _actions.ToArray();
-            
-            double[] discountedRewards = new double[rewardsArray.Length];
-            double runningReward = 0;
-            for (int t = rewardsArray.Length - 1; t >= 0; t--) {
-                runningReward = rewardsArray[t] + _gamma * runningReward;
-                discountedRewards[t] = runningReward;
-            }
-
-            double[] values = stateArray.Select(s => _valueNet.Predict(s)[0]).ToArray();
-
-            double[] advantages = new double[rewardsArray.Length];
-            for (int i = 0; i < rewardsArray.Length; i++)
-                advantages[i] = rewardsArray[i] - values[i];
-
-            double mean = advantages.Average();
-            double std = Math.Sqrt(advantages.Select(a => Math.Pow(a - mean, 2)).Average());
-            if (std < 1e-8) std = 1e-8;
-            advantages = advantages.Select(a => (a - mean) / std).ToArray();
-
-            double[][] valueTargets = discountedRewards.Select(r => new double[] { r }).ToArray();
-            _valueNet.Train(stateArray, valueTargets, 0.001); 
-
-            _fromLastLearn = 0;
-            _policyNet.TrainPPO(stateArray, actionsArray, advantages, probsArray, 0.5, 0.001);
-
-            _states.Clear();
-            _actions.Clear();
-            _probs.Clear();
-            _rewards.Clear();
-        }
-
-    return $"{move.plateId} {move.tileId} {move.bufferId}";
+        return $"{move.plateId} {move.tileId} {move.bufferId}";
     }
     
     public string Place(Board board) {
@@ -122,7 +88,69 @@ public class Bot : IBot {
     }
     
     public void Result(Dictionary<int, int> result) {
-        
+        int winner = 0;
+        int winScore = 0;
+        int myScore = 0;
+        foreach(KeyValuePair<int, int> pair in result) {
+            if (pair.Value > winScore) {
+                winner = pair.Key;
+            }
+            if(pair.Key == Id) myScore = pair.Value;
+        }
+
+        if (winner == Id) {
+            foreach (var reward in _lastGameRewards) {
+                _rewards.Add(reward + 2 + myScore / 8);
+                _fromLastLearn++;
+            }
+        }
+        else {
+            foreach (var reward in _lastGameRewards) {
+                _rewards.Add(reward - 2 + myScore / 16);
+                _fromLastLearn++;
+            }
+        }
+        _lastGameRewards.Clear();
+        if (_fromLastLearn >= LearnBuffer) Train();
+    }
+
+    private void Train() {
+        double averageReward = _rewards.Average();
+        File.AppendAllText(PathCombiner(WorkingDirectory, RewardAveragePath), averageReward.ToString() + Environment.NewLine);
+            
+        double[][] stateArray = _states.ToArray();
+        double[] rewardsArray = _rewards.ToArray();
+        double[][] probsArray = _probs.ToArray();
+        int[] actionsArray = _actions.ToArray();
+            
+        double[] discountedRewards = new double[rewardsArray.Length];
+        double runningReward = 0;
+        for (int t = rewardsArray.Length - 1; t >= 0; t--) {
+            runningReward = rewardsArray[t] + _gamma * runningReward;
+            discountedRewards[t] = runningReward;
+        }
+
+        double[] values = stateArray.Select(s => _valueNet.Predict(s)[0]).ToArray();
+
+        double[] advantages = new double[rewardsArray.Length];
+        for (int i = 0; i < rewardsArray.Length; i++)
+            advantages[i] = rewardsArray[i] - values[i];
+
+        double mean = advantages.Average();
+        double std = Math.Sqrt(advantages.Select(a => Math.Pow(a - mean, 2)).Average());
+        if (std < 1e-8) std = 1e-8;
+        advantages = advantages.Select(a => (a - mean) / std).ToArray();
+
+        double[][] valueTargets = discountedRewards.Select(r => new double[] { r }).ToArray();
+        _valueNet.Train(stateArray, valueTargets, 0.0001); 
+
+        _fromLastLearn = 0;
+        _policyNet.TrainPPO(stateArray, actionsArray, advantages, probsArray, 0.4, 0.0001);
+
+        _states.Clear();
+        _actions.Clear();
+        _probs.Clear();
+        _rewards.Clear();
     }
     
     private int[] EncodeMoves(Move[] moves) {

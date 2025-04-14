@@ -112,36 +112,6 @@ public class Trainer {
         int buffer = (action % 6);
         return new Move(tileId, plate, buffer);
     }
-    
-    private static void ComputeFinalRewards() {
-        int winnigPlayer = 0;
-        double baseReward = 40;
-        int winnerCount = Int32.MinValue;
-        for (int i = 0; i < botsCount; i++) {
-            if (board.Players[i].pointCount > winnerCount) {
-                winnigPlayer = i;
-                winnerCount = board.Players[i].pointCount;
-            }
-        }
-
-        for (int i = 0; i < botsCount; i++) {
-            double ratio = board.Players[i].pointCount / 100.0;
-            if (winnigPlayer == i) 
-                AddValueInRange(board.Players[i].pointCount + 20 + baseReward, ref eachPlayerRewards[i]);
-            else 
-                AddValueInRange(board.Players[i].pointCount - 20 + baseReward, ref eachPlayerRewards[i]);
-            if (board.Players[i].pointCount > 0)
-                AddValueInRange(10 * ratio, ref eachPlayerRewards[i]);
-            else {
-                AddValueInRange(-2 * ratio, ref eachPlayerRewards[i]);
-            }
-        }
-
-        for (int i = 0; i < botsCount; i++) {
-            rewards.AddRange(eachPlayerRewards[i]);
-        }
-
-    }
 
     private static void AddFloorPenalty() {
         //TODO: separate moves and states based on player and punish moves based on forcing to floor
@@ -167,11 +137,27 @@ public class Trainer {
         
         int col = board.FindColInRow(move.bufferId, move.tileId);
         var addedAfterFilled = board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
+        var wall = board.Players[board.CurrentPlayer].wall;
+        var inSameCol = Globals.WALL_DIMENSION - Enumerable
+            .Range(0, wall.GetLength(0))
+            .Count(row => wall[row, col] == Globals.EMPTY_CELL);
+       
+        var sameType = Enumerable.Range(0, wall.GetLength(0))
+            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+                .Select(column => wall[row, column])).Count(value => value == move.tileId);
         
+        var empty = Enumerable.Range(0, wall.GetLength(0))
+            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+                .Select(column => wall[row, column])).Count(value => value == Globals.EMPTY_CELL);
+        var filled = (Globals.WALL_DIMENSION * Globals.WALL_DIMENSION) - empty; 
+        reward -= filled * .5;
+
+        reward += sameType;
         if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
             //reward += takenCount * .5;
             reward += 3;
             reward += 2 * addedAfterFilled;
+            reward += inSameCol;
 
         }
         else {

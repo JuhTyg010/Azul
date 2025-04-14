@@ -33,43 +33,36 @@ public class Trainer {
             string[] botNames = o.ListOfIncoming.Split(' ');
             int count = botNames.Length;
             string[] names = new string[count];
+            
             _scorePath = PathCombiner(o.WorkingDir, ScoreFileName);
             _bots = new IBot[count];
             for (int i = 0; i < count; i++) {
                 string type = botNames[i];
-                if(type == "random") _bots[i] = new NonML.RandomBot(i);
-                else if (type == "PPO") _bots[i] = new PPO.Bot(i);
+                if (NonML.BotFactory.WasRecognised(type)) {
+                    _bots[i] = NonML.BotFactory.CreateBot(type, i, o.WorkingDir);
+                }
+                else if (type == "PPO") _bots[i] = new PPO.Bot(i, o.WorkingDir);
                 else _bots[i] = BotFactory.CreateBot(type, i);
                 names[i] = botNames[i] + i;
             }
 
-            int lastWinner = 0;
             while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
                 string logPath = PathCombiner(o.WorkingDir, LogDir);
-                string logFile = LogFileName(logPath + "/log");
-                lastWinner = PlayGame(count, names, o.Mode == 1, logFile);
+
+                if (!Path.Exists(logPath)) Directory.CreateDirectory(logPath);
                 
-                if (_bots[lastWinner] is IgnoringBot ignoringBot) {
-                    NeuralNetwork nc;
-                    nc = ignoringBot.GetNetwork();
-                    Console.WriteLine("Updating network...");
-                    foreach (var bot in _bots) {
-                        if (bot is IgnoringBot iBot) {
-                            iBot.LoadNetwork(nc);
-                        }
-                    }
+                string logFile = LogFileName(logPath + "/log");
+                var scores = PlayGame(count, names, o.Mode == 1, logFile);
+                foreach (var bot in _bots) {
+                    bot.Result(scores);
                 }
             }
-            if (_bots[lastWinner] is IgnoringBot ignorantBot) {
-                ignorantBot.SaveThis = true;
-            }
-
         });//*/
 
 
     }
 
-    private static int PlayGame(int count, string[] names, bool mode, string logFile) {
+    private static Dictionary<int,int> PlayGame(int count, string[] names, bool mode, string logFile) {
         Board game = new Board(count, names, mode, logFile);
         game.NextTakingMove += OnNextTakingTurn!;
         game.NextPlacingMove += OnNextPlacingTurn!;
@@ -77,7 +70,7 @@ public class Trainer {
         Console.WriteLine("Game started");
         game.StartGame();
             
-        while (game.Phase != Phase.GameOver) Thread.Sleep(1);//ish secure 
+        while (game.Phase != Phase.GameOver); 
 
         Console.WriteLine("Game over");
         Player[] players = game.Players.ToArray();
@@ -96,8 +89,14 @@ public class Trainer {
         string score = "";
         foreach (var player in game.Players) score += $"{player.pointCount} ";
         File.AppendAllText(_scorePath, score + Environment.NewLine);
+        
+        Dictionary<int,int> playerScores = new Dictionary<int,int>();
+        for (int i = 0; i < players.Length; i++) {
+            playerScores.Add(i, players[i].pointCount);
+        }
+        
 
-        return index;
+        return playerScores;
     }
 
     private static void OnNextTakingTurn(object sender, MyEventArgs e) {
