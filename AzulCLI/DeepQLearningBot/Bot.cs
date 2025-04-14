@@ -6,6 +6,10 @@ using SaveSystem;
 namespace DeepQLearningBot;
 
 public class Bot : IBot {
+
+    public int Id { get; private set; }
+    public string WorkingDirectory { get; private set; }
+    
     private const string settingFile = "/home/juhtyg/Desktop/Azul/AI_Data/ComplexBot/DQNsettings.json";
     private const string replayBufferFile = "/home/juhtyg/Desktop/Azul/AI_Data/ComplexBot/replayBuffer.json";
     private const string networkFile = "/home/juhtyg/Desktop/Azul/AI_Data/ComplexBot/network.json";
@@ -15,8 +19,7 @@ public class Bot : IBot {
     private ReplayBuffer replayBuffer;
     private Random random;
     private Dictionary<int, int> result;
-    private int id;
-    public Bot(int id) {
+    public Bot(int id, string workingDirectory = null) {
         /*DQNSetting setting = new DQNSetting(1,1,1,1,1,1,1,1);
         JsonSaver.Save(setting, settingFile);
         throw new NotImplementedException();*/
@@ -31,7 +34,7 @@ public class Bot : IBot {
 
         replayBuffer = new ReplayBuffer(200);   //to ensure whole one game can fit in there
 
-        this.id = id;
+        Id = id;
         random = new Random();
         
         AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
@@ -39,7 +42,7 @@ public class Bot : IBot {
 
     public string DoMove(Board board)
     {
-        double[] state = board.EncodeBoardState(id);
+        double[] state = board.EncodeBoardState(Id);
 
         int bestAction;
         if (random.NextDouble() < settings.Epsilon) {
@@ -67,11 +70,7 @@ public class Bot : IBot {
         }
         return DecodeAction(bestAction);
     }
-
-    public int GetId() {
-        return id;
-    }
-
+    
     private int GetRandomValidAction(Board board) {
         Move[] validMoves = board.GetValidMoves();
         if (validMoves.Length == 0)
@@ -83,7 +82,7 @@ public class Bot : IBot {
     public string Place(Board board)
     {
         //TODO: setup for better translation
-        double[] state = board.EncodeBoardState(id);
+        double[] state = board.EncodeBoardState(Id);
 
         // Get Q-values for placement
         double[] qValues = policyNet.Predict(state);
@@ -131,7 +130,7 @@ public class Bot : IBot {
         double[] nextState = board.GetNextState(state, move);
         int col = board.FindColInRow(move.bufferId, move.tileId);
         
-        reward += (double) board.Players[id].CalculatePointsIfFilled(move.bufferId, col) / 10;
+        reward += (double) board.Players[Id].CalculatePointsIfFilled(move.bufferId, col) / 10;
         reward -= (nextState[56] - state[56]) / 10;    //floor
         //check if first from center
         if(Math.Abs(nextState[50] - state[50]) > .9) reward -= .5;
@@ -204,8 +203,8 @@ public class Bot : IBot {
         }
 
         double reward;
-        if (id == key) reward = 100;
-        else reward = 100 * (result[id] - result[key]);
+        if (Id == key) reward = 100;
+        else reward = 100 * (result[Id] - result[key]);
         return reward;
     }
 

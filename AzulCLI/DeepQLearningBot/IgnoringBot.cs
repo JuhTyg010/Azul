@@ -5,6 +5,10 @@ using SaveSystem;
 namespace DeepQLearningBot;
 
 public class IgnoringBot : IBot{
+    
+    public int Id { get; private set; }
+    public string WorkingDirectory { get; private set; }
+    
     private const string SettingFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/DQNsettings.json";
     private const string ReplayBufferFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/replayBuffer.json";
     private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
@@ -13,9 +17,8 @@ public class IgnoringBot : IBot{
     private NeuralNetwork _targetNet;
     private ReplayBuffer _replayBuffer;
     private Random _random;
-    private int _id;
     public bool SaveThis = false;
-    public IgnoringBot(int id) {
+    public IgnoringBot(int id, string workingDirectory = null) {
         _settings = JsonSaver.Load<DQNSetting>(SettingFile) ?? 
                    new DQNSetting(300,199,300,30,1,0.95,0.01,0.8);
         
@@ -26,14 +29,14 @@ public class IgnoringBot : IBot{
         
         _replayBuffer = new ReplayBuffer(_settings.ReplayBufferCapacity);
 
-        this._id = id;
+        this.Id = id;
         _random = new Random();
         
         AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
     }
 
     public string DoMove(Board board) {
-        double[] state = board.EncodeBoardState(_id);
+        double[] state = board.EncodeBoardState(Id);
 
         int bestAction;
         if (_random.NextDouble() < _settings.Epsilon) {
@@ -60,10 +63,6 @@ public class IgnoringBot : IBot{
         }
 
         return DecodeAction(bestAction);
-    }
-
-    public int GetId() {
-        return _id;
     }
 
     public void Result(Dictionary<int, int> result) {
@@ -154,7 +153,7 @@ public class IgnoringBot : IBot{
             if (possibleMove.bufferId >= Globals.WALL_DIMENSION) {
                 return -10;
             }
-            Player me = board.Players[_id];
+            Player me = board.Players[Id];
             int bufferSize = possibleMove.bufferId + 1;
             Tile buffTile = me.GetBufferData(possibleMove.bufferId);
             Plate p = possibleMove.plateId < board.Plates.Length ? board.Plates[possibleMove.plateId] : board.Center;
@@ -225,7 +224,7 @@ public class IgnoringBot : IBot{
             if (qValues[action] > bestValue) {
                 incorrectCount++;
                 Logger.WriteLine($"tried invalid move: {DecodeAction(action)} qValues: {qValues[action]}");
-                _replayBuffer.Add(board.EncodeBoardState(_id), action, -10, board.EncodeBoardState(_id), false);
+                _replayBuffer.Add(board.EncodeBoardState(Id), action, -10, board.EncodeBoardState(Id), false);
             }
         }
 

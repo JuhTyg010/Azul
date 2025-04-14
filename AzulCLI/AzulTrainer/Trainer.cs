@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using CommandLine;
 using Azul;
 using DeepQLearningBot;
-using PPO;
 
 namespace AzulTrainer;
 
@@ -15,19 +11,20 @@ public class Options {
     [Option('l', "list-of-players", Required = false, Default = "deep rand", HelpText = "list of which player is which")]
     public string ListOfIncoming { get; set; } = "deep rand";
     
-    [Option('o', "output-file", Required = false, Default = "azul_log.txt", HelpText = "log file")]
-    public string LogFile { get; set; } = "log.txt";
+    [Option('d', "working-dir", Required = false, Default = "/home/", HelpText = "working directory to save files")]
+    public string WorkingDir { get; set; } = "/home/";
     
 }
 
 public class Trainer {
+    
+    private const string LogDir = "Logs";
+    private const string ScoreFileName = "score.txt";
+    
     const int Balancer = 10;
     private static IBot[] _bots = null!;
     
-    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
-    private const string ScorePath = "/home/juhtyg/Desktop/Azul/AzulCLI/score_new.txt";
-
-
+    private static string _scorePath = "score.txt";
     
     public static void Main(string[] args) {
         //PPO.Trainer.Run();
@@ -36,6 +33,7 @@ public class Trainer {
             string[] botNames = o.ListOfIncoming.Split(' ');
             int count = botNames.Length;
             string[] names = new string[count];
+            _scorePath = PathCombiner(o.WorkingDir, ScoreFileName);
             _bots = new IBot[count];
             for (int i = 0; i < count; i++) {
                 string type = botNames[i];
@@ -47,7 +45,8 @@ public class Trainer {
 
             int lastWinner = 0;
             while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
-                string logFile = LogFileName(o.LogFile + "/log");
+                string logPath = PathCombiner(o.WorkingDir, LogDir);
+                string logFile = LogFileName(logPath + "/log");
                 lastWinner = PlayGame(count, names, o.Mode == 1, logFile);
                 
                 if (_bots[lastWinner] is IgnoringBot ignoringBot) {
@@ -95,10 +94,8 @@ public class Trainer {
             Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
         }
         string score = "";
-        foreach (var player in game.Players) {
-            score += $"{player.pointCount} ";
-        }
-        File.AppendAllText(ScorePath, score + Environment.NewLine);
+        foreach (var player in game.Players) score += $"{player.pointCount} ";
+        File.AppendAllText(_scorePath, score + Environment.NewLine);
 
         return index;
     }
@@ -144,5 +141,10 @@ public class Trainer {
             fileName = $"{baseName}_{index++}.txt";
         }
         return fileName;
+    }
+
+    private static string PathCombiner(string baseName, string fileName) {
+        if (baseName[^1] != '/') baseName += '/';
+        return baseName + fileName;
     }
 }

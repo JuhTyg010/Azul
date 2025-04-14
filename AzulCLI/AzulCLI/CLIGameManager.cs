@@ -51,7 +51,7 @@ public class CLIGameManager {
             botIds = new int[botPlayers.Count];
                 
             for (int i = 0; i < botPlayers.Count; i++){
-                botIds[i] = botPlayers[i].GetId();
+                botIds[i] = botPlayers[i].Id;
             }
                 
             string[] names = new string[playerSetup.Length];
@@ -172,7 +172,7 @@ public class CLIGameManager {
     private static int FindBot(int botId, List<IBot> botPlayers) {
         for (int i = 0; i < botPlayers.Count; i++) {
             
-            if (botPlayers[i].GetId() == botId) {
+            if (botPlayers[i].Id == botId) {
                 return i;
             }
         }

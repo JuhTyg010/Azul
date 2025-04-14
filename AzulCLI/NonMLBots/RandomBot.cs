@@ -7,12 +7,16 @@ namespace NonML {
 
    
     public class RandomBot : IBot {
-        private Random random;
-        private int _id;
+        public int Id { get; private set; }
+        public string WorkingDirectory { get; private set; }
 
-        public RandomBot(int id) {
+        
+        private Random random;
+
+
+        public RandomBot(int id, string workingDirectory = null) {
             random = new Random();
-            _id = id;
+            Id = id;
         }
 
         public string DoMove(Azul.Board board) {
@@ -26,7 +30,7 @@ namespace NonML {
         }
 
         public string Place(Azul.Board board) {
-            Player me = board.Players[_id];
+            Player me = board.Players[Id];
             var row = me.FullBuffers()[0];
             List<int> possiblePositions = new List<int>();
             for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
@@ -38,7 +42,7 @@ namespace NonML {
             return $"{possiblePositions[random.Next(possiblePositions.Count)]}";
         }
 
-        public int GetId() => _id;
+        public int GetId() => Id;
         
         public void Result(Dictionary<int,int> result) {}
 

@@ -12,10 +12,12 @@ public class Bot : IBot {
     private const string RewardAveragePath = "/home/juhtyg/Desktop/Azul/AzulCLI/reward_avg.txt";
     private const int LearnBuffer = 100;
     
+    public int Id { get; private set; }
+    public string WorkingDirectory { get; private set; }
+    
     private readonly NeuralNetwork _policyNet;
     private readonly NeuralNetwork _valueNet;
-
-    private readonly int _id;
+    
     private Random _random;
     private int _fromLastLearn = 0;
 
@@ -28,7 +30,7 @@ public class Bot : IBot {
     
     
     
-    public Bot(int id) {
+    public Bot(int id, string workingDirectory = null) {
         
         _policyNet = JsonSaver.Load<NeuralNetwork>(NetworkFile) ?? 
                      new NeuralNetwork(59, 256, 256, 300);
@@ -36,7 +38,7 @@ public class Bot : IBot {
         _valueNet = JsonSaver.Load<NeuralNetwork>(ValueNetwork) ??
                     new NeuralNetwork(59, 256, 256, 1);
         
-        this._id = id;
+        this.Id = id;
         _random = new Random();
         
         AppDomain.CurrentDomain.ProcessExit += OnProcessExit!;
@@ -44,7 +46,7 @@ public class Bot : IBot {
     }
 
     public string DoMove(Board board) {
-        var state = board.EncodeBoardState(_id);
+        var state = board.EncodeBoardState(Id);
         double[] actionProbs = _policyNet.Predict(state);
         int[] validActions = EncodeMoves(board.GetValidMoves());
         // Mask invalid actions by setting their probability to zero
@@ -115,9 +117,7 @@ public class Bot : IBot {
     public string Place(Board board) {
         throw new NotImplementedException();
     }
-
-    public int GetId() => _id;
-
+    
     public void Result(Dictionary<int, int> result) {
         
     }

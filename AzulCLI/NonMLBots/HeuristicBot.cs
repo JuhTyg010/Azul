@@ -3,12 +3,15 @@ using Azul;
 namespace NonML;
 
 public class HeuristicBot : IBot {
+    
+    public int Id { get; private set; }
+    public string WorkingDirectory { get; private set; }
+    
     private readonly Random _random;
-    private readonly int _id;
 
-    public HeuristicBot(int id) {
+    public HeuristicBot(int id, string workingDirectory = null) {
         _random = new Random();
-        this._id = id;
+        this.Id = id;
     }
 
     public string DoMove(Azul.Board board) {
@@ -28,7 +31,7 @@ public class HeuristicBot : IBot {
     }
 
     public string Place(Azul.Board board) {
-        Player me = board.Players[_id];
+        Player me = board.Players[Id];
         var row = me.FullBuffers()[0];
         List<int> possiblePositions = new List<int>();
         for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
@@ -39,8 +42,6 @@ public class HeuristicBot : IBot {
 
         return $"{possiblePositions[_random.Next(possiblePositions.Count)]}";
     }
-
-    public int GetId() => _id;
     
     public void Result(Dictionary<int,int> result) {}
 
@@ -58,7 +59,7 @@ public class HeuristicBot : IBot {
         int gain = 0;
         if (possibleMove.bufferId >= Globals.WALL_DIMENSION) return -10;
         
-        Player me = board.Players[_id];
+        Player me = board.Players[Id];
         int bufferSize = possibleMove.bufferId + 1;
         Tile buffTile = me.GetBufferData(possibleMove.bufferId);
         Plate p = possibleMove.plateId < board.Plates.Length ? board.Plates[possibleMove.plateId] : board.Center;
