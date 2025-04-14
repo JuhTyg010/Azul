@@ -43,10 +43,10 @@ public class Bot : IBot {
             Directory.CreateDirectory(networkDir);
         
         _policyNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, PolicyNetwork)) ?? 
-                     new NeuralNetwork(59, 512, 512, 300);
+                     new NeuralNetwork(59, 128, 256, 300);
         
         _valueNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, ValueNetwork)) ??
-                    new NeuralNetwork(59, 512, 512, 1);
+                    new NeuralNetwork(59, 128, 256, 1);
         
         this.Id = id;
         _random = new Random();

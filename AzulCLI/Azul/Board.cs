@@ -641,8 +641,6 @@ namespace Azul {
         protected virtual void OnNextPlacingMove(MyEventArgs e) {
             NextPlacingMove?.Invoke(this, e);
         }
-        
-        
     }
     
     public class MyEventArgs : EventArgs {

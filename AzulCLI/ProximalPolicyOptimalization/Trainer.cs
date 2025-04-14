@@ -155,7 +155,7 @@ public class Trainer {
         reward += sameType;
         if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
             //reward += takenCount * .5;
-            reward += 3;
+            reward += 2 * takenCount;
             reward += 2 * addedAfterFilled;
             reward += inSameCol;
 
@@ -169,7 +169,7 @@ public class Trainer {
         var newOnFloor = nextState[16] - state[16];
         
         if(newOnFloor * 2 >= addedAfterFilled) reward -= newOnFloor;
-        else reward += newOnFloor * .2;
+        else reward += newOnFloor * 2;
         
         //TODO: maybe connect to addedAfterFilled
         //check if first from center
