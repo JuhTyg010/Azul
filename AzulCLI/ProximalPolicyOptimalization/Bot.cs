@@ -2,14 +2,15 @@ using Azul;
 using DeepQLearningBot;
 using SaveSystem;
 
+
 namespace PPO;
 
 public class Bot : IBot {
 
-    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
-    private const string ValueNetwork = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/value_network.json";
+    private const string PolicyNetwork = "PPO/policy_network.json";
+    private const string ValueNetwork = "PPO/value_network.json";
 
-    private const string RewardAveragePath = "/home/juhtyg/Desktop/Azul/AzulCLI/reward_avg.txt";
+    private const string RewardAveragePath = "reward_avg.txt";
     private const int LearnBuffer = 100;
     
     public int Id { get; private set; }
@@ -18,7 +19,7 @@ public class Bot : IBot {
     private readonly NeuralNetwork _policyNet;
     private readonly NeuralNetwork _valueNet;
     
-    private Random _random;
+    private readonly Random _random;
     private int _fromLastLearn = 0;
 
     private double _gamma = 0.99;
@@ -31,11 +32,13 @@ public class Bot : IBot {
     
     
     public Bot(int id, string workingDirectory = null) {
-        
-        _policyNet = JsonSaver.Load<NeuralNetwork>(NetworkFile) ?? 
+
+        workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
+        WorkingDirectory = workingDirectory;
+        _policyNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, PolicyNetwork)) ?? 
                      new NeuralNetwork(59, 256, 256, 300);
         
-        _valueNet = JsonSaver.Load<NeuralNetwork>(ValueNetwork) ??
+        _valueNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, ValueNetwork)) ??
                     new NeuralNetwork(59, 256, 256, 1);
         
         this.Id = id;
@@ -151,7 +154,12 @@ public class Bot : IBot {
     }
     
     private void OnProcessExit(object sender, EventArgs e) {
-        JsonSaver.Save(_policyNet, NetworkFile);
-        JsonSaver.Save(_valueNet, ValueNetwork);
+        JsonSaver.Save(_policyNet, PathCombiner(WorkingDirectory, PolicyNetwork));
+        JsonSaver.Save(_valueNet, PathCombiner(WorkingDirectory, ValueNetwork));
+    }
+    
+    private static string PathCombiner(string baseName, string fileName) {
+        if (baseName[^1] != '/') baseName += '/';
+        return baseName + fileName;
     }
 }

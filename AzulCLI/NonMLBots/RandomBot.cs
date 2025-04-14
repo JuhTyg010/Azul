@@ -9,21 +9,23 @@ namespace NonML {
     public class RandomBot : IBot {
         public int Id { get; private set; }
         public string WorkingDirectory { get; private set; }
-
         
-        private Random random;
+        private readonly Random _random;
 
 
         public RandomBot(int id, string workingDirectory = null) {
-            random = new Random();
+            _random = new Random();
             Id = id;
+            
+            workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
+            WorkingDirectory = workingDirectory;
         }
 
         public string DoMove(Azul.Board board) {
 
             var possibleMoves = board.GetValidMoves();
             
-            Move option = possibleMoves[random.Next(possibleMoves.Length)];
+            Move option = possibleMoves[_random.Next(possibleMoves.Length)];
             
             return $"{option.plateId} {option.tileId} {option.bufferId}";
 
@@ -39,7 +41,7 @@ namespace NonML {
                 }
             }
 
-            return $"{possiblePositions[random.Next(possiblePositions.Count)]}";
+            return $"{possiblePositions[_random.Next(possiblePositions.Count)]}";
         }
 
         public int GetId() => Id;

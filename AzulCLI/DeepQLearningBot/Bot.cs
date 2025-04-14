@@ -20,9 +20,9 @@ public class Bot : IBot {
     private Random random;
     private Dictionary<int, int> result;
     public Bot(int id, string workingDirectory = null) {
-        /*DQNSetting setting = new DQNSetting(1,1,1,1,1,1,1,1);
-        JsonSaver.Save(setting, settingFile);
-        throw new NotImplementedException();*/
+        
+        workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
+        WorkingDirectory = workingDirectory;
         
         Console.WriteLine("Constructor Called");
         settings = JsonSaver.Load<DQNSetting>(settingFile);

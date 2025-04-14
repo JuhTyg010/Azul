@@ -12,6 +12,9 @@ public class HeuristicBot : IBot {
     public HeuristicBot(int id, string workingDirectory = null) {
         _random = new Random();
         this.Id = id;
+        
+        workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
+        WorkingDirectory = workingDirectory;
     }
 
     public string DoMove(Azul.Board board) {

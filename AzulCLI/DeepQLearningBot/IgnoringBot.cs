@@ -19,6 +19,10 @@ public class IgnoringBot : IBot{
     private Random _random;
     public bool SaveThis = false;
     public IgnoringBot(int id, string workingDirectory = null) {
+        
+        workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
+        WorkingDirectory = workingDirectory;
+        
         _settings = JsonSaver.Load<DQNSetting>(SettingFile) ?? 
                    new DQNSetting(300,199,300,30,1,0.95,0.01,0.8);
         
