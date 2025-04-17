@@ -10,6 +10,7 @@ namespace Azul {
         public const int PlateVolume = 4;
         public const int EmptyCell = -1;
         public const int FloorSize = 7;
+        public const int BufferCount = WallDimension;
         public static readonly Move DefaultMove = new Move(-1,-1,-1);
     }
 

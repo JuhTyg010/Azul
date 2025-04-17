@@ -244,7 +244,7 @@ namespace Azul {
         /// <param name="id"> id of player from which perspective it is</param>
         /// <returns> array of doubles representing game state</returns>
         public double[] EncodeBoardState(int id) {
-            int stateSize = 59;    //59 -> all data
+            int stateSize = 60;    //all data
             double[] state = new double[stateSize];
 
             //for plates takes max 10
@@ -254,8 +254,8 @@ namespace Azul {
             // center plate
             state[9] = EncodePlateData(Center);
             state[10] = Center.isFirst ? 0 : 1;
-
-            int index = 11;
+            state[11] = Players.Length;
+            int index = 12;
             index = AddPlayerData(index, state, Players[id]);
             
             foreach (Player p in Players) {
@@ -301,12 +301,12 @@ namespace Azul {
         /// <param name="state">State from method calculates</param>
         /// <param name="move">Move that is applied to the move</param>
         /// <returns> Array of doubles representing state after move </returns>
-        public double[] GetNextState(double[] state, Move move) {
+        public static double[] GetNextState(double[] state, Move move) {
             double[] nextState = (double[]) state.Clone();
 
             int countOfTiles = 0;
             //remove from plate
-            if (move.PlateId != Plates.Length) {
+            if (move.PlateId != PlateCount(state)) {
                 
                 //clear the plate
                 nextState[move.PlateId] = 0;
@@ -402,7 +402,7 @@ namespace Azul {
         /// </summary>
         /// <param name="plateData"> specifies tiles on the plate</param>
         /// <returns>int representing plate data</returns>
-        public int EncodePlateData(int[] plateData) {
+        public static int EncodePlateData(int[] plateData) {
             int encoded = 0;
             for (int i = 0; i < plateData.Length; i++) {
                 encoded += (int) Math.Pow(EncodeBase, i) * plateData[i];
@@ -415,7 +415,7 @@ namespace Azul {
         /// </summary>
         /// <param name="tile"> tile representing buffer data</param>
         /// <returns>int representing specific buffer data</returns>
-        public int EncodeBufferData(Tile tile) {
+        public static int EncodeBufferData(Tile tile) {
             return EncodeBufferData(new int[] {tile.Id , tile.Count});
         }
 
@@ -424,7 +424,7 @@ namespace Azul {
         /// </summary>
         /// <param name="arrData"> array representing data of the buffer</param>
         /// <returns>int representing specific buffer data</returns>
-        public int EncodeBufferData(int[] arrData) {
+        public static int EncodeBufferData(int[] arrData) {
             return arrData[0] + 1 + (arrData[1] + 1) * 6;
         }
 
@@ -433,7 +433,7 @@ namespace Azul {
         /// </summary>
         /// <param name="encoded"> value representing data</param>
         /// <returns>array of ints representing buffer data</returns>
-        public int[] DecodeBufferData(int encoded) {
+        public static int[] DecodeBufferData(int encoded) {
             int first = (encoded % 6) - 1;
             int second = (encoded / 6) - 1;
             return new int[] {first, second};
@@ -444,7 +444,7 @@ namespace Azul {
         /// </summary>
         /// <param name="encoded">value representing specific plate data </param>
         /// <returns>array of ints representing tiles and ich count on the plate</returns>
-        public int[] DecodePlateData(int encoded) {
+        public static int[] DecodePlateData(int encoded) {
             int[] arr = new int[Globals.TypeCount];
             for (int i = 0; i < Globals.TypeCount; i++) {
                 arr[i] = encoded % EncodeBase;
@@ -499,6 +499,11 @@ namespace Azul {
             }
             bufferIds.Add(Globals.WallDimension);
             return bufferIds.ToArray();
+        }
+
+        private static int PlateCount(double[] state) {
+            int playerCount = (int) state[11];
+            return playerCount * 2 + 1;
         }
 
         private void StateLogData(int plateId, int tileId, int bufferId) {

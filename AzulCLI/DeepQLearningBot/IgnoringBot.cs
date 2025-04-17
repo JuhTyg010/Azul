@@ -59,7 +59,7 @@ public class IgnoringBot : IBot{
         double reward = CalculateReward(state, bestAction, board);
         
         Logger.WriteLine($"Move: {DecodeAction(bestAction)} reward: {reward}");
-        var nextState = board.GetNextState(state, DecodeToMove(bestAction));
+        var nextState = Board.GetNextState(state, DecodeToMove(bestAction));
 
         _replayBuffer.Add(state, bestAction, reward, nextState, true);
         _settings.FromLastBatch++;
@@ -117,7 +117,7 @@ public class IgnoringBot : IBot{
                 }
             }
             
-            double[] ourNextState = board.GetNextState(replay.NextState, opponentPredicted);
+            double[] ourNextState = Board.GetNextState(replay.NextState, opponentPredicted);
             double[] ourNextQValues = _targetNet.Predict(ourNextState);
 
             // Update the Q-value for the taken action
@@ -136,10 +136,10 @@ public class IgnoringBot : IBot{
         double reward = 0;
         Move move = DecodeToMove(action);
         if (move.BufferId == Globals.WallDimension) return -10;
-        var nextState = board.GetNextState(state, move);
+        var nextState = Board.GetNextState(state, move);
         int takenCount = move.PlateId == board.Plates.Length 
-            ? board.DecodePlateData((int) state[9])[move.TileId]
-            : board.DecodePlateData((int) state[move.PlateId])[move.TileId];
+            ? Board.DecodePlateData((int) state[9])[move.TileId]
+            : Board.DecodePlateData((int) state[move.PlateId])[move.TileId];
         
         int col = board.FindColInRow(move.BufferId, move.TileId);
         var addedAfterFilled = board.Players[board.CurrentPlayer].AddedPointsAfterFilled(move.BufferId, col);
@@ -163,7 +163,7 @@ public class IgnoringBot : IBot{
 
         reward += inSameCol;
         
-        if (board.DecodeBufferData((int) nextState[11 + move.BufferId])[1] == move.BufferId + 1) {
+        if (Board.DecodeBufferData((int) nextState[11 + move.BufferId])[1] == move.BufferId + 1) {
             //reward += takenCount * .5;
             reward += 1 + .3 * takenCount;
             reward += 2 * addedAfterFilled;
