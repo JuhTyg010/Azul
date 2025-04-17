@@ -129,35 +129,35 @@ public class Trainer {
     public static double CalculateReward(Move move, double[] state, Board board) {
         double reward = 0;
                               
-      if (move.bufferId == Globals.WALL_DIMENSION) return -10;
+      if (move.BufferId == Globals.WallDimension) return -10;
       var nextState = board.GetNextState(state, move);
-      int takenCount = move.plateId == board.Plates.Length 
-          ? board.DecodePlateData((int) state[9])[move.tileId]
-          : board.DecodePlateData((int) state[move.plateId])[move.tileId];
+      int takenCount = move.PlateId == board.Plates.Length 
+          ? board.DecodePlateData((int) state[9])[move.TileId]
+          : board.DecodePlateData((int) state[move.PlateId])[move.TileId];
       
-      int col = board.FindColInRow(move.bufferId, move.tileId);
-      var addedAfterFilled = board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
+      int col = board.FindColInRow(move.BufferId, move.TileId);
+      var addedAfterFilled = board.Players[board.CurrentPlayer].AddedPointsAfterFilled(move.BufferId, col);
       
       
       
       var wall = board.Players[board.CurrentPlayer].wall;
-      var inSameCol = Globals.WALL_DIMENSION - Enumerable
+      var inSameCol = Globals.WallDimension - Enumerable
           .Range(0, wall.GetLength(0))
-          .Count(row => wall[row, col] == Globals.EMPTY_CELL);
+          .Count(row => wall[row, col] == Globals.EmptyCell);
      
       var sameType = Enumerable.Range(0, wall.GetLength(0))
           .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-              .Select(column => wall[row, column])).Count(value => value == move.tileId);
+              .Select(column => wall[row, column])).Count(value => value == move.TileId);
       
       var empty = Enumerable.Range(0, wall.GetLength(0))
           .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-              .Select(column => wall[row, column])).Count(value => value == Globals.EMPTY_CELL);
-      var filled = (Globals.WALL_DIMENSION * Globals.WALL_DIMENSION) - empty; 
+              .Select(column => wall[row, column])).Count(value => value == Globals.EmptyCell);
+      var filled = (Globals.WallDimension * Globals.WallDimension) - empty; 
       reward -= filled;
 
       reward += inSameCol;
       
-      if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
+      if (board.DecodeBufferData((int) nextState[11 + move.BufferId])[1] == move.BufferId + 1) {
           //reward += takenCount * .5;
           reward += 1 + .3 * takenCount;
           reward += 2 * addedAfterFilled;
@@ -192,9 +192,9 @@ public class Trainer {
     }
     
     public static int EncodeMove(Move move) {
-        int actionId = move.bufferId;
-        actionId += 60 * move.tileId;
-        actionId += 6 * move.plateId;
+        int actionId = move.BufferId;
+        actionId += 60 * move.TileId;
+        actionId += 6 * move.PlateId;
         return actionId;
     }
     
@@ -202,33 +202,33 @@ public class Trainer {
     
     public static int GainIfPlayed(Move possibleMove, Azul.Board board) {
             int gain = 0;
-            if (possibleMove.bufferId >= Globals.WALL_DIMENSION) {
+            if (possibleMove.BufferId >= Globals.WallDimension) {
                 return -10;
             }
             Player me = board.Players[board.CurrentPlayer];
-            int bufferSize = possibleMove.bufferId + 1;
-            Tile buffTile = me.GetBufferData(possibleMove.bufferId);
-            Plate p = possibleMove.plateId < board.Plates.Length ? board.Plates[possibleMove.plateId] : board.Center;
-            int toFill = p.TileCountOfType(possibleMove.tileId);
-            if (buffTile.id == possibleMove.tileId) {
-                int toFloor = toFill - (bufferSize - buffTile.count);
+            int bufferSize = possibleMove.BufferId + 1;
+            Tile buffTile = me.GetBufferData(possibleMove.BufferId);
+            Plate p = possibleMove.PlateId < board.Plates.Length ? board.Plates[possibleMove.PlateId] : board.Center;
+            int toFill = p.TileCountOfType(possibleMove.TileId);
+            if (buffTile.Id == possibleMove.TileId) {
+                int toFloor = toFill - (bufferSize - buffTile.Count);
                 if (toFloor >= 0) {
                     gain -= toFloor;
                     int clearGain = 0;
                     if (board.IsAdvanced) {
                         int currGain = 0;
-                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
-                            currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
+                        for (int col = 0; col < Globals.WallDimension; col++) {
+                            currGain = me.AddedPointsAfterFilled(possibleMove.BufferId, col);
                             if(currGain > clearGain) clearGain = currGain;
                         }
                     }
                     else {
-                        int row = possibleMove.bufferId;
+                        int row = possibleMove.BufferId;
                         int col = 0;
-                        for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.PredefinedWall[row, col] == possibleMove.tileId)
+                        for(;col < Globals.WallDimension; col++)
+                            if (board.PredefinedWall[row, col] == possibleMove.TileId)
                                 break;
-                        clearGain = me.CalculatePointsIfFilled(row,col);
+                        clearGain = me.AddedPointsAfterFilled(row,col);
                     }
                     gain += clearGain;
                 }
@@ -240,18 +240,18 @@ public class Trainer {
                     int clearGain = 0;
                     if (board.IsAdvanced) {
                         int currGain = 0;
-                        for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
-                            currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
+                        for (int col = 0; col < Globals.WallDimension; col++) {
+                            currGain = me.AddedPointsAfterFilled(possibleMove.BufferId, col);
                             if(currGain > clearGain) clearGain = currGain;
                         }
                     }
                     else {
-                        int row = possibleMove.bufferId;
+                        int row = possibleMove.BufferId;
                         int col = 0;
-                        for(;col < Globals.WALL_DIMENSION; col++)
-                            if (board.PredefinedWall[row, col] == possibleMove.tileId)
+                        for(;col < Globals.WallDimension; col++)
+                            if (board.PredefinedWall[row, col] == possibleMove.TileId)
                                 break;
-                        clearGain = me.CalculatePointsIfFilled(row,col);
+                        clearGain = me.AddedPointsAfterFilled(row,col);
                     }
                     gain += clearGain;
                 }

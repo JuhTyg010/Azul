@@ -20,7 +20,7 @@ public class HeuristicBot : IBot {
     public string DoMove(Azul.Board board) {
 
         var possibleMoves = board.GetValidMoves();
-        Move option = new Move();
+        Move option = Globals.DefaultMove;
         int bestGain = Int32.MinValue;
         foreach (var possibleMove in possibleMoves) {
             int gain = GainIfPlayed(possibleMove, board);
@@ -29,16 +29,16 @@ public class HeuristicBot : IBot {
                 bestGain = gain;
             }
         }
-        return $"{option.plateId} {option.tileId} {option.bufferId}";
+        return option.ToString();
 
     }
 
     public string Place(Azul.Board board) {
         Player me = board.Players[Id];
-        var row = me.FullBuffers()[0];
+        var row = me.GetFullBuffersIds()[0];
         List<int> possiblePositions = new List<int>();
-        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-            if (PossibleCol(me.wall, row, i, me.GetBufferData(row).id)) {
+        for (int i = 0; i < Globals.WallDimension; i++) {
+            if (PossibleCol(me.wall, row, i, me.GetBufferData(row).Id)) {
                 possiblePositions.Add(i);
             }
         }
@@ -49,43 +49,43 @@ public class HeuristicBot : IBot {
     public void Result(Dictionary<int,int> result) {}
 
     private bool PossibleCol(int[,] wall, int row, int column, int chosenType) {
-        for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+        for (int i = 0; i < Globals.WallDimension; i++) {
             if (wall[i, column] == chosenType) {
                 return false;
             }
         }
 
-        return wall[row, column] == Globals.EMPTY_CELL;
+        return wall[row, column] == Globals.EmptyCell;
     }
     
     private int GainIfPlayed(Move possibleMove, Azul.Board board) {
         int gain = 0;
-        if (possibleMove.bufferId >= Globals.WALL_DIMENSION) return -10;
+        if (possibleMove.BufferId >= Globals.WallDimension) return -10;
         
         Player me = board.Players[Id];
-        int bufferSize = possibleMove.bufferId + 1;
-        Tile buffTile = me.GetBufferData(possibleMove.bufferId);
-        Plate p = possibleMove.plateId < board.Plates.Length ? board.Plates[possibleMove.plateId] : board.Center;
-        int toFill = p.TileCountOfType(possibleMove.tileId);
-        if (buffTile.id == possibleMove.tileId) {
-            int toFloor = toFill - (bufferSize - buffTile.count);
+        int bufferSize = possibleMove.BufferId + 1;
+        Tile buffTile = me.GetBufferData(possibleMove.BufferId);
+        Plate p = possibleMove.PlateId < board.Plates.Length ? board.Plates[possibleMove.PlateId] : board.Center;
+        int toFill = p.TileCountOfType(possibleMove.TileId);
+        if (buffTile.Id == possibleMove.TileId) {
+            int toFloor = toFill - (bufferSize - buffTile.Count);
             if (toFloor >= 0) {
                 gain -= toFloor;
                 int clearGain = 0;
                 if (board.IsAdvanced) {
                     int currGain = 0;
-                    for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
-                        currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
+                    for (int col = 0; col < Globals.WallDimension; col++) {
+                        currGain = me.AddedPointsAfterFilled(possibleMove.BufferId, col);
                         if(currGain > clearGain) clearGain = currGain;
                     }
                 }
                 else {
-                    int row = possibleMove.bufferId;
+                    int row = possibleMove.BufferId;
                     int col = 0;
-                    for(;col < Globals.WALL_DIMENSION; col++)
-                        if (board.PredefinedWall[row, col] == possibleMove.tileId)
+                    for(;col < Globals.WallDimension; col++)
+                        if (board.PredefinedWall[row, col] == possibleMove.TileId)
                             break;
-                    clearGain = me.CalculatePointsIfFilled(row,col);
+                    clearGain = me.AddedPointsAfterFilled(row,col);
                 }
                 gain += clearGain;
             }
@@ -97,18 +97,18 @@ public class HeuristicBot : IBot {
                 int clearGain = 0;
                 if (board.IsAdvanced) {
                     int currGain = 0;
-                    for (int col = 0; col < Globals.WALL_DIMENSION; col++) {
-                        currGain = me.CalculatePointsIfFilled(possibleMove.bufferId, col);
+                    for (int col = 0; col < Globals.WallDimension; col++) {
+                        currGain = me.AddedPointsAfterFilled(possibleMove.BufferId, col);
                         if(currGain > clearGain) clearGain = currGain;
                     }
                 }
                 else {
-                    int row = possibleMove.bufferId;
+                    int row = possibleMove.BufferId;
                     int col = 0;
-                    for(;col < Globals.WALL_DIMENSION; col++)
-                        if (board.PredefinedWall[row, col] == possibleMove.tileId)
+                    for(;col < Globals.WallDimension; col++)
+                        if (board.PredefinedWall[row, col] == possibleMove.TileId)
                             break;
-                    clearGain = me.CalculatePointsIfFilled(row,col);
+                    clearGain = me.AddedPointsAfterFilled(row,col);
                 }
                 gain += clearGain;
             }

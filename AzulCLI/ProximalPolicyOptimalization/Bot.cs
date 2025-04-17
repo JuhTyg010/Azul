@@ -79,7 +79,7 @@ public class Bot : IBot {
         _probs.Add(actionProbs);
         _lastGameRewards.Add(Trainer.CalculateReward(move, state, board));
 
-        return $"{move.plateId} {move.tileId} {move.bufferId}";
+        return move.ToString();
     }
     
     public string Place(Board board) {

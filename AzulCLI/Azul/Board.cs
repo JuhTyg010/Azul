@@ -69,7 +69,7 @@ namespace Azul {
             
             Plates = new Plate[playerCount * 2 + 1];
             for (int i = 0; i < playerCount * 2 + 1; i++) {
-                Plates[i] = new Plate(Globals.TYPE_COUNT);
+                Plates[i] = new Plate(Globals.TypeCount);
             }
 
         }
@@ -82,16 +82,16 @@ namespace Azul {
             Logger.WriteLine(" ");
             Logger.WriteLine("-----------------------------Game start-----------------------------");
 
-            Center = new CenterPlate(Globals.TYPE_COUNT);
-            Storage = new Tiles(Globals.TYPE_COUNT, Globals.TOTAL_TILE_COUNT);
-            _trash = new Tiles(Globals.TYPE_COUNT, 0);
+            Center = new CenterPlate(Globals.TypeCount);
+            Storage = new Tiles(Globals.TypeCount, Globals.TotalTileCount);
+            _trash = new Tiles(Globals.TypeCount, 0);
             
             Players = InitializePlayers(_playerNames.Length, _playerNames);
 
-            PredefinedWall = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-                for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
-                    PredefinedWall[j % Globals.WALL_DIMENSION, (i + j) % Globals.WALL_DIMENSION] = i;
+            PredefinedWall = new int[Globals.WallDimension, Globals.WallDimension];
+            for (int i = 0; i < Globals.WallDimension; i++) {
+                for (int j = 0; j < Globals.WallDimension; j++) {
+                    PredefinedWall[j % Globals.WallDimension, (i + j) % Globals.WallDimension] = i;
                 }
             }
 
@@ -129,7 +129,7 @@ namespace Azul {
         /// <param name="move"> Struct with parameters plateId, typeId, bufferId</param>
         /// <returns>if it's possible to do move from input</returns>
         public bool CanMove(Move move) {
-            return CanMove(move.plateId, move.tileId, move.bufferId);
+            return CanMove(move.PlateId, move.TileId, move.BufferId);
         }
         
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azul {
         /// <param name="move"> Struct with parameters plateId, typeId, bufferId</param>
         /// <returns>if it's possible to do move from input</returns>
         public bool Move(Move move) {
-            return Move(move.plateId, move.tileId, move.bufferId);
+            return Move(move.PlateId, move.TileId, move.BufferId);
         }
     
         /// <summary>
@@ -188,21 +188,21 @@ namespace Azul {
         /// <param name="col">in advanced game specifying column chosen for tile from buffer</param>
         /// <returns> in advanced game returns if it was possible</returns>
         /// <exception cref="IllegalOptionException"> If called in other phase than placing</exception>
-        public bool Calculate(int col = Globals.EMPTY_CELL) {
+        public bool Calculate(int col = Globals.EmptyCell) {
             Logger.WriteLine("Filling:");
             Logger.WriteLine($"Player's data: {Players[CurrentPlayer]}");
             if (Phase != Phase.Placing) {
                 Logger.WriteLine("Invalid Phase");
                 throw new IllegalOptionException("Invalid Phase");
             }
-            int[] fullBuffers = Players[CurrentPlayer].FullBuffers();
+            int[] fullBuffers = Players[CurrentPlayer].GetFullBuffersIds();
 
             if (col < 0 && IsAdvanced) {
                 Logger.WriteLine("invalid col");
                 return false;
             }
             if (!IsAdvanced) {
-                col = FindColInRow(fullBuffers[0], Players[CurrentPlayer].GetBufferData(fullBuffers[0]).id);
+                col = FindColInRow(fullBuffers[0], Players[CurrentPlayer].GetBufferData(fullBuffers[0]).Id);
             }
             bool isFilled = Players[CurrentPlayer].Fill(fullBuffers[0], col);
             
@@ -213,7 +213,7 @@ namespace Azul {
         
         internal void PutToTrash(int typeId, int count) {
 
-            Tiles temp = new Tiles(Globals.TYPE_COUNT, 0);
+            Tiles temp = new Tiles(Globals.TypeCount, 0);
             temp.PutTile(typeId, count);
             _trash.Union(temp);
             Logger.WriteLine($" {count} tiles of type {typeId} put to trash");
@@ -225,7 +225,7 @@ namespace Azul {
         /// <returns> array of possible moves</returns>
         public Move[] GetValidMoves() {
             List<Move> validMoves = new List<Move>();
-            for (int i = 0; i < Globals.TYPE_COUNT; i++) {
+            for (int i = 0; i < Globals.TypeCount; i++) {
                 int[] buffers = GetValidBufferIds(i);
                 int[] plates = GetValidPlateIds(i);
                 foreach (int buffer in buffers) {
@@ -271,7 +271,7 @@ namespace Azul {
          */
         private int AddPlayerData(int startIndex, double[] data, Player player) {
             //buffers
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            for (int i = 0; i < Globals.WallDimension; i++) {
                 var buffer = player.GetBufferData(i);
                 data[startIndex] = EncodeBufferData(buffer);
                 startIndex++;
@@ -284,10 +284,10 @@ namespace Azul {
             startIndex++;
             
             //wall
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            for (int i = 0; i < Globals.WallDimension; i++) {
                 double value = 0;
-                for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
-                    value += player.wall[i,j] != Globals.EMPTY_CELL ? Math.Pow(EncodeBase, j) : 0;
+                for (int j = 0; j < Globals.WallDimension; j++) {
+                    value += player.wall[i,j] != Globals.EmptyCell ? Math.Pow(EncodeBase, j) : 0;
                 }
                 data[startIndex] = value;
                 startIndex++;
@@ -306,15 +306,15 @@ namespace Azul {
 
             int countOfTiles = 0;
             //remove from plate
-            if (move.plateId != Plates.Length) {
+            if (move.PlateId != Plates.Length) {
                 
                 //clear the plate
-                nextState[move.plateId] = 0;
+                nextState[move.PlateId] = 0;
                 //add rest to center
                 var centerBefore = DecodePlateData((int)state[9]);
-                var oldPlateData = DecodePlateData((int)state[move.plateId]);
-                countOfTiles = oldPlateData[move.tileId];
-                oldPlateData[move.tileId] = 0;
+                var oldPlateData = DecodePlateData((int)state[move.PlateId]);
+                countOfTiles = oldPlateData[move.TileId];
+                oldPlateData[move.TileId] = 0;
                 
                 var newCenter = new int[centerBefore.Length];
                 for (int i = 0; i < newCenter.Length; i++) {
@@ -325,8 +325,8 @@ namespace Azul {
             }
             else {
                 var centerPlateData = DecodePlateData((int)state[9]);
-                countOfTiles = centerPlateData[move.tileId];
-                centerPlateData[move.tileId] = 0;
+                countOfTiles = centerPlateData[move.TileId];
+                centerPlateData[move.TileId] = 0;
                 nextState[9] = EncodePlateData(centerPlateData);
                 nextState[10] = 0;  //if is first: 1->0 else: 0->0
             }
@@ -334,19 +334,19 @@ namespace Azul {
             //edit player data
             int index = 11;
             int floorIndex = index + 5;
-            if (move.bufferId != Globals.WALL_DIMENSION) {
-                int inBuffer = DecodeBufferData((int) state[index + move.bufferId])[1];
-                int capacity = move.bufferId + 1;
+            if (move.BufferId != Globals.WallDimension) {
+                int inBuffer = DecodeBufferData((int) state[index + move.BufferId])[1];
+                int capacity = move.BufferId + 1;
                 int afterFilling = Math.Min(inBuffer + countOfTiles, capacity);
-                int newId = inBuffer == 0 ? move.tileId : DecodeBufferData((int) state[index + move.bufferId])[0];
-                nextState[index + move.bufferId] = EncodeBufferData(new int[] { newId, afterFilling });
+                int newId = inBuffer == 0 ? move.TileId : DecodeBufferData((int) state[index + move.BufferId])[0];
+                nextState[index + move.BufferId] = EncodeBufferData(new int[] { newId, afterFilling });
                 if (inBuffer + countOfTiles > capacity) {
                     int toFloor = (inBuffer + countOfTiles) - capacity;
-                    nextState[floorIndex] = Math.Min(Globals.FLOOR_SIZE, state[floorIndex] + toFloor);
+                    nextState[floorIndex] = Math.Min(Globals.FloorSize, state[floorIndex] + toFloor);
                 }
             }
             else {
-                nextState[floorIndex] = Math.Min(Globals.FLOOR_SIZE, state[floorIndex] + countOfTiles);
+                nextState[floorIndex] = Math.Min(Globals.FloorSize, state[floorIndex] + countOfTiles);
             }
 
             nextState[floorIndex + 1] = (int) nextState[10] == (int) state[10] ? 1 : 0;
@@ -362,11 +362,11 @@ namespace Azul {
         /// <exception cref="IllegalOptionException">In advanced game it's not predefined</exception>
         public int FindColInRow(int row, int typeId) {
             if (IsAdvanced) throw new IllegalOptionException("there is no predefined wall in advanced mode");
-            if(row < 0 || row >= Globals.WALL_DIMENSION) return Globals.EMPTY_CELL;
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            if(row < 0 || row >= Globals.WallDimension) return Globals.EmptyCell;
+            for (int i = 0; i < Globals.WallDimension; i++) {
                 if(PredefinedWall[row,i] == typeId) return i;
             }
-            return Globals.EMPTY_CELL;
+            return Globals.EmptyCell;
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azul {
             var data = plate.GetCounts();
             int[] arrData = new int[data.Length];
             foreach (var tile in data) {
-                arrData[tile.id] = tile.count;
+                arrData[tile.Id] = tile.Count;
             }
             return EncodePlateData(arrData);
         }
@@ -416,7 +416,7 @@ namespace Azul {
         /// <param name="tile"> tile representing buffer data</param>
         /// <returns>int representing specific buffer data</returns>
         public int EncodeBufferData(Tile tile) {
-            return EncodeBufferData(new int[] {tile.id , tile.count});
+            return EncodeBufferData(new int[] {tile.Id , tile.Count});
         }
 
         /// <summary>
@@ -445,8 +445,8 @@ namespace Azul {
         /// <param name="encoded">value representing specific plate data </param>
         /// <returns>array of ints representing tiles and ich count on the plate</returns>
         public int[] DecodePlateData(int encoded) {
-            int[] arr = new int[Globals.TYPE_COUNT];
-            for (int i = 0; i < Globals.TYPE_COUNT; i++) {
+            int[] arr = new int[Globals.TypeCount];
+            for (int i = 0; i < Globals.TypeCount; i++) {
                 arr[i] = encoded % EncodeBase;
                 encoded /= EncodeBase;
             }
@@ -459,7 +459,7 @@ namespace Azul {
         /// <returns>true if there is someone with full buffer</returns>
         private bool NextWithFullBuffer() {
             
-            while (!Players[CurrentPlayer].hasFullBuffer()) {
+            while (!Players[CurrentPlayer].HasFullBuffer()) {
                 Logger.WriteLine($"Player {Players[CurrentPlayer].name} has no full buffer");
                 if (Players[CurrentPlayer].ClearFloor()) {
                     Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
@@ -490,14 +490,14 @@ namespace Azul {
         /// <returns>array of ints representing ids of buffers</returns>
         /// <exception cref="IllegalOptionException"> type id in range check</exception>
         private int[] GetValidBufferIds(int typeId) {
-            if(typeId < 0 || typeId >= Globals.TYPE_COUNT) throw new IllegalOptionException("Invalid type");
+            if(typeId < 0 || typeId >= Globals.TypeCount) throw new IllegalOptionException("Invalid type");
             List<int> bufferIds = new List<int>();
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            for (int i = 0; i < Globals.WallDimension; i++) {
                 if (Players[CurrentPlayer].CanPlace(i, typeId)) {
                     bufferIds.Add(i);
                 }
             }
-            bufferIds.Add(Globals.WALL_DIMENSION);
+            bufferIds.Add(Globals.WallDimension);
             return bufferIds.ToArray();
         }
 
@@ -547,15 +547,15 @@ namespace Azul {
         }
 
         private void FillPlates() {
-            if (Storage.TotalTiles() < Globals.PLATE_VOLUME * Plates.Length) {
+            if (Storage.TotalTiles() < Globals.PlateVolume * Plates.Length) {
                 Console.WriteLine("trash to storage");
                 Storage.Union(_trash);
             }
             foreach (var plate in Plates) {
-                plate.SetTiles(Storage.GetRandom(Globals.PLATE_VOLUME));
+                plate.SetTiles(Storage.GetRandom(Globals.PlateVolume));
             }
 
-            Center = new CenterPlate(Globals.TYPE_COUNT);
+            Center = new CenterPlate(Globals.TypeCount);
             FisrtTaken = false;
         }
 
@@ -643,6 +643,10 @@ namespace Azul {
         }
     }
     
+    
+    /// <summary>
+    /// Event class with board to access data who invoked event end requires move
+    /// </summary>
     public class MyEventArgs : EventArgs {
         public Board Board;
 

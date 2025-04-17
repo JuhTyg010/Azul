@@ -43,9 +43,9 @@ namespace PPO {
         }
 
         private int EncodeMove(Move move) {
-            int actionId = move.bufferId;
-            actionId += 60 * move.tileId;
-            actionId += 6 * move.plateId;
+            int actionId = move.BufferId;
+            actionId += 60 * move.TileId;
+            actionId += 6 * move.PlateId;
             return actionId;
         }
 

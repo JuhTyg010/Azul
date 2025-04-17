@@ -17,6 +17,16 @@ public class NeuralNetwork {
     [JsonInclude] private double[] biases2;
     private Random random = new Random();
     
+    
+    /// <summary>
+    /// Internal Constructor used to load using saved vectors and matrices
+    /// </summary>
+    /// <param name="weights1">first layer matrix</param>
+    /// <param name="weightsHidden2">hidden matrix</param>
+    /// <param name="weights2">second layer matrix</param>
+    /// <param name="biases1">first hidden vector</param>
+    /// <param name="biasesHidden2">second hidden vector</param>
+    /// <param name="biases2">output vector</param>
     [JsonConstructor]
     public NeuralNetwork(double[][] weights1, double[][] weightsHidden2, double[][] weights2,
         double[] biases1, double[] biasesHidden2, double[] biases2) {
@@ -28,6 +38,14 @@ public class NeuralNetwork {
         this.biases2 = biases2;
     }
     
+    /// <summary>
+    /// Constructor used at start of the training
+    /// </summary>
+    /// <param name="inputSize"> size of the game state vector</param>
+    /// <param name="hiddenSize1"> first hidden layer</param>
+    /// <param name="hiddenSize2">second hidden layer</param>
+    /// <param name="outputSize">output vector representing action space</param>
+    
     public NeuralNetwork(int inputSize, int hiddenSize1, int hiddenSize2, int outputSize) {
         weights1 = InitializeMatrix(inputSize, hiddenSize1);
         biases1 = InitializeVector(hiddenSize1);
@@ -37,6 +55,12 @@ public class NeuralNetwork {
         weights2 = InitializeMatrix(hiddenSize2, outputSize);
         biases2 = InitializeVector(outputSize);
     }
+    
+    /// <summary>
+    /// Function to predict move probabilities based on the game state
+    /// </summary>
+    /// <param name="input">vector representing game state</param>
+    /// <returns> probabilities for each action</returns>
     public double[] Predict(double[] input) {//ReLU cause there can't be negative probability
         double[] hidden1 = ReLU(Add(Dot(input, weights1), biases1));
         double[] hidden2 = ReLU(Add(Dot(hidden1, weightsHidden2), biasesHidden2));
@@ -44,6 +68,12 @@ public class NeuralNetwork {
         return Softmax(output);
     }
     
+    /// <summary>
+    /// Function used to train/edit all layers of the network based on the new data
+    /// </summary>
+    /// <param name="inputs">array of state vectors</param>
+    /// <param name="targets">array of wanted vectors</param>
+    /// <param name="learningRate">coefficient determining the speed of the learning process</param>
     public void Train(double[][] inputs, double[][] targets, double learningRate) {
         for (int i = 0; i < inputs.Length; i++) {
             double[] input = inputs[i];
@@ -66,6 +96,15 @@ public class NeuralNetwork {
         }
     }
 
+    /// <summary>
+    /// Function used to learn/edit all layers of the neural network
+    /// </summary>
+    /// <param name="states"> array of vectors representing states</param>
+    /// <param name="actions">array of actions took in corresponding states</param>
+    /// <param name="advantages">array of advantages determined by the rewards based on the move in state</param>
+    /// <param name="oldActionProbs">array of vectors representing probabilities when move vas played</param>
+    /// <param name="epsilon"> clamping limit range </param>
+    /// <param name="learningRate"> coefficient determining the speed of the learning process</param>
     public void TrainPPO(double[][] states, int[] actions, double[] advantages,
                          double[][] oldActionProbs, double epsilon, double learningRate) {
         for (int i = 0; i < states.Length; i++) {
@@ -104,7 +143,6 @@ public class NeuralNetwork {
             UpdateWeightsAndBiases(state, hidden1, hidden2, outputError, hidden2Error, hidden1Error, learningRate);
         }
     }
-    
     private void UpdateWeightsAndBiases(double[] input, double[] hidden1, double[] hidden2,
         double[] outputError, double[] hidden2Error, double[] hidden1Error, double learningRate) {
         
@@ -146,9 +184,11 @@ public class NeuralNetwork {
     }
 
     private void ClipWeights(double[][] weights, double min, double max) {
-        for (int i = 0; i < weights.Length; i++)
-            for (int j = 0; j < weights[i].Length; j++)
+        Parallel.For(0, weights.Length, i => {
+            Parallel.For(0, weights[i].Length, j => {
                 weights[i][j] = Math.Clamp(weights[i][j], min, max);
+            });
+        });
     }
 
     private double[] Dot(double[] vector, double[][] matrix) {
@@ -220,8 +260,9 @@ public class NeuralNetwork {
 
     private double[] ReLU(double[] vector) {
         double[] result = new double[vector.Length];
-        for (int i = 0; i < vector.Length; i++)
+        Parallel.For(0, vector.Length, i => {
             result[i] = Math.Max(0, vector[i]);
+        });
         return result;
     }
 
@@ -246,12 +287,11 @@ public class NeuralNetwork {
         return vector;
     }
 
-    private double[] Activate(double[] vector) {
-        for (int i = 0; i < vector.Length; i++)
-            vector[i] = Math.Max(0, vector[i]);
-        return vector;
-    }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>hard copy of the current NeuralNetwork</returns>
     public NeuralNetwork Clone() {
         var clone = new NeuralNetwork(weights1.Length, biases1.Length, biasesHidden2.Length, biases2.Length);
 

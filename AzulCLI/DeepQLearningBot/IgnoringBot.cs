@@ -136,35 +136,35 @@ public class IgnoringBot : IBot{
     private double CalculateReward(double[] state, int action, Board board) {
         double reward = 0;
         Move move = DecodeToMove(action);
-        if (move.bufferId == Globals.WALL_DIMENSION) return -10;
+        if (move.BufferId == Globals.WallDimension) return -10;
         var nextState = board.GetNextState(state, move);
-        int takenCount = move.plateId == board.Plates.Length 
-            ? board.DecodePlateData((int) state[9])[move.tileId]
-            : board.DecodePlateData((int) state[move.plateId])[move.tileId];
+        int takenCount = move.PlateId == board.Plates.Length 
+            ? board.DecodePlateData((int) state[9])[move.TileId]
+            : board.DecodePlateData((int) state[move.PlateId])[move.TileId];
         
-        int col = board.FindColInRow(move.bufferId, move.tileId);
-        var addedAfterFilled = board.Players[board.CurrentPlayer].CalculatePointsIfFilled(move.bufferId, col);
+        int col = board.FindColInRow(move.BufferId, move.TileId);
+        var addedAfterFilled = board.Players[board.CurrentPlayer].AddedPointsAfterFilled(move.BufferId, col);
         
         
         
         var wall = board.Players[board.CurrentPlayer].wall;
-        var inSameCol = Globals.WALL_DIMENSION - Enumerable
+        var inSameCol = Globals.WallDimension - Enumerable
             .Range(0, wall.GetLength(0))
-            .Count(row => wall[row, col] == Globals.EMPTY_CELL);
+            .Count(row => wall[row, col] == Globals.EmptyCell);
        
         var sameType = Enumerable.Range(0, wall.GetLength(0))
             .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-                .Select(column => wall[row, column])).Count(value => value == move.tileId);
+                .Select(column => wall[row, column])).Count(value => value == move.TileId);
         
         var empty = Enumerable.Range(0, wall.GetLength(0))
             .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-                .Select(column => wall[row, column])).Count(value => value == Globals.EMPTY_CELL);
-        var filled = (Globals.WALL_DIMENSION * Globals.WALL_DIMENSION) - empty; 
+                .Select(column => wall[row, column])).Count(value => value == Globals.EmptyCell);
+        var filled = (Globals.WallDimension * Globals.WallDimension) - empty; 
         reward -= filled;
 
         reward += inSameCol;
         
-        if (board.DecodeBufferData((int) nextState[11 + move.bufferId])[1] == move.bufferId + 1) {
+        if (board.DecodeBufferData((int) nextState[11 + move.BufferId])[1] == move.BufferId + 1) {
             //reward += takenCount * .5;
             reward += 1 + .3 * takenCount;
             reward += 2 * addedAfterFilled;
@@ -227,15 +227,15 @@ public class IgnoringBot : IBot{
     }
 
     private int EncodeAction(Move move) {
-        int actionId = move.bufferId;
-        actionId += 60 * move.tileId;
-        actionId += 6 * move.plateId;
+        int actionId = move.BufferId;
+        actionId += 60 * move.TileId;
+        actionId += 6 * move.PlateId;
         return actionId;
     }
     
     private string DecodeAction(int actionId) {
         Move move = DecodeToMove(actionId);
-        return $"{move.plateId} {move.tileId} {move.bufferId}";
+        return move.ToString();
     }
     
     private double Max(double[] values) {

@@ -27,16 +27,16 @@ namespace NonML {
             
             Move option = possibleMoves[_random.Next(possibleMoves.Length)];
             
-            return $"{option.plateId} {option.tileId} {option.bufferId}";
+            return option.ToString();
 
         }
 
         public string Place(Azul.Board board) {
             Player me = board.Players[Id];
-            var row = me.FullBuffers()[0];
+            var row = me.GetFullBuffersIds()[0];
             List<int> possiblePositions = new List<int>();
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-                if (PossibleCol(me.wall, row, i, me.GetBufferData(row).id)) {
+            for (int i = 0; i < Globals.WallDimension; i++) {
+                if (PossibleCol(me.wall, row, i, me.GetBufferData(row).Id)) {
                     possiblePositions.Add(i);
                 }
             }
@@ -49,13 +49,13 @@ namespace NonML {
         public void Result(Dictionary<int,int> result) {}
 
         private bool PossibleCol(int[,] wall, int row, int column, int chosenType) {
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            for (int i = 0; i < Globals.WallDimension; i++) {
                 if (wall[i, column] == chosenType) {
                     return false;
                 }
             }
 
-            return wall[row, column] == Globals.EMPTY_CELL;
+            return wall[row, column] == Globals.EmptyCell;
         }
     }
 }
