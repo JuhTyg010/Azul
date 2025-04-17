@@ -16,7 +16,7 @@ namespace Azul {
         public Tiles Storage { get; private set; }
         public int CurrentPlayer { get; private set; }
         public Phase Phase { get; private set; }
-        public int[,] PredefinedWall { get; private set; }
+        public static int[,] PredefinedWall { get; private set; } = InitPredefinedWall(Globals.WallDimension);
         public bool IsAdvanced { get; private set; }
         public bool FisrtTaken;
         
@@ -39,7 +39,6 @@ namespace Azul {
             Storage = other.Storage;
             CurrentPlayer = other.CurrentPlayer;
             Phase = other.Phase;
-            PredefinedWall = other.PredefinedWall;
             IsAdvanced = other.IsAdvanced;
             FisrtTaken = other.FisrtTaken;
             _trash = other._trash;
@@ -87,14 +86,7 @@ namespace Azul {
             _trash = new Tiles(Globals.TypeCount, 0);
             
             Players = InitializePlayers(_playerNames.Length, _playerNames);
-
-            PredefinedWall = new int[Globals.WallDimension, Globals.WallDimension];
-            for (int i = 0; i < Globals.WallDimension; i++) {
-                for (int j = 0; j < Globals.WallDimension; j++) {
-                    PredefinedWall[j % Globals.WallDimension, (i + j) % Globals.WallDimension] = i;
-                }
-            }
-
+            
             CurrentPlayer = 0;
             Phase = Phase.Taking;
             _isGameOver = false;
@@ -204,7 +196,7 @@ namespace Azul {
             if (!IsAdvanced) {
                 col = FindColInRow(fullBuffers[0], Players[CurrentPlayer].GetBufferData(fullBuffers[0]).Id);
             }
-            bool isFilled = Players[CurrentPlayer].Fill(fullBuffers[0], col);
+            bool isFilled = Players[CurrentPlayer].Fill(fullBuffers[0], col, this);
             
             NextMove();
             
@@ -295,6 +287,47 @@ namespace Azul {
             return startIndex;
         }
 
+        public static double[] GetMyPlayerData(double[] state) {
+            double[] playerData = new double[12];
+            Array.Copy(state, 12, playerData, 0, 12);
+            return playerData;
+        }
+        
+        public static Player DecodePlayer(double[] playerData) {
+            Buffer[] buffers = new Buffer[Globals.BufferCount];
+            for (int i = 0; i < Globals.BufferCount; i++) {
+                var data = DecodeBufferData((int) playerData[i]);   //0-id, 1-count
+                buffers[i] = new Buffer(i + 1);
+                buffers[i].Assign(data[0], data[1]);
+            }
+            List<int> floor = new List<int>();
+            for(int i = 0; i < playerData[5]; i++) floor.Add(0);
+            bool isFirst = (int) playerData[6] == 1;
+            double[] wallData = new double[Globals.WallDimension];
+            Array.Copy(playerData, 7, wallData, 0, Globals.WallDimension);
+            var wall = DecodeWall(wallData);
+            Player player = new Player(buffers, floor, isFirst, wall);
+            return player;
+
+        }
+
+        private static int[,] DecodeWall(double[] encodedWall) {
+            int[,] wall = new int[Globals.WallDimension, Globals.WallDimension];
+            for (int i = 0; i < Globals.WallDimension; i++) {
+                var value = encodedWall[i];
+                for (int j = Globals.WallDimension - 1; j >= 0; j--) {
+                    double power = Math.Pow(EncodeBase, j);
+                    if (value >= power) {
+                        wall[i, j] = PredefinedWall[i,j]; // You decide what to fill in
+                        value -= power;
+                    } else {
+                        wall[i, j] = Globals.EmptyCell;
+                    }
+                }
+            }
+            return wall;
+        }
+
         /// <summary>
         /// This method shows how the board would look like if move was made in state
         /// </summary>
@@ -360,8 +393,7 @@ namespace Azul {
         /// <param name="typeId">id of tile type</param>
         /// <returns>index of the column</returns>
         /// <exception cref="IllegalOptionException">In advanced game it's not predefined</exception>
-        public int FindColInRow(int row, int typeId) {
-            if (IsAdvanced) throw new IllegalOptionException("there is no predefined wall in advanced mode");
+        public static int FindColInRow(int row, int typeId) {
             if(row < 0 || row >= Globals.WallDimension) return Globals.EmptyCell;
             for (int i = 0; i < Globals.WallDimension; i++) {
                 if(PredefinedWall[row,i] == typeId) return i;
@@ -461,7 +493,7 @@ namespace Azul {
             
             while (!Players[CurrentPlayer].HasFullBuffer()) {
                 Logger.WriteLine($"Player {Players[CurrentPlayer].name} has no full buffer");
-                if (Players[CurrentPlayer].ClearFloor()) {
+                if (Players[CurrentPlayer].ClearFloor(this)) {
                     Logger.WriteLine($"Player {Players[CurrentPlayer].name} will start next turn");
                     _nextFirst = CurrentPlayer;
                 }
@@ -501,7 +533,7 @@ namespace Azul {
             return bufferIds.ToArray();
         }
 
-        private static int PlateCount(double[] state) {
+        public static int PlateCount(double[] state) {
             int playerCount = (int) state[11];
             return playerCount * 2 + 1;
         }
@@ -568,7 +600,7 @@ namespace Azul {
             var players = new Player[playerCount];
 
             for (int i = 0; i < playerCount; i++) {
-                players[i] = new Player(playerNames[i], this);
+                players[i] = new Player(playerNames[i]);
                 players[i].OnWin += OnWin;
             }
 
@@ -637,6 +669,16 @@ namespace Azul {
 
         private void WritePlayerData() {
             
+        }
+
+        private static int[,] InitPredefinedWall(int dim) {
+            var predefinedWall = new int[dim, dim];
+            for (int i = 0; i < dim; i++) {
+                for (int j = 0; j < dim; j++) {
+                    predefinedWall[j % dim, (i + j) % dim] = i;
+                }
+            }
+            return predefinedWall;
         }
         
         protected virtual void OnNextTakingMove(MyEventArgs e) {

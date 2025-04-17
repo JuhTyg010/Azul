@@ -49,7 +49,7 @@ public class EnvWrapper {
             (actionId, actionProbs) = agent.SelectAction(currentObs, validMoves);
         }
         var move = Trainer.DecodeAction(actionId);
-        double reward = Trainer.CalculateReward(move, currentObs, board);
+        double reward = Trainer.CalculateReward(move, currentObs, board.CurrentPlayer);
         bool legal = board.Move(move);
         if (!legal) {
             reward -= 5; // penalize illegal

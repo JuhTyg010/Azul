@@ -13,7 +13,6 @@ namespace Azul {
         public bool isFirst { get; private set; }
         
         private Buffer[] buffers;
-        private Board game;
         
         public event EventHandler? OnWin;
 
@@ -57,11 +56,15 @@ namespace Azul {
         
             return Math.Max(colPoints, rowPoints); // at least one is 1
         }
-    
 
-        internal Player(string name, Board game) {
+        internal Player(Buffer[] buffers, List<int> floor, bool isFirst, int[,] wall) {
+            this.buffers = buffers;
+            this.floor = floor;
+            this.isFirst = isFirst;
+            this.wall = wall;
+        }
+        internal Player(string name) {
             this.name = name;
-            this.game = game;
             pointCount = 0;
             wall = new int[Globals.WallDimension, Globals.WallDimension];
             floor = new List<int>();
@@ -147,7 +150,7 @@ namespace Azul {
             return listOfFull.ToArray();
         }
 
-        internal bool Fill(int row, int col) {
+        internal bool Fill(int row, int col, Board board) {
             if (!buffers[row].IsFull()) {
                 Logger.WriteLine("buffer is not full");
                 return false;
@@ -159,7 +162,7 @@ namespace Azul {
             }
             wall[row, col] = buffers[row].TypeId;
             pointCount += AddedPointsAfterFilled(row, col);
-            game.PutToTrash(buffers[row].TypeId, buffers[row].Size - 1);    //one goes on wall
+            board.PutToTrash(buffers[row].TypeId, buffers[row].Size - 1);    //one goes on wall
             
             Logger.WriteLine(
                 $"successfully placed on wall new points: {pointCount}");
@@ -173,7 +176,17 @@ namespace Azul {
             return true;
         }
 
-        internal bool ClearFloor() {
+        public static bool Fill(int row, int col, ref Player p) {
+            if (!p.buffers[row].IsFull()) return false;
+            if (!p.possibleColumn(col, p.buffers[row].TypeId)) return false;
+            
+            p.wall[row, col] = p.buffers[row].TypeId;
+            p.pointCount += p.AddedPointsAfterFilled(row, col);
+            p.buffers[row].Clear();
+            return true;
+        }
+
+        internal bool ClearFloor(Board board) {
             //negative points are -1,-1,-2,-2,-2,-3,-3
             int[] toRemove = { 0, -1, -2, -4, -6, -8, -11, -14 };
             bool isFirst = false;
@@ -186,7 +199,7 @@ namespace Azul {
                     isFirst = true;
                 }
                 else {
-                    game.PutToTrash(floor[i],1);
+                    board.PutToTrash(floor[i],1);
                 }
             }
             floor.Clear();

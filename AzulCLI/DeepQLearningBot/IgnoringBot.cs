@@ -141,7 +141,7 @@ public class IgnoringBot : IBot{
             ? Board.DecodePlateData((int) state[9])[move.TileId]
             : Board.DecodePlateData((int) state[move.PlateId])[move.TileId];
         
-        int col = board.FindColInRow(move.BufferId, move.TileId);
+        int col = Board.FindColInRow(move.BufferId, move.TileId);
         var addedAfterFilled = board.Players[board.CurrentPlayer].AddedPointsAfterFilled(move.BufferId, col);
         
         

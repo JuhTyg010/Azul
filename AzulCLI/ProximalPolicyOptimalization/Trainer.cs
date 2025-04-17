@@ -10,7 +10,7 @@ public class Trainer {
     public const string PolicyNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/policy_network.json";
     public const string ValueNetworkPath = "/home/juhtyg/Desktop/Azul/AI_Data/PPO/value_network.json";
     static PPOAgent agent = new PPOAgent(stateSize: 199, actionSize: 300);
-    static Board board = new Board(botsCount,new string[]{"a","b"}, false, LogPath);
+    Board board = new Board(botsCount,new string[]{"a","b"}, false, LogPath);
     static List<double[]> states = new List<double[]>();
     static List<int> actions = new List<int>();
     static List<double> rewards = new List<double>();
@@ -60,7 +60,7 @@ public class Trainer {
         agent.SaveValue(ValueNetworkPath);
     }
 
-    private static void OnNextPlacingTurn(object? sender, MyEventArgs e) {
+    private void OnNextPlacingTurn(object? sender, MyEventArgs e) {
         var game = e.Board;
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
@@ -78,7 +78,7 @@ public class Trainer {
         }
     }
 
-    private static void OnNextTakingTurn(object? sender, MyEventArgs e) {
+    private void OnNextTakingTurn(object? sender, MyEventArgs e) {
         var game = e.Board;
         double[] state = game.EncodeBoardState(game.CurrentPlayer);
         var validActions = game.GetValidMoves();
@@ -97,7 +97,7 @@ public class Trainer {
         
         states.Add(state);
         actions.Add(action.Item1);
-        eachPlayerRewards[game.CurrentPlayer].Add(CalculateReward(DecodeAction(action.Item1), state, board));
+        eachPlayerRewards[game.CurrentPlayer].Add(CalculateReward(DecodeAction(action.Item1), state, game.CurrentPlayer));
         wasReevaluated = false;
         probs.Add(action.Item2);
         if (!game.Move(DecodeAction(action.Item1))) {
@@ -113,7 +113,7 @@ public class Trainer {
         return new Move(tileId, plate, buffer);
     }
 
-    private static void AddFloorPenalty() {
+    private void AddFloorPenalty() {
         //TODO: separate moves and states based on player and punish moves based on forcing to floor
         for (int i = 0; i < botsCount; i++) {
             AddValueInRange(-board.Players[i].floor.Count * 4, ref eachPlayerRewards[i]);
@@ -126,60 +126,129 @@ public class Trainer {
         }
     }
 
-    public static double CalculateReward(Move move, double[] state, Board board) {
-        double reward = 0;
-                              
-      if (move.BufferId == Globals.WallDimension) return -10;
-      var nextState = board.GetNextState(state, move);
-      int takenCount = move.PlateId == board.Plates.Length 
-          ? board.DecodePlateData((int) state[9])[move.TileId]
-          : board.DecodePlateData((int) state[move.PlateId])[move.TileId];
-      
-      int col = board.FindColInRow(move.BufferId, move.TileId);
-      var addedAfterFilled = board.Players[board.CurrentPlayer].AddedPointsAfterFilled(move.BufferId, col);
-      
-      
-      
-      var wall = board.Players[board.CurrentPlayer].wall;
-      var inSameCol = Globals.WallDimension - Enumerable
-          .Range(0, wall.GetLength(0))
-          .Count(row => wall[row, col] == Globals.EmptyCell);
-     
-      var sameType = Enumerable.Range(0, wall.GetLength(0))
-          .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-              .Select(column => wall[row, column])).Count(value => value == move.TileId);
-      
-      var empty = Enumerable.Range(0, wall.GetLength(0))
-          .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-              .Select(column => wall[row, column])).Count(value => value == Globals.EmptyCell);
-      var filled = (Globals.WallDimension * Globals.WallDimension) - empty; 
-      reward -= filled;
-
-      reward += inSameCol;
-      
-      if (board.DecodeBufferData((int) nextState[11 + move.BufferId])[1] == move.BufferId + 1) {
-          //reward += takenCount * .5;
-          reward += 1 + .3 * takenCount;
-          reward += 2 * addedAfterFilled;
-          reward += sameType;
-      }
-      else {
-          reward += 1;
-          reward += addedAfterFilled * .5;
-          //reward +=  takenCount;
-      }
-
-      var newOnFloor = nextState[16] - state[16];
-      
-      if(newOnFloor * 2 >= addedAfterFilled) reward -= newOnFloor;
-      else reward += newOnFloor * 2;
-      
-      //TODO: maybe connect to addedAfterFilled
-      //check if first from center
-      if(Math.Abs(nextState[10] - state[10]) > .9) reward -= .1;
-      
-      return reward;
+    public static double CalculateReward(Move move, double[] state, int playerId, int rewardFunId = 0) {
+        switch (rewardFunId) {
+            case 0: return RewardFunHowMuchTilesTook(move, state, playerId);
+            case 1: return RewardFunWallFromLastMove(move, state, playerId);
+            case 2: return RewardFunWallWithThisMove(move, state, playerId);
+            case 3: return RewardFunLookIfNextOneHasBetterMove(move, state, playerId);
+            default: return RewardFunHowMuchTilesTook(move, state, playerId);
+        }
     }
+
+
+    private static double RewardFunHowMuchTilesTook(Move move, double[] state, int playerId) {
+        double reward = 0;
+        
+        if (move.BufferId == Globals.BufferCount) return -10;
+        
+        var nextState = Board.GetNextState(state, move);
+        var oldMe = Board.DecodePlayer(Board.GetMyPlayerData(state));
+        var newMe = Board.DecodePlayer(Board.GetMyPlayerData(nextState));
+        int takenCount = move.PlateId == Board.PlateCount(state) 
+            ? Board.DecodePlateData((int) state[9])[move.TileId]
+            : Board.DecodePlateData((int) state[move.PlateId])[move.TileId];
+
+        //filled buffer
+        if (oldMe.GetFullBuffersIds().Length != newMe.GetFullBuffersIds().Length) {
+            reward += 5;
+            reward -= 2 * (newMe.floor.Count - oldMe.floor.Count);
+        }
+        else reward += takenCount;
+        
+        return reward;
+    }
+
+    private static double RewardFunWallFromLastMove(Move move, double[] state, int playerId) {
+        double reward = 0;
+        const double fullAdd = 1;
+        const double fullBonus = 2;
+        const double nonAdd = .5;
+        const double nonBonus = .5;
+        const double floorMultiplier = 2;
+                              
+        if (move.BufferId == Globals.BufferCount) return -10;
+      
+        var nextState = Board.GetNextState(state, move);
+        
+        var oldMe = Board.DecodePlayer(Board.GetMyPlayerData(state));
+        var newMe = Board.DecodePlayer(Board.GetMyPlayerData(nextState));
+        
+        int col = Board.FindColInRow(move.BufferId, move.TileId);
+        var addedPointsAfterFilled = newMe.AddedPointsAfterFilled(move.BufferId, col);
+        
+        var wall = newMe.wall;
+        
+        var empty = Enumerable.Range(0, wall.GetLength(0))
+            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+                .Select(column => wall[row, column])).Count(value => value == Globals.EmptyCell);
+        
+        var filled = (Globals.WallDimension * Globals.WallDimension) - empty;
+        reward -= filled; //to handle that added points are higher when more filled
+        
+        if (oldMe.GetFullBuffersIds().Length != newMe.GetFullBuffersIds().Length) {
+            reward += fullAdd;
+            reward += fullBonus * addedPointsAfterFilled;
+            
+            reward -= floorMultiplier * (newMe.floor.Count - oldMe.floor.Count);        }
+        else {
+            reward += nonAdd;
+            reward += nonBonus * addedPointsAfterFilled;
+        }
+
+        return reward;
+    }
+
+    private static double RewardFunWallWithThisMove(Move move, double[] state, int playerId) {
+        double reward = 0;
+        const double fullAdd = 1;
+        const double fullBonus = 2;
+        const double nonAdd = .5;
+        const double nonBonus = .5;
+        const double floorMultiplier = 2;
+                              
+        if (move.BufferId == Globals.BufferCount) return -10;
+        
+        var nextState = Board.GetNextState(state, move);
+        
+        var oldMe = Board.DecodePlayer(Board.GetMyPlayerData(state));
+        var newMe = Board.DecodePlayer(Board.GetMyPlayerData(nextState));
+        //to check new move
+        foreach (var row in oldMe.GetFullBuffersIds()) {
+            var column = Board.FindColInRow(row, oldMe.GetBufferData(row).Id);
+            Player.Fill(row, column, ref newMe);
+        }
+        var col = Board.FindColInRow(move.BufferId, move.TileId);
+        var wall = newMe.wall;
+        
+        var empty = Enumerable.Range(0, wall.GetLength(0))
+            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+                .Select(column => wall[row, column])).Count(value => value == Globals.EmptyCell);
+        
+        var filled = (Globals.WallDimension * Globals.WallDimension) - empty;
+        reward -= filled; //to handle that added points are higher when more filled
+        
+        var addedPointsAfterFilled = newMe.AddedPointsAfterFilled(move.BufferId, col);
+        
+        if (oldMe.GetFullBuffersIds().Length != newMe.GetFullBuffersIds().Length) {
+            reward += fullAdd;
+            reward += fullBonus * addedPointsAfterFilled;
+            
+            reward -= floorMultiplier * (newMe.floor.Count - oldMe.floor.Count);        }
+        else {
+            reward += nonAdd;
+            reward += nonBonus * addedPointsAfterFilled;
+        }
+        
+        return reward;
+    }
+
+    private static double RewardFunLookIfNextOneHasBetterMove(Move move, double[] state, int playerId) {
+        double reward = 0;
+        return reward;
+    }
+    
+    
 
     private static void ClearData() {
         for (int i = 0; i < botsCount; i++) {
@@ -226,7 +295,7 @@ public class Trainer {
                         int row = possibleMove.BufferId;
                         int col = 0;
                         for(;col < Globals.WallDimension; col++)
-                            if (board.PredefinedWall[row, col] == possibleMove.TileId)
+                            if (Board.PredefinedWall[row, col] == possibleMove.TileId)
                                 break;
                         clearGain = me.AddedPointsAfterFilled(row,col);
                     }
@@ -249,7 +318,7 @@ public class Trainer {
                         int row = possibleMove.BufferId;
                         int col = 0;
                         for(;col < Globals.WallDimension; col++)
-                            if (board.PredefinedWall[row, col] == possibleMove.TileId)
+                            if (Board.PredefinedWall[row, col] == possibleMove.TileId)
                                 break;
                         clearGain = me.AddedPointsAfterFilled(row,col);
                     }

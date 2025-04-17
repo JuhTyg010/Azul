@@ -77,7 +77,7 @@ public class Bot : IBot {
         _states.Add(state);
         _actions.Add(Trainer.EncodeMove(move));
         _probs.Add(actionProbs);
-        _lastGameRewards.Add(Trainer.CalculateReward(move, state, board));
+        _lastGameRewards.Add(Trainer.CalculateReward(move, state, board.CurrentPlayer));
 
         return move.ToString();
     }

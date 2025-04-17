@@ -83,7 +83,7 @@ public class HeuristicBot : IBot {
                     int row = possibleMove.BufferId;
                     int col = 0;
                     for(;col < Globals.WallDimension; col++)
-                        if (board.PredefinedWall[row, col] == possibleMove.TileId)
+                        if (Board.PredefinedWall[row, col] == possibleMove.TileId)
                             break;
                     clearGain = me.AddedPointsAfterFilled(row,col);
                 }
@@ -106,7 +106,7 @@ public class HeuristicBot : IBot {
                     int row = possibleMove.BufferId;
                     int col = 0;
                     for(;col < Globals.WallDimension; col++)
-                        if (board.PredefinedWall[row, col] == possibleMove.TileId)
+                        if (Board.PredefinedWall[row, col] == possibleMove.TileId)
                             break;
                     clearGain = me.AddedPointsAfterFilled(row,col);
                 }
