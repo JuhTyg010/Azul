@@ -7,7 +7,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using randomBot;
 
 namespace AzulCLI;
 
@@ -44,7 +43,7 @@ public class CLIGameManager {
             for (int i = 0; i < playerSetup.Length; i++) {
                 if (playerSetup[i].Split("_")[0] == "B") {
                     string type = playerSetup[i].Split("_")[1];
-                    if(type == "random") botPlayers.Add(new randomBot.Bot(i));
+                    if(type == "random") botPlayers.Add(new NonML.RandomBot(i));
                     else if(type == "PPO") botPlayers.Add(new PPO.Bot(i));
                     else botPlayers.Add(BotFactory.CreateBot(type, i));
                 }
@@ -52,7 +51,7 @@ public class CLIGameManager {
             botIds = new int[botPlayers.Count];
                 
             for (int i = 0; i < botPlayers.Count; i++){
-                botIds[i] = botPlayers[i].GetId();
+                botIds[i] = botPlayers[i].Id;
             }
                 
             string[] names = new string[playerSetup.Length];
@@ -94,7 +93,7 @@ public class CLIGameManager {
     }
 
     private static void OnNextTakingTurn(object? sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         
         Console.WriteLine($" Next turn {game.Players[curr].name} (press enter to go)");
@@ -136,7 +135,7 @@ public class CLIGameManager {
     }
 
     private static void OnNextPlacingTurn(object? sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         
         if(printTable)
@@ -145,7 +144,7 @@ public class CLIGameManager {
         
         Console.WriteLine($" Next turn in filling {game.Players[curr].name} (press enter to go)");
         if(!botIds.Contains(curr)) Console.ReadLine();
-        if (!game.isAdvanced) {
+        if (!game.IsAdvanced) {
             game.Calculate();
         }
         else {
@@ -173,7 +172,7 @@ public class CLIGameManager {
     private static int FindBot(int botId, List<IBot> botPlayers) {
         for (int i = 0; i < botPlayers.Count; i++) {
             
-            if (botPlayers[i].GetId() == botId) {
+            if (botPlayers[i].Id == botId) {
                 return i;
             }
         }

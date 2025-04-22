@@ -9,17 +9,17 @@ namespace PPO {
         private NeuralNetwork valueNet;
         private Random random;
         public double gamma { get; private set; } = 0.9;
-        private double epsilon = 0.2;
+        private double epsilon = 0.3;
         private double learningRate = 0.001;
 
         public PPOAgent(int stateSize, int actionSize) {
-            policyNet = new NeuralNetwork(stateSize, 128, actionSize);
-            valueNet = new NeuralNetwork(stateSize, 128, 1);
+            policyNet = new NeuralNetwork(stateSize, 256,256, actionSize);
+            valueNet = new NeuralNetwork(stateSize, 128,128, 1);
             random = new Random();
         }
 
         public (int, double[]) SelectAction(double[] state, Move[] validMoves) {
-            double[] actionProbs = Softmax(policyNet.Predict(state),10);
+            double[] actionProbs = Softmax(policyNet.Predict(state));
             int[] validActions = EncodeMoves(validMoves);
             // Mask invalid actions by setting their probability to zero
             for (int i = 0; i < actionProbs.Length; i++)
@@ -43,16 +43,16 @@ namespace PPO {
         }
 
         private int EncodeMove(Move move) {
-            int actionId = move.bufferId;
-            actionId += 60 * move.tileId;
-            actionId += 6 * move.plateId;
+            int actionId = move.BufferId;
+            actionId += 60 * move.TileId;
+            actionId += 6 * move.PlateId;
             return actionId;
         }
 
         public void Train(List<double[]> states, List<int> actions, List<double> rewards, List<double[]> oldProbs) {
 
-            policyNet.TrainPPO(states.ToArray(), actions.ToArray(), rewards.ToArray(), oldProbs.ToArray(), epsilon,
-                learningRate);
+            policyNet.TrainPPO(states.ToArray(), actions.ToArray(), rewards.ToArray(), oldProbs.ToArray(), 
+                epsilon, learningRate);
             //SaveSystem.JsonSaver.Save(policyNet, "/home/juhtyg/Desktop/Azul/AI_Data/PPO/network.json");
         }
 
@@ -94,18 +94,16 @@ namespace PPO {
         }
 
         private int SampleAction(double[] probs) {
-            //double randomValue = random.NextDouble();
-            double cumulative = 0;
-            int index = 0;
+            double commutative = random.NextDouble();
+            double prob = 0;
             for (int i = 0; i < probs.Length; i++) {
-                //cumulative += probs[i];
-                if (probs[i] > cumulative) {
-                    cumulative = probs[i];
-                    index = i;
+                prob += probs[i];
+                if (prob > commutative) {
+                    return i;
                 }
             }
 
-            return index;
+            return 0;
         }
     }
 }

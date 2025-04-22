@@ -41,32 +41,41 @@ namespace Azul {
             return new Tiles(outCounts);
         }
 
+        /// <summary>
+        /// Method to get number of specific type of the tile
+        /// </summary>
+        /// <param name="id"> id to identify tile type</param>
+        /// <returns>number of tiles with type id equal to id</returns>
         public int TileCountOfType(int id) {
             if (id < 0 || id > counts.Length - 1) return 0;
             return counts[id];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>number of tiles in instance</returns>
         public int TotalTiles() {
             return totalCount;
         }
 
-        public Tile GetTiles(int id) {
+        internal Tile TakeTiles(int id) {
             int count = counts[id];
             counts[id] = 0;
             totalCount -= count;
             return new Tile(id, count);
         }
 
-        public void PutTile(int id, int count) {
+        internal void PutTile(int id, int count) {
             counts[id] += count;
             totalCount += count;
         }
 
-        public void PutTile(Tile tile) {
-            PutTile(tile.id, tile.count);
+        internal void PutTile(Tile tile) {
+            PutTile(tile.Id, tile.Count);
         }
 
-        public void Union(Tiles other) {
+        internal void Union(Tiles other) {
             // in case one of the counts wasn't initialized yet, if none was it won't do anything 
             if (counts.Length == 0) counts = new int[other.counts.Length];
             if (other.counts.Length == 0) other.counts = new int[counts.Length];

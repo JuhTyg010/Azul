@@ -84,13 +84,13 @@ public static class Writer {
 
     private static void PrintPlayerRow(Tile buffer, int bufferSize, int[] wallRow) {
         string buff = "";
-        if (buffer.id == Globals.EMPTY_CELL) {
+        if (buffer.Id == Globals.EmptyCell) {
             for (int i = 0; i < bufferSize; i++) {
                 buff += EmptyPlace;
             }
         } else { 
-            buff = new string(buffer.id.ToString()[0], buffer.count);
-            for (int i = buffer.count; i < bufferSize; i++) {
+            buff = new string(buffer.Id.ToString()[0], buffer.Count);
+            for (int i = buffer.Count; i < bufferSize; i++) {
                 buff += EmptyPlace;
             }
         }
@@ -98,9 +98,9 @@ public static class Writer {
         string wall = "";
         foreach (var val in wallRow) {
 
-            if (val == Globals.EMPTY_CELL) {
+            if (val == Globals.EmptyCell) {
                 wall += EmptyPlace;
-            } else if (val == Globals.FIRST) {
+            } else if (val == Globals.First) {
                 wall += "f";
             } else {
                 wall += val.ToString();
@@ -112,11 +112,11 @@ public static class Writer {
     }
 
     private static void PrintPlayerFloor(Player player) {
-        for (int i = 0; i < player.FloorSize(); i++) {
+        for (int i = 0; i < Globals.FloorSize; i++) {
             if (i >= player.floor.Count) {
                 Console.Write(EmptyPlace);
             } else {
-                if(player.floor[i] == Globals.FIRST) Console.Write("F");
+                if(player.floor[i] == Globals.First) Console.Write("F");
                 else Console.Write(player.floor[i]);
             }
         }

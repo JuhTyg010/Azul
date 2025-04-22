@@ -13,35 +13,41 @@ namespace Azul {
         public bool isFirst { get; private set; }
         
         private Buffer[] buffers;
-        private Board game;
         
         public event EventHandler? OnWin;
 
+        /// <summary>
+        /// Function to calculate how much points are given when filled to wall
+        /// </summary>
+        /// <param name="row">row of filling</param>
+        /// <param name="col">column of filling</param>
+        /// <param name="wall"> wall for which we are counting </param>
+        /// <returns> number of point awarded when filled </returns>
         public static int CalculatePointReward(int row, int col, int[,] wall) {
             int colPoints = 0;
             int rowPoints = 0;
             int colTmp = col;
-            while (colTmp >= 0 && wall[row, colTmp] != Globals.EMPTY_CELL || colTmp == col) {
+            while (colTmp >= 0 && wall[row, colTmp] != Globals.EmptyCell || colTmp == col) {
                 colPoints++;
                 colTmp--;
             }
 
             colTmp = col + 1;
             while (colTmp < wall.GetLength(1) &&
-                   wall[row, colTmp] != Globals.EMPTY_CELL) {
+                   wall[row, colTmp] != Globals.EmptyCell) {
                 
                 colPoints++;
                 colTmp++;
             }
             
             int rowTmp = row;
-            while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EMPTY_CELL || row == rowTmp) {
+            while (rowTmp >= 0 && wall[rowTmp, col] != Globals.EmptyCell || row == rowTmp) {
                 rowPoints++;
                 rowTmp--;
             }
             rowTmp = row + 1;
             while (rowTmp < wall.GetLength(0) &&
-                   wall[rowTmp, col] != Globals.EMPTY_CELL) {
+                   wall[rowTmp, col] != Globals.EmptyCell) {
                 rowPoints++;
                 rowTmp++;
             }
@@ -50,19 +56,23 @@ namespace Azul {
         
             return Math.Max(colPoints, rowPoints); // at least one is 1
         }
-    
 
-        public Player(string name, Board game) {
+        internal Player(Buffer[] buffers, List<int> floor, bool isFirst, int[,] wall) {
+            this.buffers = buffers;
+            this.floor = floor;
+            this.isFirst = isFirst;
+            this.wall = wall;
+        }
+        internal Player(string name) {
             this.name = name;
-            this.game = game;
             pointCount = 0;
-            wall = new int[Globals.WALL_DIMENSION, Globals.WALL_DIMENSION];
+            wall = new int[Globals.WallDimension, Globals.WallDimension];
             floor = new List<int>();
             List<Buffer> bufferList = new List<Buffer>();
             for (int i = 0; i < wall.GetLength(0); i++) {
                 bufferList.Add(new Buffer(i + 1));
                 for (int j = 0; j < wall.GetLength(1); j++) {
-                    wall[i, j] = Globals.EMPTY_CELL;
+                    wall[i, j] = Globals.EmptyCell;
                 }
             }
 
@@ -70,7 +80,7 @@ namespace Azul {
         }
 
         public bool CanPlace(int row, int tileId) {
-            if (row == Globals.WALL_DIMENSION) return true;
+            if (row == Globals.WallDimension) return true;
             if (!possibleRow(row, tileId)) return false;
             if (!possibleBuffer(row, tileId)) return false;
             
@@ -78,18 +88,18 @@ namespace Azul {
         }
         
         public bool CanPlace(int row, Tile tile) {
-            return CanPlace(row, tile.id);
+            return CanPlace(row, tile.Id);
         }
         
         
-        public bool Place(int row, Tile tile, bool isFirst = false) {   //row can be Globals.WALL_DIMENSION for floor
+        internal bool Place(int row, Tile tile, bool isFirst = false) {   //row can be Globals.WALL_DIMENSION for floor
             
             bool canPlace = CanPlace(row, tile);
             if (canPlace) {
-                if (row == Globals.WALL_DIMENSION) {
+                if (row == Globals.WallDimension) {
                     Logger.WriteLine("is on floor");
-                    for (int i = 0; i < tile.count; i++) {
-                        if (floor.Count < Globals.FLOOR_SIZE) floor.Add(tile.id);
+                    for (int i = 0; i < tile.Count; i++) {
+                        if (floor.Count < Globals.FloorSize) floor.Add(tile.Id);
                         else break;
                     }
                     return true;
@@ -97,26 +107,26 @@ namespace Azul {
                 
                 if (isFirst) {
                     this.isFirst = true;
-                    floor.Add(Globals.FIRST);
+                    floor.Add(Globals.First);
                 }
-                int toFloor = tile.count - buffers[row].FreeToFill();
+                int toFloor = tile.Count - buffers[row].FreeToFill();
                 buffers[row].Assign(tile);
         
-                if (floor.Count < Globals.FLOOR_SIZE) {
+                if (floor.Count < Globals.FloorSize) {
                     for (int i = 0; i < toFloor; i++) {
-                        floor.Add(tile.id);
-                        if (floor.Count == Globals.FLOOR_SIZE) {
+                        floor.Add(tile.Id);
+                        if (floor.Count == Globals.FloorSize) {
                             break;
                         }
                     }
                 }
             }
             else {
-                if (!possibleRow(row, tile.id)) {
+                if (!possibleRow(row, tile.Id)) {
                     Logger.WriteLine("invalid row");
                     return false;
                 }
-                if (!possibleBuffer(row, tile.id)) {
+                if (!possibleBuffer(row, tile.Id)) {
                     Logger.WriteLine("invalid buffer");
                     return false;
                 }
@@ -127,11 +137,11 @@ namespace Azul {
         public Tile GetBufferData(int row) {
             Debug.Assert(row < buffers.Length && row >= 0, 
                 "You're asking for out of range");
-            return new Tile(buffers[row].typeId, buffers[row].filled);
+            return new Tile(buffers[row].TypeId, buffers[row].CurrentlyFilled);
         }
 
-        public int[] FullBuffers() {
-            if (!hasFullBuffer()) return new int[]{};
+        public int[] GetFullBuffersIds() {
+            if (!HasFullBuffer()) return new int[]{};
             List<int> listOfFull = new List<int>();
             for (int i = 0; i < buffers.Length; i++) {
                 if(buffers[i].IsFull()) listOfFull.Add(i);
@@ -140,19 +150,19 @@ namespace Azul {
             return listOfFull.ToArray();
         }
 
-        public bool Fill(int row, int col) {
+        internal bool Fill(int row, int col, Board board) {
             if (!buffers[row].IsFull()) {
                 Logger.WriteLine("buffer is not full");
                 return false;
             }
 
-            if (!possibleColumn(col, buffers[row].typeId)) {
+            if (!possibleColumn(col, buffers[row].TypeId)) {
                 Logger.WriteLine("invalid column to fill");
                 return false;
             }
-            wall[row, col] = buffers[row].typeId;
-            pointCount += calculatePoints(row, col);
-            game.PutToTrash(buffers[row].typeId, buffers[row].size - 1);    //one goes on wall
+            wall[row, col] = buffers[row].TypeId;
+            pointCount += AddedPointsAfterFilled(row, col);
+            board.PutToTrash(buffers[row].TypeId, buffers[row].Size - 1);    //one goes on wall
             
             Logger.WriteLine(
                 $"successfully placed on wall new points: {pointCount}");
@@ -166,7 +176,17 @@ namespace Azul {
             return true;
         }
 
-        public bool ClearFloor() {
+        public static bool Fill(int row, int col, ref Player p) {
+            if (!p.buffers[row].IsFull()) return false;
+            if (!p.possibleColumn(col, p.buffers[row].TypeId)) return false;
+            
+            p.wall[row, col] = p.buffers[row].TypeId;
+            p.pointCount += p.AddedPointsAfterFilled(row, col);
+            p.buffers[row].Clear();
+            return true;
+        }
+
+        internal bool ClearFloor(Board board) {
             //negative points are -1,-1,-2,-2,-2,-3,-3
             int[] toRemove = { 0, -1, -2, -4, -6, -8, -11, -14 };
             bool isFirst = false;
@@ -175,23 +195,19 @@ namespace Azul {
                 $"Player {name} is clearing the floor new points {pointCount}");
 
             for (int i = 0; i < floor.Count; i++) {
-                if (floor[i] == Globals.FIRST) {
+                if (floor[i] == Globals.First) {
                     isFirst = true;
                 }
                 else {
-                    game.PutToTrash(floor[i],1);
+                    board.PutToTrash(floor[i],1);
                 }
             }
             floor.Clear();
 
             return isFirst;
         }
-
-        public int FloorSize() {
-            return Globals.FLOOR_SIZE;
-        }
     
-        public bool hasFullBuffer() {
+        public bool HasFullBuffer() {
             foreach (var buffer in buffers) {
                 if (buffer.IsFull()) return true;
             }
@@ -204,19 +220,19 @@ namespace Azul {
             if(player.wall != wall) return false;
             return true;
         }
-        public void CalculateBonusPoints() {
+        internal void CalculateBonusPoints() {
             int fullColumns = 0;
             int fullRows = 0;
             int fullTypes = 0;
-            int[] totalCounts = new int[Globals.TYPE_COUNT];
+            int[] totalCounts = new int[Globals.TypeCount];
 
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
+            for (int i = 0; i < Globals.WallDimension; i++) {
                 bool isEmptyInColumn = false;
                 bool isEmptyInRow = false;
-                for (int j = 0; j < Globals.WALL_DIMENSION; j++) {
-                    if (wall[i, j] == Globals.EMPTY_CELL) isEmptyInRow = true;
-                    if (wall[j, i] == Globals.EMPTY_CELL) isEmptyInColumn = true;
-                    if (wall[i, j] != Globals.EMPTY_CELL) totalCounts[wall[i, j]]++;
+                for (int j = 0; j < Globals.WallDimension; j++) {
+                    if (wall[i, j] == Globals.EmptyCell) isEmptyInRow = true;
+                    if (wall[j, i] == Globals.EmptyCell) isEmptyInColumn = true;
+                    if (wall[i, j] != Globals.EmptyCell) totalCounts[wall[i, j]]++;
                 }
 
                 if (!isEmptyInColumn) fullColumns++;
@@ -224,7 +240,7 @@ namespace Azul {
             }
 
             foreach (var type in totalCounts) {
-                if (type == Globals.WALL_DIMENSION) fullTypes++;
+                if (type == Globals.WallDimension) fullTypes++;
             }
             
             pointCount += fullColumns * 7;
@@ -237,21 +253,21 @@ namespace Azul {
             
             string player = $"{name} points: {pointCount}\n";
             string board = "";
-            for (int i = 0; i < Globals.WALL_DIMENSION; i++) {
-                board += new String(' ', (Globals.WALL_DIMENSION - i)*2);
+            for (int i = 0; i < Globals.WallDimension; i++) {
+                board += new String(' ', (Globals.WallDimension - i)*2);
                 board += $" {buffers[i]} -> ";
                 for (int j = 0; j < wall.GetLength(1); j++) {
                     board += $"{wall[i, j].ToString()} ";
                 }
                 board += "\n";
             }
-            player += board.Replace($"{Globals.EMPTY_CELL}", "_");
+            player += board.Replace($"{Globals.EmptyCell}", "_");
             string floorStr = "floor: ";
             for (int i = 0; i < floor.Count; i++) {
                 floorStr += $" {floor[i].ToString()}";
             }
             floorStr += "\n";
-            player += floorStr.Replace($"{Globals.FIRST}", "F");
+            player += floorStr.Replace($"{Globals.First}", "F");
             return player;
         }
 
@@ -264,8 +280,8 @@ namespace Azul {
         }
 
         private bool possibleBuffer(int bufferId, int typeId) {
-            if (buffers[bufferId].typeId == Globals.EMPTY_CELL ||
-                buffers[bufferId].typeId == typeId) return true;
+            if (buffers[bufferId].TypeId == Globals.EmptyCell ||
+                buffers[bufferId].TypeId == typeId) return true;
             return false;
         }
 
@@ -277,10 +293,13 @@ namespace Azul {
             return true;
         }
 
-        public int CalculatePointsIfFilled(int row, int col) {
-            return Player.CalculatePointReward(row, col, wall);
-        }
-        private int calculatePoints(int row, int col) {
+        /// <summary>
+        /// Function to calculate how much points are given when filled to wall
+        /// </summary>
+        /// <param name="row">row of filling</param>
+        /// <param name="col">column of filling</param>
+        /// <returns> number of point awarded when filled </returns>
+        public int AddedPointsAfterFilled(int row, int col) {
             return Player.CalculatePointReward(row, col, wall);
         }
 
@@ -288,7 +307,7 @@ namespace Azul {
             for (int row = 0; row < wall.GetLength(0); row++) {
                 var isSpace = false;
                 for (int col = 0; col < wall.GetLength(1); col++) {
-                    if (wall[row, col] == Globals.EMPTY_CELL) {
+                    if (wall[row, col] == Globals.EmptyCell) {
                         isSpace = true;
                         break;
                     }

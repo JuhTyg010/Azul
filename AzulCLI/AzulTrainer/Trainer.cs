@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using CommandLine;
 using Azul;
 using DeepQLearningBot;
-using PPO;
 
 namespace AzulTrainer;
 
@@ -15,58 +11,58 @@ public class Options {
     [Option('l', "list-of-players", Required = false, Default = "deep rand", HelpText = "list of which player is which")]
     public string ListOfIncoming { get; set; } = "deep rand";
     
-    [Option('o', "output-file", Required = false, Default = "azul_log.txt", HelpText = "log file")]
-    public string LogFile { get; set; } = "log.txt";
+    [Option('d', "working-dir", Required = false, Default = "/home/", HelpText = "working directory to save files")]
+    public string WorkingDir { get; set; } = "/home/";
     
 }
 
 public class Trainer {
+    
+    private const string LogDir = "Logs";
+    private const string ScoreFileName = "score.txt";
+    
     const int Balancer = 10;
     private static IBot[] _bots = null!;
     
-    private const string NetworkFile = "/home/juhtyg/Desktop/Azul/AI_Data/IgnoringBot/network.json";
-
+    private static string _scorePath = "score.txt";
     
     public static void Main(string[] args) {
-        PPO.Trainer.Run();
+        //PPO.Trainer.Run();
 
-        /*Parser.Default.ParseArguments<Options>(args).WithParsed(o => {
+        Parser.Default.ParseArguments<Options>(args).WithParsed(o => {
             string[] botNames = o.ListOfIncoming.Split(' ');
             int count = botNames.Length;
             string[] names = new string[count];
+            
+            _scorePath = PathCombiner(o.WorkingDir, ScoreFileName);
             _bots = new IBot[count];
             for (int i = 0; i < count; i++) {
                 string type = botNames[i];
-                if(type == "random") _bots[i] = new randomBot.Bot(i);
-                else _bots[i] = BotFactory.CreateBot(type, i);
+                if (NonML.BotFactory.WasRecognised(type)) {
+                    _bots[i] = NonML.BotFactory.CreateBot(type, i, o.WorkingDir);
+                }
+                else if (type == "PPO") _bots[i] = new PPO.Bot(i, o.WorkingDir);
+                else if(type == "ignoring") _bots[i] = new IgnoringBot(i, o.WorkingDir);
                 names[i] = botNames[i] + i;
             }
 
-            int lastWinner = 0;
             while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
-                string logFile = LogFileName(o.LogFile + "/log");
-                lastWinner = PlayGame(count, names, o.Mode == 1, logFile);
-                if (_bots[lastWinner] is IgnoringBot ignoringBot) {
-                    NeuralNetwork nc;
-                    nc = ignoringBot.GetNetwork();
-                    Console.WriteLine("Updating network...");
-                    foreach (var bot in _bots) {
-                        if (bot is IgnoringBot iBot) {
-                            iBot.LoadNetwork(nc);
-                        }
-                    }
+                string logPath = PathCombiner(o.WorkingDir, LogDir);
+
+                if (!Path.Exists(logPath)) Directory.CreateDirectory(logPath);
+                
+                string logFile = LogFileName(logPath + "/log");
+                var scores = PlayGame(count, names, o.Mode == 1, logFile);
+                foreach (var bot in _bots) {
+                    bot.Result(scores);
                 }
             }
-            if (_bots[lastWinner] is IgnoringBot ignorantBot) {
-                ignorantBot.SaveThis = true;
-            }
-
         });//*/
 
 
     }
 
-    private static int PlayGame(int count, string[] names, bool mode, string logFile) {
+    private static Dictionary<int,int> PlayGame(int count, string[] names, bool mode, string logFile) {
         Board game = new Board(count, names, mode, logFile);
         game.NextTakingMove += OnNextTakingTurn!;
         game.NextPlacingMove += OnNextPlacingTurn!;
@@ -74,7 +70,7 @@ public class Trainer {
         Console.WriteLine("Game started");
         game.StartGame();
             
-        while (game.Phase != Phase.GameOver) Thread.Sleep(5);//ish secure 
+        while (game.Phase != Phase.GameOver); 
 
         Console.WriteLine("Game over");
         Player[] players = game.Players.ToArray();
@@ -90,12 +86,21 @@ public class Trainer {
         for (int i = 0; i < players.Length; i++) {
             Console.WriteLine($" {i + 1}.: {players[i].name} : points {players[i].pointCount}");
         }
+        string score = "";
+        foreach (var player in game.Players) score += $"{player.pointCount} ";
+        File.AppendAllText(_scorePath, score + Environment.NewLine);
+        
+        Dictionary<int,int> playerScores = new Dictionary<int,int>();
+        for (int i = 0; i < players.Length; i++) {
+            playerScores.Add(i, players[i].pointCount);
+        }
+        
 
-        return index;
+        return playerScores;
     }
 
     private static void OnNextTakingTurn(object sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
         var botMove = _bots[curr].DoMove(game);
@@ -105,12 +110,12 @@ public class Trainer {
     }
 
     private static void OnNextPlacingTurn(object sender, MyEventArgs e) {
-        var game = e.board;
+        var game = e.Board;
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
         Console.WriteLine($"Player {player.name} : placing");
         
-        if (!game.isAdvanced) {
+        if (!game.IsAdvanced) {
             game.Calculate();
         }
         else {
@@ -135,5 +140,10 @@ public class Trainer {
             fileName = $"{baseName}_{index++}.txt";
         }
         return fileName;
+    }
+
+    private static string PathCombiner(string baseName, string fileName) {
+        if (baseName[^1] != '/') baseName += '/';
+        return baseName + fileName;
     }
 }

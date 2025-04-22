@@ -3,13 +3,15 @@ using System.IO;
 
 namespace Azul {
     public static class Globals {
-        public const int FIRST = 999;
-        public const int TYPE_COUNT = 5;
-        public const int WALL_DIMENSION = 5;
-        public const int TOTAL_TILE_COUNT = 100;
-        public const int PLATE_VOLUME = 4;
-        public const int EMPTY_CELL = -1;
-        public const int FLOOR_SIZE = 7;
+        public const int First = 999;
+        public const int TypeCount = 5;
+        public const int WallDimension = 5;
+        public const int TotalTileCount = 100;
+        public const int PlateVolume = 4;
+        public const int EmptyCell = -1;
+        public const int FloorSize = 7;
+        public const int BufferCount = WallDimension;
+        public static readonly Move DefaultMove = new Move(-1,-1,-1);
     }
 
     public class IllegalOptionException : Exception {
@@ -17,83 +19,89 @@ namespace Azul {
     }
 
     public static class Logger {
-        private static string fileName = "log.txt";
+        private static string _fileName = "log.txt";
 
         public static void SetName(string name) {
-            fileName = name;
+            _fileName = name;
         }
         public static void WriteLine(string msg) {
-            File.AppendAllText(fileName, msg + Environment.NewLine);
+            File.AppendAllText(_fileName, msg + Environment.NewLine);
         }
 
         public static void Write(string msg) {
-            File.AppendAllText(fileName, msg);
+            File.AppendAllText(_fileName, msg);
         }
     }
 
+    /// <summary>
+    /// Enum to recognise current state
+    /// </summary>
     public enum Phase {
         Taking = 1,
         Placing = 2,
         GameOver = 3
     }
 
+    /// <summary>
+    /// struct to get buffer data
+    /// </summary>
     public struct Buffer {
-        public int size { get; private set; }
-        public int typeId { get; private set; }
-        public int filled { get; private set; }
+        public int Size { get; private set; }
+        public int TypeId { get; private set; }
+        public int CurrentlyFilled { get; private set; }
 
         public Buffer(int size) {
-            this.size = size;
-            typeId = Globals.EMPTY_CELL;
-            filled = Globals.EMPTY_CELL;
+            this.Size = size;
+            TypeId = Globals.EmptyCell;
+            CurrentlyFilled = Globals.EmptyCell;
         }
 
         public bool CanAssign(int id) {
-            if (filled != Globals.EMPTY_CELL && typeId != id) {
-                Logger.WriteLine($"invalid type, needed {typeId}, got {id}");
+            if (CurrentlyFilled != Globals.EmptyCell && TypeId != id) {
+                Logger.WriteLine($"invalid type, needed {TypeId}, got {id}");
                 return false;
             }
             return true;
         }
 
         public bool CanAssign(Tile tile) {
-            return CanAssign(tile.id);
+            return CanAssign(tile.Id);
         }
         
-        public bool Assign(int id, int count) {
+        internal bool Assign(int id, int count) {
             if (!CanAssign(id)) return false;
 
-            if (typeId == Globals.EMPTY_CELL) filled = 0;
-            typeId = id;
-            filled += count;
-            filled = Math.Min(filled, size);
-            Logger.WriteLine($"successfully filled, current state {filled} of {size}");
+            if (TypeId == Globals.EmptyCell) CurrentlyFilled = 0;
+            TypeId = id;
+            CurrentlyFilled += count;
+            CurrentlyFilled = Math.Min(CurrentlyFilled, Size);
+            Logger.WriteLine($"successfully filled, current state {CurrentlyFilled} of {Size}");
             return true;
         }
 
-        public bool Assign(Tile tile) {
-            return Assign(tile.id, tile.count);
+        internal bool Assign(Tile tile) {
+            return Assign(tile.Id, tile.Count);
         }
 
         public int FreeToFill() {
-            if (typeId == Globals.EMPTY_CELL) return size;
-            return size - filled;
+            if (TypeId == Globals.EmptyCell) return Size;
+            return Size - CurrentlyFilled;
         }
 
-        public void Clear() {
-            typeId = Globals.EMPTY_CELL;
-            filled = Globals.EMPTY_CELL;
+        internal void Clear() {
+            TypeId = Globals.EmptyCell;
+            CurrentlyFilled = Globals.EmptyCell;
         }
 
         public bool IsFull() {
-            return size == filled;
+            return Size == CurrentlyFilled;
         }
 
         public override string ToString() {
             string outStr = "";
-            for (int i = 0; i < size; i++) {
-                if (i < filled) outStr += $"{typeId} ";
-                else outStr += $"{Globals.EMPTY_CELL} ";
+            for (int i = 0; i < Size; i++) {
+                if (i < CurrentlyFilled) outStr += $"{TypeId} ";
+                else outStr += $"{Globals.EmptyCell} ";
             }
 
             return outStr;
@@ -101,42 +109,29 @@ namespace Azul {
     }
 
     public struct Tile {
-        public int id;
-        public int count;
+        public int Id;
+        public int Count;
 
         public Tile(int id, int count) {
-            this.id = id;
-            this.count = count;
+            this.Id = id;
+            this.Count = count;
         }
     }
 
-    public struct Move {
-        public int tileId;
-        public int plateId;
-        public int bufferId;
+    public record Move {
+        public readonly int TileId;
+        public readonly int PlateId;
+        public readonly int BufferId;
 
         public Move(int tileId, int plateId, int bufferId) {
-            this.tileId = tileId;
-            this.plateId = plateId;
-            this.bufferId = bufferId;
-        }
-
-        public Move(string data) {
-            string[] parts = data.Split(' ');
-            try {
-                this.plateId = int.Parse(parts[0]);
-                this.tileId = int.Parse(parts[1]);
-                this.bufferId = int.Parse(parts[2]);
-            }
-            catch (Exception e) {
-                Logger.WriteLine($"invalid move data: {data}");
-                throw new IllegalOptionException($"Invalid move data: {data}");
-            }
-            
+            this.TileId = tileId;
+            this.PlateId = plateId;
+            this.BufferId = bufferId;
         }
 
         public override string ToString() {
-            return $"{plateId} {tileId} {bufferId}";
+            return $"{PlateId} {TileId} {BufferId}";
         }
     }
+    
 }
