@@ -219,7 +219,7 @@ public class Trainer {
             Player.Fill(row, column, ref newMe);
         }
         var col = Board.FindColInRow(move.BufferId, move.TileId);
-        var wall = newMe.wall;
+        var wall = newMe.wall;  
         
         var empty = Enumerable.Range(0, wall.GetLength(0))
             .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
@@ -245,6 +245,21 @@ public class Trainer {
 
     private static double RewardFunLookIfNextOneHasBetterMove(Move move, double[] state, int playerId) {
         double reward = 0;
+        const double fullAdd = 1;
+        const double fullBonus = 2;
+        const double nonAdd = .5;
+        const double nonBonus = .5;
+        const double floorMultiplier = 2;
+        
+        if (move.BufferId == Globals.BufferCount) return -10;
+        
+        var nextState = Board.GetNextState(state, move);
+        
+        var oldMe = Board.DecodePlayer(Board.GetMyPlayerData(state));
+        var newMe = Board.DecodePlayer(Board.GetMyPlayerData(nextState));
+        
+        //TODO: implement this
+        
         return reward;
     }
     

@@ -30,13 +30,16 @@ public class Bot : IBot {
     static List<double[]> _probs = new List<double[]>();
     
     private static List<double> _lastGameRewards = new List<double>();
+    private int _rewardType;
     
     
     
-    public Bot(int id, string workingDirectory = null) {
+    public Bot(int id, int rewardType, string workingDirectory = null) {
 
         workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
         WorkingDirectory = workingDirectory;
+        
+        _rewardType = rewardType;
 
         string networkDir = PathCombiner(WorkingDirectory, "PPO");
         if (!Path.Exists(networkDir)) Directory.CreateDirectory(networkDir);
@@ -73,11 +76,11 @@ public class Bot : IBot {
         Move move = Trainer.DecodeAction(SampleAction(actionProbs));
         
         if (!board.CanMove(move)) move = board.GetValidMoves()[_random.Next(validActions.Length)];
-
+        
         _states.Add(state);
         _actions.Add(Trainer.EncodeMove(move));
         _probs.Add(actionProbs);
-        _lastGameRewards.Add(Trainer.CalculateReward(move, state, board.CurrentPlayer));
+        _lastGameRewards.Add(Trainer.CalculateReward(move, state, Id, _rewardType));
 
         return move.ToString();
     }

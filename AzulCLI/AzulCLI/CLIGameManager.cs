@@ -44,7 +44,7 @@ public class CLIGameManager {
                 if (playerSetup[i].Split("_")[0] == "B") {
                     string type = playerSetup[i].Split("_")[1];
                     if(type == "random") botPlayers.Add(new NonML.RandomBot(i));
-                    else if(type == "PPO") botPlayers.Add(new PPO.Bot(i));
+                    else if(type == "PPO") botPlayers.Add(new PPO.Bot(i, 0));
                     else botPlayers.Add(BotFactory.CreateBot(type, i));
                 }
             }

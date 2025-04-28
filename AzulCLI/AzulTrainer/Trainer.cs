@@ -14,6 +14,12 @@ public class Options {
     [Option('d', "working-dir", Required = false, Default = "/home/", HelpText = "working directory to save files")]
     public string WorkingDir { get; set; } = "/home/";
     
+    [Option('r', "reward-type", Required = true, Default = 0, HelpText = "id of the specific reward function")]
+    public int RewardType { get; set; } = 0;
+    
+    [Option('c', "count", Required = true, Default = 100_000, HelpText = "num of iterations to run")]
+    public int Count { get; set; } = 100_000;
+    
 }
 
 public class Trainer {
@@ -30,23 +36,32 @@ public class Trainer {
         //PPO.Trainer.Run();
 
         Parser.Default.ParseArguments<Options>(args).WithParsed(o => {
+            Console.WriteLine("Current working directory: " + Environment.CurrentDirectory);
+
             string[] botNames = o.ListOfIncoming.Split(' ');
             int count = botNames.Length;
             string[] names = new string[count];
-            
+            Console.WriteLine($"Count {count}, bot names:");
+            foreach (var name in botNames) Console.WriteLine($"\t{name}");
             _scorePath = PathCombiner(o.WorkingDir, ScoreFileName);
             _bots = new IBot[count];
             for (int i = 0; i < count; i++) {
                 string type = botNames[i];
                 if (NonML.BotFactory.WasRecognised(type)) {
                     _bots[i] = NonML.BotFactory.CreateBot(type, i, o.WorkingDir);
+                    Console.WriteLine("NonML Bot: " + type);
                 }
-                else if (type == "PPO") _bots[i] = new PPO.Bot(i, o.WorkingDir);
+                else if (type == "PPO") {
+                    Console.WriteLine("PPO Bot: " + type);
+                    _bots[i] = new PPO.Bot(i, o.RewardType, o.WorkingDir);
+                }
                 else if(type == "ignoring") _bots[i] = new IgnoringBot(i, o.WorkingDir);
                 names[i] = botNames[i] + i;
             }
-
-            while(!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)) {
+            //!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)
+            int runIter = 0;
+            while(runIter < o.Count) {
+                runIter++;
                 string logPath = PathCombiner(o.WorkingDir, LogDir);
 
                 if (!Path.Exists(logPath)) Directory.CreateDirectory(logPath);
@@ -103,6 +118,7 @@ public class Trainer {
         var game = e.Board;
         var curr = game.CurrentPlayer;
         var player = game.Players[curr];
+        Console.WriteLine($"Player {curr}");
         var botMove = _bots[curr].DoMove(game);
         int[] action = StringArrToIntArr(botMove.Split(' '));
         Console.WriteLine($"Player {player.name} : action {action[0]}, {action[1]}, {action[2]}");
