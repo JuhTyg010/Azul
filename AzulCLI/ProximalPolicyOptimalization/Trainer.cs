@@ -150,7 +150,7 @@ public class Trainer {
             : Board.DecodePlateData((int) state[move.PlateId])[move.TileId];
 
         //filled buffer
-        if (oldMe.GetFullBuffersIds().Length != newMe.GetFullBuffersIds().Length) {
+        if (newMe.GetBufferData(move.BufferId).Count == move.BufferId + 1) {
             reward += 5;
             reward -= 2 * (newMe.floor.Count - oldMe.floor.Count);
         }
@@ -186,7 +186,7 @@ public class Trainer {
         var filled = (Globals.WallDimension * Globals.WallDimension) - empty;
         reward -= filled; //to handle that added points are higher when more filled
         
-        if (oldMe.GetFullBuffersIds().Length != newMe.GetFullBuffersIds().Length) {
+        if (newMe.GetBufferData(move.BufferId).Count == move.BufferId + 1) {
             reward += fullAdd;
             reward += fullBonus * addedPointsAfterFilled;
             

@@ -27,6 +27,10 @@ namespace Azul {
         private bool _isGameOver;
         private int _nextFirst;
         private string[] _playerNames;
+        
+        private static readonly int[] PowEncodeBase = Enumerable.Range(0, 10)
+            .Select(i => (int)Math.Pow(EncodeBase, i)).ToArray();
+
 
         /// <summary>
         /// Copy constructor
@@ -279,7 +283,7 @@ namespace Azul {
             for (int i = 0; i < Globals.WallDimension; i++) {
                 double value = 0;
                 for (int j = 0; j < Globals.WallDimension; j++) {
-                    value += player.wall[i,j] != Globals.EmptyCell ? Math.Pow(EncodeBase, j) : 0;
+                    value += player.wall[i,j] != Globals.EmptyCell ? PowEncodeBase[j] : 0;
                 }
                 data[startIndex] = value;
                 startIndex++;
@@ -316,7 +320,7 @@ namespace Azul {
             for (int i = 0; i < Globals.WallDimension; i++) {
                 var value = encodedWall[i];
                 for (int j = Globals.WallDimension - 1; j >= 0; j--) {
-                    double power = Math.Pow(EncodeBase, j);
+                    double power = PowEncodeBase[j];
                     if (value >= power) {
                         wall[i, j] = PredefinedWall[i,j]; // You decide what to fill in
                         value -= power;
@@ -437,7 +441,7 @@ namespace Azul {
         public static int EncodePlateData(int[] plateData) {
             int encoded = 0;
             for (int i = 0; i < plateData.Length; i++) {
-                encoded += (int) Math.Pow(EncodeBase, i) * plateData[i];
+                encoded += (int) PowEncodeBase[i] * plateData[i];
             }
             return encoded;
         }
@@ -457,7 +461,7 @@ namespace Azul {
         /// <param name="arrData"> array representing data of the buffer</param>
         /// <returns>int representing specific buffer data</returns>
         public static int EncodeBufferData(int[] arrData) {
-            return arrData[0] + 1 + (arrData[1] + 1) * 6;
+            return (arrData[0] + 1) + ((arrData[1] + 1) << 3);
         }
 
         /// <summary>
@@ -466,9 +470,9 @@ namespace Azul {
         /// <param name="encoded"> value representing data</param>
         /// <returns>array of ints representing buffer data</returns>
         public static int[] DecodeBufferData(int encoded) {
-            int first = (encoded % 6) - 1;
-            int second = (encoded / 6) - 1;
-            return new int[] {first, second};
+            int tileId = (encoded & 0x07) - 1;              // Bits 0-2
+            int count = ((encoded >> 3) & 0x07) - 1;         // Bits 3-5
+            return new int[] { tileId, count };
         }
 
         /// <summary>
