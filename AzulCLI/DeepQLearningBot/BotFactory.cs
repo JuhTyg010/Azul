@@ -6,9 +6,9 @@ public class BotFactory {
     
     
     private static readonly string[] Types = ["ignoring"];
-    public static IBot CreateBot(string botType, int id) {
+    public static IBot CreateBot(string botType, int id, int rewardType) {
         return botType.ToLower() switch {
-            "ignoring" => new IgnoringBot(id),
+            "ignoring" => new IgnoringBot(id, rewardType),
             _ => throw new IllegalOptionException($"Bot type \'{botType}\' wasn't recognised")
         };
     }

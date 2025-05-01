@@ -8,8 +8,8 @@
     public class NeuralNetwork {
         private const double Epsilon = 1e-6; // Small value to prevent NaN in log calculations
         private const double WeightInitRange = 1.0; // Range for weight initialization
-        private const int ClampMin = -100;
-        private const int ClampMax = 100;
+        private const int ClampMin = -10;
+        private const int ClampMax = 10;
         [JsonInclude] private double[][] weights1;
         [JsonInclude] private double[][] weightsHidden2;
         [JsonInclude] private double[][] weights2;
@@ -46,64 +46,71 @@
             return output;
         }
         
-        public void Train(double[][] states, double[][] targets, double learningRate, double discountFactor) {
+        public void Train(double[][] states, int[] actions, double[] rewards, double[][] nextStates,
+                  NeuralNetwork targetNetwork, double learningRate, double gamma) {
             for (int it = 0; it < states.Length; it++) {
-                var state = states[it];
-                var target = targets[it];
+                double[] state = states[it];
+                int action = actions[it];
+                double reward = rewards[it];
+                double[] nextState = nextStates[it];
 
+                // --- Dopredný prechod cez online sieť (táto sieť)
                 double[] z1 = Add(Dot(state, weights1), biases1);
                 double[] a1 = ReLU(z1);
                 double[] z2 = Add(Dot(a1, weightsHidden2), biasesHidden2);
                 double[] a2 = ReLU(z2);
-                double[] qValues = Add(Dot(a2, weights2), biases2);
+                double[] qValues = Add(Dot(a2, weights2), biases2); // Q(s, a; θ)
 
-                double[] error = new double[qValues.Length];
-                for (int action = 0; action < qValues.Length; action++) {
-                    error[action] = Clamp(target[action] - qValues[action], ClampMin, ClampMax);
-                }
+                // --- Dopredný prechod cez cieľovú sieť Q(s', a'; θ^-) (target network)
+                double[] qNext = targetNetwork.Predict(nextState);
+                double maxQNext = double.MinValue;
+                foreach (var q in qNext) maxQNext = Math.Max(maxQNext, q);
 
-                double[] dOutput = error;
+                double target = reward + gamma * maxQNext;
+                double prediction = qValues[action];
+                double tdError = target - prediction;  // delta
 
+                // --- Spätný prechod len pre túto akciu
+                double[] dOutput = new double[qValues.Length]; // delta výstupu
+                dOutput[action] = tdError;
+
+                // --- Aktualizácia výstupnej vrstvy
                 for (int i = 0; i < weights2.Length; i++) {
                     for (int j = 0; j < weights2[0].Length; j++) {
                         weights2[i][j] += Clamp(learningRate * dOutput[j] * a2[i], ClampMin, ClampMax);
-                        weights2[i][j] = Clamp(weights2[i][j], ClampMin, ClampMax);
                     }
                 }
                 for (int j = 0; j < biases2.Length; j++) {
                     biases2[j] += Clamp(learningRate * dOutput[j], ClampMin, ClampMax);
-                    biases2[j] = Clamp(biases2[j], ClampMin, ClampMax);
                 }
 
+                // --- Skryté vrstvy spätný prechod
                 double[] dz2 = DotTranspose(weights2, dOutput);
-                dz2 = Multiply(dz2, z2, true);
+                dz2 = Multiply(dz2, z2, true);  // derivácia ReLU
 
                 for (int i = 0; i < weightsHidden2.Length; i++) {
                     for (int j = 0; j < weightsHidden2[0].Length; j++) {
                         weightsHidden2[i][j] += Clamp(learningRate * dz2[j] * a1[i], ClampMin, ClampMax);
-                        weightsHidden2[i][j] = Clamp(weightsHidden2[i][j], ClampMin, ClampMax);
                     }
                 }
                 for (int j = 0; j < biasesHidden2.Length; j++) {
-                    biasesHidden2[j] += learningRate * dz2[j];
-                    biasesHidden2[j] = Clamp(biasesHidden2[j], ClampMin, ClampMax);
+                    biasesHidden2[j] += Clamp(learningRate * dz2[j], ClampMin, ClampMax);
                 }
 
                 double[] dz1 = DotTranspose(weightsHidden2, dz2);
-                dz1 = Multiply(dz1, z1, true);
+                dz1 = Multiply(dz1, z1, true); // derivácia ReLU
 
                 for (int i = 0; i < weights1.Length; i++) {
                     for (int j = 0; j < weights1[0].Length; j++) {
                         weights1[i][j] += Clamp(learningRate * dz1[j] * state[i], ClampMin, ClampMax);
-                        weights1[i][j] = Clamp(weights1[i][j], ClampMin, ClampMax);
                     }
                 }
                 for (int j = 0; j < biases1.Length; j++) {
                     biases1[j] += Clamp(learningRate * dz1[j], ClampMin, ClampMax);
-                    biases1[j] = Clamp(biases1[j], ClampMin, ClampMax);
                 }
             }
         }
+
         
         private double Clamp(double value, double min, double max) {
             if (double.IsNaN(value)) {

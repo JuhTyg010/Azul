@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Azul\Azul.csproj" />
+      <ProjectReference Include="..\ProximalPolicyOptimalization\ProximalPolicyOptimalization.csproj" />
       <ProjectReference Include="..\SaveSystem\SaveSystem.csproj" />
     </ItemGroup>
 

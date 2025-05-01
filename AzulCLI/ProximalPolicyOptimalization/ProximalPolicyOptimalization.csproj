@@ -8,7 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DeepQLearningBot\DeepQLearningBot.csproj" />
+      <ProjectReference Include="..\Azul\Azul.csproj" />
+      <ProjectReference Include="..\SaveSystem\SaveSystem.csproj" />
     </ItemGroup>
 
 </Project>

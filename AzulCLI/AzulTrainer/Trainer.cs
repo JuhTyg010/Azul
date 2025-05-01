@@ -55,7 +55,7 @@ public class Trainer {
                     Console.WriteLine("PPO Bot: " + type);
                     _bots[i] = new PPO.Bot(i, o.RewardType, o.WorkingDir);
                 }
-                else if(type == "ignoring") _bots[i] = new IgnoringBot(i, o.WorkingDir);
+                else if(type == "ignoring") _bots[i] = new IgnoringBot(i, o.RewardType, o.WorkingDir);
                 names[i] = botNames[i] + i;
             }
             //!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)

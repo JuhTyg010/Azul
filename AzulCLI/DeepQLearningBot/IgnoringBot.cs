@@ -1,7 +1,7 @@
 using System.Transactions;
 using Azul;
 using SaveSystem;
-
+using PPO;
 namespace DeepQLearningBot;
 
 public class IgnoringBot : IBot{
@@ -18,16 +18,20 @@ public class IgnoringBot : IBot{
     private ReplayBuffer _replayBuffer;
     private Random _random;
     public bool SaveThis = false;
-    public IgnoringBot(int id, string workingDirectory = null) {
+    private int _updatesPassed = 0;
+    private int _rewardType;
+    public IgnoringBot(int id, int rewardType, string workingDirectory = null) {
         
         workingDirectory = workingDirectory ?? Directory.GetCurrentDirectory();
         WorkingDirectory = workingDirectory;
+        
+        _rewardType = rewardType;
         
         string networkDir = PathCombiner(WorkingDirectory, "IgnoringBot");
         if (!Path.Exists(networkDir)) Directory.CreateDirectory(networkDir);
         
         _settings = JsonSaver.Load<DQNSetting>(PathCombiner(WorkingDirectory,SettingFile)) ?? 
-                                               new DQNSetting(300, 59, 300, 30, 1, 0.95, 0.01, 0.8);
+                                               new DQNSetting(300, 59, 300, 32, 1, 0.95, 0.01, 0.9);
         
         _policyNet = JsonSaver.Load<NeuralNetwork>(PathCombiner(WorkingDirectory, NetworkFile)) ?? 
                                                    new NeuralNetwork(_settings.StateSize, 128, 128, _settings.ActionSize);
@@ -56,7 +60,7 @@ public class IgnoringBot : IBot{
         
         if(!IsLegalAction(bestAction, board)) throw new ApplicationException("Invalid action");
         
-        double reward = CalculateReward(state, bestAction, board);
+        double reward = Trainer.CalculateReward(Trainer.DecodeAction(bestAction), state, Id, _rewardType);
         
         Logger.WriteLine($"Move: {DecodeAction(bestAction)} reward: {reward}");
         var nextState = Board.GetNextState(state, DecodeToMove(bestAction));
@@ -100,91 +104,26 @@ public class IgnoringBot : IBot{
         // Sample a batch of experiences from the replay buffer
         var batch = _replayBuffer.Sample(_settings.BatchSize);
         var states = new double[_settings.BatchSize][];
-        var targets = new double[_settings.BatchSize][];
+        var nextStates = new double[_settings.BatchSize][];
+        var rewards = new double[_settings.BatchSize];
+        var actions = new int[_settings.BatchSize];
+
 
         for (int i = 0; i < _settings.BatchSize; i++)
         {
             var replay = batch[i];
-            double[] qValues = _policyNet.Predict(replay.State);
-
-            double[] opponentQValues = _targetNet.Predict(replay.NextState);
-
-            Move opponentPredicted = new Move(0,0,0);
-            double maxVal = Max(opponentQValues);
-            for (int index = 0; index < _settings.ActionSize; index++) {
-                if (Math.Abs(opponentQValues[index] - maxVal) < 0.01) {
-                    opponentPredicted = DecodeToMove(index);
-                }
-            }
-            
-            double[] ourNextState = Board.GetNextState(replay.NextState, opponentPredicted);
-            double[] ourNextQValues = _targetNet.Predict(ourNextState);
-
-            // Update the Q-value for the taken action
-            qValues[replay.Action] = replay.Reward + _settings.Gamma * Max(ourNextQValues);
-
             states[i] = replay.State;
-            targets[i] = qValues;
+            nextStates[i] = replay.NextState;
+            rewards[i] = replay.Reward;
+            actions[i] = replay.Action;
         }
 
         // Train the neural network on the batch
-        _policyNet.Train(states, targets, 0.001, 0.5);
-        _targetNet = _policyNet.Clone();
-    }
-
-    private double CalculateReward(double[] state, int action, Board board) {
-        double reward = 0;
-        Move move = DecodeToMove(action);
-        if (move.BufferId == Globals.WallDimension) return -10;
-        var nextState = Board.GetNextState(state, move);
-        int takenCount = move.PlateId == board.Plates.Length 
-            ? Board.DecodePlateData((int) state[9])[move.TileId]
-            : Board.DecodePlateData((int) state[move.PlateId])[move.TileId];
-        
-        int col = Board.FindColInRow(move.BufferId, move.TileId);
-        var addedAfterFilled = board.Players[board.CurrentPlayer].AddedPointsAfterFilled(move.BufferId, col);
-        
-        
-        
-        var wall = board.Players[board.CurrentPlayer].wall;
-        var inSameCol = Globals.WallDimension - Enumerable
-            .Range(0, wall.GetLength(0))
-            .Count(row => wall[row, col] == Globals.EmptyCell);
-       
-        var sameType = Enumerable.Range(0, wall.GetLength(0))
-            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-                .Select(column => wall[row, column])).Count(value => value == move.TileId);
-        
-        var empty = Enumerable.Range(0, wall.GetLength(0))
-            .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
-                .Select(column => wall[row, column])).Count(value => value == Globals.EmptyCell);
-        var filled = (Globals.WallDimension * Globals.WallDimension) - empty; 
-        reward -= filled;
-
-        reward += inSameCol;
-        
-        if (Board.DecodeBufferData((int) nextState[11 + move.BufferId])[1] == move.BufferId + 1) {
-            //reward += takenCount * .5;
-            reward += 1 + .3 * takenCount;
-            reward += 2 * addedAfterFilled;
-            reward += sameType;
+        _policyNet.Train(states, actions, rewards, nextStates, _targetNet, 0.001, 0.5);
+        if (_updatesPassed >= _settings.BatchSize) {
+            _updatesPassed = 0;
+            _targetNet = _policyNet.Clone();
         }
-        else {
-            reward += 1;
-            reward += addedAfterFilled * .5;
-            //reward +=  takenCount;
-        }
-
-        var newOnFloor = nextState[16] - state[16];
-        
-        if(newOnFloor * 2 >= addedAfterFilled) reward -= newOnFloor;
-        else reward += newOnFloor * 2;
-        
-        //TODO: maybe connect to addedAfterFilled
-        //check if first from center
-        if(Math.Abs(nextState[10] - state[10]) > .9) reward -= .1;
-        
-        return reward;
     }
     
     private int GetBestValidAction(double[] qValues, Board board) {
