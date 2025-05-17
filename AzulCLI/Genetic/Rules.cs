@@ -5,6 +5,7 @@ namespace Genetic {
     public class Rules {
         [Rule]
         public static bool CompletesRow(Board board, Move move) {
+            if (move.BufferId == Globals.BufferCount) return false;
             var wall = board.Players[board.CurrentPlayer].wall;
             int emptyInRow = Enumerable.Range(0, wall.GetLength(0))
                 .Count(col => wall[move.BufferId, col] == Globals.EmptyCell);
@@ -18,6 +19,8 @@ namespace Genetic {
 
         [Rule]
         public static bool CompletesBuffer(Board board, Move move) {
+            if (move.BufferId == Globals.BufferCount) return false;
+
             var player = board.Players[board.CurrentPlayer];
             int count = move.PlateId != board.Plates.Length
                 ? board.Plates[move.PlateId].TileCountOfType(move.TileId)
@@ -36,8 +39,12 @@ namespace Genetic {
 
         [Rule]
         public static bool SomethingGoesToFloor(Board board, Move move) {
+            if (move.BufferId == Globals.BufferCount) return true;
+
             var player = board.Players[board.CurrentPlayer];
-            int count = board.Plates[move.PlateId].TileCountOfType(move.TileId);
+            int count = move.PlateId != board.Plates.Length
+                ? board.Plates[move.PlateId].TileCountOfType(move.TileId) 
+                : board.Center.TileCountOfType(move.TileId);
             var buffer = player.GetBufferData(move.BufferId);
             if (buffer.Count + count > buffer.Id + 1) {
                 return true;

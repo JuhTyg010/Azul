@@ -1,4 +1,5 @@
 using Azul;
+using NonML;
 
 namespace Genetic;
 
@@ -29,26 +30,61 @@ public class Trainer {
         return population;
     }
 
-    public void RunGeneration(Board[] gameScenarios) {
-        // Evaluate fitness by simulating games
-        foreach (var agent in _population) {
-            //agent.Fitness = SimulateGames(agent, gameScenarios);
-        }
+    public void RunGeneration(int playerCount) {
+        int gamesToPlay = _population.Count * 10; // Total number of games to simulate
+        int agentsPerGame = playerCount - 1;
 
-        // Select top agents (e.g., top 20%)
+        var rnd = new Random();
+        var tasks = new List<Task>();
+
+        object fitnessLock = new object(); // Lock for updating fitness
+
+        for (int i = 0; i < gamesToPlay; i++) {
+            
+                // Select random agents
+                var selectedAgents = _population.OrderBy(_ => rnd.Next()).Take(agentsPerGame).ToList();
+                var bots = new List<IBot>();
+                var botIdToAgent = new Dictionary<int, int>();
+
+                for (int j = 0; j < agentsPerGame; j++) {
+                    int id = rnd.Next(_population.Count);
+                    var bot = new Bot(j, _population[id], $"Run_{i}_Bot_{id}");
+                    bots.Add(bot);
+                    botIdToAgent[j] = id;
+                }
+                bots.Add(new HeuristicBot(agentsPerGame));
+
+                var result = PlayGameWithBots(bots, playerCount);
+                
+                foreach (var bot in bots) {
+                    lock (fitnessLock) {
+                        bot.Result(result);
+                        if (bot is Bot) {
+                            var botBot = (Bot) bot;
+                            _population[botIdToAgent[bot.Id]] = botBot.GetAgent;
+                        }
+                    }
+                }
+        }
         var topAgents = _population.OrderByDescending(a => a.Fitness).Take(_population.Count / 5).ToList();
 
-        // Breed new generation
+        for (int i = 0; i < topAgents.Count; i++) {
+            Console.WriteLine(topAgents[i].Fitness);
+            topAgents[i].PrintWeights();
+            topAgents[i].ResetFitness();
+            Console.WriteLine($"after reset {topAgents[i].Fitness}");
+        }
+
+
         _population = BreedNewGeneration(topAgents);
     }
+    
 
     private List<Agent> BreedNewGeneration(List<Agent> parents) {
         var newGeneration = new List<Agent>();
 
-        // Keep top performers
         newGeneration.AddRange(parents);
-
-        // Crossover and mutate
+        
         while (newGeneration.Count < _population.Count) {
             var parent1 = parents[_random.Next(parents.Count)];
             var parent2 = parents[_random.Next(parents.Count)];
@@ -63,7 +99,6 @@ public class Trainer {
     private Dictionary<string, double> Crossover(Agent parent1, Agent parent2) {
         var childWeights = new Dictionary<string, double>();
         foreach (var rule in parent1.RuleWeights.Keys)
-            // Blend weights from both parents
             childWeights[rule] = (parent1.RuleWeights[rule] + parent2.RuleWeights[rule]) / 2;
         return childWeights;
     }
@@ -73,4 +108,59 @@ public class Trainer {
             if (_random.NextDouble() < 0.1) // 10% mutation chance
                 weights[rule] += (float) (_random.NextDouble() * 0.4 - 0.2); // Small perturbation
     }
+    
+    private Dictionary<int, int> PlayGameWithBots(List<IBot> bots, int playerCount) {
+        var localBots = bots;
+        string[] names = bots.Select((b, i) => $"Bot_{b.Id}").ToArray();
+        bool mode = false;
+
+        void OnNextTakingTurn(object sender, MyEventArgs e) {
+            var game = e.Board;
+            int curr = game.CurrentPlayer;
+            var botMove = localBots[curr].DoMove(game);
+            int[] action = StringArrToIntArr(botMove.Split(' '));
+            game.Move(action[0], action[1], action[2]);
+        }
+
+        void OnNextPlacingTurn(object sender, MyEventArgs e) {
+            var game = e.Board;
+            int curr = game.CurrentPlayer;
+
+            if (!game.IsAdvanced) {
+                game.Calculate();
+            } else {
+                game.Calculate(int.Parse(localBots[curr].Place(game)));
+            }
+        }
+
+        Board game = new Board(playerCount, names, mode); // no logging for parallel
+        game.NextTakingMove += OnNextTakingTurn;
+        game.NextPlacingMove += OnNextPlacingTurn;
+
+        game.StartGame();
+        while (game.Phase != Phase.GameOver) ; // Wait till game ends
+
+        var scores = new Dictionary<int, int>();
+        for (int i = 0; i < game.Players.Length; i++) {
+            scores[i] = game.Players[i].pointCount;
+            Console.WriteLine($"{i + 1}. {game.Players[i].name}: {scores[i]}");
+        }
+
+        foreach (var bot in localBots) {
+            bot.Result(scores);
+        }
+
+        return scores;
+    }
+    
+    private static int[] StringArrToIntArr(string[] arr) {
+        List<int> output = new List<int>();
+
+        foreach (var val in arr) {
+            output.Add(int.Parse(val));
+        }
+
+        return output.ToArray();
+    }
+
 }
