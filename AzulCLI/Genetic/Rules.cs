@@ -3,12 +3,82 @@ using Azul;
 namespace Genetic {
 
     public class Rules {
+        [Rule]
         public static bool CompletesRow(Board board, Move move) {
+            var wall = board.Players[board.CurrentPlayer].wall;
+            int emptyInRow = Enumerable.Range(0, wall.GetLength(0))
+                .Count(col => wall[move.BufferId, col] == Globals.EmptyCell);
+            return emptyInRow == 1; //one to being filled
+        }
+        
+        [Rule]
+        public static bool BlocksOpponent(Board board, Move move) {
+            return false; //TODO: implement this
+        }
+
+        [Rule]
+        public static bool CompletesBuffer(Board board, Move move) {
+            var player = board.Players[board.CurrentPlayer];
+            int count = move.PlateId != board.Plates.Length
+                ? board.Plates[move.PlateId].TileCountOfType(move.TileId)
+                : board.Center.TileCountOfType(move.TileId);
+            var buffer = player.GetBufferData(move.BufferId);
+            if (buffer.Count + count >= buffer.Id + 1) {
+                return true;
+            }
             return false;
         }
 
-        public static bool BlocksOpponent(Board board, Move move) {
+        [Rule]
+        public static bool IWillStart(Board board, Move move) {
+            return move.PlateId == board.Plates.Length && board.Center.isFirst;
+        }
+
+        [Rule]
+        public static bool SomethingGoesToFloor(Board board, Move move) {
+            var player = board.Players[board.CurrentPlayer];
+            int count = board.Plates[move.PlateId].TileCountOfType(move.TileId);
+            var buffer = player.GetBufferData(move.BufferId);
+            if (buffer.Count + count > buffer.Id + 1) {
+                return true;
+            }
+            return IWillStart(board, move);
+        }
+
+        [Rule]
+        public static bool CompletesColumn(Board board, Move move) {
+            //TODO: handle info about what to which col
             return false;
+        }
+
+        [Rule]
+        public static bool AllOfOneColor(Board board, Move move) {
+            var wall = board.Players[board.CurrentPlayer].wall;
+            int tilesOfType = Enumerable.Range(0, wall.GetLength(0))
+                .SelectMany(row => Enumerable.Range(0, wall.GetLength(1))
+                    .Select(column => wall[row, column])).Count(value => value == move.TileId);
+            return tilesOfType == Globals.TypeCount - 1;
+        }
+
+        [Rule]
+        public static bool TakenMaxCount(Board board, Move move) {
+            int count = move.PlateId != board.Plates.Length
+                ? board.Plates[move.PlateId].TileCountOfType(move.TileId) 
+                : board.Center.TileCountOfType(move.TileId);
+            int maxVal = 0;
+            int tempCount = 0;
+            foreach (var plate in board.Plates) {
+                tempCount = plate.GetCounts().Max(p => p.Count);
+                if (tempCount > maxVal) {
+                    maxVal = tempCount;
+                }
+            }
+            tempCount = board.Center.GetCounts().Max(p => p.Count);
+            if (tempCount > maxVal) {
+                maxVal = tempCount;
+            }
+
+            return maxVal == count;
         }
     }
 }

@@ -13,11 +13,16 @@ public class Trainer {
     private List<Agent> InitializePopulation(int size) {
         var population = new List<Agent>();
         for (var i = 0; i < size; i++) {
-            var weights = new Dictionary<string, float> {
-                { nameof(Rules.CompletesRow), (float) _random.NextDouble() * 4 - 2 }, // Weight range: [-2, 2]
-                { nameof(Rules.BlocksOpponent), (float) _random.NextDouble() * 4 - 2 }
-                // Add more rules...
-            };
+            var weights = new Dictionary<string, double>();
+            
+            var obj = new Rules();
+            var methods = typeof(Rules).GetMethods()
+                .Where(m => m.GetCustomAttributes(typeof(Genetic.Rule), false).Any());
+
+            foreach (var method in methods) {
+                string methodName = method.Name;
+                weights.TryAdd(methodName, (double) _random.NextDouble() * 4 - 2);
+            }
             population.Add(new Agent(weights));
         }
 
@@ -55,15 +60,15 @@ public class Trainer {
         return newGeneration;
     }
 
-    private Dictionary<string, float> Crossover(Agent parent1, Agent parent2) {
-        var childWeights = new Dictionary<string, float>();
+    private Dictionary<string, double> Crossover(Agent parent1, Agent parent2) {
+        var childWeights = new Dictionary<string, double>();
         foreach (var rule in parent1.RuleWeights.Keys)
             // Blend weights from both parents
             childWeights[rule] = (parent1.RuleWeights[rule] + parent2.RuleWeights[rule]) / 2;
         return childWeights;
     }
 
-    private void Mutate(Dictionary<string, float> weights) {
+    private void Mutate(Dictionary<string, double> weights) {
         foreach (var rule in weights.Keys.ToList())
             if (_random.NextDouble() < 0.1) // 10% mutation chance
                 weights[rule] += (float) (_random.NextDouble() * 0.4 - 0.2); // Small perturbation
