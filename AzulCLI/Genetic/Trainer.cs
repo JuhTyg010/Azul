@@ -31,7 +31,7 @@ public class Trainer {
     }
 
     public void RunGeneration(int playerCount) {
-        int gamesToPlay = _population.Count * 10; // Total number of games to simulate
+        int gamesToPlay = (_population.Count * _population.Count) / 2; // Total number of games to simulate
         int agentsPerGame = playerCount - 1;
 
         var rnd = new Random();
@@ -40,9 +40,7 @@ public class Trainer {
         object fitnessLock = new object(); // Lock for updating fitness
 
         for (int i = 0; i < gamesToPlay; i++) {
-            
-                // Select random agents
-                var selectedAgents = _population.OrderBy(_ => rnd.Next()).Take(agentsPerGame).ToList();
+            tasks.Add(Task.Run(() => {
                 var bots = new List<IBot>();
                 var botIdToAgent = new Dictionary<int, int>();
 
@@ -51,11 +49,13 @@ public class Trainer {
                     var bot = new Bot(j, _population[id], $"Run_{i}_Bot_{id}");
                     bots.Add(bot);
                     botIdToAgent[j] = id;
+                    _population[id].Played++;
                 }
+
                 bots.Add(new HeuristicBot(agentsPerGame));
 
                 var result = PlayGameWithBots(bots, playerCount);
-                
+
                 foreach (var bot in bots) {
                     lock (fitnessLock) {
                         bot.Result(result);
@@ -65,14 +65,15 @@ public class Trainer {
                         }
                     }
                 }
+            }));
         }
-        var topAgents = _population.OrderByDescending(a => a.Fitness).Take(_population.Count / 5).ToList();
+        Task.WaitAll(tasks.ToArray());
+        var topAgents = _population.OrderByDescending(a => a.WinRate()).Take(_population.Count / 5).ToList();
 
         for (int i = 0; i < topAgents.Count; i++) {
-            Console.WriteLine(topAgents[i].Fitness);
+            Console.WriteLine($"Played: {topAgents[i].Played} Wins: {topAgents[i].Wins}");
             topAgents[i].PrintWeights();
-            topAgents[i].ResetFitness();
-            Console.WriteLine($"after reset {topAgents[i].Fitness}");
+            topAgents[i].ResetValues();
         }
 
 
@@ -145,11 +146,6 @@ public class Trainer {
             scores[i] = game.Players[i].pointCount;
             Console.WriteLine($"{i + 1}. {game.Players[i].name}: {scores[i]}");
         }
-
-        foreach (var bot in localBots) {
-            bot.Result(scores);
-        }
-
         return scores;
     }
     

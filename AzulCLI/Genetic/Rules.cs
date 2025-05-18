@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Azul;
 
 namespace Genetic {
@@ -7,7 +8,7 @@ namespace Genetic {
         public static bool CompletesRow(Board board, Move move) {
             if (move.BufferId == Globals.BufferCount) return false;
             var wall = board.Players[board.CurrentPlayer].wall;
-            int emptyInRow = Enumerable.Range(0, wall.GetLength(0))
+            int emptyInRow = Enumerable.Range(0, Globals.WallDimension)
                 .Count(col => wall[move.BufferId, col] == Globals.EmptyCell);
             return emptyInRow == 1; //one to being filled
         }
@@ -54,8 +55,12 @@ namespace Genetic {
 
         [Rule]
         public static bool CompletesColumn(Board board, Move move) {
-            //TODO: handle info about what to which col
-            return false;
+            if(move.BufferId == Globals.BufferCount) return false;
+            int col = Board.FindColInRow(move.BufferId, move.TileId);
+            var wall = board.Players[board.CurrentPlayer].wall;
+            int emptyInCol = Enumerable.Range(0, Globals.WallDimension)
+                .Count(row => wall[row, col] == Globals.EmptyCell);
+            return emptyInCol == 1;
         }
 
         [Rule]
@@ -87,5 +92,7 @@ namespace Genetic {
 
             return maxVal == count;
         }
+        
+        
     }
 }

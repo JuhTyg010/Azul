@@ -35,8 +35,7 @@ public class Bot : IBot
         }
 
         if (winner == Id) {
-            _agent.Fitness += 1;
-            Console.WriteLine($"Id: {Id} Fitness: {_agent.Fitness}");
+            _agent.Wins += 1;
         }
     }
     

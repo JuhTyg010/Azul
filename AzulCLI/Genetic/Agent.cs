@@ -4,11 +4,13 @@ namespace Genetic;
 
 public class Agent {
     public Dictionary<string, double> RuleWeights { get; set; }  // Rule name -> Weight
-    public double Fitness { get; set; }
+    public int Played { get; set; }
+    public int Wins { get; set; }
 
     public Agent(Dictionary<string, double> weights) {
         RuleWeights = weights;
-        Fitness = 0;
+        Played = 0;
+        Wins = 0;
     }
 
     public double EvaluateMove(Board board, Move move) {
@@ -32,8 +34,13 @@ public class Agent {
         return score;
     }
 
-    public void ResetFitness() {
-        Fitness = 0;
+    public void ResetValues() {
+        Played = 0;
+        Wins = 0;
+    }
+
+    public double WinRate() {
+        return Wins / (double)Played;
     }
 
     public void PrintWeights() {
