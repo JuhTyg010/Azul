@@ -13,11 +13,12 @@ namespace Genetic {
             return emptyInRow == 1; //one to being filled
         }
         
-        [Rule]
         public static bool BlocksOpponent(Board board, Move move) {
+            
             return false; //TODO: implement this
         }
-
+        
+        
         [Rule]
         public static bool CompletesBuffer(Board board, Move move) {
             if (move.BufferId == Globals.BufferCount) return false;
@@ -61,6 +62,39 @@ namespace Genetic {
             int emptyInCol = Enumerable.Range(0, Globals.WallDimension)
                 .Count(row => wall[row, col] == Globals.EmptyCell);
             return emptyInCol == 1;
+        }
+
+        [Rule]
+        public static bool MultipleInRow(Board board, Move move) {
+            if (move.BufferId == Globals.BufferCount) return false;
+            int col = Board.FindColInRow(move.BufferId, move.TileId);
+            var wall = board.Players[board.CurrentPlayer].wall;
+            int colMinusOne = Math.Max(0, col - 1);
+            int colPlusOne = Math.Min(Globals.WallDimension - 1, col + 1);
+            if (col != colMinusOne && wall[move.BufferId, colMinusOne] != Globals.EmptyCell) {
+                return true;
+            }
+            if (col != colPlusOne && wall[move.BufferId, colPlusOne] != Globals.EmptyCell) {
+                return true;
+            }
+
+            return false;
+        }
+
+        [Rule]
+        public static bool MultipleInColumn(Board board, Move move) {
+            if (move.BufferId == Globals.BufferCount) return false;
+            int col = Board.FindColInRow(move.BufferId, move.TileId);
+            var wall = board.Players[board.CurrentPlayer].wall;
+            int rowMinusOne = Math.Max(0, move.BufferId - 1);
+            int rowPlusOne = Math.Min(Globals.WallDimension - 1, move.BufferId + 1);
+            if (move.BufferId != rowMinusOne && wall[rowMinusOne, col] != Globals.EmptyCell) {
+                return true;
+            }
+            if (move.BufferId != rowPlusOne && wall[rowPlusOne, col] != Globals.EmptyCell) {
+                return true;
+            }
+            return false;
         }
 
         [Rule]
