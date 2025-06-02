@@ -489,6 +489,10 @@ namespace Azul {
             return arr;
         }
 
+        public void FinishGame() {
+            Phase = Phase.GameOver;
+        }
+
         /// <summary>
         /// This method finds next player which has full buffer
         /// </summary>
