@@ -32,7 +32,7 @@ public class Trainer {
 
     public void RunGeneration(int playerCount) {
         int gamesToPlay = (_population.Count * _population.Count) / 2; // Total number of games to simulate
-        int agentsPerGame = playerCount - 1;
+        int agentsPerGame = playerCount;
 
         var rnd = new Random();
         var tasks = new List<Task>();
@@ -52,7 +52,7 @@ public class Trainer {
                     _population[id].Played++;
                 }
 
-                bots.Add(new HeuristicBot(agentsPerGame));
+                //bots.Add(new HeuristicBot(agentsPerGame));
 
                 var result = PlayGameWithBots(bots, playerCount);
 
@@ -114,8 +114,11 @@ public class Trainer {
         var localBots = bots;
         string[] names = bots.Select((b, i) => $"Bot_{b.Id}").ToArray();
         bool mode = false;
+        int turns = 0;
+        bool wasTakingTurn = false;
 
         void OnNextTakingTurn(object sender, MyEventArgs e) {
+            wasTakingTurn = true;
             var game = e.Board;
             int curr = game.CurrentPlayer;
             var botMove = localBots[curr].DoMove(game);
@@ -124,6 +127,14 @@ public class Trainer {
         }
 
         void OnNextPlacingTurn(object sender, MyEventArgs e) {
+            if (wasTakingTurn) {
+                turns++;
+                if (turns > 40) {
+                    Console.WriteLine("Killing game");
+                    e.Board.FinishGame();
+                }
+                wasTakingTurn = false;
+            }
             var game = e.Board;
             int curr = game.CurrentPlayer;
 
