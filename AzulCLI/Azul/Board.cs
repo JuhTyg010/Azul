@@ -18,7 +18,11 @@ namespace Azul {
         public Phase Phase { get; private set; }
         public static int[,] PredefinedWall { get; private set; } = InitPredefinedWall(Globals.WallDimension);
         public bool IsAdvanced { get; private set; }
-        public bool FisrtTaken;
+        public bool FisrtTaken { get; private set; }
+        
+        public int Round { get; private set; }
+        
+        public EventManager EventManager { get; private set; }
         
         public event EventHandler<MyEventArgs> NextTakingMove;
         public event EventHandler<MyEventArgs> NextPlacingMove;
@@ -44,6 +48,7 @@ namespace Azul {
             CurrentPlayer = other.CurrentPlayer;
             Phase = other.Phase;
             IsAdvanced = other.IsAdvanced;
+            EventManager = other.EventManager;
             FisrtTaken = other.FisrtTaken;
             _trash = other._trash;
             _isGameOver = other._isGameOver;
@@ -63,6 +68,7 @@ namespace Azul {
         public Board(int playerCount, string[] playerNames, bool isAdvanced = false, string fileName = "azul_log.txt") {
             IsAdvanced = isAdvanced;
             this._playerNames = playerNames;
+            EventManager = new EventManager();
             Logger.SetName(fileName);
             
             if (playerNames.Length != playerCount) {
@@ -96,6 +102,7 @@ namespace Azul {
             _isGameOver = false;
             FillPlates();
             NextMove();
+            EventManager.ProcessPendingActions();
         }
         
         
@@ -638,26 +645,27 @@ namespace Azul {
                 if (ArePlatesEmpty()) {
                     Logger.WriteLine("Plates are empty, starting filling");
                     CurrentPlayer = 0;
+                    Round++;
                     if (NextWithFullBuffer()) {
                         Logger.WriteLine($"Found full buffer player: {Players[CurrentPlayer].name}");
                         Phase = Phase.Placing;
-                        OnNextPlacingMove(new MyEventArgs(CurrentPlayer, this));
+                        EventManager.QueueEvent(() => OnNextPlacingMove(new MyEventArgs(CurrentPlayer, this)));
                     }
                     else {
                         Logger.WriteLine("No player has full buffer");
                         StartNextTakingPhase();
-                        OnNextTakingMove(new MyEventArgs(CurrentPlayer, this));
+                        EventManager.QueueEvent(() => OnNextTakingMove(new MyEventArgs(CurrentPlayer, this)));
                     }
                 }
                 else {
                     CurrentPlayer++;
                     CurrentPlayer %= Players.Length;
                     Logger.WriteLine($"Player's {Players[CurrentPlayer].name} move");
-                    OnNextTakingMove(new MyEventArgs(CurrentPlayer, this));
+                    EventManager.QueueEvent(() => OnNextTakingMove(new MyEventArgs(CurrentPlayer, this)));
                 }
             } else if (Phase == Phase.Placing) {
                 if (NextWithFullBuffer()) {
-                    OnNextPlacingMove(new MyEventArgs(CurrentPlayer,this));
+                    EventManager.QueueEvent(() => OnNextPlacingMove(new MyEventArgs(CurrentPlayer,this)));
                 }
                 else {
                     Logger.WriteLine("No player has full buffer");
@@ -669,7 +677,7 @@ namespace Azul {
                     else {
                         Logger.WriteLine("All players filled to the wall");
                         StartNextTakingPhase();
-                        OnNextTakingMove(new MyEventArgs(CurrentPlayer, this));
+                        EventManager.QueueEvent(() => OnNextTakingMove(new MyEventArgs(CurrentPlayer, this)));
                     }
                 }
             }
