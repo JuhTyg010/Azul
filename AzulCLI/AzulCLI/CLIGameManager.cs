@@ -106,7 +106,7 @@ public class CLIGameManager {
             string botMove = botPlayers[FindBot(curr, botPlayers)].DoMove(game);
             Console.WriteLine(botMove);
             int[] action = StringArrToIntArr(botMove.Split(' '));
-            game.Move(action[0], action[1], action[2]); //bot cant do illegal move (for now)
+            game.EventManager.QueueEvent(() => game.Move(action[0], action[1], action[2])); //bot cant do illegal move (for now)
         }
         else {
             Console.ReadLine();
@@ -120,7 +120,7 @@ public class CLIGameManager {
             if(input == null) throw new NoNullAllowedException("No input");
             int[] action = StringArrToIntArr(input.Split());
             // <{0-9}> <{0-4}> <{0-5}> first is which plate (last is center) second is type and last is buffer id
-            bool moveDone = game.Move(action[0], action[1], action[2]);
+            bool moveDone = game.CanMove(action[0], action[1], action[2]);
             while (!moveDone) {
                 Console.WriteLine("Invalid move try again");
                 
@@ -129,8 +129,9 @@ public class CLIGameManager {
                     game.Plates, game.Center, game.Players[curr]);  
                 
                 action = StringArrToIntArr(Console.ReadLine().Split());
-                moveDone = game.Move(action[0], action[1], action[2]);
+                moveDone = game.CanMove(action[0], action[1], action[2]);
             }
+            game.EventManager.QueueEvent(() => game.Move(action[0], action[1], action[2]));
         }
     }
 
@@ -145,16 +146,16 @@ public class CLIGameManager {
         Console.WriteLine($" Next turn in filling {game.Players[curr].name} (press enter to go)");
         if(!botIds.Contains(curr)) Console.ReadLine();
         if (!game.IsAdvanced) {
-            game.Calculate();
+            game.EventManager.QueueEvent(() => game.Calculate());
         }
         else {
             if (botIds.Contains(game.CurrentPlayer)) {
-                game.Calculate(int.Parse(botPlayers[FindBot(curr, botPlayers)].Place(game)));
+                game.EventManager.QueueEvent(() => game.Calculate(int.Parse(botPlayers[FindBot(curr, botPlayers)].Place(game))));
             }
             else {
                 string? input = Console.ReadLine(); //should be {0-4} representing the column of first buffer
                 if(input == null) throw new NoNullAllowedException("No input");
-                game.Calculate(int.Parse(input));
+                game.EventManager.QueueEvent(() => game.Calculate(int.Parse(input)));
             }
         }
     }

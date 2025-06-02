@@ -122,7 +122,7 @@ public class Trainer {
         var botMove = _bots[curr].DoMove(game);
         int[] action = StringArrToIntArr(botMove.Split(' '));
         Console.WriteLine($"Player {player.name} : action {action[0]}, {action[1]}, {action[2]}");
-        game.Move(action[0], action[1], action[2]);
+        game.EventManager.QueueEvent(() => game.Move(action[0], action[1], action[2]));
     }
 
     private static void OnNextPlacingTurn(object sender, MyEventArgs e) {
@@ -132,10 +132,10 @@ public class Trainer {
         Console.WriteLine($"Player {player.name} : placing");
         
         if (!game.IsAdvanced) {
-            game.Calculate();
+            game.EventManager.QueueEvent(() => game.Calculate());
         }
         else {
-            game.Calculate(int.Parse(_bots[curr].Place(game)));
+            game.EventManager.QueueEvent(() => game.Calculate(int.Parse(_bots[curr].Place(game))));
         }
     }
     
