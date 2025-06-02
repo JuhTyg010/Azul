@@ -31,7 +31,7 @@ public class Trainer {
     }
 
     public void RunGeneration(int playerCount) {
-        int gamesToPlay = (_population.Count * _population.Count) / 2; // Total number of games to simulate
+        int gamesToPlay = 4 * _population.Count; // Total number of games to simulate
         int agentsPerGame = playerCount;
 
         var rnd = new Random();
@@ -114,34 +114,30 @@ public class Trainer {
         var localBots = bots;
         string[] names = bots.Select((b, i) => $"Bot_{b.Id}").ToArray();
         bool mode = false;
-        int turns = 0;
-        bool wasTakingTurn = false;
 
         void OnNextTakingTurn(object sender, MyEventArgs e) {
-            wasTakingTurn = true;
             var game = e.Board;
+
+            if (game.Round > 50) {
+                Console.WriteLine("Killing long game");
+                game.FinishGame();
+                return;
+            }
+            
             int curr = game.CurrentPlayer;
             var botMove = localBots[curr].DoMove(game);
             int[] action = StringArrToIntArr(botMove.Split(' '));
-            game.Move(action[0], action[1], action[2]);
+            game.EventManager.QueueEvent(() => game.Move(action[0], action[1], action[2]));
         }
 
-        void OnNextPlacingTurn(object sender, MyEventArgs e) {
-            if (wasTakingTurn) {
-                turns++;
-                if (turns > 40) {
-                    Console.WriteLine("Killing game");
-                    e.Board.FinishGame();
-                }
-                wasTakingTurn = false;
-            }
+        void OnNextPlacingTurn(object sender, MyEventArgs e){
             var game = e.Board;
             int curr = game.CurrentPlayer;
 
             if (!game.IsAdvanced) {
-                game.Calculate();
+                game.EventManager.QueueEvent(() => game.Calculate());
             } else {
-                game.Calculate(int.Parse(localBots[curr].Place(game)));
+                game.EventManager.QueueEvent(() => game.Calculate(int.Parse(localBots[curr].Place(game))));
             }
         }
 
