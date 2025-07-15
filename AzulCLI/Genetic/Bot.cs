@@ -37,6 +37,8 @@ public class Bot : IBot
         if (winner == Id) {
             _agent.Wins += 1;
         }
+
+        _agent.PointGain += result[Id];
     }
     
     public Agent GetAgent => _agent;

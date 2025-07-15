@@ -13,11 +13,6 @@ namespace Genetic {
             return emptyInRow == 1; //one to being filled
         }
         
-        public static bool BlocksOpponent(Board board, Move move) {
-            
-            return false; //TODO: implement this
-        }
-        
         
         [Rule]
         public static bool CompletesBuffer(Board board, Move move) {
@@ -41,9 +36,10 @@ namespace Genetic {
 
         [Rule]
         public static bool SomethingGoesToFloor(Board board, Move move) {
-            if (move.BufferId == Globals.BufferCount) return true;
-
             var player = board.Players[board.CurrentPlayer];
+            if (player.floor.Count() == Globals.FloorSize) return false;
+            
+            if (move.BufferId == Globals.BufferCount) return true;
             int count = move.PlateId != board.Plates.Length
                 ? board.Plates[move.PlateId].TileCountOfType(move.TileId) 
                 : board.Center.TileCountOfType(move.TileId);
@@ -106,6 +102,7 @@ namespace Genetic {
             return tilesOfType == Globals.TypeCount - 1;
         }
 
+        
         [Rule]
         public static bool TakenMaxCount(Board board, Move move) {
             int count = move.PlateId != board.Plates.Length

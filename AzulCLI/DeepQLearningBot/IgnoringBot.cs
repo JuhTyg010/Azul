@@ -46,6 +46,12 @@ public class IgnoringBot : IBot{
         AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
     }
 
+    /// <summary>
+    /// Implementation for the interface function from IBot
+    /// </summary>
+    /// <param name="board"></param>
+    /// <returns></returns>
+    /// <exception cref="ApplicationException"> Thrown when there is no possible move to be played but some is expected</exception>
     public string DoMove(Board board) {
         double[] state = board.EncodeBoardState(Id);
 
@@ -137,17 +143,8 @@ public class IgnoringBot : IBot{
                 bestAction = action;
             } 
         }
-        
-        for (int action = 0; action < qValues.Length; action++) {
-            if (qValues[action] > bestValue) {
-                incorrectCount++;
-                Logger.WriteLine($"tried invalid move: {DecodeAction(action)} qValues: {qValues[action]}");
-                _replayBuffer.Add(board.EncodeBoardState(Id), action, -10, board.EncodeBoardState(Id), false);
-            }
-        }
 
         if (bestAction == -1) throw new IllegalOptionException("no valid action"); //should be always false
-        Logger.WriteLine($"Best action's Qvalue: {bestValue} after {incorrectCount} failed actions");
         return bestAction;
     }
 
@@ -193,8 +190,6 @@ public class IgnoringBot : IBot{
     }
 
     private void OnProcessExit(object sender, EventArgs e) {
-        //JsonSaver.Save(settings, settingFile);
-        //JsonSaver.Save(replayBuffer, replayBufferFile);
         JsonSaver.Save(_targetNet, PathCombiner(WorkingDirectory, NetworkFile));    
     }
     

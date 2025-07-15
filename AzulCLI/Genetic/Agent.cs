@@ -6,6 +6,8 @@ public class Agent {
     public Dictionary<string, double> RuleWeights { get; set; }  // Rule name -> Weight
     public int Played { get; set; }
     public int Wins { get; set; }
+    
+    public int PointGain { get; set; }
 
     public Agent(Dictionary<string, double> weights) {
         RuleWeights = weights;
@@ -37,10 +39,15 @@ public class Agent {
     public void ResetValues() {
         Played = 0;
         Wins = 0;
+        PointGain = 0;
     }
 
     public double WinRate() {
         return Wins / (double)Played;
+    }
+
+    public double PointsPerGame() {
+        return PointGain / (double)Played;
     }
 
     public void PrintWeights() {

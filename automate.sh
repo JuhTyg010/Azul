@@ -4,9 +4,9 @@ trainer_path="/home/juhtyg/Desktop/Azul/AzulCLI/AzulTrainer/bin/Debug/net8.0"
 running_dir="/home/juhtyg/Desktop/Azul/AzulCLI/AzulTrainer/bin/Debug/net8.0"
 working_dir="/home/juhtyg/Desktop/Azul"
 
-bots=(PPO)
-opponents=(random heuristic)
-numbers_from_r=(0 1 2 3)  # Replace this with the actual numbers you want to use
+bots=(ignoring)
+opponents=(heuristic)
+numbers_from_r=(1 2 )  # Replace this with the actual numbers you want to use
 
 # Loop through all combinations
 
@@ -23,7 +23,7 @@ for bot1 in "${bots[@]}"; do
       fi
 
       # Create the argument string for the trainer program
-      args="-m 0 -r ${r} -d ${specific_dir} -l '${bot1} ${bot2}' -c 100000"
+      args="-m 0 -r ${r} -d ${specific_dir} -l '${bot1} ${bot2}' -c 50000"
      
 	cmd=(
         "${trainer_path}/AzulTrainer"
@@ -31,7 +31,7 @@ for bot1 in "${bots[@]}"; do
         -r "${r}"
         -d "${specific_dir}"
         -l "${bot1} ${bot2}"  # This will be treated as one argument
-        -c 100000
+        -c 50000
       )
 
       # Run the trainer program in the background for parallel execution
