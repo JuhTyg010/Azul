@@ -36,14 +36,15 @@ public class CLIGameManager {
         {
             Console.WriteLine($"You choose a mode to {o.Mode} ");
             bool isAdvanced = o.Mode == 1;
-            Console.WriteLine($" You choose game for {o.ListOfIncoming.Length} players");
             string[] playerSetup = o.ListOfIncoming.Split(" ");
-            
+            Console.WriteLine($" You choose game for {playerSetup.Length} players");
             botPlayers = new List<IBot>();
             for (int i = 0; i < playerSetup.Length; i++) {
                 if (playerSetup[i].Split("_")[0] == "B") {
                     string type = playerSetup[i].Split("_")[1];
-                    if(type == "random") botPlayers.Add(new NonML.RandomBot(i));
+                    if (NonML.BotFactory.WasRecognised(type)) {
+                        botPlayers.Add(NonML.BotFactory.CreateBot(type, i, o.logFile));
+                    }
                     else if(type == "PPO") botPlayers.Add(new PPO.Bot(i, 0));
                     else botPlayers.Add(BotFactory.CreateBot(type, i, 0));
                 }
